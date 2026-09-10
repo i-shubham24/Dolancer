@@ -1,0 +1,119 @@
+/*
+ * Dolancer design tokens.
+ *
+ * Ported from the sibling AssignX client app (nitin612/assign-X, src/styles/tokens.css)
+ * so the two surfaces read as one system. The look is three moves: a 2px near-black
+ * border, a hard offset shadow, and a translate on hover/press. Keep those consistent
+ * and everything else follows.
+ *
+ * Declared through Tailwind v4 @theme, so each token generates its utility:
+ *   --color-coral        -> bg-coral / text-coral / border-coral
+ *   --shadow-offset-md   -> shadow-offset-md
+ *   --radius-xl          -> rounded-xl
+ */
+@theme {
+  /* Canvas and surfaces */
+  --color-canvas: #f5f5f7;
+  --color-surface: #ffffff;
+  --color-surface-2: #fafafc;
+  --color-subtle: #efeff4;
+  --color-muted: #e4e4ec;
+  --color-hover: #ebebf2;
+
+  /* Typography colours */
+  --color-ink: #111111;
+  --color-ink-2: #555555;
+  --color-ink-muted: #777777;
+  --color-ink-3: #999999;
+  --color-inverse: #ffffff;
+
+  /* Primary: coral */
+  --color-coral: #ff6b5b;
+  --color-coral-hover: #ff5542;
+  --color-coral-light: #ffebe8;
+
+  /* Secondary: blue */
+  --color-blue: #6c8bff;
+  --color-blue-hover: #5475f5;
+  --color-blue-light: #eef2ff;
+
+  /* Accent: lime */
+  --color-lime: #c7ff3d;
+  --color-lime-hover: #b5f220;
+  --color-lime-light: #f5ffdb;
+
+  /* Accent: violet */
+  --color-purple: #7b61ff;
+  --color-purple-hover: #6849f5;
+  --color-purple-light: #f3f0ff;
+
+  /* Borders */
+  --color-line: #111111;
+  --color-line-subtle: #ececf2;
+  --color-line-card: #e6e6ee;
+
+  /* Status. Every status must also carry a text label, never colour alone. */
+  --color-success-bg: #e8fdf0;
+  --color-success-ink: #0d7a3e;
+  --color-success-dot: #10b981;
+  --color-warning-bg: #fff8e6;
+  --color-warning-ink: #a15c00;
+  --color-warning-dot: #f59e0b;
+  --color-danger-bg: #feeceb;
+  --color-danger-ink: #c0241a;
+  --color-danger-dot: #ef4444;
+  --color-info-bg: #eef2ff;
+  --color-info-ink: #2a4ecc;
+  --color-info-dot: #6c8bff;
+  --color-neutral-bg: #f3f3f7;
+  --color-neutral-ink: #555555;
+  --color-neutral-dot: #888888;
+
+  /* The signature: hard offset shadows */
+  --shadow-offset-xs: 1px 1px 0px #111111;
+  --shadow-offset-sm: 2px 2px 0px #111111;
+  --shadow-offset-md: 3px 3px 0px #111111;
+  --shadow-offset-lg: 4px 4px 0px #111111;
+  --shadow-offset-xl: 6px 6px 0px #111111;
+  --shadow-offset-2xl: 7px 7px 0px #111111;
+  --shadow-modal: 8px 8px 0px #111111;
+  --shadow-coral: 2px 2px 0px #ff6b5b;
+
+  /* Soft shadows, reserved for the quiet components */
+  --shadow-soft-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-soft-md: 0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-soft-lg: 0 6px 20px rgba(0, 0, 0, 0.06);
+
+  /* Type */
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --text-2xs: 11px;
+  --text-xs: 12px;
+  --text-sm: 13px;
+  --text-base: 14px;
+  --text-md: 15px;
+  --text-lg: 16px;
+  --text-xl: 18px;
+  --text-2xl: 22px;
+  --text-3xl: 28px;
+  --text-4xl: 36px;
+  --text-5xl: 48px;
+
+  /* Radii */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-3xl: 22px;
+
+  /* Layout */
+  --spacing-sidebar: 256px;
+  --spacing-topbar: 64px;
+  --spacing-content: 1320px;
+
+  /* Motion. Spring easing, never a linear fade. */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+}

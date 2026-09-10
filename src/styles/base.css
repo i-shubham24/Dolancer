@@ -1,0 +1,277 @@
+/*
+ * Base layer. Typography scale and the shimmer the sibling app forgot to define
+ * (its SkeletonLoader references a .skeleton class that exists in no stylesheet,
+ * so its skeletons render invisible). Loading states here are always visible.
+ */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 800;
+    line-height: 1.18;
+    letter-spacing: -0.03em;
+  }
+
+  h1 {
+    font-size: var(--text-4xl);
+  }
+  h2 {
+    font-size: var(--text-2xl);
+  }
+  h3 {
+    font-size: var(--text-xl);
+  }
+  h4 {
+    font-size: var(--text-lg);
+  }
+
+  ::selection {
+    background: var(--color-coral);
+    color: var(--color-ink);
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(17, 17, 17, 0.2);
+    border-radius: 9999px;
+  }
+}
+
+@layer components {
+  /* The real shimmer. Never a blank region, never an OS spinner. */
+  .skeleton {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--color-muted);
+    border-radius: var(--radius-sm);
+  }
+
+  .skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.55) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    animation: skeleton-sweep 1.4s ease-in-out infinite;
+  }
+
+  @keyframes skeleton-sweep {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  @keyframes status-pulse {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.4);
+      opacity: 0.65;
+    }
+  }
+
+  .status-dot-pulse {
+    animation: status-pulse 2s infinite ease-in-out;
+  }
+
+  @keyframes marquee-slide {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      /* The track holds two identical copies, so shifting by half loops seamlessly. */
+      transform: translateX(-50%);
+    }
+  }
+
+  .marquee-track {
+    animation: marquee-slide 38s linear infinite;
+  }
+
+  .marquee-track:hover,
+  .marquee-track:focus-within {
+    animation-play-state: paused;
+  }
+
+
+  /* A slow bob, offset per element so a group never moves in lockstep. */
+  @keyframes float-bob {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-9px);
+    }
+  }
+
+  .float-bob {
+    animation: float-bob 5.5s ease-in-out infinite;
+  }
+
+  /* Horizontal drag rail. Snaps to each card and hides its scrollbar, so it reads
+     as a deck you push rather than a scrolling div. */
+  .drag-rail {
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    overscroll-behavior-x: contain;
+  }
+  .drag-rail::-webkit-scrollbar {
+    display: none;
+  }
+  .drag-rail > * {
+    scroll-snap-align: start;
+  }
+
+  /*
+   * Physical-material devices.
+   *
+   * The house style is flat and hard-edged, which is easy to make look generic.
+   * These give a few surfaces the properties of real objects instead: paper that
+   * tears, cards that were put down by hand, things held on with tape. Each is
+   * pure CSS, so there are no images to load and nothing to go stale.
+   */
+
+  /* A torn paper edge. The conic-gradient mask cuts triangular teeth out of the
+     bottom, so the element reads as something ripped off a roll. */
+  .torn-bottom {
+    --tooth-w: 16px;
+    padding-bottom: 26px;
+    -webkit-mask:
+      conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% /
+      var(--tooth-w) 100% repeat-x;
+    mask:
+      conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% /
+      var(--tooth-w) 100% repeat-x;
+  }
+
+  /* Two punched holes, as though the sheet came out of a binder. */
+  .punched::before,
+  .punched::after {
+    content: "";
+    position: absolute;
+    top: 14px;
+    width: 11px;
+    height: 11px;
+    border-radius: 9999px;
+    background-color: var(--color-canvas);
+    border: 1.5px solid var(--color-ink);
+  }
+  .punched::before {
+    left: 16px;
+  }
+  .punched::after {
+    left: 38px;
+  }
+
+  /* A strip of tape holding something to the page. */
+  .taped::before {
+    content: "";
+    position: absolute;
+    top: -9px;
+    left: 50%;
+    width: 76px;
+    height: 20px;
+    transform: translateX(-50%) rotate(-2.5deg);
+    background-color: rgba(199, 255, 61, 0.65);
+    border-left: 1.5px dashed rgba(17, 17, 17, 0.25);
+    border-right: 1.5px dashed rgba(17, 17, 17, 0.25);
+  }
+
+  /* Cards put down by hand rather than laid out on a grid. They straighten when
+     you reach for one. */
+  .scattered > * {
+    transition:
+      transform 220ms var(--ease-spring),
+      box-shadow 220ms var(--ease-spring);
+  }
+  .scattered > *:nth-child(4n + 1) {
+    transform: rotate(-1.4deg);
+  }
+  .scattered > *:nth-child(4n + 2) {
+    transform: rotate(1deg) translateY(6px);
+  }
+  .scattered > *:nth-child(4n + 3) {
+    transform: rotate(-0.6deg) translateY(-4px);
+  }
+  .scattered > *:nth-child(4n + 4) {
+    transform: rotate(1.8deg) translateY(3px);
+  }
+  .scattered > *:hover,
+  .scattered > *:focus-within {
+    transform: rotate(0deg) translateY(-4px);
+    z-index: 2;
+  }
+
+  /* Ruled paper, for anything that should read as written down. */
+  .ruled {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0 27px,
+      rgba(17, 17, 17, 0.07) 27px 28px
+    );
+  }
+
+  /* A tilt driven by cursor position. The angles come from JS as custom
+     properties, so the whole effect is two lines of CSS. */
+  .cursor-tilt {
+    transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+    transition: transform 120ms ease-out;
+    transform-style: preserve-3d;
+  }
+
+  /* NFR-038: honour reduced motion across the board. */
+  @media (prefers-reduced-motion: reduce) {
+    .skeleton::after,
+    .status-dot-pulse,
+    .marquee-track {
+      animation: none;
+    }
+    .scattered > *,
+    .cursor-tilt {
+      transform: none !important;
+    }
+    .float-bob {
+      animation: none;
+    }
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+}
