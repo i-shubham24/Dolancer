@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Star, Send } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { demo, demoId, demoRespond, isDemo } from "@/lib/demo-data";
 import { callRowRpc, unwrap } from "@/lib/rpc";
 import { selectColumns } from "@/lib/select";
 import { qk } from "@/lib/query-keys";
@@ -23,6 +24,8 @@ import type { DoerApplicationRow, RatingSummaryRow } from "@/types/database";
  * on the backend handoff list for someone to settle.
  */
 async function fetchRating(): Promise<{ average: number | null; count: number; level: string }> {
+  if (isDemo()) return demoRespond(() => demo.rating);
+
   const row = unwrap(await callRowRpc<RatingSummaryRow>("my_rating_summary"));
   const average = row?.avg_score == null ? null : Number(row.avg_score);
   return {
@@ -33,6 +36,8 @@ async function fetchRating(): Promise<{ average: number | null; count: number; l
 }
 
 async function fetchApplication(): Promise<DoerApplicationRow | null> {
+  if (isDemo()) return demoRespond(() => demo.application);
+
   const { data, error } = await supabase
     .from("doer_applications")
     .select(selectColumns("id", "bio", "status", "created_at"))
@@ -42,6 +47,17 @@ async function fetchApplication(): Promise<DoerApplicationRow | null> {
 }
 
 async function submitApplication(bio: string): Promise<void> {
+  if (isDemo()) {
+    return demoRespond(() => {
+      demo.application = {
+        id: demoId("application"),
+        bio: bio.trim(),
+        status: "pending",
+        created_at: new Date().toISOString(),
+      };
+    });
+  }
+
   const { data: userData } = await supabase.auth.getUser();
   const id = userData.user?.id;
   if (!id) throw new Error("Not signed in");

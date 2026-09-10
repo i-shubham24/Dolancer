@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { supabase } from "./supabase";
+import { isDemo } from "./demo-data";
 
 /**
  * Realtime subscriptions.
@@ -29,6 +30,8 @@ export const topics = {
 type BroadcastHandler = (payload: unknown) => void;
 
 function subscribe(topic: string, event: string, handler: BroadcastHandler): () => void {
+  if (isDemo()) return () => {};
+
   let disposed = false;
   let cleanup: (() => void) | null = null;
 

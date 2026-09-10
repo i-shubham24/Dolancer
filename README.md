@@ -17,12 +17,25 @@ npm run dev
 | Script | What it does |
 | --- | --- |
 | `npm run dev` | Vite dev server on 5173 (honours `PORT`) |
+| `npm run dev:demo` | Dev server on built-in sample data, no backend or env values needed |
 | `npm run build` | Typecheck then production build |
+| `npm run build:demo` | Production build in demo mode |
 | `npm run typecheck` | `tsc -b --noEmit` |
 | `npm run lint` | ESLint |
 | `npm run check:secrets` | Refuses privileged key material anywhere in source |
 | `npm run check:copy` | Enforces the banned-word and em-dash rules |
 | `npm run verify` | All of the above, in order |
+
+### Demo mode
+
+`npm run dev:demo` runs the whole app on built-in sample data, with no Supabase project
+and no env values. Any email signs straight in to a populated doer account, and actions
+such as claiming, starting and submitting work play out until the page is reloaded.
+
+The switch is `VITE_DEMO_MODE=true`. For a hosted demo, set that variable in the host's
+build environment (on Vercel: Project Settings, Environment Variables) and redeploy, or
+use `npm run build:demo` as the build command. The sample data, and the stand-ins for
+server behaviour such as claiming and grading, live in `src/lib/demo-data.ts`.
 
 ## The rules this codebase enforces
 

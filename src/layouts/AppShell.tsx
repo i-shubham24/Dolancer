@@ -17,6 +17,7 @@ import {
   LogOut,
 } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { isDemo } from "@/lib/demo-data";
 import { useAuth } from "@/providers/AuthProvider";
 import { signOut } from "@/features/auth/api";
 import { useProfile } from "@/features/dashboard/queries";
@@ -72,6 +73,18 @@ function NavItem({
   );
 }
 
+/** Marks the sample-data build, so nobody mistakes it for a live account. */
+function DemoBadge() {
+  return (
+    <span
+      title="Sample data. Changes last until you reload."
+      className="rounded-full border-[1.5px] border-ink bg-lime px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide"
+    >
+      Demo
+    </span>
+  );
+}
+
 function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   const { user } = useAuth();
   const profile = useProfile();
@@ -88,6 +101,7 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
         <span className="text-xl font-extrabold tracking-[-0.04em]">
           Dolancer<span className="text-coral">.</span>
         </span>
+        {isDemo() ? <DemoBadge /> : null}
       </Link>
 
       <nav className="space-y-1" aria-label="Main">
@@ -161,6 +175,7 @@ export function AppShell() {
             <span className="text-base font-extrabold">D</span>
           </span>
           <span className="text-lg font-extrabold tracking-[-0.04em]">Dolancer</span>
+          {isDemo() ? <DemoBadge /> : null}
         </Link>
         <button
           type="button"

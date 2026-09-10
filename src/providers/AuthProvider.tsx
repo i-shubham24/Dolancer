@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/lib/supabase";
+import { demoAuth, isDemo } from "@/lib/demo-data";
 
 interface AuthContextValue {
   session: Session | null;
@@ -38,10 +39,15 @@ function readRole(session: Session | null): string | null {
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [session, setSession] = useState<Session | null>(null);
-  const [loading, setLoading] = useState(true);
+  // The demo session is local, so there is no lookup to wait for.
+  const [session, setSession] = useState<Session | null>(() =>
+    isDemo() ? demoAuth.getSession() : null,
+  );
+  const [loading, setLoading] = useState(() => !isDemo());
 
   useEffect(() => {
+    if (isDemo()) return demoAuth.onChange(setSession);
+
     let active = true;
 
     supabase.auth.getSession().then(({ data }) => {
@@ -66,7 +72,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       session,
       user: session?.user ?? null,
       loading,
-      role: readRole(session),
+      // The demo session carries no JWT claims. The sample account is an approved doer.
+      role: isDemo() ? (session ? "doer" : null) : readRole(session),
     }),
     [session, loading],
   );

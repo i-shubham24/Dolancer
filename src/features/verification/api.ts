@@ -2,6 +2,7 @@ import { supabase } from "@/lib/supabase";
 import { callRpc, unwrap } from "@/lib/rpc";
 import { selectColumns } from "@/lib/select";
 import { BUCKETS } from "@/lib/constants";
+import { demo, demoRespond, isDemo } from "@/lib/demo-data";
 import type { KycRow, KycStatus } from "@/types/database";
 
 export const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
@@ -9,6 +10,8 @@ export const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
 const ALLOWED_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "application/pdf"]);
 
 export async function fetchKycStatus(): Promise<KycStatus> {
+  if (isDemo()) return demoRespond(() => demo.kyc);
+
   const { data, error } = await supabase
     .from("kyc")
     .select(selectColumns("status"))
@@ -81,6 +84,14 @@ export async function submitKyc(input: {
   selfie: File;
   payout: PayoutInput;
 }): Promise<KycStatus> {
+  // Nothing is uploaded or stored in the demo; the submission just goes to review.
+  if (isDemo()) {
+    return demoRespond(() => {
+      demo.kyc = "submitted";
+      return demo.kyc;
+    });
+  }
+
   // Payout first: it is the step most likely to be rejected by the provider, and
   // failing here before any document is stored avoids orphaned uploads.
   await setPayoutMethod(input.payout);

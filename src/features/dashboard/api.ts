@@ -2,6 +2,7 @@ import { supabase } from "@/lib/supabase";
 import { callRowRpc, unwrap } from "@/lib/rpc";
 import { selectColumns } from "@/lib/select";
 import { toPaise } from "@/lib/paise";
+import { demo, demoGateState, demoPoolView, demoRespond, isDemo } from "@/lib/demo-data";
 import { fetchProjects } from "@/features/work/api";
 import type {
   DoerApplicationRow,
@@ -14,6 +15,8 @@ import type {
 import type { DoerGateState, DoerProject, EarningsSummary, PoolOffer } from "@/types/domain";
 
 export async function fetchProfile(): Promise<ProfileRow> {
+  if (isDemo()) return demoRespond(() => demo.profile);
+
   const { data, error } = await supabase
     .from("profiles")
     .select(selectColumns("full_name", "whatsapp", "country", "available"))
@@ -24,6 +27,12 @@ export async function fetchProfile(): Promise<ProfileRow> {
 }
 
 export async function setAvailability(available: boolean): Promise<void> {
+  if (isDemo()) {
+    return demoRespond(() => {
+      demo.profile.available = available;
+    });
+  }
+
   const { data: userData } = await supabase.auth.getUser();
   const id = userData.user?.id;
   if (!id) throw new Error("Not signed in");
@@ -37,6 +46,8 @@ export async function fetchActiveProjects(): Promise<DoerProject[]> {
 }
 
 export async function fetchEarningsSummary(): Promise<EarningsSummary> {
+  if (isDemo()) return demoRespond(() => demo.earnings);
+
   const row = unwrap(await callRowRpc<EarningsSummaryRow>("doer_earnings_summary"));
   return {
     grossPaise: toPaise(row?.gross_paise),
@@ -52,6 +63,8 @@ export async function fetchEarningsSummary(): Promise<EarningsSummary> {
  * window, so an empty result is a legitimate state and not an error.
  */
 export async function fetchPoolPreview(limit = 3): Promise<PoolOffer[]> {
+  if (isDemo()) return demoRespond(() => demoPoolView().slice(0, limit));
+
   const { data, error } = await supabase
     .from("doer_pool")
     .select(
@@ -87,6 +100,8 @@ export async function fetchPoolPreview(limit = 3): Promise<PoolOffer[]> {
  * rejecting the whole screen.
  */
 export async function fetchGateState(role: string | null): Promise<DoerGateState> {
+  if (isDemo()) return demoRespond(demoGateState);
+
   const [applicationResult, kycResult, skillsResult, lessonsResult, progressResult] =
     await Promise.allSettled([
       supabase

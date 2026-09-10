@@ -2,6 +2,7 @@ import { supabase } from "@/lib/supabase";
 import { callRowRpc, unwrap } from "@/lib/rpc";
 import { selectColumns } from "@/lib/select";
 import { toPaise } from "@/lib/paise";
+import { demo, demoRespond, isDemo } from "@/lib/demo-data";
 import type { EarningsSummaryRow, LedgerDoerRow } from "@/types/database";
 import type { EarningsSummary } from "@/types/domain";
 
@@ -20,6 +21,8 @@ export interface LedgerRow {
  * withheld, both scoped to the caller, and returns net as the difference.
  */
 export async function fetchEarningsSummary(): Promise<EarningsSummary> {
+  if (isDemo()) return demoRespond(() => demo.earnings);
+
   const row = unwrap(await callRowRpc<EarningsSummaryRow>("doer_earnings_summary"));
   return {
     grossPaise: toPaise(row?.gross_paise),
@@ -41,6 +44,8 @@ export async function fetchEarningsSummary(): Promise<EarningsSummary> {
  * be a guess. The withheld total comes from the summary instead.
  */
 export async function fetchLedger(): Promise<LedgerRow[]> {
+  if (isDemo()) return demoRespond(() => demo.ledger);
+
   const { data, error } = await supabase
     .from("ledger_doer")
     .select(selectColumns("id", "project_id", "entry_type", "amount_paise", "created_at"))

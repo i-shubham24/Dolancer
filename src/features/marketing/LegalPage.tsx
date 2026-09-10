@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
+import { demoRespond, isDemo } from "@/lib/demo-data";
 import { selectColumns } from "@/lib/select";
 import { formatDate } from "@/lib/datetime";
 import { cn } from "@/lib/cn";
@@ -27,6 +28,10 @@ interface LegalDocument {
  * rendering a stale copy.
  */
 async function fetchLegalDocument(kind: LegalKind): Promise<LegalDocument | null> {
+  // The demo has no published documents, and inventing legal text would defeat the
+  // point of versioning it, so the page shows its honest "not published" state.
+  if (isDemo()) return demoRespond(() => null);
+
   const { data, error } = await supabase
     .from("current_legal_documents")
     .select(selectColumns("kind", "version", "title", "content", "effective_at"))

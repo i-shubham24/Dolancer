@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import { selectColumns } from "@/lib/select";
 import { BUCKETS } from "@/lib/constants";
+import { DEMO_USER_ID, demo, demoId, demoRespond, demoThreadId, isDemo } from "@/lib/demo-data";
 import type { MessageRow } from "@/types/database";
 
 export interface ChatMessage {
@@ -31,6 +32,12 @@ export interface ChatAttachment {
  * filter here to forget.
  */
 export async function fetchThreadId(projectId: string): Promise<string | null> {
+  if (isDemo()) {
+    return demoRespond(() =>
+      demo.projects.some((project) => project.id === projectId) ? demoThreadId(projectId) : null,
+    );
+  }
+
   const { data, error } = await supabase
     .from("threads")
     .select(selectColumns("id"))
@@ -41,6 +48,8 @@ export async function fetchThreadId(projectId: string): Promise<string | null> {
 }
 
 export async function fetchMessages(threadId: string): Promise<ChatMessage[]> {
+  if (isDemo()) return demoRespond(() => demo.messages[threadId] ?? []);
+
   // Newest first with a limit, then reversed, so a long thread loads its tail
   // rather than its head.
   const { data, error } = await supabase
@@ -62,6 +71,17 @@ export async function fetchMessages(threadId: string): Promise<ChatMessage[]> {
 }
 
 export async function sendMessage(threadId: string, body: string): Promise<void> {
+  if (isDemo()) {
+    return demoRespond(() => {
+      (demo.messages[threadId] ??= []).push({
+        id: demoId("message"),
+        authorId: DEMO_USER_ID,
+        body: body.trim(),
+        createdAt: new Date().toISOString(),
+      });
+    });
+  }
+
   const { data: userData } = await supabase.auth.getUser();
   const authorId = userData.user?.id;
   if (!authorId) throw new Error("Not signed in");
@@ -75,6 +95,8 @@ export async function sendMessage(threadId: string, body: string): Promise<void>
 }
 
 export async function fetchAttachments(threadId: string): Promise<ChatAttachment[]> {
+  if (isDemo()) return demoRespond(() => demo.attachments[threadId] ?? []);
+
   const { data, error } = await supabase
     .from("attachments")
     .select(
@@ -131,6 +153,8 @@ const READABLE_BUCKETS = new Set<string>([BUCKETS.chat, BUCKETS.deliverables]);
  * short and they are never persisted.
  */
 export async function signedUrlFor(bucket: string, objectPath: string): Promise<string> {
+  // The demo lists attachments but has no stored files behind them.
+  if (isDemo()) throw new Error("Files cannot be opened in the demo.");
   if (!READABLE_BUCKETS.has(bucket)) throw new Error("That file is not available here.");
 
   const { data, error } = await supabase.storage.from(bucket).createSignedUrl(objectPath, 60);

@@ -5,6 +5,7 @@ import { Input, Label } from "@/components/ui/input";
 import { Card } from "@/components/brutal/Card";
 import { setMyCountry, updateProfileBasics } from "./api";
 import { supabase } from "@/lib/supabase";
+import { isDemo } from "@/lib/demo-data";
 
 /**
  * The one true gate before the dashboard, and it exists because country is set once
@@ -43,8 +44,8 @@ export function CountryOnboardingPage() {
         whatsapp: whatsapp.trim() || null,
       });
       // The role and onboarding claims are stamped at token issue, so refresh
-      // before routing or the app reads a stale JWT.
-      await supabase.auth.refreshSession();
+      // before routing or the app reads a stale JWT. The demo session has no JWT.
+      if (!isDemo()) await supabase.auth.refreshSession();
       navigate(next, { replace: true });
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "Could not save your details.");

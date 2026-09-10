@@ -43,15 +43,32 @@ function assertNotPrivileged(name: string, value: string): void {
   }
 }
 
-const supabaseUrl = required("VITE_SUPABASE_URL", import.meta.env.VITE_SUPABASE_URL);
-const supabasePublishableKey = required(
-  "VITE_SUPABASE_PUBLISHABLE_KEY",
-  import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-);
+/**
+ * Demo mode runs the whole app on built-in sample data with no backend, so the
+ * product can be shown before Supabase is connected. It is on only when
+ * VITE_DEMO_MODE is exactly "true".
+ */
+const demoMode = import.meta.env.VITE_DEMO_MODE === "true";
 
-assertNotPrivileged("VITE_SUPABASE_PUBLISHABLE_KEY", supabasePublishableKey);
+// Demo mode never talks to Supabase, so neither value is required there. Anything
+// that is set still gets screened: a privileged key must not ship in a demo bundle
+// either.
+const supabaseUrl = demoMode
+  ? (import.meta.env.VITE_SUPABASE_URL ?? "").trim()
+  : required("VITE_SUPABASE_URL", import.meta.env.VITE_SUPABASE_URL);
+const supabasePublishableKey = demoMode
+  ? (import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ?? "").trim()
+  : required(
+      "VITE_SUPABASE_PUBLISHABLE_KEY",
+      import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+    );
+
+if (supabasePublishableKey) {
+  assertNotPrivileged("VITE_SUPABASE_PUBLISHABLE_KEY", supabasePublishableKey);
+}
 
 export const env = {
+  demoMode,
   supabaseUrl,
   supabasePublishableKey,
 } as const;

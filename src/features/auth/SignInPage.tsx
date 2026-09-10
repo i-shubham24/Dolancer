@@ -3,7 +3,8 @@ import { useNavigate, useSearchParams, Link, useLocation } from "react-router-do
 import { Mail, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
-import { sendEmailOtp, verifyEmailOtp, signInWithGoogle } from "./api";
+import { isDemo } from "@/lib/demo-data";
+import { sendEmailOtp, verifyEmailOtp, signInWithGoogle, signInDemo } from "./api";
 
 type Stage = "email" | "code";
 
@@ -21,8 +22,15 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
   const oauthError = params.get("error");
   const isSignUp = mode === "sign-up";
 
+  /** Demo mode sends no email and needs no code: straight in as the sample doer. */
+  function enterDemo() {
+    signInDemo();
+    navigate(next, { replace: true });
+  }
+
   async function handleSendCode(event: React.FormEvent) {
     event.preventDefault();
+    if (isDemo()) return enterDemo();
     setBusy(true);
     setError(null);
     try {
@@ -50,6 +58,7 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
   }
 
   async function handleGoogle() {
+    if (isDemo()) return enterDemo();
     setBusy(true);
     setError(null);
     try {
@@ -88,6 +97,14 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
             ? "Join in minutes. Projects come to you, and the pay is agreed upfront."
             : "Sign in to pick up work and track your earnings."}
         </p>
+        {isDemo() ? (
+          <p className="mt-5 flex items-center gap-2.5 rounded-md border-[1.5px] border-ink bg-lime-light px-3 py-2.5 text-xs font-semibold text-ink-2 shadow-offset-xs">
+            <span className="shrink-0 rounded-full border-[1.5px] border-ink bg-lime px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-ink">
+              Demo
+            </span>
+            Sample data only. Any email signs you in, and no code is needed.
+          </p>
+        ) : null}
       </div>
 
       {oauthError ? (

@@ -1,5 +1,6 @@
 import { supabase } from "@/lib/supabase";
 import { selectColumns } from "@/lib/select";
+import { DEMO_USER_ID, demo, demoId, demoRespond, isDemo } from "@/lib/demo-data";
 import type { TicketStatus } from "@/types/database";
 
 export const TICKET_CATEGORIES = [
@@ -32,6 +33,12 @@ async function currentUserId(): Promise<string> {
 }
 
 export async function fetchTickets(): Promise<Ticket[]> {
+  if (isDemo()) {
+    return demoRespond(() =>
+      [...demo.tickets].sort((a, b) => b.createdAt.localeCompare(a.createdAt)),
+    );
+  }
+
   const { data, error } = await supabase
     .from("tickets")
     .select(selectColumns("id", "subject", "category", "status", "created_at"))
@@ -51,6 +58,10 @@ export async function fetchTickets(): Promise<Ticket[]> {
 }
 
 export async function fetchTicket(ticketId: string): Promise<Ticket | null> {
+  if (isDemo()) {
+    return demoRespond(() => demo.tickets.find((ticket) => ticket.id === ticketId) ?? null);
+  }
+
   const { data, error } = await supabase
     .from("tickets")
     .select(selectColumns("id", "subject", "category", "status", "created_at"))
@@ -71,6 +82,8 @@ export async function fetchTicket(ticketId: string): Promise<Ticket | null> {
 }
 
 export async function fetchTicketMessages(ticketId: string): Promise<TicketMessage[]> {
+  if (isDemo()) return demoRespond(() => demo.ticketMessages[ticketId] ?? []);
+
   const { data, error } = await supabase
     .from("ticket_messages")
     .select(selectColumns("id", "author_id", "body", "created_at"))
@@ -94,6 +107,24 @@ export async function openTicket(input: {
   category: string;
   body: string;
 }): Promise<string> {
+  if (isDemo()) {
+    return demoRespond(() => {
+      const ticketId = demoId("tk");
+      const createdAt = new Date().toISOString();
+      demo.tickets.unshift({
+        id: ticketId,
+        subject: input.subject.trim(),
+        category: input.category,
+        status: "open",
+        createdAt,
+      });
+      demo.ticketMessages[ticketId] = [
+        { id: demoId("ticket-message"), authorId: DEMO_USER_ID, body: input.body.trim(), createdAt },
+      ];
+      return ticketId;
+    });
+  }
+
   const openerId = await currentUserId();
 
   const { data, error } = await supabase
@@ -120,6 +151,17 @@ export async function openTicket(input: {
 }
 
 export async function replyToTicket(ticketId: string, body: string): Promise<void> {
+  if (isDemo()) {
+    return demoRespond(() => {
+      (demo.ticketMessages[ticketId] ??= []).push({
+        id: demoId("ticket-message"),
+        authorId: DEMO_USER_ID,
+        body: body.trim(),
+        createdAt: new Date().toISOString(),
+      });
+    });
+  }
+
   const authorId = await currentUserId();
   const { error } = await supabase
     .from("ticket_messages")

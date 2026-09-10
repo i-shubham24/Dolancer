@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Copy, Check, Gift } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { demo, demoRespond, isDemo } from "@/lib/demo-data";
 import { callRpc, unwrap } from "@/lib/rpc";
 import { selectColumns } from "@/lib/select";
 import { qk } from "@/lib/query-keys";
@@ -23,6 +24,8 @@ interface ReferralState {
  * inviter_id makes concurrent calls converge rather than mint duplicates.
  */
 async function fetchReferrals(): Promise<ReferralState> {
+  if (isDemo()) return demoRespond(() => demo.referrals);
+
   const code = unwrap(await callRpc<string>("ensure_invite_code"));
 
   const { data, error } = await supabase

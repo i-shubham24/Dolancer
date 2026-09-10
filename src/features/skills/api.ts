@@ -1,5 +1,6 @@
 import { supabase } from "@/lib/supabase";
 import { selectColumns } from "@/lib/select";
+import { demo, demoRespond, isDemo } from "@/lib/demo-data";
 import type { SkillRow } from "@/types/database";
 
 export interface SkillOption {
@@ -16,6 +17,13 @@ async function currentUserId(): Promise<string> {
   return id;
 }
 
+function pickDemoSkill(skillId: string, selected: boolean): Promise<void> {
+  return demoRespond(() => {
+    const skill = demo.skills.find((entry) => entry.id === skillId);
+    if (skill) skill.selected = selected;
+  });
+}
+
 /**
  * The skill catalogue, marked with what this doer has picked.
  *
@@ -25,6 +33,10 @@ async function currentUserId(): Promise<string> {
  * has no work.
  */
 export async function fetchSkills(): Promise<SkillOption[]> {
+  if (isDemo()) {
+    return demoRespond(() => [...demo.skills].sort((a, b) => a.name.localeCompare(b.name)));
+  }
+
   const [catalogue, mine] = await Promise.all([
     supabase
       .from("skills")
@@ -50,6 +62,8 @@ export async function fetchSkills(): Promise<SkillOption[]> {
 }
 
 export async function addSkill(skillId: string): Promise<void> {
+  if (isDemo()) return pickDemoSkill(skillId, true);
+
   const doerId = await currentUserId();
   const { error } = await supabase
     .from("doer_skills")
@@ -61,6 +75,8 @@ export async function addSkill(skillId: string): Promise<void> {
 }
 
 export async function removeSkill(skillId: string): Promise<void> {
+  if (isDemo()) return pickDemoSkill(skillId, false);
+
   const doerId = await currentUserId();
   const { error } = await supabase
     .from("doer_skills")

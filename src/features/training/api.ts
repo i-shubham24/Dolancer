@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import { callRowRpc, unwrap } from "@/lib/rpc";
 import { selectColumns } from "@/lib/select";
+import { demo, demoGradeLesson, demoRespond, isDemo } from "@/lib/demo-data";
 import type { LessonRow } from "@/types/database";
 
 export interface Lesson {
@@ -44,6 +45,17 @@ async function completedLessonIds(): Promise<Set<string>> {
 }
 
 export async function fetchLessons(): Promise<Lesson[]> {
+  if (isDemo()) {
+    return demoRespond(() =>
+      demo.lessons.map(({ id, title, moduleOrder, completed }) => ({
+        id,
+        title,
+        moduleOrder,
+        completed,
+      })),
+    );
+  }
+
   const [lessons, done] = await Promise.all([
     supabase
       .from("lessons")
@@ -64,6 +76,15 @@ export async function fetchLessons(): Promise<Lesson[]> {
 }
 
 export async function fetchLesson(lessonId: string): Promise<LessonDetail | null> {
+  if (isDemo()) {
+    return demoRespond(() => {
+      const lesson = demo.lessons.find((entry) => entry.id === lessonId);
+      if (!lesson) return null;
+      const { id, title, body, moduleOrder, completed } = lesson;
+      return { id, title, body, moduleOrder, completed };
+    });
+  }
+
   const [lesson, done] = await Promise.all([
     supabase
       .from("lessons")
@@ -92,6 +113,12 @@ export async function fetchLesson(lessonId: string): Promise<LessonDetail | null
  * cannot leak to a client that simply asks for it.
  */
 export async function fetchQuestions(lessonId: string): Promise<LessonQuestion[]> {
+  if (isDemo()) {
+    return demoRespond(
+      () => demo.lessons.find((entry) => entry.id === lessonId)?.questions ?? [],
+    );
+  }
+
   const { data, error } = await supabase
     .from("lesson_questions_public")
     .select(selectColumns("id", "prompt", "options", "sort_order"))
@@ -115,6 +142,8 @@ export async function gradeLesson(
   lessonId: string,
   answers: number[],
 ): Promise<{ score: number; passed: boolean }> {
+  if (isDemo()) return demoRespond(() => demoGradeLesson(lessonId, answers));
+
   const row = unwrap(
     await callRowRpc<{ score: number; passed: boolean }>("grade_lesson", {
       p_lesson: lessonId,
@@ -125,6 +154,13 @@ export async function gradeLesson(
 }
 
 export async function markComplete(lessonId: string): Promise<void> {
+  if (isDemo()) {
+    return demoRespond(() => {
+      const lesson = demo.lessons.find((entry) => entry.id === lessonId);
+      if (lesson) lesson.completed = true;
+    });
+  }
+
   const userId = await currentUserId();
   const { error } = await supabase
     .from("lesson_progress")

@@ -3,7 +3,8 @@ import { callBooleanRpc, type RpcResult } from "@/lib/rpc";
 import { selectColumns } from "@/lib/select";
 import { toPaise } from "@/lib/paise";
 import { bucketStatuses } from "@/lib/status";
-import type { ProjectsDoerRow } from "@/types/database";
+import { demo, demoRespond, isDemo } from "@/lib/demo-data";
+import type { ProjectStatus, ProjectsDoerRow } from "@/types/database";
 import type { DoerProject, WorkBucket } from "@/types/domain";
 
 export const PROJECT_COLUMNS = selectColumns(
@@ -45,6 +46,15 @@ export function mapProject(row: ProjectsDoerRow): DoerProject {
 }
 
 export async function fetchProjects(bucket: WorkBucket): Promise<DoerProject[]> {
+  if (isDemo()) {
+    const statuses = bucketStatuses(bucket);
+    return demoRespond(() =>
+      demo.projects
+        .filter((project) => statuses.includes(project.status))
+        .sort((a, b) => b.createdAt.localeCompare(a.createdAt)),
+    );
+  }
+
   const { data, error } = await supabase
     .from("projects_doer")
     .select(PROJECT_COLUMNS)
@@ -56,6 +66,10 @@ export async function fetchProjects(bucket: WorkBucket): Promise<DoerProject[]> 
 }
 
 export async function fetchProject(projectId: string): Promise<DoerProject | null> {
+  if (isDemo()) {
+    return demoRespond(() => demo.projects.find((project) => project.id === projectId) ?? null);
+  }
+
   const { data, error } = await supabase
     .from("projects_doer")
     .select(PROJECT_COLUMNS)
@@ -74,20 +88,60 @@ export async function fetchProject(projectId: string): Promise<DoerProject | nul
  * each carries its own message rather than a generic failure.
  */
 
+const REJECTED = {
+  start: "This project is not ready to start. It may have already moved on.",
+  submit: "This could not be submitted. It may already be with your supervisor.",
+  workingDoc: "The link could not be saved. This project may no longer be active.",
+  progress: "Progress could not be updated. This project may no longer be active.",
+} as const;
+
+/**
+ * The demo stand-in for those guarded UPDATEs: change the project only from a
+ * status the real RPC accepts, and report the same rejection otherwise.
+ */
+function demoTransition(
+  projectId: string,
+  from: readonly ProjectStatus[],
+  change: (project: DoerProject) => void,
+  rejectedMessage: string,
+): Promise<RpcResult<true>> {
+  return demoRespond((): RpcResult<true> => {
+    const project = demo.projects.find((entry) => entry.id === projectId);
+    if (!project || !from.includes(project.status)) {
+      return { ok: false, kind: "rejected", message: rejectedMessage };
+    }
+    change(project);
+    project.updatedAt = new Date().toISOString();
+    return { ok: true, data: true };
+  });
+}
+
 export async function startWork(projectId: string): Promise<RpcResult<true>> {
-  return callBooleanRpc(
-    "start_work",
-    { p_id: projectId },
-    "This project is not ready to start. It may have already moved on.",
-  );
+  if (isDemo()) {
+    return demoTransition(
+      projectId,
+      ["paid"],
+      (project) => {
+        project.status = "in_progress";
+      },
+      REJECTED.start,
+    );
+  }
+  return callBooleanRpc("start_work", { p_id: projectId }, REJECTED.start);
 }
 
 export async function submitForReview(projectId: string): Promise<RpcResult<true>> {
-  return callBooleanRpc(
-    "submit_for_review",
-    { p_id: projectId },
-    "This could not be submitted. It may already be with your supervisor.",
-  );
+  if (isDemo()) {
+    return demoTransition(
+      projectId,
+      ["in_progress"],
+      (project) => {
+        project.status = "in_review";
+      },
+      REJECTED.submit,
+    );
+  }
+  return callBooleanRpc("submit_for_review", { p_id: projectId }, REJECTED.submit);
 }
 
 /**
@@ -98,10 +152,20 @@ export async function setWorkingDoc(
   projectId: string,
   url: string,
 ): Promise<RpcResult<true>> {
+  if (isDemo()) {
+    return demoTransition(
+      projectId,
+      ["paid", "in_progress", "in_review"],
+      (project) => {
+        project.workingDocUrl = url.trim() || null;
+      },
+      REJECTED.workingDoc,
+    );
+  }
   return callBooleanRpc(
     "set_working_doc",
     { p_id: projectId, p_url: url.trim() },
-    "The link could not be saved. This project may no longer be active.",
+    REJECTED.workingDoc,
   );
 }
 
@@ -110,9 +174,20 @@ export async function setProgress(
   projectId: string,
   pct: number,
 ): Promise<RpcResult<true>> {
+  const clamped = Math.max(0, Math.min(100, Math.round(pct)));
+  if (isDemo()) {
+    return demoTransition(
+      projectId,
+      ["in_progress", "in_review"],
+      (project) => {
+        project.progressPct = clamped;
+      },
+      REJECTED.progress,
+    );
+  }
   return callBooleanRpc(
     "set_project_progress",
-    { p_id: projectId, p_pct: Math.max(0, Math.min(100, Math.round(pct))) },
-    "Progress could not be updated. This project may no longer be active.",
+    { p_id: projectId, p_pct: clamped },
+    REJECTED.progress,
   );
 }

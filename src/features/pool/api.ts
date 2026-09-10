@@ -2,6 +2,7 @@ import { supabase } from "@/lib/supabase";
 import { callBooleanRpc, type RpcResult } from "@/lib/rpc";
 import { selectColumns, pageLimit, cursorPage } from "@/lib/select";
 import { toPaise } from "@/lib/paise";
+import { demoClaim, demoPoolView, demoRespond, isDemo } from "@/lib/demo-data";
 import type { DoerPoolRow } from "@/types/database";
 import type { PoolOffer } from "@/types/domain";
 
@@ -18,6 +19,19 @@ const POOL_COLUMNS = selectColumns(
 export type PoolSort = "newest" | "payout" | "deadline";
 
 const PAGE_SIZE = 20;
+
+const CLAIM_REJECTED = "Someone else claimed this first. It is no longer available.";
+
+/** The demo board in the requested order. It is small, so it is always one page. */
+function sortDemoOffers(offers: PoolOffer[], sort: PoolSort): PoolOffer[] {
+  if (sort === "payout") return offers.sort((a, b) => b.payoutPaise - a.payoutPaise);
+  if (sort === "deadline") {
+    // Offers without a deadline sink, matching nullsFirst: false below.
+    const due = (offer: PoolOffer) => offer.deliveryAt ?? "9999";
+    return offers.sort((a, b) => due(a).localeCompare(due(b)));
+  }
+  return offers;
+}
 
 /**
  * Read the claim pool.
@@ -37,6 +51,10 @@ export async function fetchPool(input: {
   sort?: PoolSort;
 }): Promise<{ items: PoolOffer[]; nextCursor: string | null }> {
   const sort = input.sort ?? "newest";
+
+  if (isDemo()) {
+    return demoRespond(() => ({ items: sortDemoOffers(demoPoolView(), sort), nextCursor: null }));
+  }
 
   let query = supabase.from("doer_pool").select(POOL_COLUMNS).limit(pageLimit(PAGE_SIZE));
 
@@ -81,9 +99,13 @@ export async function fetchPool(input: {
  * The parameter is p_id. Not p_project_id.
  */
 export async function claimProject(projectId: string): Promise<RpcResult<true>> {
-  return callBooleanRpc(
-    "claim_project_as_doer",
-    { p_id: projectId },
-    "Someone else claimed this first. It is no longer available.",
-  );
+  if (isDemo()) {
+    return demoRespond(
+      (): RpcResult<true> =>
+        demoClaim(projectId)
+          ? { ok: true, data: true }
+          : { ok: false, kind: "rejected", message: CLAIM_REJECTED },
+    );
+  }
+  return callBooleanRpc("claim_project_as_doer", { p_id: projectId }, CLAIM_REJECTED);
 }

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Bell, BellOff, CheckCheck } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { demo, demoRespond, isDemo } from "@/lib/demo-data";
 import { selectColumns } from "@/lib/select";
 import { qk } from "@/lib/query-keys";
 import { formatDateTime } from "@/lib/datetime";
@@ -43,15 +44,20 @@ interface Notification {
   createdAt: string;
 }
 
-async function fetchNotifications(): Promise<Notification[]> {
+async function fetchNotificationRows(): Promise<NotificationRow[]> {
+  if (isDemo()) return demoRespond(() => demo.notifications);
+
   const { data, error } = await supabase
     .from("notifications")
     .select(selectColumns("id", "template_type", "deep_link", "read_at", "created_at"))
     .order("created_at", { ascending: false })
     .limit(50);
   if (error) throw new Error(error.message);
+  return (data as unknown as NotificationRow[] | null) ?? [];
+}
 
-  return ((data as unknown as NotificationRow[] | null) ?? []).map((row) => ({
+async function fetchNotifications(): Promise<Notification[]> {
+  return (await fetchNotificationRows()).map((row) => ({
     id: row.id,
     title: TEMPLATES[row.template_type] ?? "Something happened on your work",
     deepLink: row.deep_link,
@@ -61,6 +67,13 @@ async function fetchNotifications(): Promise<Notification[]> {
 }
 
 async function markAllRead(): Promise<void> {
+  if (isDemo()) {
+    return demoRespond(() => {
+      const readAt = new Date().toISOString();
+      for (const row of demo.notifications) row.read_at ??= readAt;
+    });
+  }
+
   // read_at is the only column granted for update on this table.
   const { error } = await supabase
     .from("notifications")
