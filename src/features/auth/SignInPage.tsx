@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams, Link, useLocation } from "react-router-dom";
 import { Mail, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
+import { Turnstile, turnstileConfigured } from "@/components/Turnstile";
 import { isDemo } from "@/lib/demo-data";
+import { safeNext } from "@/lib/safe-next";
+import { toUserError } from "@/lib/user-error";
 import { sendEmailOtp, verifyEmailOtp, signInWithGoogle, signInDemo } from "./api";
 
 type Stage = "email" | "code";
@@ -14,13 +17,24 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
   const [code, setCode] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [cooldown, setCooldown] = useState(0);
+  const [sends, setSends] = useState(0);
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const next = params.get("next") ?? "/dashboard";
+  const next = safeNext(params.get("next"));
   const oauthError = params.get("error");
   const isSignUp = mode === "sign-up";
+  const sendLimitReached = sends >= 5;
+
+  // Resend cooldown ticks down while the code stage is visible.
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const timer = window.setTimeout(() => setCooldown((left) => left - 1), 1000);
+    return () => window.clearTimeout(timer);
+  }, [cooldown]);
 
   /** Demo mode sends no email and needs no code: straight in as the sample doer. */
   function enterDemo() {
@@ -36,8 +50,25 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
     try {
       await sendEmailOtp(email.trim(), isSignUp);
       setStage("code");
+      setSends((count) => count + 1);
+      setCooldown(30);
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : "Could not send the code.");
+      setError(toUserError(cause, "Could not send the code. Try again."));
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function handleResend() {
+    if (isDemo() || busy || cooldown > 0 || sendLimitReached) return;
+    setBusy(true);
+    setError(null);
+    try {
+      await sendEmailOtp(email.trim(), isSignUp);
+      setSends((count) => count + 1);
+      setCooldown(30);
+    } catch (cause) {
+      setError(toUserError(cause, "Could not resend the code. Try again."));
     } finally {
       setBusy(false);
     }
@@ -51,7 +82,7 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
       await verifyEmailOtp(email.trim(), code.trim());
       navigate(next, { replace: true });
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : "That code did not work.");
+      setError(toUserError(cause, "That code did not work. Request a new one and try again."));
     } finally {
       setBusy(false);
     }
@@ -64,18 +95,18 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
     try {
       await signInWithGoogle(next);
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : "Google sign-in failed.");
+      setError(toUserError(cause, "Google sign-in failed. Try again."));
       setBusy(false);
     }
   }
 
   return (
     <div className="w-full max-w-md">
-      <div className="mb-8">
-        <div className="mb-6 inline-flex h-9 w-9 rotate-[-4deg] items-center justify-center rounded-[10px] border-2 border-ink bg-blue text-inverse shadow-offset-sm">
+      <div className="mb-5">
+        <div className="mb-4 inline-flex h-9 w-9 rotate-[-4deg] items-center justify-center rounded-[10px] border-2 border-ink bg-blue text-inverse shadow-offset-sm">
           <span className="text-lg font-extrabold">D</span>
         </div>
-        <h1 className="text-4xl font-extrabold leading-[1.05] tracking-[-0.035em]">
+        <h1 className="text-3xl font-extrabold leading-[1.05] tracking-[-0.035em] xl:text-4xl">
           {isSignUp ? (
             <>
               Get paid for what
@@ -92,13 +123,13 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
             </>
           )}
         </h1>
-        <p className="mt-4 text-md text-ink-2">
+        <p className="mt-2 text-md text-ink-2">
           {isSignUp
             ? "Join in minutes. Projects come to you, and the pay is agreed upfront."
             : "Sign in to pick up work and track your earnings."}
         </p>
         {isDemo() ? (
-          <p className="mt-5 flex items-center gap-2.5 rounded-md border-[1.5px] border-ink bg-lime-light px-3 py-2.5 text-xs font-semibold text-ink-2 shadow-offset-xs">
+          <p className="mt-3 flex items-center gap-2.5 rounded-md border-[1.5px] border-ink bg-lime-light px-3 py-2 text-xs font-semibold text-ink-2 shadow-offset-xs">
             <span className="shrink-0 rounded-full border-[1.5px] border-ink bg-lime px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-ink">
               Demo
             </span>
@@ -136,15 +167,22 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
               type="email"
               autoComplete="email"
               required
+              maxLength={254}
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               placeholder="you@example.com"
             />
           </div>
-          <Button type="submit" size="lg" className="w-full" disabled={busy || !email.trim()}>
+          <Button
+            type="submit"
+            size="lg"
+            className="w-full"
+            disabled={busy || !email.trim() || (turnstileConfigured() && !captchaToken)}
+          >
             <Mail className="h-4 w-4" aria-hidden="true" />
             {busy ? "Sending code..." : "Email me a code"}
           </Button>
+          <Turnstile onVerify={setCaptchaToken} />
         </form>
       ) : (
         <form onSubmit={handleVerify} className="space-y-4">
@@ -178,10 +216,29 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
           <Button type="submit" size="lg" className="w-full" disabled={busy || !code.trim()}>
             {busy ? "Checking..." : "Continue"}
           </Button>
+          <div className="flex items-center justify-between gap-3 text-xs">
+            {sendLimitReached ? (
+              <p className="text-warning-ink" role="status">
+                Too many codes sent. Wait a few minutes, then start again.
+              </p>
+            ) : (
+              <p className="text-ink-muted">
+                {cooldown > 0 ? `Resend available in ${cooldown}s.` : "No code yet?"}
+              </p>
+            )}
+            <button
+              type="button"
+              onClick={() => void handleResend()}
+              disabled={busy || cooldown > 0 || sendLimitReached}
+              className="min-h-[44px] shrink-0 px-2 font-bold text-ink underline decoration-2 underline-offset-2 disabled:text-ink-3 disabled:no-underline"
+            >
+              Resend code
+            </button>
+          </div>
         </form>
       )}
 
-      <div className="my-6 flex items-center gap-3">
+      <div className="my-4 flex items-center gap-3">
         <span className="h-px flex-1 bg-line-subtle" />
         <span className="text-xs font-bold uppercase tracking-[0.08em] text-ink-3">or</span>
         <span className="h-px flex-1 bg-line-subtle" />
@@ -191,7 +248,7 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
         Continue with Google
       </Button>
 
-      <p className="mt-8 text-center text-sm text-ink-2">
+      <p className="mt-5 text-center text-sm text-ink-2">
         {isSignUp ? "Already have an account? " : "New to Dolancer? "}
         <Link
           to={isSignUp ? `/sign-in${location.search}` : `/sign-up${location.search}`}

@@ -1,12 +1,15 @@
+import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { Wallet, Receipt, ReceiptText } from "lucide-react";
+import { Wallet, Receipt, ReceiptText, Download } from "lucide-react";
 import { ColorStat } from "@/components/brutal/ColorStat";
 import { Card } from "@/components/brutal/Card";
+import { Button } from "@/components/ui/button";
 import { SkeletonCard, Skeleton, LoadingAnnounce } from "@/components/brutal/Skeleton";
 import { EmptyState, ErrorState } from "@/components/brutal/EmptyState";
 import { formatPaise } from "@/lib/paise";
 import { formatDate } from "@/lib/datetime";
+import { fyLabel, fyOptions, inFinancialYear } from "@/lib/fy";
 import { qk } from "@/lib/query-keys";
 import { fetchEarningsSummary, fetchLedger } from "./api";
 
@@ -26,11 +29,45 @@ import { fetchEarningsSummary, fetchLedger } from "./api";
 export function EarningsPage() {
   const summary = useQuery({ queryKey: qk.earnings.summary(), queryFn: fetchEarningsSummary });
   const ledger = useQuery({ queryKey: qk.earnings.ledger(), queryFn: fetchLedger });
+  const [fy, setFy] = useState<string>("all");
+
+  const years = useMemo(
+    () => fyOptions((ledger.data ?? []).map((row) => row.createdAt)),
+    [ledger.data],
+  );
+  const visible = useMemo(() => {
+    const rows = ledger.data ?? [];
+    if (fy === "all") return rows;
+    return rows.filter((row) => inFinancialYear(row.createdAt, Number(fy)));
+  }, [ledger.data, fy]);
+
+  function exportCsv() {
+    const escape = (value: string) => `"${value.replace(/"/g, '""')}"`;
+    const lines = [
+      "Released,Project,Gross (INR)",
+      ...visible.map((row) =>
+        [
+          escape(new Date(row.createdAt).toLocaleDateString("en-IN")),
+          escape(row.projectId),
+          (row.amountPaise / 100).toFixed(2),
+        ].join(","),
+      ),
+    ];
+    const blob = new Blob([lines.join("\n")], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = `dolancer-payouts-${fy === "all" ? "all" : fyLabel(Number(fy))}.csv`;
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    URL.revokeObjectURL(url);
+  }
 
   return (
     <div className="space-y-7">
       <header>
-        <h1 className="text-4xl font-extrabold tracking-[-0.035em]">Earnings</h1>
+        <h1 className="text-3xl font-extrabold tracking-[-0.035em] sm:text-4xl">Earnings</h1>
         <p className="mt-2 max-w-xl text-md text-ink-2">
           What you have been paid, and what was withheld getting there.
         </p>
@@ -109,9 +146,43 @@ export function EarningsPage() {
       </Card>
 
       <section aria-labelledby="history" className="space-y-4">
-        <h2 id="history" className="text-2xl font-extrabold tracking-[-0.03em]">
-          Payout history
-        </h2>
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 id="history" className="text-2xl font-extrabold tracking-[-0.03em]">
+              Payout history
+            </h2>
+            <p className="mt-1 text-xs text-ink-muted">
+              Totals above are all time. The list below can be narrowed by financial year.
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <label htmlFor="fy" className="text-xs font-bold text-ink-2">
+              Financial year
+            </label>
+            <select
+              id="fy"
+              value={fy}
+              onChange={(event) => setFy(event.target.value)}
+              className="rounded-md border-2 border-ink bg-surface px-3 py-2 text-xs font-bold shadow-offset-xs outline-none"
+            >
+              <option value="all">All years</option>
+              {years.map((year) => (
+                <option key={year} value={String(year)}>
+                  {fyLabel(year)}
+                </option>
+              ))}
+            </select>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={exportCsv}
+              disabled={visible.length === 0}
+            >
+              <Download className="h-3.5 w-3.5" aria-hidden="true" />
+              Export CSV
+            </Button>
+          </div>
+        </div>
 
         {ledger.isLoading ? (
           <div className="space-y-3">
@@ -128,6 +199,17 @@ export function EarningsPage() {
             icon={<ReceiptText className="h-6 w-6" aria-hidden="true" />}
             title="No payouts yet"
             description="Once a project you delivered is approved and released, it shows up here with what you were paid."
+          />
+        ) : visible.length === 0 ? (
+          <EmptyState
+            icon={<ReceiptText className="h-6 w-6" aria-hidden="true" />}
+            title="Nothing in this year"
+            description="No payouts were released in the selected financial year. Try another year."
+            action={
+              <Button variant="secondary" onClick={() => setFy("all")}>
+                Show all years
+              </Button>
+            }
           />
         ) : (
           <Card className="overflow-hidden p-0">
@@ -149,7 +231,7 @@ export function EarningsPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {ledger.data.map((row) => (
+                  {visible.map((row) => (
                     <tr key={row.id} className="border-b border-line-subtle last:border-0">
                       <td className="whitespace-nowrap px-4 py-3 font-semibold">
                         {formatDate(row.createdAt)}

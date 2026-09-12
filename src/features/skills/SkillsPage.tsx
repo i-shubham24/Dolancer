@@ -7,6 +7,7 @@ import { Skeleton, LoadingAnnounce } from "@/components/brutal/Skeleton";
 import { EmptyState, ErrorState } from "@/components/brutal/EmptyState";
 import { cn } from "@/lib/cn";
 import { qk } from "@/lib/query-keys";
+import { toUserError } from "@/lib/user-error";
 import { fetchSkills, addSkill, removeSkill, type SkillOption } from "./api";
 
 export function SkillsPage() {
@@ -23,7 +24,7 @@ export function SkillsPage() {
       void queryClient.invalidateQueries({ queryKey: qk.pool.all() });
       void queryClient.invalidateQueries({ queryKey: qk.gate() });
     },
-    onError: (error: Error) => toast.error(error.message),
+    onError: (error: Error) => toast.error(toUserError(error, "Could not update skills. Try again.")),
   });
 
   const grouped = useMemo(() => {

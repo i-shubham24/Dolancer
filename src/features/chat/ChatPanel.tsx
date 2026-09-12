@@ -9,6 +9,7 @@ import { Skeleton, LoadingAnnounce } from "@/components/brutal/Skeleton";
 import { ErrorState } from "@/components/brutal/EmptyState";
 import { cn } from "@/lib/cn";
 import { qk } from "@/lib/query-keys";
+import { toUserError } from "@/lib/user-error";
 import { formatDateTime } from "@/lib/datetime";
 import { MAX_MESSAGE_LENGTH, CLIENT_LABEL } from "@/lib/constants";
 import { useAuth } from "@/providers/AuthProvider";
@@ -39,6 +40,29 @@ export function ChatPanel({ projectId }: { projectId: string }) {
   });
 
   const threadId = thread.data ?? null;
+
+  // Drafts survive a reload or a trip to another page. Keyed per thread so two
+  // projects never share half-written words. Cleared on successful send.
+  const [hydratedFor, setHydratedFor] = useState<string | null>(null);
+  useEffect(() => {
+    if (!threadId || hydratedFor === threadId) return;
+    try {
+      const saved = localStorage.getItem(`dolancer.chat.draft.${threadId}`);
+      if (saved) setDraft(saved);
+    } catch {
+      // Private mode. Typing still works, it just will not persist.
+    }
+    setHydratedFor(threadId);
+  }, [threadId, hydratedFor]);
+  useEffect(() => {
+    if (!threadId) return;
+    try {
+      if (draft) localStorage.setItem(`dolancer.chat.draft.${threadId}`, draft);
+      else localStorage.removeItem(`dolancer.chat.draft.${threadId}`);
+    } catch {
+      // Private mode. Ignore.
+    }
+  }, [threadId, draft]);
 
   const messages = useQuery({
     queryKey: qk.work.messages(threadId ?? "none"),
@@ -71,9 +95,14 @@ export function ChatPanel({ projectId }: { projectId: string }) {
     mutationFn: (body: string) => sendMessage(threadId as string, body),
     onSuccess: () => {
       setDraft("");
+      try {
+        if (threadId) localStorage.removeItem(`dolancer.chat.draft.${threadId}`);
+      } catch {
+        // Private mode. Ignore.
+      }
       onIncoming();
     },
-    onError: (error: Error) => toast.error(error.message),
+    onError: (error: Error) => toast.error(toUserError(error, "Could not send the message. Try again.")),
   });
 
   async function openAttachment(bucket: string, objectPath: string) {
@@ -81,7 +110,7 @@ export function ChatPanel({ projectId }: { projectId: string }) {
       const url = await signedUrlFor(bucket, objectPath);
       window.open(url, "_blank", "noopener,noreferrer");
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Could not open that file.");
+      toast.error(toUserError(error, "Could not open that file."));
     }
   }
 

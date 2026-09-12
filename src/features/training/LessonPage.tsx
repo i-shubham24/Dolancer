@@ -9,6 +9,7 @@ import { Skeleton, LoadingAnnounce } from "@/components/brutal/Skeleton";
 import { EmptyState, ErrorState } from "@/components/brutal/EmptyState";
 import { cn } from "@/lib/cn";
 import { qk } from "@/lib/query-keys";
+import { toUserError } from "@/lib/user-error";
 import { fetchLesson, fetchQuestions, gradeLesson, markComplete } from "./api";
 
 export function LessonPage() {
@@ -37,7 +38,7 @@ export function LessonPage() {
       toast.success("Module complete.");
       invalidate();
     },
-    onError: (error: Error) => toast.error(error.message),
+    onError: (error: Error) => toast.error(toUserError(error, "Could not mark complete. Try again.")),
   });
 
   const grade = useMutation({
@@ -54,7 +55,7 @@ export function LessonPage() {
         toast.warning(`Scored ${outcome.score}%. Review and try again.`);
       }
     },
-    onError: (error: Error) => toast.error(error.message),
+    onError: (error: Error) => toast.error(toUserError(error, "Could not grade. Try again.")),
   });
 
   if (lesson.isLoading) {

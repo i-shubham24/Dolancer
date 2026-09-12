@@ -6,6 +6,7 @@ import { Send, Mail, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input, Textarea, Label } from "@/components/ui/input";
 import { useAuth } from "@/providers/AuthProvider";
+import { toUserError } from "@/lib/user-error";
 import { openTicket, TICKET_CATEGORIES } from "@/features/tickets/api";
 import { CONTACT } from "./content";
 
@@ -31,6 +32,8 @@ export function ContactForm() {
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const [handedOff, setHandedOff] = useState(false);
+  // Honeypot, same contract as the ticket form: bots get a fake success.
+  const [website, setWebsite] = useState("");
 
   const ticket = useMutation({
     mutationFn: () => openTicket({ subject, category, body: message }),
@@ -38,7 +41,7 @@ export function ContactForm() {
       toast.success("Ticket opened. You can follow it in support.");
       navigate(`/tickets/${ticketId}`);
     },
-    onError: (error: Error) => toast.error(error.message),
+    onError: (error: Error) => toast.error(toUserError(error, "Could not open the ticket. Try again.")),
   });
 
   const ready = session
@@ -48,6 +51,15 @@ export function ContactForm() {
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     if (!ready) return;
+
+    if (website.trim()) {
+      // Bot trap tripped. Mirror a real success with no network call.
+      toast.success("Ticket opened. You can follow it in support.");
+      setSubject("");
+      setMessage("");
+      setWebsite("");
+      return;
+    }
 
     if (session) {
       ticket.mutate();
@@ -125,6 +137,7 @@ export function ContactForm() {
           <Input
             id="contact-subject"
             value={subject}
+            maxLength={120}
             onChange={(event) => setSubject(event.target.value)}
             placeholder="A short summary"
             required
@@ -137,9 +150,22 @@ export function ContactForm() {
             id="contact-message"
             rows={5}
             value={message}
+            maxLength={4000}
             onChange={(event) => setMessage(event.target.value)}
             placeholder="Tell us what is going on."
             required
+          />
+        </div>
+
+        <div aria-hidden="true" className="absolute -left-[9999px] top-0 h-px w-px overflow-hidden">
+          <label htmlFor="contact-website">Website</label>
+          <input
+            id="contact-website"
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            value={website}
+            onChange={(event) => setWebsite(event.target.value)}
           />
         </div>
       </div>

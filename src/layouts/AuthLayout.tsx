@@ -6,8 +6,8 @@ import { Outlet } from "react-router-dom";
  */
 export function AuthLayout() {
   return (
-    <div className="grid min-h-dvh lg:grid-cols-2">
-      <div className="flex items-center justify-center px-5 py-12 sm:px-10">
+    <div className="grid min-h-dvh lg:h-dvh lg:overflow-hidden lg:grid-cols-2">
+      <div className="flex items-center justify-center px-5 py-8 sm:px-10 lg:min-h-0 lg:overflow-y-auto lg:py-6">
         <Outlet />
       </div>
 

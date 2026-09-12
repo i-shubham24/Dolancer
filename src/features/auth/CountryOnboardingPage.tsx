@@ -5,6 +5,8 @@ import { Input, Label } from "@/components/ui/input";
 import { Card } from "@/components/brutal/Card";
 import { setMyCountry, updateProfileBasics } from "./api";
 import { supabase } from "@/lib/supabase";
+import { safeNext } from "@/lib/safe-next";
+import { toUserError } from "@/lib/user-error";
 import { isDemo } from "@/lib/demo-data";
 
 /**
@@ -31,7 +33,7 @@ export function CountryOnboardingPage() {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const [params] = useSearchParams();
-  const next = params.get("next") ?? "/dashboard";
+  const next = safeNext(params.get("next"));
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -48,7 +50,7 @@ export function CountryOnboardingPage() {
       if (!isDemo()) await supabase.auth.refreshSession();
       navigate(next, { replace: true });
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : "Could not save your details.");
+      setError(toUserError(cause, "Could not save your details. Try again."));
     } finally {
       setBusy(false);
     }

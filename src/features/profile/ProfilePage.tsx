@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input, Textarea, Label } from "@/components/ui/input";
 import { Skeleton } from "@/components/brutal/Skeleton";
 import { useProfile } from "@/features/dashboard/queries";
+import { toUserError } from "@/lib/user-error";
 import { updateProfileBasics } from "@/features/auth/api";
 import type { DoerApplicationRow, RatingSummaryRow } from "@/types/database";
 
@@ -111,7 +112,7 @@ export function ProfilePage() {
       toast.success("Saved.");
       void queryClient.invalidateQueries({ queryKey: qk.profile() });
     },
-    onError: (error: Error) => toast.error(error.message),
+    onError: (error: Error) => toast.error(toUserError(error, "Could not save. Try again.")),
   });
 
   const apply = useMutation({
@@ -121,7 +122,7 @@ export function ProfilePage() {
       void queryClient.invalidateQueries({ queryKey: qk.application() });
       void queryClient.invalidateQueries({ queryKey: qk.gate() });
     },
-    onError: (error: Error) => toast.error(error.message),
+    onError: (error: Error) => toast.error(toUserError(error, "Could not send the application. Try again.")),
   });
 
   const applicationStatus = application.data?.status;

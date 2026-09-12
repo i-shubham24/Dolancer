@@ -8,9 +8,10 @@ import { Input, Label } from "@/components/ui/input";
 import { Skeleton } from "@/components/brutal/Skeleton";
 import { ErrorState } from "@/components/brutal/EmptyState";
 import { cn } from "@/lib/cn";
+import { toUserError } from "@/lib/user-error";
 import { qk } from "@/lib/query-keys";
 import type { KycStatus } from "@/types/database";
-import { fetchKycStatus, submitKyc, type PayoutInput } from "./api";
+import { fetchKycStatus, submitKyc, validateIdentityFile, type PayoutInput } from "./api";
 
 const STATUS_COPY: Record<KycStatus, { tone: string; icon: typeof Check; title: string; body: string }> = {
   pending: {
@@ -44,12 +45,16 @@ function FileField({
   label,
   hint,
   file,
+  error,
+  resetKey,
   onChange,
 }: {
   id: string;
   label: string;
   hint: string;
   file: File | null;
+  error: string | null;
+  resetKey: string;
   onChange: (file: File | null) => void;
 }) {
   return (
@@ -60,10 +65,12 @@ function FileField({
         className={cn(
           "flex cursor-pointer items-center gap-3 rounded-md border-2 border-dashed border-ink px-4 py-3.5",
           "text-sm font-semibold transition-colors",
-          file ? "bg-success-bg" : "bg-surface hover:bg-hover",
+          error ? "bg-danger-bg" : file ? "bg-success-bg" : "bg-surface hover:bg-hover",
         )}
       >
-        {file ? (
+        {error ? (
+          <X className="h-4 w-4 shrink-0 text-danger-ink" aria-hidden="true" />
+        ) : file ? (
           <Check className="h-4 w-4 shrink-0 text-success-ink" aria-hidden="true" />
         ) : (
           <Upload className="h-4 w-4 shrink-0 text-ink-muted" aria-hidden="true" />
@@ -71,13 +78,20 @@ function FileField({
         <span className="min-w-0 flex-1 truncate">{file ? file.name : "Choose a file"}</span>
       </label>
       <input
+        key={resetKey}
         id={id}
         type="file"
         accept="image/jpeg,image/png,image/webp,application/pdf"
         className="sr-only"
         onChange={(event) => onChange(event.target.files?.[0] ?? null)}
       />
-      <p className="text-xs text-ink-muted">{hint}</p>
+      {error ? (
+        <p role="alert" className="text-xs font-semibold text-danger-ink">
+          {error}
+        </p>
+      ) : (
+        <p className="text-xs text-ink-muted">{hint}</p>
+      )}
     </div>
   );
 }
@@ -88,6 +102,9 @@ export function VerificationPage() {
 
   const [document, setDocument] = useState<File | null>(null);
   const [selfie, setSelfie] = useState<File | null>(null);
+  const [documentError, setDocumentError] = useState<string | null>(null);
+  const [selfieError, setSelfieError] = useState<string | null>(null);
+  const [picks, setPicks] = useState(0);
   const [method, setMethod] = useState<"upi" | "bank">("upi");
   const [vpa, setVpa] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
@@ -103,7 +120,7 @@ export function VerificationPage() {
       setDocument(null);
       setSelfie(null);
     },
-    onError: (error: Error) => toast.error(error.message),
+    onError: (error: Error) => toast.error(toUserError(error, "Could not submit. Check the files and try again.")),
   });
 
   const payout: PayoutInput =
@@ -121,7 +138,8 @@ export function VerificationPage() {
       ? vpa.trim().length > 2
       : accountNumber.trim().length >= 6 && ifsc.trim().length === 11 && holder.trim().length > 0;
 
-  const ready = Boolean(document && selfie && payoutReady);
+  const ready =
+    Boolean(document && selfie && !documentError && !selfieError && payoutReady);
   const current = status.data ?? "pending";
   const spec = STATUS_COPY[current];
   const canSubmit = current === "pending" || current === "rejected";
@@ -129,7 +147,7 @@ export function VerificationPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-6">
       <header>
-        <h1 className="text-4xl font-extrabold tracking-[-0.035em]">Verification</h1>
+        <h1 className="text-3xl font-extrabold tracking-[-0.035em] sm:text-4xl">Verification</h1>
         <p className="mt-2 text-md text-ink-2">
           We check who you are before money can move. This is the step that unlocks earning.
         </p>
@@ -159,8 +177,8 @@ export function VerificationPage() {
           className="space-y-6"
           onSubmit={(event) => {
             event.preventDefault();
-            if (!document || !selfie) return;
-            submit.mutate({ document, selfie, payout });
+            if (!ready) return;
+            submit.mutate({ document: document as File, selfie: selfie as File, payout });
           }}
         >
           <Card className="space-y-5">
@@ -176,14 +194,28 @@ export function VerificationPage() {
               label="Government photo ID"
               hint="PAN card, passport, driving licence or Aadhaar. JPG, PNG, WEBP or PDF, under 10MB."
               file={document}
-              onChange={setDocument}
+              error={documentError}
+              resetKey={`kyc-document-${picks}`}
+              onChange={(picked) => {
+                const problem = picked ? validateIdentityFile(picked) : null;
+                setDocumentError(problem);
+                setDocument(problem ? null : picked);
+                setPicks((n) => n + 1);
+              }}
             />
             <FileField
               id="kyc-selfie"
               label="A photo of you"
               hint="A clear, recent photo of your face. Not a picture of your ID."
               file={selfie}
-              onChange={setSelfie}
+              error={selfieError}
+              resetKey={`kyc-selfie-${picks}`}
+              onChange={(picked) => {
+                const problem = picked ? validateIdentityFile(picked) : null;
+                setSelfieError(problem);
+                setSelfie(problem ? null : picked);
+                setPicks((n) => n + 1);
+              }}
             />
 
             <p className="rounded-md border border-line-card bg-surface-2 px-3 py-2.5 text-[11px] leading-relaxed text-ink-2">

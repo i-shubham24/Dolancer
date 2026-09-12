@@ -1,0 +1,1 @@
+{"name": "Dolancer", "short_name": "Dolancer", "description": "Claim fixed-price tasks from a blind board and get paid.", "start_url": "/dashboard", "scope": "/", "display": "standalone", "background_color": "#F5F5F7", "theme_color": "#111111", "icons": [{"src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any"}]}

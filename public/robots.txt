@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://dolancer.vercel.app/sitemap.xml

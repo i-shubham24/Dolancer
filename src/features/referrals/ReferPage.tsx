@@ -72,7 +72,7 @@ export function ReferPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-6">
       <header>
-        <h1 className="text-4xl font-extrabold tracking-[-0.035em]">Refer someone</h1>
+        <h1 className="text-3xl font-extrabold tracking-[-0.035em] sm:text-4xl">Refer someone</h1>
         <p className="mt-2 text-md text-ink-2">
           Know someone good? Invite them, and you earn a bonus once they finish and get
           approved on their first project.
@@ -116,6 +116,29 @@ export function ReferPage() {
             <h2 id="invited" className="text-2xl font-extrabold tracking-[-0.03em]">
               People you invited
             </h2>
+            <ol className="grid gap-2 sm:grid-cols-3" aria-label="How a referral pays out">
+              <li className="rounded-xl border-[1.5px] border-ink bg-surface p-3 shadow-offset-xs">
+                <div className="text-2xl font-extrabold tracking-[-0.03em]">1</div>
+                <div className="mt-1 text-sm font-extrabold">Shared</div>
+                <div className="text-[11px] text-ink-muted">
+                  {code ? "Your link is live." : "Your link appears once loaded."}
+                </div>
+              </li>
+              <li className="rounded-xl border-[1.5px] border-ink bg-surface p-3 shadow-offset-xs">
+                <div className="text-2xl font-extrabold tracking-[-0.03em]">
+                  {referrals.data?.invited.length ?? 0}
+                </div>
+                <div className="mt-1 text-sm font-extrabold">Joined</div>
+                <div className="text-[11px] text-ink-muted">Signed up with your code.</div>
+              </li>
+              <li className="rounded-xl border-[1.5px] border-dashed border-ink/40 bg-surface-2 p-3">
+                <div className="text-2xl font-extrabold tracking-[-0.03em]">Auto</div>
+                <div className="mt-1 text-sm font-extrabold">Bonus on approval</div>
+                <div className="text-[11px] text-ink-muted">
+                  Lands automatically when their first project is approved.
+                </div>
+              </li>
+            </ol>
             {referrals.data && referrals.data.invited.length > 0 ? (
               <ul className="space-y-2">
                 {referrals.data.invited.map((invitee) => (

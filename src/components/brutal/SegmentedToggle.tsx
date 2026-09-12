@@ -22,7 +22,7 @@ export function SegmentedToggle<T extends string>({
       role="tablist"
       aria-label={label}
       className={cn(
-        "inline-flex items-center gap-1 rounded-full border-[1.5px] border-ink bg-subtle p-1 shadow-offset-xs",
+        "inline-flex max-w-full items-center gap-1 overflow-x-auto rounded-full border-[1.5px] border-ink bg-subtle p-1 shadow-offset-xs",
         className,
       )}
     >
@@ -36,7 +36,7 @@ export function SegmentedToggle<T extends string>({
             aria-selected={selected}
             onClick={() => onChange(option.id)}
             className={cn(
-              "inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-extrabold tracking-[-0.01em] transition-all duration-[120ms]",
+              "inline-flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-full px-3.5 py-2.5 text-xs font-extrabold tracking-[-0.01em] transition-all duration-[120ms]",
               selected
                 ? "border-[1.5px] border-ink bg-surface shadow-offset-xs"
                 : "border-[1.5px] border-transparent text-ink-2 hover:text-ink",

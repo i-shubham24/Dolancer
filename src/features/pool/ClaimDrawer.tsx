@@ -65,7 +65,7 @@ export function ClaimDrawer({
                     {offer.brief?.trim().split("\n")[0] || `${offer.category} task`}
                   </Dialog.Title>
                 </div>
-                <Dialog.Close className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border-2 border-ink bg-surface shadow-offset-xs transition-all hover:-translate-x-px hover:-translate-y-px hover:shadow-offset-sm">
+                <Dialog.Close className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md border-2 border-ink bg-surface shadow-offset-xs transition-all hover:-translate-x-px hover:-translate-y-px hover:shadow-offset-sm">
                   <X className="h-4 w-4" aria-hidden="true" />
                   <span className="sr-only">Close</span>
                 </Dialog.Close>
@@ -76,7 +76,7 @@ export function ClaimDrawer({
                   <div className="text-xs font-extrabold uppercase tracking-[0.05em] text-ink/65">
                     You earn
                   </div>
-                  <div className="mt-1.5 text-5xl font-extrabold leading-none tracking-[-0.045em]">
+                  <div className="mt-1.5 break-words text-4xl font-extrabold leading-none tracking-[-0.045em] tabular-nums sm:text-5xl">
                     {formatPaise(offer.payoutPaise)}
                   </div>
                   <p className="mt-3 text-xs font-semibold leading-snug text-ink/70">
@@ -94,7 +94,7 @@ export function ClaimDrawer({
                   </div>
                 </div>
 
-                <dl className="grid grid-cols-2 gap-3">
+                <dl className="grid grid-cols-1 gap-3 min-[400px]:grid-cols-2">
                   <div className="rounded-xl border border-line-card bg-surface p-3">
                     <dt className="text-2xs font-bold uppercase tracking-[0.05em] text-ink-muted">
                       Due
@@ -115,6 +115,26 @@ export function ClaimDrawer({
                   You will work with a supervisor, who is your only point of contact. You
                   will not deal with the {CLIENT_LABEL.toLowerCase()} directly.
                 </p>
+
+                <div className="rounded-xl border-[1.5px] border-ink bg-surface-2 p-4">
+                  <h3 className="text-xs font-extrabold uppercase tracking-[0.05em] text-ink-muted">
+                    How review works
+                  </h3>
+                  <ol className="mt-2.5 list-none space-y-2 text-xs leading-relaxed text-ink-2">
+                    <li className="flex gap-2">
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-[1.5px] border-ink bg-lime text-[10px] font-extrabold text-ink" aria-hidden="true">1</span>
+                      Add your working link first. Progress updates and submission stay locked until it is in.
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-[1.5px] border-ink bg-lime text-[10px] font-extrabold text-ink" aria-hidden="true">2</span>
+                      Submit for review. Your supervisor checks it against the brief, never the client.
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-[1.5px] border-ink bg-lime text-[10px] font-extrabold text-ink" aria-hidden="true">3</span>
+                      If changes are requested, you revise and resubmit. Payout releases on approval and shows under Earnings.
+                    </li>
+                  </ol>
+                </div>
               </div>
 
               <div className="space-y-3 border-t-2 border-ink bg-surface px-6 py-5">
@@ -138,7 +158,7 @@ export function ClaimDrawer({
                         and uses one of your {MAX_ACTIVE_PROJECTS} slots.
                       </p>
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex flex-col gap-2 sm:flex-row">
                       <Button
                         variant="secondary"
                         className="flex-1"

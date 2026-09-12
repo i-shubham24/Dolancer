@@ -6,12 +6,38 @@ import { cn } from "@/lib/cn";
 import { useSetWorkingDoc } from "./queries";
 
 /**
+ * Frontend mirror of the database rule, with parsing the prefix check misses.
+ *
+ * The database enforces https and a 2048 char cap. Here we also parse the URL,
+ * require a real hostname, and block localhost and private ranges so a doer
+ * learns the problem immediately instead of after a round trip. The database
+ * remains authoritative.
+ */
+function validateWorkingUrl(trimmed: string): string | null {
+  if (!trimmed) return null;
+  if (trimmed.length > 2048) return "That link is too long. Keep it under 2048 characters.";
+  let parsed: URL;
+  try {
+    parsed = new URL(trimmed);
+  } catch {
+    return "Enter a complete link starting with https://";
+  }
+  if (parsed.protocol !== "https:") return "The link must start with https://";
+  const host = parsed.hostname.toLowerCase();
+  if (!host || !host.includes(".")) return "Enter a complete link with a valid address.";
+  if (host === "localhost" || host.endsWith(".localhost")) return "Use a public link, not localhost.";
+  if (/^(10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)/.test(host)) {
+    return "Use a public link, not a private network address.";
+  }
+  if (/\s/.test(trimmed)) return "The link must not contain spaces.";
+  return null;
+}
+
+/**
  * Pinned to the top of the properties rail, because it gates everything else.
  *
  * The doer supplies this link themselves: set_working_doc is doer-scoped in the
- * database, so there is no path by which a supervisor could populate it. The copy
- * therefore has to make it clear this is theirs to provide, and to say what stays
- * frozen until it is, rather than simply refusing the buttons downstream.
+ * database, so there is no path by which a supervisor could populate it.
  */
 export function WorkingLinkCard({
   projectId,
@@ -33,10 +59,10 @@ export function WorkingLinkCard({
     event.preventDefault();
     const trimmed = value.trim();
 
-    // Mirror the database's own rule so the doer gets the message immediately
-    // rather than after a round trip.
-    if (trimmed && !trimmed.startsWith("https://")) {
-      setError("The link must start with https://");
+    // Mirror the database rule plus parsing, so the message is immediate.
+    const problem = validateWorkingUrl(trimmed);
+    if (problem) {
+      setError(problem);
       return;
     }
     setError(null);
@@ -80,6 +106,9 @@ export function WorkingLinkCard({
               inputMode="url"
               placeholder="https://..."
               value={value}
+              maxLength={2048}
+              autoComplete="off"
+              spellCheck={false}
               onChange={(event) => setValue(event.target.value)}
               aria-describedby="working-link-help"
             />
@@ -134,7 +163,7 @@ export function WorkingLinkCard({
             <button
               type="button"
               onClick={() => setEditing(true)}
-              className="text-[11px] font-bold text-ink-muted underline underline-offset-2 hover:text-ink"
+              className="inline-block min-h-[44px] px-1 py-2 text-[11px] font-bold text-ink-muted underline underline-offset-2 hover:text-ink"
             >
               Change link
             </button>

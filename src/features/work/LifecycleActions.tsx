@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Play, Send, Info } from "lucide-react";
+import { Play, Send, Info, Check, Minus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/brutal/Card";
 import { cn } from "@/lib/cn";
@@ -107,6 +107,45 @@ export function LifecycleActions({ project }: { project: DoerProject }) {
           </div>
 
           <div>
+            {/*
+              Readiness checklist, informational only. It reflects real state
+              (working link, recorded progress) and changes no gate: canSubmit
+              still decides the button, exactly as before.
+            */}
+            <ul aria-label="Before you submit" className="mb-3 space-y-1.5 rounded-lg border border-line-card bg-surface-2 p-3">
+              <li className="flex items-center gap-2 text-[11px] font-semibold">
+                <span
+                  className={cn(
+                    "flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-[1.5px] border-ink",
+                    gates.hasWorkingDoc ? "bg-success-bg text-success-ink" : "bg-warning-bg text-warning-ink",
+                  )}
+                  aria-hidden="true"
+                >
+                  {gates.hasWorkingDoc ? <Check className="h-3 w-3" /> : <Minus className="h-3 w-3" />}
+                </span>
+                <span className={gates.hasWorkingDoc ? "text-ink-2" : "text-warning-ink"}>
+                  {gates.hasWorkingDoc ? "Working link is in" : "Working link still missing"}
+                </span>
+              </li>
+              <li className="flex items-center gap-2 text-[11px] font-semibold text-ink-2">
+                <span
+                  className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-[1.5px] border-ink bg-surface"
+                  aria-hidden="true"
+                >
+                  <Check className="h-3 w-3" />
+                </span>
+                Progress recorded at {project.progressPct}%
+              </li>
+              <li className="flex items-center gap-2 text-[11px] font-semibold text-ink-2">
+                <span
+                  className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-[1.5px] border-ink bg-surface"
+                  aria-hidden="true"
+                >
+                  <Check className="h-3 w-3" />
+                </span>
+                Deliverable checked against the brief
+              </li>
+            </ul>
             <Button
               size="lg"
               className="w-full"

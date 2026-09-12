@@ -11,6 +11,7 @@ import { Skeleton, LoadingAnnounce } from "@/components/brutal/Skeleton";
 import { EmptyState, ErrorState } from "@/components/brutal/EmptyState";
 import { cn } from "@/lib/cn";
 import { qk } from "@/lib/query-keys";
+import { toUserError } from "@/lib/user-error";
 import { formatDateTime } from "@/lib/datetime";
 import { useAuth } from "@/providers/AuthProvider";
 import type { TicketStatus } from "@/types/database";
@@ -42,7 +43,7 @@ export function TicketPage() {
       setDraft("");
       void queryClient.invalidateQueries({ queryKey: qk.tickets.messages(id) });
     },
-    onError: (error: Error) => toast.error(error.message),
+    onError: (error: Error) => toast.error(toUserError(error, "Could not send the reply. Try again.")),
   });
 
   if (ticket.isLoading) {

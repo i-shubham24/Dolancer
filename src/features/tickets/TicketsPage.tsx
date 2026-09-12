@@ -6,10 +6,12 @@ import { LifeBuoy, Plus, ArrowRight } from "lucide-react";
 import { Card } from "@/components/brutal/Card";
 import { Button } from "@/components/ui/button";
 import { Input, Textarea, Label } from "@/components/ui/input";
+import { Turnstile, turnstileConfigured } from "@/components/Turnstile";
 import { StatusBadge } from "@/components/brutal/StatusBadge";
 import { Skeleton, LoadingAnnounce } from "@/components/brutal/Skeleton";
 import { EmptyState, ErrorState } from "@/components/brutal/EmptyState";
 import { qk } from "@/lib/query-keys";
+import { toUserError } from "@/lib/user-error";
 import { formatDate } from "@/lib/datetime";
 import type { TicketStatus } from "@/types/database";
 import { fetchTickets, openTicket, TICKET_CATEGORIES } from "./api";
@@ -26,6 +28,10 @@ export function TicketsPage() {
   const [subject, setSubject] = useState("");
   const [category, setCategory] = useState<string>(TICKET_CATEGORIES[0].id);
   const [body, setBody] = useState("");
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  // Honeypot. Humans never see it; bots fill it, and a filled field gets a
+  // fake success with no network call, so spam burns time for nothing.
+  const [website, setWebsite] = useState("");
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -41,11 +47,28 @@ export function TicketsPage() {
       setBody("");
       navigate(`/tickets/${ticketId}`);
     },
-    onError: (error: Error) => toast.error(error.message),
+    onError: (error: Error) => toast.error(toUserError(error, "Could not open the ticket. Try again.")),
   });
 
   const items = tickets.data ?? [];
-  const ready = subject.trim().length > 3 && body.trim().length > 10;
+  const ready =
+    subject.trim().length > 3 &&
+    body.trim().length > 10 &&
+    (!turnstileConfigured() || captchaToken !== null);
+
+  function handleSend() {
+    if (!ready || create.isPending) return;
+    if (website.trim()) {
+      // Bot trap tripped. Mirror a real success so there is nothing to learn.
+      toast.success("Sent. Support will pick it up.");
+      setComposing(false);
+      setSubject("");
+      setBody("");
+      setWebsite("");
+      return;
+    }
+    create.mutate({ subject, category, body });
+  }
 
   return (
     <div className="mx-auto max-w-3xl space-y-6">
@@ -89,6 +112,7 @@ export function TicketsPage() {
             <Input
               id="subject"
               value={subject}
+              maxLength={120}
               onChange={(event) => setSubject(event.target.value)}
               placeholder="A short summary"
             />
@@ -100,8 +124,21 @@ export function TicketsPage() {
               id="body"
               rows={5}
               value={body}
+              maxLength={4000}
               onChange={(event) => setBody(event.target.value)}
               placeholder="What happened, and what you expected instead."
+            />
+          </div>
+
+          <div aria-hidden="true" className="absolute -left-[9999px] top-0 h-px w-px overflow-hidden">
+            <label htmlFor="website">Website</label>
+            <input
+              id="website"
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              value={website}
+              onChange={(event) => setWebsite(event.target.value)}
             />
           </div>
 
@@ -117,11 +154,12 @@ export function TicketsPage() {
             <Button
               className="flex-1"
               disabled={!ready || create.isPending}
-              onClick={() => create.mutate({ subject, category, body })}
+              onClick={handleSend}
             >
               {create.isPending ? "Sending..." : "Send ticket"}
             </Button>
           </div>
+          <Turnstile onVerify={setCaptchaToken} />
         </Card>
       ) : null}
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Layers, Lock, SlidersHorizontal, ShieldCheck } from "lucide-react";
+import { Link, useSearchParams } from "react-router-dom";
+import { Layers, Lock, SlidersHorizontal, ShieldCheck, BellRing, Bell } from "lucide-react";
 import { SkeletonCard, LoadingAnnounce } from "@/components/brutal/Skeleton";
 import { EmptyState, ErrorState } from "@/components/brutal/EmptyState";
 import { SegmentedToggle } from "@/components/brutal/SegmentedToggle";
@@ -14,6 +14,8 @@ import type { PoolOffer } from "@/types/domain";
 import { usePool } from "./queries";
 import { PoolCard } from "./PoolCard";
 import { ClaimDrawer } from "./ClaimDrawer";
+import { SearchTrigger } from "@/components/SearchTrigger";
+import { useBoardNotify } from "./useBoardNotify";
 import type { PoolSort } from "./api";
 
 const SORTS = [
@@ -22,9 +24,25 @@ const SORTS = [
   { id: "deadline" as const, label: "Due soonest" },
 ];
 
+const SORT_IDS: PoolSort[] = ["newest", "payout", "deadline"];
+
+function sortFromParams(params: URLSearchParams): PoolSort {
+  const raw = params.get("sort");
+  return SORT_IDS.includes(raw as PoolSort) ? (raw as PoolSort) : "newest";
+}
+
 export function PoolPage() {
-  const [sort, setSort] = useState<PoolSort>("newest");
+  const [params, setParams] = useSearchParams();
+  const sort = sortFromParams(params);
+  const setSort = (next: PoolSort) => {
+    setParams((current) => {
+      const copy = new URLSearchParams(current);
+      copy.set("sort", next);
+      return copy;
+    });
+  };
   const [selected, setSelected] = useState<PoolOffer | null>(null);
+  const { watching, toggle: toggleWatch } = useBoardNotify();
 
   const pool = usePool(sort);
   const gate = useGateState();
@@ -54,13 +72,16 @@ export function PoolPage() {
     <div className="space-y-6">
       <header className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-4xl font-extrabold tracking-[-0.035em]">Job board</h1>
+          <h1 className="text-3xl font-extrabold tracking-[-0.035em] sm:text-4xl">Job board</h1>
           <p className="mt-2 max-w-xl text-md text-ink-2">
             Work matched to your skills. The pay is fixed and shown upfront, and the first
             qualified claim wins.
           </p>
         </div>
-        <AvailabilityToggle />
+        <div className="flex flex-wrap items-center gap-2">
+          <SearchTrigger />
+          <AvailabilityToggle />
+        </div>
       </header>
 
       {/*
@@ -88,7 +109,7 @@ export function PoolPage() {
               : "You can claim while you have a slot free."}
           </span>
           {atCap ? (
-            <Button asChild size="sm" variant="secondary" className="ml-auto">
+            <Button asChild size="sm" variant="secondary" className="w-full sm:ml-auto sm:w-auto">
               <Link to="/work">Go to my work</Link>
             </Button>
           ) : null}
@@ -154,11 +175,30 @@ export function PoolPage() {
           <EmptyState
             icon={<Layers className="h-6 w-6" aria-hidden="true" />}
             title="Nothing matching right now"
-            description="Work shows here as soon as a brief matches your skills. New ones land through the day, so check back."
+            description={
+              watching
+                ? "You are watching the board. New matches land here first, newest on top."
+                : "Work shows here as soon as a brief matches your skills. New ones land through the day, so check back."
+            }
             action={
-              <Button asChild variant="secondary">
-                <Link to="/skills">Review my skills</Link>
-              </Button>
+              <div className="flex flex-wrap justify-center gap-2">
+                <Button variant={watching ? "secondary" : "primary"} onClick={toggleWatch}>
+                  {watching ? (
+                    <>
+                      <BellRing className="h-4 w-4" aria-hidden="true" />
+                      Watching. Turn off
+                    </>
+                  ) : (
+                    <>
+                      <Bell className="h-4 w-4" aria-hidden="true" />
+                      Notify me when work appears
+                    </>
+                  )}
+                </Button>
+                <Button asChild variant="secondary">
+                  <Link to="/skills">Review my skills</Link>
+                </Button>
+              </div>
             }
           />
         )

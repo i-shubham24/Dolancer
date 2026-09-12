@@ -3,6 +3,7 @@ import { cn } from "@/lib/cn";
 import { formatPaise } from "@/lib/paise";
 import { relativeDeadline } from "@/lib/datetime";
 import { statusDisplay } from "@/lib/status";
+import { preloadWorkbench } from "@/lib/preload";
 import { CLIENT_LABEL } from "@/lib/constants";
 import type { DoerProject } from "@/types/domain";
 import { StatusBadge } from "./StatusBadge";
@@ -22,6 +23,8 @@ export function ProjectCard({ project, className }: { project: DoerProject; clas
   return (
     <Link
       to={`/work/${project.id}`}
+      onMouseEnter={preloadWorkbench}
+      onFocus={preloadWorkbench}
       className={cn(
         "group flex flex-col gap-[13px] rounded-3xl border-2 border-ink bg-surface px-[22px] pb-[22px] pt-5",
         "shadow-offset-lg transition-[transform,box-shadow] duration-[220ms] ease-spring",
@@ -36,18 +39,18 @@ export function ProjectCard({ project, className }: { project: DoerProject; clas
         {progress > 0 ? <ProgressPill>{progress}%</ProgressPill> : null}
       </div>
 
-      <h3 className="text-lg font-extrabold leading-[1.3] tracking-[-0.025em] transition-colors group-hover:text-coral">
+      <h3 className="line-clamp-3 break-words text-lg font-extrabold leading-[1.3] tracking-[-0.025em] transition-colors group-hover:text-coral">
         {project.brief?.trim() || `${project.category} task`}
       </h3>
 
-      <div className="grid grid-cols-2 gap-3 rounded-xl border-[1.5px] border-line-card bg-[#f8f8fb] px-3 py-[9px]">
-        <div>
-          <div className="text-2xs font-bold uppercase tracking-[0.04em] text-ink-muted">Payout</div>
-          <div className="text-md font-extrabold tracking-[-0.02em]">
-            {formatPaise(project.payoutPaise)}
+      <div className="grid grid-cols-1 gap-3 rounded-xl border-[1.5px] border-line-card bg-[#f8f8fb] px-3 py-[9px] min-[380px]:grid-cols-2">
+          <div className="min-w-0">
+            <div className="text-2xs font-bold uppercase tracking-[0.04em] text-ink-muted">Payout</div>
+            <div className="break-words text-md font-extrabold tracking-[-0.02em]">
+              {formatPaise(project.payoutPaise)}
+            </div>
           </div>
-        </div>
-        <div>
+          <div className="min-w-0">
           <div className="text-2xs font-bold uppercase tracking-[0.04em] text-ink-muted">Due</div>
           <div className="text-md font-extrabold tracking-[-0.02em]">
             {relativeDeadline(project.deliveryAt)}
@@ -71,7 +74,7 @@ export function ProjectCard({ project, className }: { project: DoerProject; clas
         </div>
       ) : null}
 
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="mt-auto flex flex-wrap items-center gap-2 pt-1">
         <MicroChip>{CLIENT_LABEL}</MicroChip>
         {project.qcBounceCount > 0 ? (
           <MicroChip>

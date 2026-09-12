@@ -17,11 +17,12 @@ import {
   LogOut,
 } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { preloadRoute } from "@/lib/preload";
+import { CommandMenu } from "@/components/CommandMenu";
 import { isDemo } from "@/lib/demo-data";
 import { useAuth } from "@/providers/AuthProvider";
 import { signOut } from "@/features/auth/api";
 import { useProfile } from "@/features/dashboard/queries";
-import { AvailabilityToggle } from "@/features/dashboard/AvailabilityToggle";
 
 const NAV = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -54,6 +55,8 @@ function NavItem({
     <NavLink
       to={to}
       onClick={onNavigate}
+      onMouseEnter={() => preloadRoute(to)}
+      onFocus={() => preloadRoute(to)}
       className={({ isActive }) =>
         cn(
           "group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-bold tracking-[-0.01em] transition-all duration-[120ms]",
@@ -104,7 +107,7 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
         {isDemo() ? <DemoBadge /> : null}
       </Link>
 
-      <nav className="space-y-1" aria-label="Main">
+      <nav className="space-y-1 px-1" aria-label="Main">
         {NAV.map((item) => (
           <NavItem key={item.to} {...item} onNavigate={onNavigate} />
         ))}
@@ -112,7 +115,7 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
 
       <div className="my-5 h-px bg-line-subtle" />
 
-      <nav className="space-y-1" aria-label="Account">
+      <nav className="space-y-1 px-1" aria-label="Account">
         {SECONDARY.map((item) => (
           <NavItem key={item.to} {...item} onNavigate={onNavigate} />
         ))}
@@ -138,17 +141,15 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
           </Link>
 
           <div className="mt-3 border-t border-line-subtle pt-3">
-            <AvailabilityToggle compact />
+            <button
+              type="button"
+              onClick={() => void signOut()}
+              className="flex w-full items-center gap-2 rounded-md px-1 py-1.5 text-xs font-bold text-ink-muted transition-colors hover:text-danger-ink"
+            >
+              <LogOut className="h-3.5 w-3.5" aria-hidden="true" />
+              Sign out
+            </button>
           </div>
-
-          <button
-            type="button"
-            onClick={() => void signOut()}
-            className="mt-3 flex w-full items-center gap-2 rounded-md px-1 py-1.5 text-xs font-bold text-ink-muted transition-colors hover:text-danger-ink"
-          >
-            <LogOut className="h-3.5 w-3.5" aria-hidden="true" />
-            Sign out
-          </button>
         </div>
       </div>
     </div>
@@ -161,6 +162,7 @@ export function AppShell() {
   return (
     <div className="min-h-dvh bg-canvas">
       <ScrollToTop />
+      <CommandMenu />
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:border-2 focus:border-ink focus:bg-lime focus:px-4 focus:py-2 focus:text-sm focus:font-extrabold"
@@ -182,7 +184,7 @@ export function AppShell() {
           onClick={() => setMobileOpen((open) => !open)}
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileOpen}
-          className="flex h-10 w-10 items-center justify-center rounded-md border-2 border-ink bg-surface shadow-offset-xs"
+          className="flex h-11 w-11 items-center justify-center rounded-md border-2 border-ink bg-surface shadow-offset-xs"
         >
           {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
         </button>
@@ -196,7 +198,7 @@ export function AppShell() {
             className="absolute inset-0 bg-ink/30"
             onClick={() => setMobileOpen(false)}
           />
-          <div className="absolute inset-y-0 left-0 w-[85%] max-w-xs overflow-y-auto border-r-2 border-ink bg-canvas p-5">
+          <div className="absolute inset-y-0 left-0 w-[85%] max-w-xs overflow-y-auto overscroll-contain border-r-2 border-ink bg-canvas p-5">
             <SidebarContent onNavigate={() => setMobileOpen(false)} />
           </div>
         </div>

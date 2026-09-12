@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/providers/AuthProvider";
 import { fetchMyCountry } from "./api";
+import { safeNext } from "@/lib/safe-next";
 import { Skeleton } from "@/components/brutal/Skeleton";
 
 /**
@@ -17,7 +18,7 @@ export function AuthCallbackPage() {
   const [params] = useSearchParams();
   const [failed, setFailed] = useState(false);
 
-  const next = params.get("next") ?? "/dashboard";
+  const next = safeNext(params.get("next"));
   const errorParam = params.get("error") ?? params.get("error_description");
 
   useEffect(() => {

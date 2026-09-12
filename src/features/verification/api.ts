@@ -7,7 +7,28 @@ import type { KycRow, KycStatus } from "@/types/database";
 
 export const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
 
-const ALLOWED_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "application/pdf"]);
+const EXTENSIONS_FOR_TYPE: Record<string, string[]> = {
+  "image/jpeg": ["jpg", "jpeg"],
+  "image/png": ["png"],
+  "image/webp": ["webp"],
+  "application/pdf": ["pdf"],
+};
+
+/**
+ * Immediate, offline file check shared by the form and the uploader.
+ *
+ * File.type is spoofable, so the extension is cross-checked against it: a
+ * .exe renamed to image/jpeg fails here instead of after Submit. Storage RLS
+ * and the payout-first ordering remain the real controls.
+ */
+export function validateIdentityFile(file: File): string | null {
+  if (file.size === 0) return "That file is empty.";
+  if (file.size > MAX_UPLOAD_BYTES) return "Files must be under 10MB.";
+  const raw = file.name.split(".").pop()?.toLowerCase() ?? "";
+  const allowed = EXTENSIONS_FOR_TYPE[file.type];
+  if (!allowed || !allowed.includes(raw)) return "Upload a JPG, PNG, WEBP or PDF.";
+  return null;
+}
 
 export async function fetchKycStatus(): Promise<KycStatus> {
   if (isDemo()) return demoRespond(() => demo.kyc);
@@ -37,11 +58,8 @@ function extensionFor(file: File): string {
  * insert permission but no read policy, so they cannot fetch back what they sent.
  */
 async function uploadIdentityFile(file: File): Promise<string> {
-  if (file.size === 0) throw new Error("That file is empty.");
-  if (file.size > MAX_UPLOAD_BYTES) throw new Error("Files must be under 10MB.");
-  if (!ALLOWED_TYPES.has(file.type)) {
-    throw new Error("Upload a JPG, PNG, WEBP or PDF.");
-  }
+  const problem = validateIdentityFile(file);
+  if (problem) throw new Error(problem);
 
   const objectPath = `${crypto.randomUUID()}.${extensionFor(file)}`;
   const { error } = await supabase.storage

@@ -91,7 +91,7 @@ export function ColorStat({
           aria-hidden="true"
         />
       ) : (
-        <p className="mt-3 text-5xl font-extrabold leading-none tracking-[-0.045em]">{value}</p>
+        <p className="mt-3 break-words text-4xl font-extrabold leading-none tracking-[-0.045em] tabular-nums sm:text-5xl">{value}</p>
       )}
 
       {subtext ? (

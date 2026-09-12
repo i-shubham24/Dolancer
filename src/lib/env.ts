@@ -67,8 +67,17 @@ if (supabasePublishableKey) {
   assertNotPrivileged("VITE_SUPABASE_PUBLISHABLE_KEY", supabasePublishableKey);
 }
 
+// Optional. Until set, the Turnstile component renders nothing and every form
+// behaves exactly as before. Screened like any other value: a privileged key
+// must never arrive through the browser bundle.
+const turnstileSiteKey = (import.meta.env.VITE_TURNSTILE_SITE_KEY ?? "").trim();
+if (turnstileSiteKey) {
+  assertNotPrivileged("VITE_TURNSTILE_SITE_KEY", turnstileSiteKey);
+}
+
 export const env = {
   demoMode,
   supabaseUrl,
   supabasePublishableKey,
+  turnstileSiteKey,
 } as const;
