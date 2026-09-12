@@ -14,7 +14,6 @@ import type { PoolOffer } from "@/types/domain";
 import { usePool } from "./queries";
 import { PoolCard } from "./PoolCard";
 import { ClaimDrawer } from "./ClaimDrawer";
-import { SearchTrigger } from "@/components/SearchTrigger";
 import { useBoardNotify } from "./useBoardNotify";
 import type { PoolSort } from "./api";
 
@@ -78,10 +77,7 @@ export function PoolPage() {
             qualified claim wins.
           </p>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <SearchTrigger />
-          <AvailabilityToggle />
-        </div>
+        <AvailabilityToggle />
       </header>
 
       {/*

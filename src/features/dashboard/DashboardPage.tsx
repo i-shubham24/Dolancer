@@ -24,7 +24,6 @@ import {
 } from "./queries";
 import { ReadinessCard } from "./ReadinessCard";
 import { SpotlightHero } from "./SpotlightHero";
-import { SearchTrigger } from "@/components/SearchTrigger";
 import { AvailabilityToggle } from "./AvailabilityToggle";
 import { CapacityRail } from "./CapacityRail";
 
@@ -97,10 +96,7 @@ export function DashboardPage() {
             Here is where your work and your money stand today.
           </p>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <SearchTrigger />
-          <AvailabilityToggle />
-        </div>
+        <AvailabilityToggle />
       </header>
 
       {gate.isLoading ? <SkeletonCard /> : gate.data ? <ReadinessCard gate={gate.data} /> : null}
