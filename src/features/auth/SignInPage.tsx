@@ -7,6 +7,7 @@ import { Turnstile, turnstileConfigured } from "@/components/Turnstile";
 import { isDemo } from "@/lib/demo-data";
 import { safeNext } from "@/lib/safe-next";
 import { toUserError } from "@/lib/user-error";
+import { emailSchema, otpCodeSchema } from "@/lib/validations";
 import { sendEmailOtp, verifyEmailOtp, signInWithGoogle, signInDemo } from "./api";
 
 type Stage = "email" | "code";
@@ -45,10 +46,17 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
   async function handleSendCode(event: React.FormEvent) {
     event.preventDefault();
     if (isDemo()) return enterDemo();
+    
+    const parseResult = emailSchema.safeParse(email.trim());
+    if (!parseResult.success) {
+      setError(parseResult.error.errors[0].message);
+      return;
+    }
+
     setBusy(true);
     setError(null);
     try {
-      await sendEmailOtp(email.trim(), isSignUp);
+      await sendEmailOtp(parseResult.data, isSignUp);
       setStage("code");
       setSends((count) => count + 1);
       setCooldown(30);
@@ -76,10 +84,17 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
 
   async function handleVerify(event: React.FormEvent) {
     event.preventDefault();
+
+    const parseResult = otpCodeSchema.safeParse(code.trim());
+    if (!parseResult.success) {
+      setError(parseResult.error.errors[0].message);
+      return;
+    }
+
     setBusy(true);
     setError(null);
     try {
-      await verifyEmailOtp(email.trim(), code.trim());
+      await verifyEmailOtp(email.trim(), parseResult.data);
       navigate(next, { replace: true });
     } catch (cause) {
       setError(toUserError(cause, "That code did not work. Request a new one and try again."));

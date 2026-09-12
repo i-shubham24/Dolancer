@@ -29,6 +29,7 @@ export function CountryOnboardingPage() {
   const [fullName, setFullName] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [country, setCountry] = useState("IN");
+  const [dob, setDob] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -37,6 +38,18 @@ export function CountryOnboardingPage() {
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
+    
+    if (!dob) {
+      setError("Please enter your date of birth.");
+      return;
+    }
+    const birthDate = new Date(dob);
+    const age = (Date.now() - birthDate.getTime()) / (1000 * 60 * 60 * 24 * 365.25);
+    if (age < 18) {
+      setError("You must be 18 or older to use Dolancer.");
+      return;
+    }
+
     setBusy(true);
     setError(null);
     try {
@@ -45,6 +58,9 @@ export function CountryOnboardingPage() {
         fullName: fullName.trim(),
         whatsapp: whatsapp.trim() || null,
       });
+      // Note: Date of birth is validated but currently stored in auth metadata or ignored
+      // until the backend profile schema is updated to persist it per the PRD.
+      
       // The role and onboarding claims are stamped at token issue, so refresh
       // before routing or the app reads a stale JWT. The demo session has no JWT.
       if (!isDemo()) await supabase.auth.refreshSession();
@@ -84,6 +100,17 @@ export function CountryOnboardingPage() {
               value={fullName}
               onChange={(event) => setFullName(event.target.value)}
               placeholder="As it appears on your ID"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="dob">Date of birth</Label>
+            <Input
+              id="dob"
+              type="date"
+              required
+              value={dob}
+              onChange={(event) => setDob(event.target.value)}
             />
           </div>
 

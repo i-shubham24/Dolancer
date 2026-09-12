@@ -52,26 +52,23 @@ export function isActiveStatus(status: ProjectStatus): boolean {
 /**
  * Which workbench actions are available.
  *
- * The working-link rule: the doer pastes their own link through set_working_doc,
- * which is doer-scoped in the database. We then hold back progress updates and
- * submission until that link exists. Starting work is deliberately not blocked,
- * because start_work gates only on status and ownership, so blocking it here would
- * strand a project that nobody could advance.
+ * The working-link rule (PRD FR-DO-012, BR-018): Working artefacts are created and
+ * owned by company workspace accounts, never by a doer's personal account. The
+ * supervisor provides the link, and the doer cannot start work until it is present.
  */
 export function workbenchGates(project: { status: ProjectStatus; workingDocUrl: string | null }) {
   const hasWorkingDoc = Boolean(project.workingDocUrl?.trim());
   return {
     hasWorkingDoc,
-    canSetWorkingDoc: ["paid", "in_progress", "in_review"].includes(project.status),
-    canStart: project.status === "paid",
+    canSetWorkingDoc: false, // PRD BR-018: Supervisor sets this, not the doer.
+    canStart: project.status === "paid" && hasWorkingDoc,
     canSetProgress: hasWorkingDoc && ["in_progress", "in_review"].includes(project.status),
     canSubmit: hasWorkingDoc && project.status === "in_progress",
     /**
-     * Stated as a consequence, not a refusal. Naming what stays frozen is what makes
-     * the gate feel like a step rather than a wall.
+     * Stated as a consequence, not a refusal.
      */
     blockedReason: hasWorkingDoc
       ? null
-      : "Nothing moves until your working link is in. Add it to update progress or submit.",
+      : "Waiting for your supervisor to set up the company workspace. You can start work once the link appears.",
   };
 }

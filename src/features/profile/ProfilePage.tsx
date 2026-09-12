@@ -15,6 +15,7 @@ import { Skeleton } from "@/components/brutal/Skeleton";
 import { useProfile } from "@/features/dashboard/queries";
 import { toUserError } from "@/lib/user-error";
 import { updateProfileBasics } from "@/features/auth/api";
+import { profileBasicsSchema, applicationBioSchema, validateOrThrow } from "@/lib/validations";
 import type { DoerApplicationRow, RatingSummaryRow } from "@/types/database";
 
 /**
@@ -106,23 +107,28 @@ export function ProfilePage() {
   }, [profile.data]);
 
   const save = useMutation({
-    mutationFn: () =>
-      updateProfileBasics({ fullName: fullName.trim(), whatsapp: whatsapp.trim() || null }),
+    mutationFn: () => {
+      const parsed = validateOrThrow(profileBasicsSchema, { fullName: fullName.trim(), whatsapp: whatsapp.trim() || undefined });
+      return updateProfileBasics({ fullName: parsed.fullName, whatsapp: parsed.whatsapp || null });
+    },
     onSuccess: () => {
       toast.success("Saved.");
       void queryClient.invalidateQueries({ queryKey: qk.profile() });
     },
-    onError: (error: Error) => toast.error(toUserError(error, "Could not save. Try again.")),
+    onError: (error: Error) => toast.error(toUserError(error)),
   });
 
   const apply = useMutation({
-    mutationFn: () => submitApplication(bio),
+    mutationFn: () => {
+      const parsed = validateOrThrow(applicationBioSchema, bio.trim());
+      return submitApplication(parsed);
+    },
     onSuccess: () => {
       toast.success("Application sent.");
       void queryClient.invalidateQueries({ queryKey: qk.application() });
       void queryClient.invalidateQueries({ queryKey: qk.gate() });
     },
-    onError: (error: Error) => toast.error(toUserError(error, "Could not send the application. Try again.")),
+    onError: (error: Error) => toast.error(toUserError(error)),
   });
 
   const applicationStatus = application.data?.status;

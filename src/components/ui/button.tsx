@@ -35,9 +35,9 @@ const buttonVariants = cva(
           "bg-danger-bg text-danger-ink shadow-offset-sm hover:-translate-x-px hover:-translate-y-px hover:shadow-offset-md active:translate-x-[2px] active:translate-y-[2px] active:shadow-offset-xs",
       },
       size: {
-        sm: "px-3.5 py-[7px] text-xs rounded-sm",
-        md: "px-5 py-[11px] text-sm rounded-md",
-        lg: "px-[26px] py-[13px] text-md rounded-md",
+        sm: "min-h-[44px] px-3.5 py-[7px] text-xs rounded-sm",
+        md: "min-h-[44px] px-5 py-[11px] text-sm rounded-md",
+        lg: "min-h-[44px] px-[26px] py-[13px] text-md rounded-md",
         icon: "h-11 w-11 rounded-md p-0",
       },
     },
