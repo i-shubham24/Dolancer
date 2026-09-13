@@ -11,7 +11,7 @@ import { EmptyState, ErrorState } from "@/components/brutal/EmptyState";
 import { Button } from "@/components/ui/button";
 import { formatPaise } from "@/lib/paise";
 import { formatDateTime } from "@/lib/datetime";
-import { statusDisplay, workbenchGates } from "@/lib/status";
+import { statusDisplay } from "@/lib/status";
 import { CLIENT_LABEL } from "@/lib/constants";
 import { qk } from "@/lib/query-keys";
 import { useProjectChanges } from "@/lib/realtime";
@@ -83,7 +83,6 @@ export function WorkbenchPage() {
 
   const data = project.data;
   const status = statusDisplay(data.status, data.workingDocUrl);
-  const gates = workbenchGates(data);
 
   return (
     <div className="space-y-6">
