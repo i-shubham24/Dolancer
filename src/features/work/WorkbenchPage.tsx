@@ -84,7 +84,6 @@ export function WorkbenchPage() {
   const data = project.data;
   const status = statusDisplay(data.status, data.workingDocUrl);
   const gates = workbenchGates(data);
-  const editable = gates.canSetWorkingDoc;
 
   return (
     <div className="space-y-6">
