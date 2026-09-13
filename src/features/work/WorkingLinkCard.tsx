@@ -1,4 +1,4 @@
-import { Link2, ExternalLink, Check, Clock } from "lucide-react";
+import { ExternalLink, Check, Clock } from "lucide-react";
 import { cn } from "@/lib/cn";
 
 /**

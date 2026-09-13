@@ -49,7 +49,7 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
     
     const parseResult = emailSchema.safeParse(email.trim());
     if (!parseResult.success) {
-      setError(parseResult.error.errors[0].message);
+      setError(parseResult.error.errors[0]?.message || "Invalid email");
       return;
     }
 
@@ -87,7 +87,7 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
 
     const parseResult = otpCodeSchema.safeParse(code.trim());
     if (!parseResult.success) {
-      setError(parseResult.error.errors[0].message);
+      setError(parseResult.error.errors[0]?.message || "Invalid code");
       return;
     }
 

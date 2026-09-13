@@ -160,9 +160,7 @@ export function WorkbenchPage() {
         <aside className="space-y-4" aria-label="Project details">
           {/* Pinned first: it gates progress and submission. */}
           <WorkingLinkCard
-            projectId={data.id}
             workingDocUrl={data.workingDocUrl}
-            editable={editable}
           />
 
           <LifecycleActions project={data} />

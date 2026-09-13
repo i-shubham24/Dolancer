@@ -115,7 +115,7 @@ export function ProfilePage() {
       toast.success("Saved.");
       void queryClient.invalidateQueries({ queryKey: qk.profile() });
     },
-    onError: (error: Error) => toast.error(toUserError(error)),
+    onError: (error: Error) => toast.error(toUserError(error, "Could not save profile.")),
   });
 
   const apply = useMutation({
@@ -128,7 +128,7 @@ export function ProfilePage() {
       void queryClient.invalidateQueries({ queryKey: qk.application() });
       void queryClient.invalidateQueries({ queryKey: qk.gate() });
     },
-    onError: (error: Error) => toast.error(toUserError(error)),
+    onError: (error: Error) => toast.error(toUserError(error, "Could not send application.")),
   });
 
   const applicationStatus = application.data?.status;
