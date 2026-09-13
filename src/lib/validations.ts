@@ -22,7 +22,7 @@ export const profileBasicsSchema = z.object({
     .string()
     .min(2, "Name must be at least 2 characters.")
     .max(100, "Name is too long.")
-    .regex(/^[\p{L}\s\-\']+$/u, "Name contains invalid characters."),
+    .regex(/^[\p{L}\s\-']+$/u, "Name contains invalid characters."),
   whatsapp: z
     .string()
     .max(20, "WhatsApp number is too long.")
