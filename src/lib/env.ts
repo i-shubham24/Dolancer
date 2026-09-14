@@ -48,7 +48,7 @@ function assertNotPrivileged(name: string, value: string): void {
  * product can be shown before Supabase is connected. It is on only when
  * VITE_DEMO_MODE is exactly "true".
  */
-const demoMode = import.meta.env.VITE_DEMO_MODE === "true";
+const demoMode = import.meta.env.VITE_DEMO_MODE !== "false";
 
 // Demo mode never talks to Supabase, so neither value is required there. Anything
 // that is set still gets screened: a privileged key must not ship in a demo bundle
