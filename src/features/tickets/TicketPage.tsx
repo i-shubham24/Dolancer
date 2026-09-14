@@ -92,7 +92,7 @@ export function TicketPage() {
 
       <header className="space-y-2">
         <StatusBadge tone={spec.tone} label={spec.label} />
-        <h1 className="text-3xl font-extrabold tracking-[-0.035em]">{ticket.data.subject}</h1>
+        <h1 className="break-words text-3xl font-extrabold tracking-[-0.035em]">{ticket.data.subject}</h1>
         <p className="text-sm text-ink-muted">Opened {formatDateTime(ticket.data.createdAt)}</p>
       </header>
 
@@ -106,7 +106,7 @@ export function TicketPage() {
               <li key={message.id} className={cn("flex", mine ? "justify-end" : "justify-start")}>
                 <div
                   className={cn(
-                    "max-w-[85%] rounded-xl border-[1.5px] border-ink px-4 py-3 shadow-offset-xs",
+                    "max-w-[85%] rounded-xl border border-line-card px-4 py-3 shadow-soft-sm",
                     mine ? "bg-lime" : "bg-surface",
                   )}
                 >

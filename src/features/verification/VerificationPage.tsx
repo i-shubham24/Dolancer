@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { motion, useReducedMotion } from "framer-motion";
 import { ShieldCheck, Upload, Check, Clock, X } from "lucide-react";
 import { Card } from "@/components/brutal/Card";
 import { Button } from "@/components/ui/button";
@@ -63,9 +64,9 @@ function FileField({
       <label
         htmlFor={id}
         className={cn(
-          "flex cursor-pointer items-center gap-3 rounded-md border-2 border-dashed border-ink px-4 py-3.5",
+          "flex cursor-pointer items-center gap-3 rounded-2xl border border-dashed border-line-card px-4 py-3.5",
           "text-sm font-semibold transition-colors",
-          error ? "bg-danger-bg" : file ? "bg-success-bg" : "bg-surface hover:bg-hover",
+          error ? "bg-danger-bg/70" : file ? "bg-success-bg/70" : "bg-white hover:bg-hover",
         )}
       >
         {error ? (
@@ -97,6 +98,7 @@ function FileField({
 }
 
 export function VerificationPage() {
+  const reduceMotion = useReducedMotion();
   const queryClient = useQueryClient();
   const status = useQuery({ queryKey: qk.kyc(), queryFn: fetchKycStatus });
 
@@ -145,8 +147,18 @@ export function VerificationPage() {
   const canSubmit = current === "pending" || current === "rejected";
 
   return (
-    <div className="mx-auto max-w-2xl space-y-6">
-      <header>
+    <motion.div
+      className="relative mx-auto max-w-3xl space-y-6 overflow-hidden px-1 py-1 sm:px-2"
+      initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+    >
+      <div className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-purple/10 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute -left-24 top-72 h-64 w-64 rounded-full bg-blue/10 blur-3xl" aria-hidden="true" />
+      <header className="relative rounded-3xl bg-surface/70 px-5 py-6 backdrop-blur-sm sm:px-7">
+        <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-blue">
+          Trust &amp; clearance
+        </p>
         <h1 className="text-3xl font-extrabold tracking-[-0.035em] sm:text-4xl">Verification</h1>
         <p className="mt-2 text-md text-ink-2">
           We check who you are before money can move. This is the step that unlocks earning.
@@ -161,7 +173,7 @@ export function VerificationPage() {
           onRetry={() => void status.refetch()}
         />
       ) : (
-        <Card className={cn("border-2", spec.tone)}>
+        <Card className={cn("relative border-transparent shadow-soft-md", spec.tone)}>
           <div className="flex items-start gap-3">
             <spec.icon className="mt-0.5 h-5 w-5 shrink-0" aria-hidden="true" />
             <div>
@@ -181,7 +193,7 @@ export function VerificationPage() {
             submit.mutate({ document: document as File, selfie: selfie as File, payout });
           }}
         >
-          <Card className="space-y-5">
+          <Card className="space-y-5 bg-white/95">
             <div>
               <h2 className="text-lg font-extrabold tracking-[-0.025em]">Who you are</h2>
               <p className="mt-1 text-sm text-ink-2">
@@ -218,14 +230,14 @@ export function VerificationPage() {
               }}
             />
 
-            <p className="rounded-md border border-line-card bg-surface-2 px-3 py-2.5 text-[11px] leading-relaxed text-ink-2">
+            <p className="rounded-2xl border border-line-card bg-surface-2 px-3 py-2.5 text-[11px] leading-relaxed text-ink-2">
               Documents are stored encrypted under a random reference, never under your name.
               They are deleted once your identity is confirmed. Only an irreversible hash is
               kept afterwards, solely to stop a removed account signing up again.
             </p>
           </Card>
 
-          <Card className="space-y-5">
+          <Card className="space-y-5 bg-white/95">
             <div>
               <h2 className="text-lg font-extrabold tracking-[-0.025em]">Where you get paid</h2>
               <p className="mt-1 text-sm text-ink-2">
@@ -241,9 +253,9 @@ export function VerificationPage() {
                   onClick={() => setMethod(option)}
                   aria-pressed={method === option}
                   className={cn(
-                    "flex-1 rounded-md border-2 border-ink px-4 py-2.5 text-sm font-extrabold transition-all duration-[120ms]",
+                    "flex-1 rounded-full border border-line-card px-4 py-2.5 text-sm font-extrabold transition-all duration-200",
                     method === option
-                      ? "bg-lime shadow-offset-sm"
+                      ? "bg-purple text-white shadow-soft-sm"
                       : "bg-surface hover:bg-hover",
                   )}
                 >
@@ -299,7 +311,7 @@ export function VerificationPage() {
               </div>
             )}
 
-            <p className="rounded-md border border-line-card bg-surface-2 px-3 py-2.5 text-[11px] leading-relaxed text-ink-2">
+            <p className="rounded-2xl border border-line-card bg-surface-2 px-3 py-2.5 text-[11px] leading-relaxed text-ink-2">
               Your full account number is never stored here. It is exchanged for a token with
               our payments provider, and we keep only a masked version to show you which
               account it is.
@@ -323,6 +335,6 @@ export function VerificationPage() {
           ) : null}
         </form>
       ) : null}
-    </div>
+    </motion.div>
   );
 }

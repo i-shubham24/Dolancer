@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
+import { motion, useReducedMotion } from "framer-motion";
 import { Inbox, Archive } from "lucide-react";
 import { SkeletonCard, LoadingAnnounce } from "@/components/brutal/Skeleton";
 import { EmptyState, ErrorState } from "@/components/brutal/EmptyState";
@@ -52,6 +53,7 @@ const BUCKETS = [
 ];
 
 export function WorkPage() {
+  const reduceMotion = useReducedMotion();
   const bucket = useUiStore((state) => state.workBucket);
   const setBucket = useUiStore((state) => state.setWorkBucket);
   const projects = useProjects(bucket);
@@ -60,10 +62,14 @@ export function WorkPage() {
   const total = projects.data?.length ?? 0;
 
   return (
-    <div className="space-y-6">
-      <header className="flex flex-wrap items-start justify-between gap-4">
+    <motion.div className="relative space-y-7" initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }}>
+      <div className="pointer-events-none absolute -right-20 -top-24 -z-10 h-72 w-72 rounded-full bg-blue-light/70 blur-3xl" aria-hidden="true" />
+      <header className="flex flex-wrap items-end justify-between gap-4 rounded-[1.75rem] border border-line-card bg-gradient-to-br from-blue-light/70 via-surface to-purple-light/60 p-6 shadow-soft-md sm:p-8">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-[-0.035em] sm:text-4xl">My work</h1>
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-surface/80 px-3 py-1 text-xs font-bold uppercase tracking-wider text-blue shadow-soft-sm">
+            <span className="h-2 w-2 rounded-full bg-secondary" aria-hidden="true" /> Active pipeline
+          </div>
+          <h1 className="text-3xl font-extrabold tracking-[-0.045em] sm:text-4xl">My workbench</h1>
           <p className="mt-2 text-md text-ink-2">
             {bucket === "active"
               ? "Everything on your plate, with whatever needs you first."
@@ -120,19 +126,21 @@ export function WorkPage() {
                 >
                   {group.label}
                 </h2>
-                <span className="rounded-full border-[1.5px] border-ink bg-surface px-2 py-0.5 text-[10px] font-extrabold">
+                <span className="rounded-full border border-line-card bg-surface px-2 py-0.5 text-[10px] font-extrabold">
                   {group.items.length}
                 </span>
               </div>
-              <div className="grid gap-4 md:grid-cols-2">
+              <motion.div className="grid gap-4 md:grid-cols-2" initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: reduceMotion ? 0 : 0.06 } } }}>
                 {group.items.map((project) => (
-                  <ProjectCard key={project.id} project={project} />
+                  <motion.div key={project.id} variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0 } }} transition={{ duration: 0.35 }}>
+                    <ProjectCard project={project} />
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             </section>
           ))}
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }

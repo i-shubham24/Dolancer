@@ -42,9 +42,9 @@ export function ColorStat({
   return (
     <div
       className={cn(
-        "relative isolate overflow-hidden rounded-2xl border-2 border-ink p-5 shadow-offset-md",
+        "relative isolate overflow-hidden rounded-2xl border border-line-card p-5 shadow-soft-md",
         "transition-all duration-[180ms] ease-spring",
-        "hover:-translate-x-px hover:-translate-y-px hover:shadow-offset-lg",
+        "hover:-translate-y-1 hover:shadow-soft-lg",
         TONES[tone],
         className,
       )}
@@ -65,7 +65,7 @@ export function ColorStat({
         {icon ? (
           <span
             className={cn(
-              "flex h-8 w-8 items-center justify-center rounded-lg border-[1.5px] border-ink [&>svg]:h-4 [&>svg]:w-4",
+              "flex h-8 w-8 items-center justify-center rounded-xl border border-line-card [&>svg]:h-4 [&>svg]:w-4",
               inverse ? "bg-white/15" : "bg-surface/70",
             )}
           >

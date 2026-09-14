@@ -2,13 +2,13 @@
  * Dolancer design tokens.
  *
  * Ported from the sibling AssignX client app (nitin612/assign-X, src/styles/tokens.css)
- * so the two surfaces read as one system. The look is three moves: a 2px near-black
- * border, a hard offset shadow, and a translate on hover/press. Keep those consistent
- * and everything else follows.
+ * so the two surfaces read as one system. Surfaces use quiet semantic borders,
+ * rounded corners, and diffused shadows so the visual language stays calm and
+ * palette-aware.
  *
  * Declared through Tailwind v4 @theme, so each token generates its utility:
  *   --color-coral        -> bg-coral / text-coral / border-coral
- *   --shadow-offset-md   -> shadow-offset-md
+ *   --shadow-soft-md   -> shadow-soft-md
  *   --radius-xl          -> rounded-xl
  */
 @theme {
@@ -69,17 +69,7 @@
   --color-neutral-ink: #555555;
   --color-neutral-dot: #888888;
 
-  /* The signature: hard offset shadows */
-  --shadow-offset-xs: 1px 1px 0px #111111;
-  --shadow-offset-sm: 2px 2px 0px #111111;
-  --shadow-offset-md: 3px 3px 0px #111111;
-  --shadow-offset-lg: 4px 4px 0px #111111;
-  --shadow-offset-xl: 6px 6px 0px #111111;
-  --shadow-offset-2xl: 7px 7px 0px #111111;
-  --shadow-modal: 8px 8px 0px #111111;
-  --shadow-coral: 2px 2px 0px #ff6b5b;
-
-  /* Soft shadows, reserved for the quiet components */
+  /* Diffused shadows for quiet elevation */
   --shadow-soft-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
   --shadow-soft-md: 0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
   --shadow-soft-lg: 0 6px 20px rgba(0, 0, 0, 0.06);
@@ -116,4 +106,181 @@
 
   /* Motion. Spring easing, never a linear fade. */
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Runtime palette tokens. The selected palette changes these values on <html>. */
+  --color-canvas: var(--dl-canvas);
+  --color-surface: var(--dl-surface);
+  --color-surface-2: var(--dl-surface-2);
+  --color-subtle: var(--dl-subtle);
+  --color-muted: var(--dl-muted);
+  --color-hover: var(--dl-hover);
+  --color-ink: var(--dl-ink);
+  --color-ink-2: var(--dl-ink-2);
+  --color-ink-muted: var(--dl-ink-muted);
+  --color-ink-3: var(--dl-ink-3);
+  --color-inverse: var(--dl-inverse);
+  --color-coral: var(--dl-primary);
+  --color-coral-hover: var(--dl-primary-hover);
+  --color-coral-light: var(--dl-primary-light);
+  --color-blue: var(--dl-secondary);
+  --color-blue-hover: var(--dl-secondary-hover);
+  --color-blue-light: var(--dl-secondary-light);
+  --color-lime: var(--dl-accent);
+  --color-lime-hover: var(--dl-accent-hover);
+  --color-lime-light: var(--dl-accent-light);
+  --color-purple: var(--dl-purple);
+  --color-purple-hover: var(--dl-purple-hover);
+  --color-purple-light: var(--dl-purple-light);
+  --color-line: var(--dl-line);
+  --color-line-subtle: var(--dl-line-subtle);
+  --color-line-card: var(--dl-line-card);
+  --color-success-bg: var(--dl-success-bg);
+  --color-success-ink: var(--dl-success-ink);
+  --color-success-dot: var(--dl-success-dot);
+  --color-warning-bg: var(--dl-warning-bg);
+  --color-warning-ink: var(--dl-warning-ink);
+  --color-warning-dot: var(--dl-warning-dot);
+  --color-danger-bg: var(--dl-danger-bg);
+  --color-danger-ink: var(--dl-danger-ink);
+  --color-danger-dot: var(--dl-danger-dot);
+  --color-info-bg: var(--dl-info-bg);
+  --color-info-ink: var(--dl-info-ink);
+  --color-info-dot: var(--dl-info-dot);
+  --color-neutral-bg: var(--dl-neutral-bg);
+  --color-neutral-ink: var(--dl-neutral-ink);
+  --color-neutral-dot: var(--dl-neutral-dot);
+}
+
+:root,
+:root[data-palette="cobalt"] {
+  --dl-canvas: #f7f9fb;
+  --dl-surface: #ffffff;
+  --dl-surface-2: #f8fafc;
+  --dl-subtle: #f1f5f9;
+  --dl-muted: #e2e8f0;
+  --dl-hover: #eff6ff;
+  --dl-ink: #0f172a;
+  --dl-ink-2: #475569;
+  --dl-ink-muted: #64748b;
+  --dl-ink-3: #94a3b8;
+  --dl-inverse: #ffffff;
+  --dl-primary: #2563eb;
+  --dl-primary-hover: #1d4ed8;
+  --dl-primary-light: #dbeafe;
+  --dl-secondary: #14b8a6;
+  --dl-secondary-hover: #0f9f8f;
+  --dl-secondary-light: #ccfbf1;
+  --dl-accent: #f59e0b;
+  --dl-accent-hover: #d97706;
+  --dl-accent-light: #fef3c7;
+  --dl-purple: #7c3aed;
+  --dl-purple-hover: #6d28d9;
+  --dl-purple-light: #ede9fe;
+  --dl-line: #cbd5e1;
+  --dl-line-subtle: #e2e8f0;
+  --dl-line-card: #e2e8f0;
+  --dl-success-bg: #ecfdf5;
+  --dl-success-ink: #047857;
+  --dl-success-dot: #10b981;
+  --dl-warning-bg: #fffbeb;
+  --dl-warning-ink: #b45309;
+  --dl-warning-dot: #f59e0b;
+  --dl-danger-bg: #fff1f2;
+  --dl-danger-ink: #be123c;
+  --dl-danger-dot: #f43f5e;
+  --dl-info-bg: #eff6ff;
+  --dl-info-ink: #1d4ed8;
+  --dl-info-dot: #2563eb;
+  --dl-neutral-bg: #f1f5f9;
+  --dl-neutral-ink: #475569;
+  --dl-neutral-dot: #64748b;
+  --dl-card-pink: #f7b5d2;
+  --dl-card-lilac: #ddd2ff;
+  --dl-card-yellow: #ffe29a;
+  --dl-card-mint: #bcefe2;
+  --dl-graphic: #9a7cff;
+  --dl-graphic-soft: #ece7ff;
+  --dl-gradient-a: #dcd1ff;
+  --dl-gradient-b: #c4f3eb;
+}
+
+:root[data-palette="violet"] {
+  --dl-primary: #7c3aed;
+  --dl-primary-hover: #6d28d9;
+  --dl-primary-light: #ede9fe;
+  --dl-secondary: #10b981;
+  --dl-secondary-hover: #059669;
+  --dl-secondary-light: #d1fae5;
+  --dl-accent: #f59e0b;
+  --dl-accent-hover: #d97706;
+  --dl-accent-light: #fef3c7;
+  --dl-purple: #8b5cf6;
+  --dl-purple-hover: #7c3aed;
+  --dl-purple-light: #f5f3ff;
+  --dl-hover: #f5f3ff;
+  --dl-info-bg: #f5f3ff;
+  --dl-info-ink: #6d28d9;
+  --dl-info-dot: #7c3aed;
+  --dl-card-pink: #f4b3d7;
+  --dl-card-lilac: #d9c9ff;
+  --dl-card-yellow: #ffe09a;
+  --dl-card-mint: #b7efdc;
+  --dl-graphic: #8b5cf6;
+  --dl-graphic-soft: #eee9ff;
+  --dl-gradient-a: #dfd3ff;
+  --dl-gradient-b: #c5f1e8;
+}
+
+:root[data-palette="mint"] {
+  --dl-primary: #0f9f8f;
+  --dl-primary-hover: #0f766e;
+  --dl-primary-light: #ccfbf1;
+  --dl-secondary: #2563eb;
+  --dl-secondary-hover: #1d4ed8;
+  --dl-secondary-light: #dbeafe;
+  --dl-accent: #84cc16;
+  --dl-accent-hover: #65a30d;
+  --dl-accent-light: #ecfccb;
+  --dl-purple: #6366f1;
+  --dl-purple-hover: #4f46e5;
+  --dl-purple-light: #eef2ff;
+  --dl-hover: #f0fdfa;
+  --dl-info-bg: #eff6ff;
+  --dl-info-ink: #1d4ed8;
+  --dl-info-dot: #2563eb;
+  --dl-card-pink: #ffc0d5;
+  --dl-card-lilac: #d1ddff;
+  --dl-card-yellow: #ffe6a7;
+  --dl-card-mint: #b8f1e2;
+  --dl-graphic: #3c82f6;
+  --dl-graphic-soft: #e7efff;
+  --dl-gradient-a: #d4e1ff;
+  --dl-gradient-b: #c0f2e8;
+}
+
+:root[data-palette="sunset"] {
+  --dl-primary: #e05a47;
+  --dl-primary-hover: #c2412d;
+  --dl-primary-light: #ffebe8;
+  --dl-secondary: #4f46e5;
+  --dl-secondary-hover: #4338ca;
+  --dl-secondary-light: #e0e7ff;
+  --dl-accent: #f59e0b;
+  --dl-accent-hover: #d97706;
+  --dl-accent-light: #fef3c7;
+  --dl-purple: #9333ea;
+  --dl-purple-hover: #7e22ce;
+  --dl-purple-light: #faf5ff;
+  --dl-hover: #fff7ed;
+  --dl-info-bg: #eef2ff;
+  --dl-info-ink: #4338ca;
+  --dl-info-dot: #4f46e5;
+  --dl-card-pink: #ffb6c8;
+  --dl-card-lilac: #d9c2ff;
+  --dl-card-yellow: #ffe0a0;
+  --dl-card-mint: #bcefdc;
+  --dl-graphic: #8b5cf6;
+  --dl-graphic-soft: #f0e6ff;
+  --dl-gradient-a: #e3d1ff;
+  --dl-gradient-b: #ffd6dc;
 }

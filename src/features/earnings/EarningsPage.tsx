@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import { motion, useReducedMotion } from "framer-motion";
 import { Wallet, Receipt, ReceiptText, Download } from "lucide-react";
 import { ColorStat } from "@/components/brutal/ColorStat";
 import { Card } from "@/components/brutal/Card";
@@ -27,6 +28,7 @@ import { fetchEarningsSummary, fetchLedger } from "./api";
  * able to check against their own filing.
  */
 export function EarningsPage() {
+  const reduceMotion = useReducedMotion();
   const summary = useQuery({ queryKey: qk.earnings.summary(), queryFn: fetchEarningsSummary });
   const ledger = useQuery({ queryKey: qk.earnings.ledger(), queryFn: fetchLedger });
   const [fy, setFy] = useState<string>("all");
@@ -65,12 +67,24 @@ export function EarningsPage() {
   }
 
   return (
-    <div className="space-y-7">
-      <header>
-        <h1 className="text-3xl font-extrabold tracking-[-0.035em] sm:text-4xl">Earnings</h1>
+    <motion.div
+      className="relative space-y-7 overflow-hidden rounded-[2rem] px-1 py-1 sm:px-2"
+      initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+    >
+      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-purple/10 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute -right-20 top-40 h-64 w-64 rounded-full bg-blue/10 blur-3xl" aria-hidden="true" />
+      <header className="relative flex flex-col gap-4 rounded-3xl bg-surface/70 px-5 py-6 backdrop-blur-sm sm:px-7">
+        <div>
+        <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-blue">
+          Verified ledger · transparent settlement
+        </p>
+        <h1 className="text-3xl font-extrabold tracking-[-0.035em] sm:text-4xl">Earnings &amp; ledger</h1>
         <p className="mt-2 max-w-xl text-md text-ink-2">
           What you have been paid, and what was withheld getting there.
         </p>
+        </div>
       </header>
 
       {summary.isError ? (
@@ -99,7 +113,7 @@ export function EarningsPage() {
         </div>
       )}
 
-      <Card>
+      <Card className="relative overflow-hidden bg-white/90">
         <h2 className="text-xs font-extrabold uppercase tracking-[0.05em] text-ink-muted">
           How that reconciles
         </h2>
@@ -127,7 +141,7 @@ export function EarningsPage() {
               )}
             </dd>
           </div>
-          <div className="flex items-baseline justify-between gap-4 border-t-2 border-ink pt-3">
+          <div className="flex items-baseline justify-between gap-4 border-t border-line-subtle pt-3">
             <dt className="text-md font-extrabold">You received</dt>
             <dd className="text-2xl font-extrabold tabular-nums tracking-[-0.03em]">
               {summary.isLoading ? (
@@ -163,7 +177,7 @@ export function EarningsPage() {
               id="fy"
               value={fy}
               onChange={(event) => setFy(event.target.value)}
-              className="rounded-md border-2 border-ink bg-surface px-3 py-2 text-xs font-bold shadow-offset-xs outline-none"
+              className="rounded-full border border-line-card bg-white px-3 py-2 text-xs font-bold shadow-soft-sm outline-none transition focus:border-blue focus:ring-4 focus:ring-blue/10"
             >
               <option value="all">All years</option>
               {years.map((year) => (
@@ -212,13 +226,13 @@ export function EarningsPage() {
             }
           />
         ) : (
-          <Card className="overflow-hidden p-0">
+          <Card className="overflow-hidden bg-white/95 p-0">
             {/* Wide content scrolls inside its own container, never the page body. */}
             <div className="overflow-x-auto">
               <table className="w-full min-w-[32rem] border-collapse text-sm">
                 <caption className="sr-only">Your released payouts</caption>
                 <thead>
-                  <tr className="border-b-2 border-ink bg-subtle text-left">
+                  <tr className="border-b border-line-subtle bg-subtle text-left">
                     <th scope="col" className="px-4 py-3 text-2xs font-extrabold uppercase tracking-[0.05em]">
                       Released
                     </th>
@@ -260,6 +274,6 @@ export function EarningsPage() {
           </Card>
         )}
       </section>
-    </div>
+    </motion.div>
   );
 }

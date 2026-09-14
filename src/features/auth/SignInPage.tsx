@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams, Link, useLocation } from "react-router-dom";
-import { Mail, ArrowLeft } from "lucide-react";
+import { ArrowLeft, Check, Mail, ShieldCheck, Sparkles } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
 import { Turnstile, turnstileConfigured } from "@/components/Turnstile";
+import { StitchBadge, StitchCard } from "@/components/stitch/StitchPrimitives";
 import { isDemo } from "@/lib/demo-data";
 import { safeNext } from "@/lib/safe-next";
 import { toUserError } from "@/lib/user-error";
@@ -24,6 +26,7 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const location = useLocation();
+  const reduceMotion = useReducedMotion();
 
   const next = safeNext(params.get("next"));
   const oauthError = params.get("error");
@@ -115,48 +118,54 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
     }
   }
 
+  const rise = reduceMotion ? {} : { opacity: 0, y: 14 };
+  const spring = { duration: 0.55, ease: [0.16, 1, 0.3, 1] as const };
+
   return (
-    <div className="w-full max-w-md">
-      <div className="mb-5">
-        <div className="mb-4 inline-flex h-9 w-9 rotate-[-4deg] items-center justify-center rounded-[10px] border-2 border-ink bg-blue text-inverse shadow-offset-sm">
-          <span className="text-lg font-extrabold">D</span>
+    <div className="auth-form relative w-full max-w-xl py-2 sm:py-4">
+      <div className="pointer-events-none absolute -left-16 top-2 h-28 w-28 rounded-full bg-purple-light blur-2xl sm:-left-28 sm:-top-8" aria-hidden="true" />
+      <div className="pointer-events-none absolute -right-12 bottom-16 h-36 w-36 rounded-full bg-coral-light blur-3xl" aria-hidden="true" />
+      <motion.div initial={rise} animate={{ opacity: 1, y: 0 }} transition={spring} className="relative">
+        <div className="mb-7 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="inline-flex h-11 w-11 rotate-[-5deg] items-center justify-center rounded-2xl bg-purple text-inverse shadow-soft-md">
+              <span className="text-xl font-extrabold">D</span>
+            </div>
+            <span className="text-sm font-extrabold tracking-[-0.02em] text-ink">Dolancer</span>
+          </div>
+          <StitchBadge tone="neutral"><ShieldCheck className="h-3.5 w-3.5 text-success-ink" /> Secure access</StitchBadge>
         </div>
-        <h1 className="text-3xl font-extrabold leading-[1.05] tracking-[-0.035em] xl:text-4xl">
+        <div className="mb-7 max-w-lg">
+          <p className="mb-3 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-purple">
+            <Sparkles className="h-4 w-4" aria-hidden="true" /> The better way to do work
+          </p>
+          <h1 className="text-3xl font-extrabold leading-[1.05] tracking-[-0.045em] sm:text-4xl lg:text-5xl">
           {isSignUp ? (
             <>
               Get paid for what
               <br />
               you are already
               <br />
-              <span className="bg-lime px-2">good at.</span>
+              <span className="relative inline-block text-purple"><span className="absolute inset-x-0 bottom-1 h-3 -rotate-1 rounded-full bg-lime-light" /><span className="relative">good at.</span></span>
             </>
           ) : (
             <>
               Welcome
               <br />
-              <span className="bg-coral px-2 text-ink">back.</span>
+              <span className="relative inline-block text-purple"><span className="absolute inset-x-0 bottom-1 h-3 -rotate-1 rounded-full bg-coral-light" /><span className="relative">back.</span></span>
             </>
           )}
-        </h1>
-        <p className="mt-2 text-md text-ink-2">
+          </h1>
+          <p className="mt-4 max-w-md text-md leading-relaxed text-ink-2">
           {isSignUp
             ? "Join in minutes. Projects come to you, and the pay is agreed upfront."
             : "Sign in to pick up work and track your earnings."}
-        </p>
-        {isDemo() ? (
-          <p className="mt-3 flex items-center gap-2.5 rounded-md border-[1.5px] border-ink bg-lime-light px-3 py-2 text-xs font-semibold text-ink-2 shadow-offset-xs">
-            <span className="shrink-0 rounded-full border-[1.5px] border-ink bg-lime px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-ink">
-              Demo
-            </span>
-            Sample data only. Any email signs you in, and no code is needed.
           </p>
-        ) : null}
-      </div>
-
+        </div>
       {oauthError ? (
         <div
           role="alert"
-          className="mb-5 rounded-md border-2 border-ink bg-danger-bg px-4 py-3 text-sm font-semibold text-danger-ink shadow-offset-xs"
+          className="mb-5 rounded-xl border border-danger-ink/15 bg-danger-bg px-4 py-3 text-sm font-semibold text-danger-ink"
         >
           {oauthError === "wrong-role"
             ? "That account is not a Dolancer account."
@@ -167,12 +176,18 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
       {error ? (
         <div
           role="alert"
-          className="mb-5 rounded-md border-2 border-ink bg-danger-bg px-4 py-3 text-sm font-semibold text-danger-ink shadow-offset-xs"
+          className="mb-5 rounded-xl border border-danger-ink/15 bg-danger-bg px-4 py-3 text-sm font-semibold text-danger-ink"
         >
           {error}
         </div>
       ) : null}
 
+      <StitchCard className="relative overflow-hidden p-5 sm:p-7">
+        <div className="auth-card-art" aria-hidden="true">
+          <span className="auth-card-art-block auth-card-art-block-one" />
+          <span className="auth-card-art-block auth-card-art-block-two" />
+          <span className="auth-card-art-dot" />
+        </div>
       {stage === "email" ? (
         <form onSubmit={handleSendCode} className="space-y-4">
           <div className="space-y-2">
@@ -272,6 +287,12 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
           {isSignUp ? "Sign in" : "Create one"}
         </Link>
       </p>
+        <div className="mt-5 flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs font-semibold text-ink-muted">
+          <span className="inline-flex items-center gap-1.5"><Check className="h-3.5 w-3.5 text-success-ink" /> No bidding wars</span>
+          <span className="inline-flex items-center gap-1.5"><Check className="h-3.5 w-3.5 text-success-ink" /> Pay agreed upfront</span>
+        </div>
+      </StitchCard>
+      </motion.div>
     </div>
   );
 }

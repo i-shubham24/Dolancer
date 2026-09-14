@@ -31,12 +31,12 @@ export function TrainingPage() {
             <span className="text-xs font-extrabold uppercase tracking-[0.05em] text-ink-muted">
               Progress
             </span>
-            <span className="rounded-full border-[1.5px] border-ink bg-lime px-2.5 py-0.5 text-2xs font-extrabold">
+            <span className="rounded-full border border-line-card bg-lime px-2.5 py-0.5 text-2xs font-extrabold">
               {done} of {items.length}
             </span>
           </div>
           <div
-            className="mt-3 h-2.5 w-full overflow-hidden rounded-full border-[1.5px] border-ink bg-surface"
+            className="mt-3 h-2.5 w-full overflow-hidden rounded-full border border-line-card bg-surface"
             role="progressbar"
             aria-valuenow={pct}
             aria-valuemin={0}
@@ -76,15 +76,15 @@ export function TrainingPage() {
               <Link
                 to={`/training/${lesson.id}`}
                 className={cn(
-                  "flex items-center gap-4 rounded-xl border-[1.5px] border-ink bg-surface p-4",
-                  "shadow-offset-xs transition-all duration-[120ms]",
-                  "hover:-translate-x-px hover:-translate-y-px hover:shadow-offset-sm",
+                  "flex items-center gap-4 rounded-xl border border-line-card bg-surface p-4",
+                  "shadow-soft-sm transition-all duration-[120ms]",
+                  "hover:shadow-soft-sm",
                   lesson.completed && "bg-surface-2",
                 )}
               >
                 <span
                   className={cn(
-                    "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border-[1.5px] border-ink text-sm font-extrabold",
+                    "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-line-card text-sm font-extrabold",
                     lesson.completed ? "bg-success-bg text-success-ink" : "bg-lime",
                   )}
                 >

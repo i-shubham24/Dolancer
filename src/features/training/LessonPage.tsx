@@ -105,7 +105,7 @@ export function LessonPage() {
 
       <header className="space-y-2">
         {data.completed ? (
-          <span className="inline-flex items-center gap-1.5 rounded-full border-[1.5px] border-ink bg-success-bg px-2.5 py-0.5 text-2xs font-extrabold text-success-ink">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-line-card bg-success-bg px-2.5 py-0.5 text-2xs font-extrabold text-success-ink">
             <Check className="h-3 w-3" aria-hidden="true" />
             Completed
           </span>
@@ -150,10 +150,10 @@ export function LessonPage() {
                   <label
                     key={optionIndex}
                     className={cn(
-                      "flex cursor-pointer items-center gap-2.5 rounded-lg border-[1.5px] px-3 py-2.5 text-sm font-semibold transition-colors",
+                      "flex cursor-pointer items-center gap-2.5 rounded-lg border px-3 py-2.5 text-sm font-semibold transition-colors",
                       checked
-                        ? "border-ink bg-lime shadow-offset-xs"
-                        : "border-line-card bg-surface hover:border-ink",
+                        ? "border-coral bg-lime shadow-soft-sm"
+                        : "border-line-card bg-surface hover:border-coral/40",
                     )}
                   >
                     <input
@@ -178,7 +178,7 @@ export function LessonPage() {
             <div
               role="status"
               className={cn(
-                "flex items-start gap-2.5 rounded-lg border-2 border-ink px-4 py-3",
+                "flex items-start gap-2.5 rounded-lg border border-line-card px-4 py-3",
                 result.passed ? "bg-success-bg" : "bg-warning-bg",
               )}
             >

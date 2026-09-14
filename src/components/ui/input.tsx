@@ -2,8 +2,7 @@ import * as React from "react";
 import { cn } from "@/lib/cn";
 
 /**
- * Focus thickens the shadow and lifts the field rather than drawing a ring. That is
- * the system's idiom: depth, not outline.
+ * Inputs use calm surfaces and a clear semantic focus ring.
  */
 export const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
   function Input({ className, ...props }, ref) {
@@ -11,11 +10,11 @@ export const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttribute
       <input
         ref={ref}
         className={cn(
-          "w-full rounded-md border-2 border-ink bg-surface px-4 py-[11px]",
+          "w-full rounded-xl border border-line-card bg-surface px-4 py-[11px]",
           "font-sans text-sm font-medium text-ink placeholder:text-ink-3",
-          "shadow-offset-xs outline-none transition-all duration-[120ms]",
-          "focus:-translate-x-px focus:-translate-y-px focus:shadow-offset-sm",
-          "disabled:opacity-50 disabled:shadow-none",
+          "shadow-soft-sm outline-none transition-all duration-200",
+          "focus:border-blue focus:ring-4 focus:ring-blue/15",
+          "disabled:opacity-50",
           className,
         )}
         {...props}
@@ -32,11 +31,11 @@ export const Textarea = React.forwardRef<
     <textarea
       ref={ref}
       className={cn(
-        "w-full rounded-md border-2 border-ink bg-surface px-4 py-[11px]",
+        "w-full rounded-xl border border-line-card bg-surface px-4 py-[11px]",
         "font-sans text-sm font-medium text-ink placeholder:text-ink-3",
-        "shadow-offset-xs outline-none transition-all duration-[120ms] resize-y",
-        "focus:-translate-x-px focus:-translate-y-px focus:shadow-offset-sm",
-        "disabled:opacity-50 disabled:shadow-none",
+        "shadow-soft-sm outline-none transition-all duration-200 resize-y",
+        "focus:border-blue focus:ring-4 focus:ring-blue/15",
+        "disabled:opacity-50",
         className,
       )}
       {...props}

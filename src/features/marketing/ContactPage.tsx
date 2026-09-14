@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
+import { motion, useReducedMotion } from "framer-motion";
 import { Mail, Clock, Scale, LifeBuoy } from "lucide-react";
-import { Card } from "@/components/brutal/Card";
+import { StitchBadge, StitchCard, StitchSection } from "@/components/stitch/StitchPrimitives";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/providers/AuthProvider";
 import { CONTACT } from "./content";
@@ -15,29 +16,32 @@ import { ContactForm } from "./ContactForm";
  */
 export function ContactPage() {
   const { session } = useAuth();
+  const reduceMotion = useReducedMotion();
 
   return (
-    <div className="mx-auto w-full max-w-[1320px] px-4 py-16 lg:px-6 lg:py-24">
-      <div className="max-w-2xl">
-        <h1 className="text-5xl font-extrabold leading-[1.05] tracking-[-0.045em]">
-          Talk to{" "}
-          <span className="inline-block -rotate-[2deg] rounded-xl border-2 border-ink bg-lime px-3 pb-1 shadow-offset-md">
-            a person.
-          </span>
-        </h1>
-        <p className="mt-6 text-lg leading-relaxed text-ink-2">
+    <div className="fresh-page fresh-contact-page">
+      <StitchSection className="fresh-hero fresh-editorial-hero fresh-contact-hero">
+      <div className="fresh-container">
+        <StitchBadge>We are here to help</StitchBadge>
+        <motion.h1 initial={reduceMotion ? false : { opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65 }} className="mt-5 max-w-2xl">
+          Talk to <span className="fresh-highlight fresh-underline fresh-underline-pink">a person.</span>
+        </motion.h1>
+        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
           Questions about payments, verification, a project you are on, or your account.
           Someone answers every one of them.
         </p>
       </div>
+      </StitchSection>
 
-      <div className="mt-12 grid gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-start">
-        <ContactForm />
+      <div className="fresh-container fresh-contact-content grid gap-6 pb-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:pb-24">
+        <div className="fresh-contact-form-wrap">
+          <ContactForm />
+        </div>
 
-        <div className="space-y-4">
+        <div className="fresh-contact-aside space-y-4">
           {session ? (
-            <Card className="border-2 bg-lime shadow-offset-md">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl border-2 border-ink bg-surface shadow-offset-xs">
+            <StitchCard className="bg-success-bg p-6">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-surface">
                 <LifeBuoy className="h-5 w-5" aria-hidden="true" />
               </span>
               <h2 className="mt-4 text-lg font-extrabold tracking-[-0.03em]">
@@ -49,10 +53,10 @@ export function ContactPage() {
               <Button asChild variant="dark" className="mt-4">
                 <Link to="/tickets">Go to support</Link>
               </Button>
-            </Card>
+            </StitchCard>
           ) : (
-            <Card className="border-2 bg-blue shadow-offset-md">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl border-2 border-ink bg-surface shadow-offset-xs">
+            <StitchCard className="bg-purple-light p-6">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-surface">
                 <Mail className="h-5 w-5" aria-hidden="true" />
               </span>
               <h2 className="mt-4 text-lg font-extrabold tracking-[-0.03em]">Or email directly</h2>
@@ -62,23 +66,23 @@ export function ContactPage() {
               >
                 {CONTACT.email}
               </a>
-            </Card>
+            </StitchCard>
           )}
 
-          <Card className="bg-ink text-inverse">
-            <span className="flex h-11 w-11 items-center justify-center rounded-xl border-2 border-white/25 bg-white/10">
+          <StitchCard className="bg-purple-light p-6">
+            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-purple text-inverse">
               <Clock className="h-5 w-5" aria-hidden="true" />
             </span>
             <h2 className="mt-4 text-lg font-extrabold tracking-[-0.03em]">When we are around</h2>
             <p className="mt-2 text-sm font-bold">{CONTACT.hours}</p>
-            <p className="mt-3 text-xs leading-relaxed text-white/55">
+            <p className="mt-3 text-xs leading-relaxed text-ink-2">
               Anything about a project you are actively working on is best raised with your
               supervisor in that project's thread. They will see it soonest.
             </p>
-          </Card>
+          </StitchCard>
 
-          <Card className="bg-purple-light">
-            <span className="flex h-11 w-11 items-center justify-center rounded-xl border-2 border-ink bg-purple text-inverse">
+          <StitchCard className="stitch-card-pink p-6">
+            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-purple text-inverse">
               <Scale className="h-5 w-5" aria-hidden="true" />
             </span>
             <h2 className="mt-4 text-lg font-extrabold tracking-[-0.03em]">Grievances</h2>
@@ -93,11 +97,11 @@ export function ContactPage() {
               <Mail className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
               {CONTACT.grievanceEmail}
             </a>
-          </Card>
+          </StitchCard>
         </div>
       </div>
 
-      <p className="mt-10 text-xs leading-relaxed text-ink-muted">
+      <p className="fresh-container mt-10 pb-10 text-xs leading-relaxed text-ink-muted">
         Dolancer is operated by {CONTACT.company}, {CONTACT.jurisdiction}. See our{" "}
         <Link to="/legal/terms" className="underline underline-offset-2 hover:text-ink">
           terms

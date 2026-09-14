@@ -10,7 +10,7 @@ import { StatusBadge } from "./StatusBadge";
 import { CategoryPill, ProgressPill, MicroChip } from "./Pill";
 
 /**
- * The loudest component in the system: 22px radius, 4px shadow, a 3px lift.
+ * Shared project surface used by work and pool views.
  *
  * The counterparty is always rendered as the CLIENT_LABEL constant. There is no
  * client identity in projects_doer to render even if we wanted to, which is the
@@ -26,10 +26,10 @@ export function ProjectCard({ project, className }: { project: DoerProject; clas
       onMouseEnter={preloadWorkbench}
       onFocus={preloadWorkbench}
       className={cn(
-        "group flex flex-col gap-[13px] rounded-3xl border-2 border-ink bg-surface px-[22px] pb-[22px] pt-5",
-        "shadow-offset-lg transition-[transform,box-shadow] duration-[220ms] ease-spring",
-        "hover:-translate-x-[3px] hover:-translate-y-[3px] hover:shadow-offset-2xl",
-        "focus-visible:-translate-x-[3px] focus-visible:-translate-y-[3px] focus-visible:shadow-offset-2xl",
+        "group flex flex-col gap-[13px] rounded-3xl border border-line-card bg-surface px-[22px] pb-[22px] pt-5",
+        "shadow-soft-md transition-[transform,box-shadow,border-color] duration-[220ms] ease-spring",
+        "hover:-translate-y-1 hover:border-blue/40 hover:shadow-soft-lg",
+        "focus-visible:-translate-y-1 focus-visible:border-blue/40 focus-visible:shadow-soft-lg",
         className,
       )}
     >
@@ -43,7 +43,7 @@ export function ProjectCard({ project, className }: { project: DoerProject; clas
         {project.brief?.trim() || `${project.category} task`}
       </h3>
 
-      <div className="grid grid-cols-1 gap-3 rounded-xl border-[1.5px] border-line-card bg-[#f8f8fb] px-3 py-[9px] min-[380px]:grid-cols-2">
+      <div className="grid grid-cols-1 gap-3 rounded-xl border border-line-card bg-subtle px-3 py-[9px] min-[380px]:grid-cols-2">
           <div className="min-w-0">
             <div className="text-2xs font-bold uppercase tracking-[0.04em] text-ink-muted">Payout</div>
             <div className="break-words text-md font-extrabold tracking-[-0.02em]">
@@ -60,7 +60,7 @@ export function ProjectCard({ project, className }: { project: DoerProject; clas
 
       {progress > 0 ? (
         <div
-          className="h-2 w-full overflow-hidden rounded-full border-[1.5px] border-ink bg-surface"
+          className="h-2 w-full overflow-hidden rounded-full bg-subtle"
           role="progressbar"
           aria-valuenow={progress}
           aria-valuemin={0}
@@ -68,7 +68,7 @@ export function ProjectCard({ project, className }: { project: DoerProject; clas
           aria-label="Work progress"
         >
           <div
-            className="h-full rounded-full bg-gradient-to-r from-coral to-[#ffa07a] transition-[width] duration-300"
+            className="h-full rounded-full bg-gradient-to-r from-blue to-purple transition-[width] duration-300"
             style={{ width: `${progress}%` }}
           />
         </div>

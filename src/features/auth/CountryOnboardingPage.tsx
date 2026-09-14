@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { motion, useReducedMotion } from "framer-motion";
+import { Check, Globe2, ShieldCheck, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
-import { Card } from "@/components/brutal/Card";
+import { StitchBadge, StitchCard, StitchColorCard } from "@/components/stitch/StitchPrimitives";
 import { setMyCountry, updateProfileBasics } from "./api";
 import { supabase } from "@/lib/supabase";
 import { safeNext } from "@/lib/safe-next";
@@ -35,6 +37,7 @@ export function CountryOnboardingPage() {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const next = safeNext(params.get("next"));
+  const reduceMotion = useReducedMotion();
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -72,20 +75,38 @@ export function CountryOnboardingPage() {
     }
   }
 
+  const rise = reduceMotion ? {} : { opacity: 0, y: 14 };
   return (
-    <div className="w-full max-w-lg">
-      <h1 className="text-3xl font-extrabold tracking-[-0.035em]">A couple of details</h1>
-      <p className="mt-3 text-md text-ink-2">
+    <motion.div initial={rise} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }} className="relative w-full max-w-2xl py-4 sm:py-8">
+      <div className="pointer-events-none absolute -left-16 top-0 h-32 w-32 rounded-full bg-purple-light blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute -right-12 bottom-4 h-40 w-40 rounded-full bg-blue-light blur-3xl" aria-hidden="true" />
+      <div className="relative mb-7 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="inline-flex h-11 w-11 rotate-[-5deg] items-center justify-center rounded-2xl bg-purple text-inverse shadow-soft-md"><span className="text-xl font-extrabold">D</span></div>
+          <span className="text-sm font-extrabold tracking-[-0.02em] text-ink">Dolancer</span>
+        </div>
+        <StitchBadge tone="neutral"><ShieldCheck className="h-3.5 w-3.5 text-success-ink" /> Your details are private</StitchBadge>
+      </div>
+      <div className="relative mb-7">
+        <p className="mb-3 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-purple"><Sparkles className="h-4 w-4" aria-hidden="true" /> One quick step</p>
+        <h1 className="text-3xl font-extrabold tracking-[-0.045em] sm:text-4xl lg:text-5xl">Let’s make it official.</h1>
+        <p className="mt-4 max-w-xl text-md leading-relaxed text-ink-2">
         Your country sets your currency, tax handling and timezone. It is set once, so pick the
         one where you are tax resident.
-      </p>
+        </p>
+      </div>
 
-      <Card className="mt-6">
+      <StitchCard className="relative overflow-hidden p-5 sm:p-7">
+        <div className="auth-card-art" aria-hidden="true">
+          <span className="auth-card-art-block auth-card-art-block-one" />
+          <span className="auth-card-art-block auth-card-art-block-two" />
+          <span className="auth-card-art-dot" />
+        </div>
         <form onSubmit={handleSubmit} className="space-y-5">
           {error ? (
             <div
               role="alert"
-              className="rounded-md border-2 border-ink bg-danger-bg px-4 py-3 text-sm font-semibold text-danger-ink"
+              className="rounded-xl border border-danger-ink/15 bg-danger-bg px-4 py-3 text-sm font-semibold text-danger-ink"
             >
               {error}
             </div>
@@ -120,7 +141,7 @@ export function CountryOnboardingPage() {
               id="country"
               value={country}
               onChange={(event) => setCountry(event.target.value)}
-              className="w-full rounded-md border-2 border-ink bg-surface px-4 py-[11px] text-sm font-medium shadow-offset-xs outline-none transition-all focus:-translate-x-px focus:-translate-y-px focus:shadow-offset-sm"
+              className="w-full rounded-xl border border-line-card bg-surface px-4 py-3 text-sm font-medium shadow-soft-sm outline-none transition-all focus:border-purple focus:ring-4 focus:ring-purple-light"
             >
               {COUNTRIES.map((entry) => (
                 <option key={entry.code} value={entry.code}>
@@ -149,7 +170,19 @@ export function CountryOnboardingPage() {
             {busy ? "Saving..." : "Continue to dashboard"}
           </Button>
         </form>
-      </Card>
-    </div>
+      </StitchCard>
+      <div className="mt-6 grid gap-3 sm:grid-cols-2">
+        <StitchColorCard tone="lilac" className="p-4">
+          <Globe2 className="mb-3 h-5 w-5 text-purple" />
+          <p className="text-sm font-bold">Built for global doers</p>
+          <p className="mt-1 text-xs leading-relaxed text-ink-2">Your local currency and timezone keep every detail clear.</p>
+        </StitchColorCard>
+        <StitchColorCard tone="mint" className="p-4">
+          <Check className="mb-3 h-5 w-5 text-success-ink" />
+          <p className="text-sm font-bold">Only once, always useful</p>
+          <p className="mt-1 text-xs leading-relaxed text-ink-2">We use this to route work and handle payouts correctly.</p>
+        </StitchColorCard>
+      </div>
+    </motion.div>
   );
 }

@@ -76,7 +76,7 @@ export function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-2xl border-2 border-ink bg-surface p-6 shadow-offset-lg lg:p-8"
+      className="rounded-[1.75rem] border border-line-card bg-surface p-6 shadow-soft-lg lg:p-8"
     >
       <h2 className="text-2xl font-extrabold tracking-[-0.03em]">Send us a message</h2>
       <p className="mt-2 text-sm leading-relaxed text-ink-2">
@@ -111,7 +111,7 @@ export function ContactForm() {
             </div>
           </div>
         ) : (
-          <p className="rounded-md border border-line-card bg-surface-2 px-3 py-2.5 text-xs text-ink-2">
+          <p className="rounded-xl border border-line-card bg-subtle px-3 py-2.5 text-xs text-ink-2">
             Sending as {user?.email}
           </p>
         )}
@@ -122,7 +122,7 @@ export function ContactForm() {
             id="contact-category"
             value={category}
             onChange={(event) => setCategory(event.target.value)}
-            className="w-full rounded-md border-2 border-ink bg-surface px-4 py-[11px] text-sm font-medium shadow-offset-xs outline-none transition-all focus:-translate-x-px focus:-translate-y-px focus:shadow-offset-sm"
+            className="w-full rounded-xl border border-line-card bg-surface px-4 py-[11px] text-sm font-medium shadow-soft-sm outline-none transition-all focus:border-purple focus:ring-4 focus:ring-purple/15"
           >
             {TICKET_CATEGORIES.map((option) => (
               <option key={option.id} value={option.id}>
@@ -173,7 +173,7 @@ export function ContactForm() {
       {handedOff ? (
         <div
           role="status"
-          className="mt-5 flex items-start gap-2.5 rounded-md border-2 border-ink bg-success-bg px-4 py-3"
+          className="mt-5 flex items-start gap-2.5 rounded-xl border border-success-ink/20 bg-success-bg px-4 py-3"
         >
           <Check className="mt-0.5 h-4 w-4 shrink-0 text-success-ink" aria-hidden="true" />
           <p className="text-xs font-semibold leading-snug text-success-ink">

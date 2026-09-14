@@ -97,7 +97,7 @@ export function TicketsPage() {
               id="category"
               value={category}
               onChange={(event) => setCategory(event.target.value)}
-              className="w-full rounded-md border-2 border-ink bg-surface px-4 py-[11px] text-sm font-medium shadow-offset-xs outline-none transition-all focus:-translate-x-px focus:-translate-y-px focus:shadow-offset-sm"
+              className="w-full rounded-md border border-line-card bg-surface px-4 py-[11px] text-sm font-medium shadow-soft-sm outline-none transition-all focus:shadow-soft-sm"
             >
               {TICKET_CATEGORIES.map((option) => (
                 <option key={option.id} value={option.id}>

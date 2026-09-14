@@ -17,15 +17,15 @@ export function WorkingLinkCard({
   return (
     <div
       className={cn(
-        "rounded-xl border-2 p-4 shadow-offset-sm",
-        hasLink ? "border-ink bg-surface" : "border-ink bg-warning-bg",
+        "relative overflow-hidden rounded-2xl border border-line-card p-4 shadow-soft-md",
+        hasLink ? "bg-surface" : "bg-gradient-to-br from-warning-bg via-surface to-lime-light",
       )}
     >
       <div className="flex items-center gap-2">
         <span
           className={cn(
-            "flex h-6 w-6 items-center justify-center rounded-md border-[1.5px] border-ink",
-            hasLink ? "bg-success-bg text-success-ink" : "bg-lime",
+            "flex h-8 w-8 items-center justify-center rounded-full border border-line-card",
+            hasLink ? "bg-success-bg text-success-ink" : "bg-lime-light text-warning-ink",
           )}
         >
           {hasLink ? (
