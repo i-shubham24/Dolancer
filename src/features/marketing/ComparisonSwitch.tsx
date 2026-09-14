@@ -60,7 +60,7 @@ export function ComparisonSwitch() {
         <div
           role="tablist"
           aria-label="Compare ways of working"
-          className="inline-flex shrink-0 rounded-full border-2 border-ink bg-subtle p-1 shadow-offset-sm"
+          className="inline-flex shrink-0 rounded-full border border-line-card bg-subtle p-1 shadow-soft-sm"
         >
           {(["usual", "here"] as const).map((option) => {
             const selected = option === side;
@@ -75,9 +75,9 @@ export function ComparisonSwitch() {
                   "rounded-full px-4 py-2 text-sm font-extrabold tracking-[-0.01em] transition-all duration-[120ms]",
                   selected
                     ? option === "here"
-                      ? "border-[1.5px] border-ink bg-lime shadow-offset-xs"
-                      : "border-[1.5px] border-ink bg-surface shadow-offset-xs"
-                    : "border-[1.5px] border-transparent text-ink-2 hover:text-ink",
+                      ? "border border-coral bg-lime shadow-soft-sm"
+                      : "border border-line-card bg-surface shadow-soft-sm"
+                    : "border border-transparent text-ink-2 hover:text-ink",
                 )}
               >
                 {option === "usual" ? "The usual way" : "Here"}
@@ -92,14 +92,14 @@ export function ComparisonSwitch() {
           <li
             key={row.question}
             className={cn(
-              "rounded-2xl border-2 border-ink p-5 transition-all duration-[200ms] ease-spring",
-              isHere ? "bg-surface shadow-offset-md" : "bg-neutral-bg shadow-offset-xs",
+              "rounded-2xl border border-line-card p-5 transition-all duration-[200ms] ease-spring",
+              isHere ? "bg-surface shadow-soft-md" : "bg-neutral-bg shadow-soft-sm",
             )}
           >
             <div className="flex items-start gap-3">
               <span
                 className={cn(
-                  "flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border-[1.5px] border-ink",
+                  "flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-line-card",
                   isHere ? "bg-lime" : "bg-danger-bg",
                 )}
               >

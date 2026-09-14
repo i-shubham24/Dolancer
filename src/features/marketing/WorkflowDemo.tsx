@@ -93,7 +93,7 @@ export function WorkflowDemo() {
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-start">
       <div>
-        <h2 id="walkthrough" className="text-4xl font-extrabold tracking-[-0.04em]">
+        <h2 id="walkthrough" className="text-3xl font-extrabold tracking-[-0.04em] sm:text-4xl">
           What a project actually looks like
         </h2>
         <p className="mt-3 max-w-md text-md text-ink-2">
@@ -112,17 +112,19 @@ export function WorkflowDemo() {
                   aria-controls="workflow-panel"
                   onClick={() => setIndex(entryIndex)}
                   className={cn(
-                    "flex w-full items-center gap-3 rounded-xl border-2 px-4 py-3 text-left",
-                    "transition-all duration-[150ms] ease-spring",
+                    "flex w-full items-center gap-3 rounded-2xl border px-4 py-3 text-left",
+                    "transition-all duration-[180ms] ease-spring",
                     active
-                      ? "-translate-x-[2px] -translate-y-[2px] border-ink bg-surface shadow-offset-md"
-                      : "border-transparent bg-transparent hover:border-ink hover:bg-surface",
+                      ? "border-primary/20 bg-surface shadow-soft-md"
+                      : "border-transparent bg-transparent hover:border-line-card hover:bg-surface/80",
                   )}
                 >
                   <span
                     className={cn(
-                      "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border-[1.5px] border-ink text-sm font-extrabold",
-                      active ? "bg-coral" : "bg-subtle",
+                      "flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-sm font-extrabold",
+                      active
+                        ? "border-primary/20 bg-primary-light text-primary"
+                        : "border-line-card bg-subtle text-ink-2",
                     )}
                   >
                     {entryIndex + 1}
@@ -143,7 +145,7 @@ export function WorkflowDemo() {
         ref={tilt.ref}
         onPointerMove={tilt.onPointerMove}
         onPointerLeave={tilt.onPointerLeave}
-        className="cursor-tilt rounded-3xl border-2 border-ink bg-surface p-6 shadow-offset-xl"
+        className="cursor-tilt rounded-[2rem] border border-line-card bg-surface p-6 shadow-soft-lg"
       >
         <div className="flex flex-wrap items-center gap-2">
           <CategoryPill>Writing and content</CategoryPill>
@@ -155,7 +157,7 @@ export function WorkflowDemo() {
         </h3>
         <p className="mt-2 text-sm leading-relaxed text-ink-2">{stage.body}</p>
 
-        <div className="mt-5 grid grid-cols-2 gap-3 rounded-xl border-[1.5px] border-line-card bg-[#f8f8fb] px-4 py-3">
+        <div className="mt-5 grid grid-cols-2 gap-3 rounded-2xl border border-line-card bg-surface-2 px-4 py-3">
           <div>
             <div className="text-2xs font-bold uppercase tracking-[0.04em] text-ink-muted">
               You earn
@@ -171,7 +173,7 @@ export function WorkflowDemo() {
         </div>
 
         {stage.id === "link" ? (
-          <div className="mt-4 flex items-center gap-2 rounded-md border-2 border-ink bg-surface px-3.5 py-2.5 shadow-offset-xs">
+          <div className="mt-4 flex items-center gap-2 rounded-xl border border-line-card bg-surface-2 px-3.5 py-2.5 shadow-soft-sm">
             <Link2 className="h-3.5 w-3.5 shrink-0 text-ink-muted" aria-hidden="true" />
             <span className="text-sm text-ink-3">https://</span>
             <span className="ml-0.5 inline-block h-4 w-px animate-pulse bg-ink" aria-hidden="true" />
@@ -184,9 +186,9 @@ export function WorkflowDemo() {
               <span>Progress</span>
               <span>{stage.progress}%</span>
             </div>
-            <div className="h-2.5 w-full overflow-hidden rounded-full border-[1.5px] border-ink bg-surface">
+            <div className="h-2.5 w-full overflow-hidden rounded-full bg-subtle">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-coral to-[#ffa07a] transition-[width] duration-500 ease-spring"
+                className="h-full rounded-full bg-gradient-to-r from-primary to-purple transition-[width] duration-500 ease-spring"
                 style={{ width: `${stage.progress}%` }}
               />
             </div>
@@ -197,10 +199,10 @@ export function WorkflowDemo() {
           <div
             aria-hidden="true"
             className={cn(
-              "flex items-center justify-center gap-2 rounded-md border-2 border-ink px-5 py-3 text-sm font-bold",
+              "flex items-center justify-center gap-2 rounded-full border px-5 py-3 text-sm font-bold transition-colors",
               stage.action.enabled
-                ? "bg-coral text-ink shadow-offset-md"
-                : "bg-muted text-ink-3 opacity-60",
+                ? "border-primary/20 bg-primary text-inverse shadow-soft-md"
+                : "border-line-card bg-muted text-ink-3 opacity-60",
             )}
           >
             <ActionIcon className="h-4 w-4" />

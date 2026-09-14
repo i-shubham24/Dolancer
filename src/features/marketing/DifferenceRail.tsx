@@ -13,8 +13,23 @@ import { cn } from "@/lib/cn";
 import { DIFFERENCES } from "./content";
 
 const ICONS = [Ban, Wallet, UserCheck, Clock, ShieldCheck, TrendingUp];
-const TINTS = ["bg-coral", "bg-blue", "bg-lime", "bg-purple", "bg-warning-bg", "bg-success-bg"];
-const INK = ["text-ink", "text-inverse", "text-ink", "text-inverse", "text-ink", "text-ink"];
+const TINTS = [
+  "bg-primary-light",
+  "bg-purple-light",
+  "bg-accent-light",
+  "bg-secondary-light",
+  "bg-warning-bg",
+  "bg-success-bg",
+];
+const INK = ["text-primary", "text-purple", "text-ink", "text-secondary", "text-warning-ink", "text-success-ink"];
+const CARD_TINTS = [
+  "bg-primary-light/55",
+  "bg-purple-light/55",
+  "bg-accent-light/55",
+  "bg-secondary-light/55",
+  "bg-warning-bg/55",
+  "bg-success-bg/55",
+];
 
 /**
  * A deck you push, rather than a grid you scan.
@@ -83,7 +98,7 @@ export function DifferenceRail() {
     <div>
       <div className="flex flex-wrap items-end justify-between gap-6">
         <div>
-          <span className="inline-flex items-center rounded-full bg-ink px-3 py-1 text-2xs font-extrabold uppercase tracking-[0.08em] text-inverse">
+          <span className="inline-flex items-center rounded-full bg-purple-light px-3 py-1 text-2xs font-extrabold uppercase tracking-[0.08em] text-purple">
             Drag the cards
           </span>
           <h2 id="differences" className="mt-4 max-w-lg text-4xl font-extrabold tracking-[-0.04em]">
@@ -105,11 +120,11 @@ export function DifferenceRail() {
               disabled={disabled}
               aria-label={label}
               className={cn(
-                "flex h-11 w-11 items-center justify-center rounded-full border-2 border-ink",
+                "flex h-11 w-11 items-center justify-center rounded-full border border-line-card",
                 "transition-all duration-[120ms]",
                 disabled
                   ? "cursor-not-allowed bg-muted opacity-40"
-                  : "bg-surface shadow-offset-sm hover:-translate-x-px hover:-translate-y-px hover:bg-lime hover:shadow-offset-md active:translate-x-[2px] active:translate-y-[2px] active:shadow-offset-xs",
+                  : "bg-surface shadow-soft-sm hover:-translate-y-0.5 hover:border-primary/25 hover:bg-primary-light hover:shadow-soft-md active:translate-y-0",
               )}
             >
               <Icon className="h-4 w-4" aria-hidden="true" />
@@ -143,14 +158,15 @@ export function DifferenceRail() {
             <article
               key={item.title}
               className={cn(
-                "w-[17rem] shrink-0 rounded-2xl border-2 border-ink bg-surface p-6",
-                "shadow-offset-md transition-all duration-[180ms] ease-spring",
-                "hover:-translate-y-1 hover:shadow-offset-lg sm:w-[19rem]",
+                "w-[17rem] shrink-0 rounded-[1.75rem] border border-line-card p-6",
+                "shadow-soft-md transition-all duration-[180ms] ease-spring",
+                CARD_TINTS[index % CARD_TINTS.length],
+                "hover:-translate-y-1 hover:border-primary/20 hover:shadow-soft-lg sm:w-[19rem]",
               )}
             >
               <span
                 className={cn(
-                  "flex h-12 w-12 items-center justify-center rounded-xl border-2 border-ink shadow-offset-xs",
+                  "flex h-12 w-12 items-center justify-center rounded-2xl border border-line-card shadow-soft-sm",
                   TINTS[index % TINTS.length],
                   INK[index % INK.length],
                 )}

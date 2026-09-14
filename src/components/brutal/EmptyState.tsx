@@ -21,13 +21,13 @@ export function EmptyState({
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed border-ink",
-        "bg-surface px-6 py-12 text-center shadow-offset-sm",
+        "flex flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-line-card",
+        "bg-surface px-6 py-12 text-center shadow-soft-md",
         className,
       )}
     >
       {icon ? (
-        <span className="flex h-14 w-14 items-center justify-center rounded-lg border-2 border-ink bg-lime shadow-offset-sm">
+        <span className="flex h-14 w-14 items-center justify-center rounded-2xl border border-line-card bg-accent-light shadow-soft-sm">
           {icon}
         </span>
       ) : null}
@@ -57,8 +57,8 @@ export function ErrorState({
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center gap-4 rounded-2xl border-2 border-ink",
-        "bg-danger-bg px-6 py-10 text-center shadow-offset-sm",
+        "flex flex-col items-center justify-center gap-4 rounded-2xl border border-danger-ink/15",
+        "bg-danger-bg px-6 py-10 text-center shadow-soft-md",
         className,
       )}
       role="alert"
@@ -73,7 +73,7 @@ export function ErrorState({
         <button
           type="button"
           onClick={onRetry}
-          className="rounded-md border-2 border-ink bg-surface px-4 py-2 text-xs font-extrabold shadow-offset-xs transition-all hover:-translate-x-px hover:-translate-y-px hover:shadow-offset-sm"
+          className="rounded-full border border-line-card bg-surface px-4 py-2 text-xs font-extrabold shadow-soft-sm transition-all hover:-translate-y-0.5 hover:shadow-soft-md"
         >
           Try again
         </button>

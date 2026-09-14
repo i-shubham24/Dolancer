@@ -70,16 +70,16 @@ export function FloatingCapsules() {
       className="pointer-events-none relative hidden h-[24rem] w-full lg:block"
     >
       {/* The disc they orbit. */}
-      <div className="absolute left-1/2 top-1/2 h-44 w-44 -translate-x-1/2 -translate-y-1/2 rotate-6 rounded-full border-2 border-ink bg-blue" />
-      <div className="absolute left-1/2 top-1/2 h-44 w-44 -translate-x-[46%] -translate-y-[54%] rounded-full border-2 border-ink bg-purple/20" />
+      <div className="absolute left-1/2 top-1/2 h-44 w-44 -translate-x-1/2 -translate-y-1/2 rotate-6 rounded-full border border-line-card bg-blue" />
+      <div className="absolute left-1/2 top-1/2 h-44 w-44 -translate-x-[46%] -translate-y-[54%] rounded-full border border-line-card bg-purple/20" />
 
       {CAPSULES.map((capsule) => (
         <span
           key={capsule.label}
           style={{ ...capsule.style, animationDelay: capsule.delay }}
           className={cn(
-            "float-bob absolute inline-flex items-center gap-2 rounded-full border-2 border-ink px-3.5 py-2",
-            "text-xs font-extrabold whitespace-nowrap shadow-offset-sm",
+            "float-bob absolute inline-flex items-center gap-2 rounded-full border border-line-card px-3.5 py-2",
+            "text-xs font-extrabold whitespace-nowrap shadow-soft-sm",
             capsule.tone,
           )}
         >

@@ -139,7 +139,7 @@ export function ChatPanel({ projectId }: { projectId: string }) {
 
   return (
     <Card className="flex flex-col p-0">
-      <div className="flex items-center gap-2 border-b-2 border-ink px-5 py-3.5">
+      <div className="flex items-center gap-2 border-b border-line-card px-5 py-3.5">
         <MessagesSquare className="h-4 w-4 text-ink-muted" aria-hidden="true" />
         <h2 className="text-sm font-extrabold tracking-[-0.01em]">Your supervisor</h2>
         <span className="ml-auto text-[11px] text-ink-muted">
@@ -168,7 +168,7 @@ export function ChatPanel({ projectId }: { projectId: string }) {
               <div key={message.id} className={cn("flex", mine ? "justify-end" : "justify-start")}>
                 <div
                   className={cn(
-                    "max-w-[85%] rounded-xl border-[1.5px] border-ink px-3.5 py-2.5 shadow-offset-xs",
+                    "max-w-[85%] rounded-xl border border-line-card px-3.5 py-2.5 shadow-soft-sm",
                     mine ? "bg-lime" : "bg-surface-2",
                   )}
                 >
@@ -184,7 +184,7 @@ export function ChatPanel({ projectId }: { projectId: string }) {
                       key={file.id}
                       type="button"
                       onClick={() => void openAttachment(file.bucket, file.objectPath)}
-                      className="mt-2 flex w-full items-center gap-1.5 rounded-md border border-ink bg-surface px-2.5 py-1.5 text-left text-xs font-bold hover:bg-hover"
+                      className="mt-2 flex w-full items-center gap-1.5 rounded-md border border-line-card bg-surface px-2.5 py-1.5 text-left text-xs font-bold hover:bg-hover"
                     >
                       <Paperclip className="h-3 w-3 shrink-0" aria-hidden="true" />
                       <span className="truncate">{file.filename}</span>
@@ -202,7 +202,7 @@ export function ChatPanel({ projectId }: { projectId: string }) {
         <div ref={endRef} />
       </div>
 
-      <div className="space-y-2 border-t-2 border-ink px-5 py-4">
+      <div className="space-y-2 border-t border-line-card px-5 py-4">
         <Textarea
           rows={2}
           value={draft}

@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { Link, useParams } from "react-router-dom";
+import { motion, useReducedMotion } from "framer-motion";
 import { useQueryClient } from "@tanstack/react-query";
 import { ArrowLeft, AlertTriangle, RotateCcw } from "lucide-react";
 import { Card } from "@/components/brutal/Card";
@@ -9,6 +10,7 @@ import { DeadlineBadge } from "@/components/brutal/DeadlineBadge";
 import { Skeleton, LoadingAnnounce } from "@/components/brutal/Skeleton";
 import { EmptyState, ErrorState } from "@/components/brutal/EmptyState";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/cn";
 import { formatPaise } from "@/lib/paise";
 import { formatDateTime } from "@/lib/datetime";
 import { statusDisplay } from "@/lib/status";
@@ -31,6 +33,7 @@ import { LifecycleActions } from "./LifecycleActions";
  * client identity, so there is nothing else available to render even by accident.
  */
 export function WorkbenchPage() {
+  const reduceMotion = useReducedMotion();
   const { id = "" } = useParams();
   const project = useProject(id);
   const queryClient = useQueryClient();
@@ -46,7 +49,8 @@ export function WorkbenchPage() {
 
   if (project.isLoading) {
     return (
-      <div className="space-y-6">
+      <motion.div className="relative space-y-7" initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }}>
+        <div className="pointer-events-none absolute -left-24 top-16 -z-10 h-72 w-72 rounded-full bg-purple-light/70 blur-3xl" aria-hidden="true" />
         <LoadingAnnounce label="Loading this project" />
         <Skeleton className="h-8 w-40" />
         <Skeleton className="h-12 w-3/4" />
@@ -54,7 +58,7 @@ export function WorkbenchPage() {
           <Skeleton className="h-64 w-full rounded-xl" />
           <Skeleton className="h-64 w-full rounded-xl" />
         </div>
-      </div>
+      </motion.div>
     );
   }
 
@@ -85,7 +89,7 @@ export function WorkbenchPage() {
   const status = statusDisplay(data.status, data.workingDocUrl);
 
   return (
-    <div className="space-y-6">
+    <motion.div className="relative space-y-7" initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }}>
       <Link
         to="/work"
         className="inline-flex items-center gap-1.5 text-sm font-bold text-ink-2 hover:text-ink"
@@ -94,20 +98,30 @@ export function WorkbenchPage() {
         My work
       </Link>
 
-      <header className="space-y-3">
+      <header className="relative overflow-hidden rounded-[1.75rem] border border-line-card bg-gradient-to-br from-purple-light/70 via-surface to-blue-light/60 p-6 shadow-soft-md sm:p-8">
+        <div className="relative space-y-3">
         <div className="flex flex-wrap items-center gap-2">
           <CategoryPill>{data.category}</CategoryPill>
           <StatusBadge tone={status.tone} label={status.label} />
           <DeadlineBadge deadline={data.deliveryAt} />
         </div>
-        <h1 className="text-3xl font-extrabold leading-tight tracking-[-0.035em]">
+        <h1 className="break-words text-3xl font-extrabold leading-tight tracking-[-0.035em]">
           {data.brief?.trim().split("\n")[0] || `${data.category} task`}
         </h1>
+        <div className="mt-5 flex max-w-xl items-center gap-2 rounded-full bg-surface/75 p-1.5 shadow-soft-sm" aria-label="Project lifecycle">
+          {["Assigned", "In progress", "Review", "Approved"].map((step, index) => (
+            <span key={step} className="flex min-w-0 flex-1 items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-ink-muted">
+              <span className={cn("flex h-6 w-6 shrink-0 items-center justify-center rounded-full", index === 1 ? "bg-purple text-inverse" : "bg-surface-2 text-ink-2")}>{index + 1}</span>
+              <span className="hidden truncate sm:inline">{step}</span>
+            </span>
+          ))}
+        </div>
+        </div>
       </header>
 
       {/* Rework notice sits above everything: it is the reason the work reopened. */}
       {data.lastBounceReason ? (
-        <Card className="border-2 bg-danger-bg">
+        <Card className="border bg-danger-bg">
           <div className="flex items-start gap-2.5">
             <RotateCcw className="mt-0.5 h-4 w-4 shrink-0 text-danger-ink" aria-hidden="true" />
             <div>
@@ -121,7 +135,7 @@ export function WorkbenchPage() {
       ) : null}
 
       {data.qcBounceCount >= 2 ? (
-        <div className="flex items-start gap-2.5 rounded-xl border-2 border-ink bg-warning-bg px-4 py-3 shadow-offset-xs">
+        <div className="flex items-start gap-2.5 rounded-xl border border-line-card bg-warning-bg px-4 py-3 shadow-soft-sm">
           <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-warning-ink" aria-hidden="true" />
           <p className="text-xs font-semibold leading-snug text-warning-ink">
             This work has come back {data.qcBounceCount} times. Talk to your supervisor before
@@ -132,7 +146,7 @@ export function WorkbenchPage() {
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
         <div className="min-w-0 space-y-5">
-          <Card>
+          <Card className="rounded-3xl border border-line-card shadow-soft-md">
             <h2 className="text-xs font-extrabold uppercase tracking-[0.05em] text-ink-muted">
               The brief
             </h2>
@@ -142,7 +156,7 @@ export function WorkbenchPage() {
           </Card>
 
           {data.revisionCount > 0 && data.revisionReason ? (
-            <Card>
+            <Card className="rounded-3xl border border-line-card shadow-soft-md">
               <h2 className="text-xs font-extrabold uppercase tracking-[0.05em] text-ink-muted">
                 Revision requested ({data.revisionCount})
               </h2>
@@ -194,6 +208,6 @@ export function WorkbenchPage() {
           </Card>
         </aside>
       </div>
-    </div>
+    </motion.div>
   );
 }

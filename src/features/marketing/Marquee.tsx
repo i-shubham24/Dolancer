@@ -19,7 +19,7 @@ export function Marquee() {
 
   return (
     <div className="relative overflow-x-clip py-6">
-      <div className="w-[112%] -translate-x-[6%] -rotate-[1.8deg] overflow-hidden border-y-2 border-ink bg-surface py-3.5">
+      <div className="w-[112%] -translate-x-[6%] -rotate-[1.8deg] overflow-hidden border-y border-line-card bg-surface py-3.5">
         <div className="marquee-track flex w-max">
           {[0, 1].map((copy) => (
             <ul
@@ -34,7 +34,7 @@ export function Marquee() {
                   </span>
                   <span
                     aria-hidden="true"
-                    className="h-2.5 w-2.5 shrink-0 rotate-45 border-[1.5px] border-ink bg-lime"
+                    className="h-2.5 w-2.5 shrink-0 rotate-45 border border-line-card bg-lime"
                   />
                 </li>
               ))}

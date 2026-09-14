@@ -148,12 +148,12 @@ export function NotificationsPage() {
                 hoverable={Boolean(item.deepLink)}
                 className={cn(
                   "flex items-center gap-3.5",
-                  !item.readAt && "border-2 bg-lime-light",
+                  !item.readAt && "border bg-lime-light",
                 )}
               >
                 <span
                   className={cn(
-                    "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border-[1.5px] border-ink",
+                    "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-line-card",
                     item.readAt ? "bg-subtle text-ink-muted" : "bg-lime",
                   )}
                 >

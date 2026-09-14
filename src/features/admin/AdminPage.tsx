@@ -54,7 +54,7 @@ export function AdminPage() {
   if (role !== "admin") {
     return (
       <div className="mx-auto max-w-xl">
-        <Card className="border-2 text-center">
+        <Card className="border text-center">
           <ShieldAlert className="mx-auto h-8 w-8 text-ink-muted" aria-hidden="true" />
           <h1 className="mt-3 text-2xl font-extrabold tracking-[-0.03em]">Not available</h1>
           <p className="mt-2 text-sm text-ink-2">
@@ -75,7 +75,7 @@ export function AdminPage() {
           as their backend views land.
         </p>
         {isDemo() ? (
-          <p className="mt-3 inline-block rounded-full border-[1.5px] border-ink bg-lime px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wide">
+          <p className="mt-3 inline-block rounded-full border border-line-card bg-lime px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wide">
             Sample data
           </p>
         ) : null}

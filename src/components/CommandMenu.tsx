@@ -103,9 +103,9 @@ export function CommandMenu() {
         <Dialog.Overlay className="fixed inset-0 z-50 bg-ink/40" />
         <Dialog.Content
           aria-label="Quick navigation"
-          className="fixed left-1/2 top-[12vh] z-50 w-[calc(100vw-2rem)] max-w-lg -translate-x-1/2 overflow-hidden rounded-2xl border-2 border-ink bg-surface shadow-modal focus:outline-none"
+          className="fixed left-1/2 top-[12vh] z-50 w-[calc(100vw-2rem)] max-w-lg -translate-x-1/2 overflow-hidden rounded-2xl border border-line-card bg-surface shadow-soft-lg focus:outline-none"
         >
-          <div className="flex items-center gap-2.5 border-b-2 border-ink px-4 py-3">
+          <div className="flex items-center gap-2.5 border-b border-line-subtle px-4 py-3">
             <Search className="h-4 w-4 shrink-0 text-ink-muted" aria-hidden="true" />
             <Dialog.Title className="sr-only">Quick navigation</Dialog.Title>
             <input
@@ -131,7 +131,7 @@ export function CommandMenu() {
               spellCheck={false}
               className="min-w-0 flex-1 bg-transparent text-sm font-semibold outline-none placeholder:text-ink-3"
             />
-            <kbd className="shrink-0 rounded-md border-[1.5px] border-ink bg-subtle px-1.5 py-0.5 font-mono text-[10px] font-bold text-ink-2">
+            <kbd className="shrink-0 rounded-md border border-line-card bg-subtle px-1.5 py-0.5 font-mono text-[10px] font-bold text-ink-2">
               ESC
             </kbd>
           </div>
@@ -152,15 +152,15 @@ export function CommandMenu() {
                     }}
                     onClick={() => go(action.to)}
                     className={cn(
-                      "flex w-full items-center gap-3 rounded-lg border-[1.5px] px-3 py-2.5 text-left transition-colors",
+                      "flex w-full items-center gap-3 rounded-lg border px-3 py-2.5 text-left transition-colors",
                       index === active
-                        ? "border-ink bg-lime-light"
+                        ? "border-primary/20 bg-primary-light"
                         : "border-transparent",
                     )}
                   >
                     <span
                       className={cn(
-                        "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border-[1.5px] border-ink",
+                        "flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-line-card",
                         index === active ? "bg-lime" : "bg-surface-2",
                       )}
                     >

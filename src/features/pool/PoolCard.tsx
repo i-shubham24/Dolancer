@@ -39,13 +39,14 @@ export function PoolCard({
       onClick={onOpen}
       aria-label={`Open ${offer.category} task, ${formatPaise(offer.payoutPaise)}`}
       className={cn(
-        "w-full rounded-2xl border-2 border-ink bg-surface p-5 text-left",
-        "transition-all duration-[180ms] ease-spring",
+        "group relative w-full overflow-hidden rounded-[1.5rem] border border-line-card bg-surface p-5 text-left",
+        "transition-all duration-[220ms] ease-spring hover:border-purple/30",
         selected
-          ? "-translate-x-[3px] -translate-y-[3px] shadow-offset-2xl"
-          : "shadow-offset-md hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-offset-lg",
+          ? "-translate-y-1 border-purple/40 shadow-soft-lg"
+          : "shadow-soft-md hover:-translate-y-1 hover:shadow-soft-lg",
       )}
     >
+      <span className="pointer-events-none absolute -right-16 -top-20 h-48 w-48 rounded-full bg-purple-light/70 blur-3xl transition-transform duration-500 group-hover:scale-125" aria-hidden="true" />
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="min-w-0 flex-1 space-y-2.5">
           <div className="flex flex-wrap items-center gap-2">
@@ -53,7 +54,7 @@ export function PoolCard({
             {!hideAccessories ? <DeadlineBadge deadline={offer.deliveryAt} /> : null}
           </div>
 
-          <h3 className="text-lg font-extrabold leading-[1.3] tracking-[-0.025em]">
+          <h3 className="relative text-lg font-extrabold leading-[1.3] tracking-[-0.025em] transition-colors group-hover:text-purple">
             {offer.brief?.trim().split("\n")[0] || `${offer.category} task`}
           </h3>
 
@@ -69,7 +70,7 @@ export function PoolCard({
           ) : null}
         </div>
 
-        <div className="shrink-0 text-right">
+        <div className="relative shrink-0 rounded-2xl bg-lime-light/70 px-3 py-2 text-right">
           <div className="text-2xs font-bold uppercase tracking-[0.05em] text-ink-muted">
             You earn
           </div>

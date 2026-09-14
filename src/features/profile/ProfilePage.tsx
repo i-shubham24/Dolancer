@@ -142,7 +142,7 @@ export function ProfilePage() {
       </header>
 
       {needsApplication ? (
-        <Card className="border-2 bg-lime-light">
+        <Card className="border bg-lime-light">
           <h2 className="text-lg font-extrabold tracking-[-0.025em]">Apply to join</h2>
           <p className="mt-1 text-sm text-ink-2">
             Tell us what you do and where you are strongest. A couple of sentences is plenty.
@@ -174,7 +174,7 @@ export function ProfilePage() {
           </div>
         </Card>
       ) : applicationStatus && role !== "doer" ? (
-        <Card className={`border-2 ${APPLICATION_COPY[applicationStatus]?.tone ?? ""}`}>
+        <Card className={`border ${APPLICATION_COPY[applicationStatus]?.tone ?? ""}`}>
           <h2 className="text-lg font-extrabold tracking-[-0.025em]">
             {APPLICATION_COPY[applicationStatus]?.title}
           </h2>

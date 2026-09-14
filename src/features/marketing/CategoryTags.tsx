@@ -33,9 +33,9 @@ export function CategoryTags() {
         <li key={category.name}>
           <div
             className={cn(
-              "group relative flex h-full overflow-hidden rounded-2xl border-2 border-ink bg-surface",
-              "shadow-offset-sm transition-all duration-[220ms] ease-spring",
-              "hover:rotate-0 hover:-translate-y-1.5 hover:shadow-offset-lg",
+              "group relative flex h-full overflow-hidden rounded-2xl border border-line-card bg-surface",
+              "shadow-soft-sm transition-all duration-[220ms] ease-spring",
+              "hover:rotate-0 hover:-translate-y-1.5 hover:shadow-soft-lg",
               TILTS[index % TILTS.length],
             )}
           >
@@ -43,7 +43,7 @@ export function CategoryTags() {
             <span
               aria-hidden="true"
               className={cn(
-                "w-3 shrink-0 border-r-2 border-ink transition-all duration-[220ms] group-hover:w-5",
+                "w-3 shrink-0 border-r border-line-card transition-all duration-[220ms] group-hover:w-5",
                 BANDS[index % BANDS.length],
               )}
             />
@@ -52,7 +52,7 @@ export function CategoryTags() {
               {/* The punched hole, as on a tag that gets tied to something. */}
               <span
                 aria-hidden="true"
-                className="absolute left-2.5 top-6 h-2.5 w-2.5 rounded-full border-[1.5px] border-ink bg-canvas"
+                className="absolute left-2.5 top-6 h-2.5 w-2.5 rounded-full border border-line-card bg-canvas"
               />
 
               <div className="flex items-start justify-between gap-3">

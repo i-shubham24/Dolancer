@@ -12,7 +12,7 @@ export function Skeleton({ className }: { className?: string }) {
 export function SkeletonCard({ className }: { className?: string }) {
   return (
     <div
-      className={cn("rounded-xl border-[1.5px] border-ink bg-surface p-5 shadow-offset-sm", className)}
+      className={cn("rounded-2xl border border-line-card bg-surface p-5 shadow-soft-sm", className)}
       aria-hidden="true"
     >
       <Skeleton className="h-3 w-24" />

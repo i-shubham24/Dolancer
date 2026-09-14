@@ -51,7 +51,7 @@ export function PayoutExplainer() {
               className="flex items-center justify-between text-sm font-extrabold"
             >
               An example project payout
-              <span className="rounded-full border-[1.5px] border-ink bg-lime px-2.5 py-0.5 text-xs tabular-nums shadow-offset-xs">
+              <span className="rounded-full border border-primary/15 bg-accent-light px-2.5 py-0.5 text-xs tabular-nums shadow-soft-sm">
                 {formatPaise(grossPaise)}
               </span>
             </label>
@@ -73,7 +73,7 @@ export function PayoutExplainer() {
               className="flex items-center justify-between text-sm font-extrabold"
             >
               If your withholding rate is
-              <span className="rounded-full border-[1.5px] border-ink bg-surface px-2.5 py-0.5 text-xs tabular-nums shadow-offset-xs">
+              <span className="rounded-full border border-line-card bg-surface px-2.5 py-0.5 text-xs tabular-nums shadow-soft-sm">
                 {ratePercent}%
               </span>
             </label>
@@ -100,7 +100,7 @@ export function PayoutExplainer() {
           corner out, and against the viewport edge it reads as clipped. */}
       <div className="flex justify-center lg:pr-6">
         <div className="relative w-full max-w-sm rotate-[1.2deg] transition-transform duration-300 ease-spring hover:rotate-0">
-          <div className="torn-bottom border-x-2 border-t-2 border-ink bg-surface px-7 pt-7 shadow-offset-lg">
+          <div className="torn-bottom rounded-[2rem] border border-line-card bg-surface px-7 pt-7 shadow-soft-lg">
             <div className="text-center">
               <p className="font-mono text-2xs font-bold uppercase tracking-[0.18em] text-ink-muted">
                 Dolancer
@@ -112,7 +112,7 @@ export function PayoutExplainer() {
 
             <div
               aria-hidden="true"
-              className="my-5 border-t-2 border-dashed border-ink/25"
+              className="my-5 border-t border-dashed border-line-card"
             />
 
             <dl className="space-y-3.5 font-mono text-sm" aria-live="polite">
@@ -130,7 +130,7 @@ export function PayoutExplainer() {
 
             <div
               aria-hidden="true"
-              className="my-5 border-t-2 border-dashed border-ink/25"
+              className="my-5 border-t border-dashed border-line-card"
             />
 
             <div className="flex items-baseline justify-between gap-4">
@@ -144,7 +144,7 @@ export function PayoutExplainer() {
 
             {/* A single split bar, in place of a chart. */}
             <div
-              className="mt-5 flex h-3.5 overflow-hidden rounded-full border-2 border-ink"
+              className="mt-5 flex h-3.5 overflow-hidden rounded-full bg-subtle"
               aria-hidden="true"
             >
               <div
@@ -152,21 +152,21 @@ export function PayoutExplainer() {
                 style={{ width: `${netShare}%` }}
               />
               <div
-                className="border-l-2 border-ink bg-coral transition-[width] duration-200"
+                className="bg-primary transition-[width] duration-200"
                 style={{ width: `${100 - netShare}%` }}
               />
             </div>
             <div className="mt-2.5 flex flex-wrap justify-between gap-2 font-mono text-2xs font-bold">
               <span className="flex items-center gap-1.5">
                 <span
-                  className="h-2.5 w-2.5 rounded-full border border-ink bg-lime"
+                  className="h-2.5 w-2.5 rounded-full bg-secondary"
                   aria-hidden="true"
                 />
                 You receive
               </span>
               <span className="flex items-center gap-1.5">
                 <span
-                  className="h-2.5 w-2.5 rounded-full border border-ink bg-coral"
+                  className="h-2.5 w-2.5 rounded-full bg-primary"
                   aria-hidden="true"
                 />
                 Withheld

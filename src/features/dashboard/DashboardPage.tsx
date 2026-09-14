@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Inbox, Layers, ArrowRight, Wallet, Receipt, Briefcase } from "lucide-react";
 import { SkeletonCard, LoadingAnnounce } from "@/components/brutal/Skeleton";
@@ -46,6 +47,7 @@ const FILTERS: { id: WorkFilter; label: string; match: (p: DoerProject) => boole
 ];
 
 export function DashboardPage() {
+  const reduceMotion = useReducedMotion();
   const profile = useProfile();
   const gate = useGateState();
   const projects = useActiveProjects();
@@ -82,10 +84,15 @@ export function DashboardPage() {
   const poolCount = pool.data?.length ?? 0;
 
   return (
-    <div className="space-y-7">
-      <header className="flex flex-wrap items-start justify-between gap-4">
+    <motion.div
+      className="space-y-8"
+      initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45, ease: "easeOut" }}
+    >
+      <header className="flex flex-wrap items-start justify-between gap-4 rounded-3xl border border-line-card/70 bg-surface/70 p-5 shadow-soft-sm backdrop-blur-sm sm:p-6">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-[-0.035em] sm:text-4xl">
+          <h1 className="text-3xl font-extrabold tracking-[-0.04em] text-ink sm:text-4xl">
             {profile.isLoading ? (
               <span className="skeleton inline-block h-9 w-64 align-middle" />
             ) : (
@@ -113,7 +120,7 @@ export function DashboardPage() {
         Three figures, and only three. Gross, tax and net are always shown as separate
         numbers rather than collapsed into one, so what was withheld is never implicit.
       */}
-      <section aria-labelledby="figures">
+      <section aria-labelledby="figures" className="rounded-3xl border border-line-card/70 bg-surface/50 p-4 shadow-soft-sm sm:p-5">
         <h2 id="figures" className="sr-only">
           Your figures
         </h2>
@@ -163,8 +170,8 @@ export function DashboardPage() {
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
         <div className="min-w-0 space-y-7">
           {linkNeeded > 0 ? (
-            <div className="flex flex-wrap items-center gap-3 rounded-xl border-2 border-ink bg-warning-bg px-4 py-3 shadow-offset-sm">
-              <span className="rounded-full border-[1.5px] border-ink bg-surface px-2.5 py-0.5 text-2xs font-extrabold">
+            <div className="flex flex-wrap items-center gap-3 rounded-xl border border-line-card bg-warning-bg px-4 py-3 shadow-soft-sm">
+              <span className="rounded-full border border-line-card bg-surface px-2.5 py-0.5 text-2xs font-extrabold">
                 {linkNeeded} waiting
               </span>
               <p className="min-w-0 flex-1 text-sm font-bold">
@@ -254,7 +261,7 @@ export function DashboardPage() {
         <CapacityRail activeCount={activeCount} gate={gate.data} />
       </div>
 
-      <section aria-labelledby="board" className="space-y-4">
+      <section aria-labelledby="board" className="space-y-4 rounded-3xl border border-line-card/70 bg-surface/50 p-4 shadow-soft-sm sm:p-5">
             <div className="flex items-center justify-between gap-4">
               <h2 id="board" className="text-2xl font-extrabold tracking-[-0.03em]">
                 On the board
@@ -308,6 +315,6 @@ export function DashboardPage() {
               </div>
             )}
       </section>
-    </div>
+    </motion.div>
   );
 }

@@ -48,35 +48,36 @@ export function ClaimDrawer({
   return (
     <Dialog.Root open={open} onOpenChange={(next) => (next ? onOpenChange(true) : close())}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-40 bg-ink/30 backdrop-blur-[2px]" />
+        <Dialog.Overlay className="fixed inset-0 z-40 bg-ink/20 backdrop-blur-md" />
         <Dialog.Content
-          className="fixed inset-y-0 right-0 z-50 flex w-full max-w-lg flex-col border-l-2 border-ink bg-canvas shadow-modal focus:outline-none"
+          className="fixed inset-y-3 right-3 z-50 flex w-[calc(100%-1.5rem)] max-w-lg flex-col overflow-hidden rounded-[1.75rem] border border-line-card bg-canvas/95 shadow-[0_24px_80px_rgba(15,23,42,0.18)] backdrop-blur-xl focus:outline-none sm:inset-y-5 sm:right-5 sm:w-[calc(100%-2.5rem)]"
           aria-describedby={undefined}
         >
           {offer ? (
             <>
-              <div className="flex items-start justify-between gap-4 border-b-2 border-ink bg-surface px-6 py-5">
+              <div className="flex items-start justify-between gap-4 border-b border-line-card bg-surface/80 px-6 py-5">
                 <div className="min-w-0 space-y-2">
                   <div className="flex flex-wrap items-center gap-2">
                     <CategoryPill>{offer.category}</CategoryPill>
                     <DeadlineBadge deadline={offer.deliveryAt} />
                   </div>
-                  <Dialog.Title className="text-2xl font-extrabold leading-tight tracking-[-0.03em]">
+                  <Dialog.Title className="break-words text-2xl font-extrabold leading-tight tracking-[-0.03em]">
                     {offer.brief?.trim().split("\n")[0] || `${offer.category} task`}
                   </Dialog.Title>
                 </div>
-                <Dialog.Close className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md border-2 border-ink bg-surface shadow-offset-xs transition-all hover:-translate-x-px hover:-translate-y-px hover:shadow-offset-sm">
+                <Dialog.Close className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line-card bg-surface shadow-soft-sm transition-all hover:-translate-y-0.5 hover:shadow-soft-md">
                   <X className="h-4 w-4" aria-hidden="true" />
                   <span className="sr-only">Close</span>
                 </Dialog.Close>
               </div>
 
               <div className="min-h-0 flex-1 space-y-5 overflow-y-auto px-6 py-5">
-                <div className="rounded-2xl border-2 border-ink bg-lime p-5 shadow-offset-md">
+                <div className="relative overflow-hidden rounded-2xl border border-line-card bg-gradient-to-br from-lime-light via-surface to-secondary-light p-5 shadow-soft-md">
+                  <span className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-lime/40 blur-2xl" aria-hidden="true" />
                   <div className="text-xs font-extrabold uppercase tracking-[0.05em] text-ink/65">
                     You earn
                   </div>
-                  <div className="mt-1.5 break-words text-4xl font-extrabold leading-none tracking-[-0.045em] tabular-nums sm:text-5xl">
+                  <div className="relative mt-1.5 break-words text-4xl font-extrabold leading-none tracking-[-0.045em] tabular-nums sm:text-5xl">
                     {formatPaise(offer.payoutPaise)}
                   </div>
                   <p className="mt-3 text-xs font-semibold leading-snug text-ink/70">
@@ -89,7 +90,7 @@ export function ClaimDrawer({
                   <h3 className="text-xs font-extrabold uppercase tracking-[0.05em] text-ink-muted">
                     The brief
                   </h3>
-                  <div className="whitespace-pre-wrap rounded-xl border-[1.5px] border-ink bg-surface p-4 text-sm leading-relaxed shadow-offset-xs">
+                  <div className="whitespace-pre-wrap rounded-2xl border border-line-card bg-surface p-4 text-sm leading-relaxed shadow-soft-sm">
                     {offer.brief?.trim() || "Your supervisor will share the detail once you claim."}
                   </div>
                 </div>
@@ -116,30 +117,30 @@ export function ClaimDrawer({
                   will not deal with the {CLIENT_LABEL.toLowerCase()} directly.
                 </p>
 
-                <div className="rounded-xl border-[1.5px] border-ink bg-surface-2 p-4">
+                <div className="rounded-xl border border-line-card bg-surface-2 p-4">
                   <h3 className="text-xs font-extrabold uppercase tracking-[0.05em] text-ink-muted">
                     How review works
                   </h3>
                   <ol className="mt-2.5 list-none space-y-2 text-xs leading-relaxed text-ink-2">
                     <li className="flex gap-2">
-                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-[1.5px] border-ink bg-lime text-[10px] font-extrabold text-ink" aria-hidden="true">1</span>
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-line-card bg-lime text-[10px] font-extrabold text-ink" aria-hidden="true">1</span>
                       Add your working link first. Progress updates and submission stay locked until it is in.
                     </li>
                     <li className="flex gap-2">
-                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-[1.5px] border-ink bg-lime text-[10px] font-extrabold text-ink" aria-hidden="true">2</span>
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-line-card bg-lime text-[10px] font-extrabold text-ink" aria-hidden="true">2</span>
                       Submit for review. Your supervisor checks it against the brief, never the client.
                     </li>
                     <li className="flex gap-2">
-                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-[1.5px] border-ink bg-lime text-[10px] font-extrabold text-ink" aria-hidden="true">3</span>
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-line-card bg-lime text-[10px] font-extrabold text-ink" aria-hidden="true">3</span>
                       If changes are requested, you revise and resubmit. Payout releases on approval and shows under Earnings.
                     </li>
                   </ol>
                 </div>
               </div>
 
-              <div className="space-y-3 border-t-2 border-ink bg-surface px-6 py-5">
+              <div className="space-y-3 border-t border-line-card bg-surface/85 px-6 py-5 backdrop-blur">
                 {blockedReason ? (
-                  <div className="flex items-start gap-2.5 rounded-md border-[1.5px] border-ink bg-warning-bg px-3.5 py-3">
+                  <div className="flex items-start gap-2.5 rounded-md border border-line-card bg-warning-bg px-3.5 py-3">
                     <Lock className="mt-0.5 h-4 w-4 shrink-0 text-warning-ink" aria-hidden="true" />
                     <p className="text-xs font-semibold leading-snug text-warning-ink">
                       {blockedReason}
@@ -147,7 +148,7 @@ export function ClaimDrawer({
                   </div>
                 ) : confirming ? (
                   <>
-                    <div className="flex items-start gap-2.5 rounded-md border-[1.5px] border-ink bg-info-bg px-3.5 py-3">
+                    <div className="flex items-start gap-2.5 rounded-md border border-line-card bg-info-bg px-3.5 py-3">
                       <AlertTriangle
                         className="mt-0.5 h-4 w-4 shrink-0 text-info-ink"
                         aria-hidden="true"

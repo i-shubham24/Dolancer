@@ -110,10 +110,10 @@ export function LegalPage() {
             key={option}
             to={`/legal/${option}`}
             className={cn(
-              "rounded-full border-[1.5px] border-ink px-4 py-2 text-sm font-extrabold transition-all duration-[120ms]",
+              "rounded-full border border-line-card px-4 py-2 text-sm font-extrabold transition-all duration-[120ms]",
               option === resolved
-                ? "bg-lime shadow-offset-xs"
-                : "bg-surface hover:-translate-x-px hover:-translate-y-px hover:shadow-offset-xs",
+                ? "bg-lime shadow-soft-sm"
+                : "bg-surface hover:shadow-soft-sm",
             )}
           >
             {option === "terms" ? "Terms of service" : "Privacy policy"}
@@ -140,7 +140,7 @@ export function LegalPage() {
         />
       ) : (
         <article>
-          <header className="border-b-2 border-ink pb-6">
+          <header className="border-b border-line-card pb-6">
             <h1 className="text-4xl font-extrabold tracking-[-0.04em]">
               {document.data.title}
             </h1>

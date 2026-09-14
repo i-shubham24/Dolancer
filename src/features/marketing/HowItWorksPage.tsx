@@ -1,15 +1,13 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowRight, Check, CircleDollarSign, ShieldCheck, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/brutal/Card";
+import { StitchBadge, StitchColorCard, StitchOrbitalGraphic, StitchSection } from "@/components/stitch/StitchPrimitives";
 import { STEPS } from "./content";
 import { WorkflowDemo } from "./WorkflowDemo";
 import { PayoutExplainer } from "./PayoutExplainer";
 import { DifferenceRail } from "./DifferenceRail";
 import { CategoryTags } from "./CategoryTags";
-
-const ACCENTS = ["bg-coral", "bg-blue", "bg-lime", "bg-purple"] as const;
-const ACCENT_TEXT = ["text-ink", "text-inverse", "text-ink", "text-inverse"] as const;
 
 function Section({
   children,
@@ -21,63 +19,92 @@ function Section({
   labelledBy?: string;
 }) {
   return (
-    <section aria-labelledby={labelledBy} className={className}>
-      <div className="mx-auto w-full max-w-[1320px] px-4 py-16 lg:px-6 lg:py-20">{children}</div>
-    </section>
+    <StitchSection aria-labelledby={labelledBy} className={`fresh-section ${className}`}>
+      <div className="fresh-container">{children}</div>
+    </StitchSection>
   );
 }
 
 export function HowItWorksPage() {
+  const reduceMotion = useReducedMotion();
+  const reveal = {
+    hidden: { opacity: 0, y: 18 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] as const } },
+  };
+
   return (
-    <>
-      <section className="border-b-2 border-ink">
-        <div className="mx-auto w-full max-w-[1320px] px-4 py-16 lg:px-6 lg:py-20">
-          <h1 className="max-w-3xl text-5xl font-extrabold leading-[1.05] tracking-[-0.045em]">
-            The whole thing,
-            <br />
-            <span className="bg-blue px-2 text-inverse">start to paid.</span>
-          </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-2">
-            No part of this is hidden until after you sign up. Read it all, then decide.
-          </p>
+    <div className="fresh-page">
+      <section className="fresh-hero">
+        <div className="fresh-dot-field" aria-hidden="true" />
+        <div className="fresh-container fresh-process-hero">
+          <motion.div initial={reduceMotion ? false : "hidden"} animate="show" variants={reveal}>
+            <StitchBadge><Sparkles className="h-3.5 w-3.5" /> Everything, in the open</StitchBadge>
+            <h1 className="mt-5 max-w-3xl">
+              The whole thing,
+              <br />
+              <span className="fresh-highlight fresh-underline fresh-underline-mint">start to paid.</span>
+            </h1>
+            <p className="mt-6 max-w-xl">
+              No part of this is hidden until after you sign up. Read it all, then decide.
+            </p>
+            <div className="fresh-process-proof">
+              <span><Check /> Pay is visible before you claim.</span>
+              <span><ShieldCheck /> A supervisor carries the client side.</span>
+            </div>
+          </motion.div>
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 18, rotate: 2 }}
+            animate={reduceMotion ? undefined : { opacity: 1, y: 0, rotate: 0 }}
+            transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+            className="fresh-process-hero-art"
+          >
+            <StitchOrbitalGraphic />
+            <div className="fresh-process-ticket">
+              <span className="fresh-live-dot" />
+              Matched project
+              <strong>₹24,000</strong>
+              <small>7 days · Writing and content</small>
+            </div>
+            <div className="fresh-process-chip"><CircleDollarSign /> payout protected</div>
+          </motion.div>
         </div>
       </section>
 
-      <Section labelledBy="steps">
-        <h2 id="steps" className="text-4xl font-extrabold tracking-[-0.04em]">
-          Getting started
-        </h2>
-        <ol className="scattered mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+      <Section labelledBy="steps" className="fresh-process-steps">
+        <div className="fresh-section-heading">
+          <div><span className="fresh-eyebrow">The route is simple</span><h2 id="steps">Getting started</h2></div>
+          <p>Four clear moments. No proposal treadmill, no mystery invoice, no disappearing client.</p>
+        </div>
+        <ol className="fresh-step-grid mt-10">
           {STEPS.map((step, index) => (
-            <li key={step.title}>
-              <Card className="h-full">
-                <span
-                  className={`flex h-11 w-11 items-center justify-center rounded-xl border-2 border-ink text-lg font-extrabold shadow-offset-sm ${ACCENTS[index % ACCENTS.length]} ${ACCENT_TEXT[index % ACCENT_TEXT.length]}`}
-                >
-                  {index + 1}
-                </span>
+            <motion.li key={step.title} initial={reduceMotion ? false : "hidden"} whileInView={reduceMotion ? undefined : "show"} viewport={{ once: true, amount: 0.2 }} variants={reveal} className="fresh-step">
+                <span>{String(index + 1).padStart(2, "0")}</span>
                 <h3 className="mt-4 text-lg font-extrabold tracking-[-0.025em]">{step.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-ink-2">{step.body}</p>
-              </Card>
-            </li>
+            </motion.li>
           ))}
         </ol>
       </Section>
 
-      <Section labelledBy="walkthrough" className="border-y-2 border-ink bg-surface">
+      <Section labelledBy="walkthrough" className="fresh-workflow">
+        <div className="fresh-process-bento">
+          <StitchColorCard tone="lilac"><span className="fresh-bento-icon"><Sparkles /></span><strong>Matched, not marketed</strong><p>Your skills decide what appears on your board.</p></StitchColorCard>
+          <StitchColorCard tone="pink"><span className="fresh-bento-icon"><ShieldCheck /></span><strong>Protected while you work</strong><p>Feedback and client conversations stay with the supervisor.</p></StitchColorCard>
+          <StitchColorCard tone="yellow"><span className="fresh-bento-icon"><CircleDollarSign /></span><strong>Paid with the brief</strong><p>The amount is clear before you decide to claim.</p></StitchColorCard>
+        </div>
         <WorkflowDemo />
       </Section>
 
-      <Section labelledBy="payout" className="border-y-2 border-ink bg-lime-light">
+      <Section labelledBy="payout" className="fresh-payout">
         <PayoutExplainer />
       </Section>
 
-      <Section labelledBy="differences" className="border-y-2 border-ink bg-blue">
+      <Section labelledBy="differences" className="fresh-difference">
         <DifferenceRail />
       </Section>
 
-      <Section labelledBy="disciplines" className="border-b-2 border-ink bg-surface">
-        <h2 id="disciplines" className="text-4xl font-extrabold tracking-[-0.04em]">
+      <Section labelledBy="disciplines" className="fresh-steps">
+        <h2 id="disciplines" className="fresh-section-heading-text">
           What gets briefed here
         </h2>
         <p className="mt-3 max-w-xl text-md text-ink-2">
@@ -90,12 +117,10 @@ export function HowItWorksPage() {
       </Section>
 
       <Section labelledBy="cta">
-        <div className="mx-auto max-w-4xl rounded-3xl border-2 border-ink bg-surface p-8 shadow-offset-xl lg:p-10">
-          <div className="flex flex-wrap items-center justify-between gap-8">
+        <div className="fresh-final-card mx-auto max-w-4xl">
+          <div className="fresh-final-content flex flex-wrap items-center justify-between gap-8">
             <div className="min-w-0 flex-1">
-              <span className="inline-block -rotate-[3deg] rounded-lg border-2 border-ink bg-lime px-3 py-1 text-2xs font-extrabold uppercase tracking-[0.08em] shadow-offset-xs">
-                That is all of it
-              </span>
+              <StitchBadge>That is all of it</StitchBadge>
               <h2
                 id="cta"
                 className="mt-4 max-w-md text-3xl font-extrabold leading-[1.1] tracking-[-0.04em]"
@@ -104,7 +129,7 @@ export function HowItWorksPage() {
               </h2>
             </div>
 
-            <div className="flex shrink-0 flex-col gap-2.5">
+            <div className="fresh-cta-actions flex shrink-0 flex-col gap-2.5">
               <Button asChild size="lg">
                 <Link to="/sign-up">
                   Create your account
@@ -118,6 +143,6 @@ export function HowItWorksPage() {
           </div>
         </div>
       </Section>
-    </>
+    </div>
   );
 }

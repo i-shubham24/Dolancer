@@ -5,9 +5,9 @@ import { relativeDeadline, deadlineUrgency, formatDateTime } from "@/lib/datetim
 const TONE = {
   none: "bg-neutral-bg text-neutral-ink border-line-card",
   comfortable: "bg-neutral-bg text-neutral-ink border-line-card",
-  soon: "bg-warning-bg text-warning-ink border-ink",
-  urgent: "bg-danger-bg text-danger-ink border-ink",
-  overdue: "bg-danger-bg text-danger-ink border-ink",
+  soon: "bg-warning-bg text-warning-ink border-line-card",
+  urgent: "bg-danger-bg text-danger-ink border-line-card",
+  overdue: "bg-danger-bg text-danger-ink border-line-card",
 } as const;
 
 /**
@@ -34,10 +34,10 @@ export function DeadlineBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border-[1.5px] px-2.5 py-[3px]",
+        "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-[3px]",
         "text-2xs font-extrabold leading-tight",
         TONE[urgency],
-        critical && "shadow-offset-xs",
+        critical && "shadow-soft-sm",
         className,
       )}
       title={deadline ? formatDateTime(deadline) : undefined}

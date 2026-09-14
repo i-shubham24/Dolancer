@@ -4,41 +4,40 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/cn";
 
 /**
- * The system's loudest control. Three moves define it: a 2px near-black border, a
- * hard offset shadow, and a translate that lifts on hover and presses in on active.
- * Keep the shadow and the translate in step or the button stops feeling physical.
+ * Shared tactile control. Shape and motion stay consistent while the palette
+ * supplies the color language.
  */
 const buttonVariants = cva(
   cn(
     "inline-flex items-center justify-center gap-2 whitespace-nowrap select-none",
     "font-sans font-bold leading-none tracking-[-0.01em]",
-    "border-2 border-ink transition-all duration-[120ms] ease-out",
-    "disabled:pointer-events-none disabled:opacity-45 disabled:shadow-none",
-    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink",
+    "rounded-full border border-transparent transition-all duration-200 ease-spring",
+    "disabled:pointer-events-none disabled:opacity-45",
+    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue",
   ),
   {
     variants: {
       variant: {
         primary:
-          "bg-coral text-ink shadow-offset-md hover:bg-coral-hover hover:-translate-x-px hover:-translate-y-px hover:shadow-offset-lg active:translate-x-[2px] active:translate-y-[2px] active:shadow-offset-xs",
+          "bg-coral text-inverse shadow-soft-md hover:bg-coral-hover hover:-translate-y-0.5 hover:shadow-soft-lg active:translate-y-0",
         secondary:
-          "bg-surface text-ink shadow-offset-sm hover:bg-hover hover:-translate-x-px hover:-translate-y-px hover:shadow-offset-md active:translate-x-[2px] active:translate-y-[2px] active:shadow-offset-xs",
+          "border-line-card bg-surface text-ink shadow-soft-sm hover:-translate-y-0.5 hover:bg-hover hover:shadow-soft-md active:translate-y-0",
         blue:
-          "bg-blue text-inverse shadow-offset-md hover:bg-blue-hover hover:-translate-x-px hover:-translate-y-px hover:shadow-offset-lg active:translate-x-[2px] active:translate-y-[2px] active:shadow-offset-xs",
+          "bg-blue text-inverse shadow-soft-md hover:bg-blue-hover hover:-translate-y-0.5 hover:shadow-soft-lg active:translate-y-0",
         lime:
-          "bg-lime text-ink shadow-offset-md hover:bg-lime-hover hover:-translate-x-px hover:-translate-y-px hover:shadow-offset-lg active:translate-x-[2px] active:translate-y-[2px] active:shadow-offset-xs",
+          "bg-lime text-ink shadow-soft-md hover:bg-lime-hover hover:-translate-y-0.5 hover:shadow-soft-lg active:translate-y-0",
         dark:
-          "bg-ink text-inverse shadow-offset-md hover:-translate-x-px hover:-translate-y-px hover:shadow-offset-lg active:translate-x-[2px] active:translate-y-[2px] active:shadow-offset-xs",
+          "bg-ink text-inverse shadow-soft-md hover:-translate-y-0.5 hover:shadow-soft-lg active:translate-y-0",
         ghost:
-          "border-transparent bg-transparent text-ink shadow-none hover:border-ink hover:bg-surface",
+          "border-transparent bg-transparent text-ink shadow-none hover:bg-surface hover:shadow-soft-sm",
         danger:
-          "bg-danger-bg text-danger-ink shadow-offset-sm hover:-translate-x-px hover:-translate-y-px hover:shadow-offset-md active:translate-x-[2px] active:translate-y-[2px] active:shadow-offset-xs",
+          "bg-danger-bg text-danger-ink shadow-soft-sm hover:-translate-y-0.5 hover:shadow-soft-md active:translate-y-0",
       },
       size: {
-        sm: "min-h-[44px] px-3.5 py-[7px] text-xs rounded-sm",
-        md: "min-h-[44px] px-5 py-[11px] text-sm rounded-md",
-        lg: "min-h-[44px] px-[26px] py-[13px] text-md rounded-md",
-        icon: "h-11 w-11 rounded-md p-0",
+        sm: "min-h-[44px] px-4 py-2 text-xs",
+        md: "min-h-[44px] px-5 py-2.5 text-sm",
+        lg: "min-h-[48px] px-7 py-3 text-md",
+        icon: "h-11 w-11 rounded-full p-0",
       },
     },
     defaultVariants: { variant: "primary", size: "md" },

@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { motion, useReducedMotion } from "framer-motion";
 import { Check, Plus, Sparkles } from "lucide-react";
 import { Card } from "@/components/brutal/Card";
 import { Skeleton, LoadingAnnounce } from "@/components/brutal/Skeleton";
@@ -11,6 +12,7 @@ import { toUserError } from "@/lib/user-error";
 import { fetchSkills, addSkill, removeSkill, type SkillOption } from "./api";
 
 export function SkillsPage() {
+  const reduceMotion = useReducedMotion();
   const queryClient = useQueryClient();
   const skills = useQuery({ queryKey: qk.skills.catalogue(), queryFn: fetchSkills });
 
@@ -40,8 +42,16 @@ export function SkillsPage() {
   const chosenCount = (skills.data ?? []).filter((skill) => skill.selected).length;
 
   return (
-    <div className="space-y-6">
-      <header>
+    <motion.div
+      className="relative space-y-6 overflow-hidden px-1 py-1 sm:px-2"
+      initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+    >
+      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-blue/10 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute right-0 top-56 h-56 w-56 rounded-full bg-purple/10 blur-3xl" aria-hidden="true" />
+      <header className="relative rounded-3xl bg-surface/70 px-5 py-6 backdrop-blur-sm sm:px-7">
+        <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-blue">Creator profile</p>
         <h1 className="text-4xl font-extrabold tracking-[-0.035em]">Your skills</h1>
         <p className="mt-2 max-w-2xl text-md text-ink-2">
           This is how work finds you. Only projects in a category you have picked appear on
@@ -50,7 +60,7 @@ export function SkillsPage() {
       </header>
 
       {!skills.isLoading && chosenCount === 0 ? (
-        <div className="rounded-xl border-2 border-ink bg-warning-bg px-4 py-3 shadow-offset-sm">
+        <div className="rounded-2xl border border-warning-ink/15 bg-warning-bg px-4 py-3 shadow-soft-sm">
           <p className="text-sm font-semibold text-warning-ink">
             You have not picked any skills yet, so no work can reach you. Choose at least one.
           </p>
@@ -85,7 +95,7 @@ export function SkillsPage() {
           </p>
 
           {grouped.map(([category, options]) => (
-            <Card key={category}>
+            <Card key={category} className="bg-white/95">
               <h2 className="text-xs font-extrabold uppercase tracking-[0.05em] text-ink-muted">
                 {category}
               </h2>
@@ -98,12 +108,12 @@ export function SkillsPage() {
                     disabled={toggle.isPending}
                     onClick={() => toggle.mutate({ id: skill.id, selected: skill.selected })}
                     className={cn(
-                      "inline-flex items-center gap-1.5 rounded-full border-[1.5px] border-ink px-3.5 py-2",
+                      "inline-flex items-center gap-1.5 rounded-full border border-line-card px-3.5 py-2",
                       "text-xs font-extrabold tracking-[-0.01em] transition-all duration-[120ms]",
                       "disabled:opacity-60",
                       skill.selected
-                        ? "bg-lime shadow-offset-xs"
-                        : "bg-surface hover:-translate-x-px hover:-translate-y-px hover:shadow-offset-xs",
+                        ? "bg-success-bg text-success-ink shadow-soft-sm"
+                        : "bg-surface hover:-translate-y-0.5 hover:bg-blue-light hover:shadow-soft-sm",
                     )}
                   >
                     {skill.selected ? (
@@ -119,6 +129,6 @@ export function SkillsPage() {
           ))}
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }

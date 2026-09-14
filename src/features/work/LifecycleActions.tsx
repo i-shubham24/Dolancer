@@ -116,7 +116,7 @@ export function LifecycleActions({ project }: { project: DoerProject }) {
               <li className="flex items-center gap-2 text-[11px] font-semibold">
                 <span
                   className={cn(
-                    "flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-[1.5px] border-ink",
+                    "flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-line-card",
                     gates.hasWorkingDoc ? "bg-success-bg text-success-ink" : "bg-warning-bg text-warning-ink",
                   )}
                   aria-hidden="true"
@@ -129,7 +129,7 @@ export function LifecycleActions({ project }: { project: DoerProject }) {
               </li>
               <li className="flex items-center gap-2 text-[11px] font-semibold text-ink-2">
                 <span
-                  className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-[1.5px] border-ink bg-surface"
+                  className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-line-card bg-surface"
                   aria-hidden="true"
                 >
                   <Check className="h-3 w-3" />
@@ -138,7 +138,7 @@ export function LifecycleActions({ project }: { project: DoerProject }) {
               </li>
               <li className="flex items-center gap-2 text-[11px] font-semibold text-ink-2">
                 <span
-                  className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-[1.5px] border-ink bg-surface"
+                  className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-line-card bg-surface"
                   aria-hidden="true"
                 >
                   <Check className="h-3 w-3" />

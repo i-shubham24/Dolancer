@@ -39,7 +39,7 @@ export function AvailabilityToggle({ compact = false }: { compact?: boolean }) {
     <div className={cn("flex flex-col gap-1.5", compact ? "items-start" : "items-end")}>
       <div
         className={cn(
-          "inline-flex items-center gap-2.5 rounded-full border-[1.5px] border-ink px-3 py-1.5 shadow-offset-xs",
+          "inline-flex items-center gap-2.5 rounded-full border border-line-card bg-surface/90 px-3 py-1.5 shadow-soft-md backdrop-blur-sm",
           TONE[state],
           isSaving && "opacity-70",
         )}
@@ -56,7 +56,7 @@ export function AvailabilityToggle({ compact = false }: { compact?: boolean }) {
             disabled={isSaving}
             aria-label={"Availability: " + copy.label}
             className={cn(
-              "relative h-5 w-9 rounded-full border-[1.5px] border-ink transition-colors",
+              "relative h-5 w-9 rounded-full border border-line-card transition-colors",
               available ? "bg-surface" : "bg-muted",
             )}
           >

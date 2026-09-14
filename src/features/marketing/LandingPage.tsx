@@ -1,336 +1,170 @@
-import { useEffect, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowUpRight, Check, ChevronDown, ShieldCheck, Sparkles, Wallet } from "lucide-react";
 import { Link } from "react-router-dom";
-import { ArrowRight, ShieldCheck, Plus, Minus } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/brutal/Card";
-import { STEPS, FAQS, TESTIMONIALS } from "./content";
-import { Marquee } from "./Marquee";
+import {
+  StitchBadge as Badge,
+  StitchButton,
+  StitchColorCard,
+  StitchOrbitalGraphic,
+  StitchSection,
+} from "@/components/stitch/StitchPrimitives";
+import { FAQS, STEPS, DIFFERENCES } from "./content";
 import { WorkflowDemo } from "./WorkflowDemo";
 import { PayoutExplainer } from "./PayoutExplainer";
-import { ComparisonSwitch } from "./ComparisonSwitch";
-import { FloatingCapsules } from "./FloatingCapsules";
-import { DifferenceRail } from "./DifferenceRail";
-import { HeroDoodles, Cube, Cylinder, Cradle } from "./HeroDoodles";
 
-const ACCENTS = ["bg-coral", "bg-blue", "bg-lime", "bg-purple"] as const;
-const ACCENT_TEXT = ["text-ink", "text-inverse", "text-ink", "text-inverse"] as const;
-
-/** Words that cycle in the hero. Each is a real discipline people are hired for. */
-const ROTATING = ["writing", "design", "code", "research", "video", "marketing"];
-
-function Eyebrow({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="inline-flex items-center rounded-full bg-ink px-3 py-1 text-2xs font-extrabold uppercase tracking-[0.08em] text-inverse">
-      {children}
-    </span>
-  );
-}
+const ease = [0.16, 1, 0.3, 1] as const;
+const rise = {
+  hidden: { opacity: 0, y: 22 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease } },
+};
+const list = { hidden: {}, show: { transition: { staggerChildren: 0.1 } } };
 
 function Section({
   children,
   className = "",
-  labelledBy,
+  id,
 }: {
   children: React.ReactNode;
   className?: string;
-  labelledBy?: string;
+  id?: string;
 }) {
   return (
-    <section aria-labelledby={labelledBy} className={className}>
-      <div className="mx-auto w-full max-w-[1320px] px-4 py-16 lg:px-6 lg:py-24">{children}</div>
-    </section>
+    <StitchSection id={id} className={`fresh-section ${className}`}>
+      <div className="fresh-container">{children}</div>
+    </StitchSection>
   );
 }
 
-function RotatingWord() {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    // Respect a reduced-motion preference by simply not cycling.
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (query.matches) return;
-
-    const timer = window.setInterval(() => {
-      setIndex((value) => (value + 1) % ROTATING.length);
-    }, 2200);
-    return () => window.clearInterval(timer);
-  }, []);
-
-  // The sibling app sets a tilted, hard-shadowed sticker inline in its headline,
-  // and that device is the most recognisable thing about it. Reusing it here is
-  // what makes the two products read as one family.
+function ArrowMark() {
   return (
-    <span className="mx-1 inline-block -rotate-[4deg] rounded-xl border-2 border-ink bg-lime px-4 pb-1 shadow-offset-md">
-      {ROTATING[index]}
-    </span>
+    <svg className="fresh-arrow" viewBox="0 0 140 70" fill="none" aria-hidden="true">
+      <path d="M4 10c39-8 82 1 98 25 9 14 5 25-16 29" />
+      <path d="m78 57 9 8 1-13" />
+    </svg>
   );
 }
 
 export function LandingPage() {
+  const reduceMotion = useReducedMotion();
+
   return (
-    <>
-      {/* Hero */}
-      {/* No bottom border: the tilted belt below supplies its own rules, and a
-          straight line above it reads as a mistake. */}
-      <section className="relative overflow-hidden">
-        {/* Anchored at the top corner, bleeding off both edges. */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-28 -top-28 h-80 w-80 rotate-12 rounded-3xl border-2 border-ink bg-coral"
-        />
-        <HeroDoodles />
+    <div className="fresh-page">
+      <section className="fresh-hero">
+        <div className="fresh-orb fresh-orb-one" aria-hidden="true" />
+        <div className="fresh-orb fresh-orb-two" aria-hidden="true" />
+        <div className="fresh-dot-field" aria-hidden="true" />
+        <div className="fresh-container fresh-hero-grid">
+          <motion.div initial={reduceMotion ? false : "hidden"} animate="show" variants={list} className="fresh-hero-copy">
+            <motion.div variants={rise}>
+              <Badge><Sparkles className="h-3.5 w-3.5" /> The work-first creator platform</Badge>
+            </motion.div>
+            <motion.h1 variants={rise}>
+              Get paid for what you
+              <span className="fresh-highlight fresh-underline fresh-underline-pink"> are good at.</span>
+            </motion.h1>
+            <motion.p variants={rise}>
+              Find focused projects, know the payout before you start, and work with a supervisor
+              who protects your time. No pitching. No chasing. Just making.
+            </motion.p>
+            <motion.div variants={rise} className="fresh-actions">
+              <StitchButton asChild><Link to="/sign-up">Start earning <ArrowUpRight /></Link></StitchButton>
+              <Link className="fresh-text-link" to="/how-it-works">See how it works <ArrowUpRight /></Link>
+            </motion.div>
+            <motion.div variants={rise} className="fresh-trust-row">
+              <span><Check /> Pay agreed upfront</span>
+              <span><Check /> Supervisor backed</span>
+            </motion.div>
+          </motion.div>
 
-        <div className="relative mx-auto grid w-full max-w-[1320px] gap-8 px-4 pb-16 pt-10 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:items-center lg:px-6 lg:pb-20 lg:pt-14">
-          <div className="max-w-3xl">
-            <span className="inline-flex rotate-[-2.5deg] items-center rounded-full border-2 border-ink bg-surface px-3.5 py-1.5 text-xs font-extrabold uppercase tracking-[0.05em] shadow-offset-sm">
-              For skilled people who would rather just work
-            </span>
-
-            <h1 className="mt-6 text-balance text-[2.6rem] font-extrabold leading-[1.05] tracking-[-0.045em] sm:text-5xl lg:text-6xl xl:text-[4.1rem]">
-              Get paid for
-              <br />
-              your <RotatingWord />
-              <br />
-              without the chasing.
-            </h1>
-
-            <p className="mt-7 max-w-xl text-lg leading-relaxed text-ink-2">
-              No bidding. No proposals. No invoices to follow up. Work arrives with the pay
-              already agreed, a supervisor reviews it before it goes out, and you are paid when
-              it is approved.
-            </p>
-
-            <div className="mt-9 flex flex-wrap items-center gap-3">
-              <Button asChild size="lg">
-                <Link to="/sign-up">
-                  Start earning
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </Link>
-              </Button>
-              <Button asChild variant="secondary" size="lg">
-                <a href="#walkthrough">See a project run</a>
-              </Button>
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, scale: 0.94, y: 24 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.9, ease, delay: 0.15 }}
+            className="fresh-hero-art"
+          >
+            <div className="fresh-art-card fresh-art-main">
+              <div className="fresh-card-topline"><span className="fresh-live-dot" /> Matched for you <span>•••</span></div>
+              <div className="fresh-project-icon">✦</div>
+              <p className="fresh-kicker">Design system / product</p>
+              <h2>Build a calm, clear onboarding experience</h2>
+              <p className="fresh-muted">A focused brief with room for your best thinking.</p>
+              <div className="fresh-project-meta"><span>₹24,000</span><span>7 days</span></div>
+              <div className="fresh-progress"><span /></div>
+              <button type="button" className="fresh-card-button">View brief <ArrowUpRight /></button>
             </div>
-
-            <p className="mt-5 text-sm text-ink-muted">
-              Free to join, and takes a couple of minutes.
-            </p>
-          </div>
-
-          <FloatingCapsules />
+            <div className="fresh-art-card fresh-art-float">
+              <Wallet />
+              <strong>Payout released</strong>
+              <span>₹18,600 <small>today</small></span>
+            </div>
+            <div className="fresh-art-note">Good work, <strong>on your terms.</strong></div>
+            <ArrowMark />
+          </motion.div>
         </div>
       </section>
 
-      <Marquee />
-
-      {/* Interactive walkthrough */}
-      <Section labelledBy="walkthrough">
-        <WorkflowDemo />
+      <Section className="fresh-proof">
+        <div className="fresh-proof-intro"><span className="fresh-eyebrow">A better way to work</span><h2>Built around the part you are actually good at.</h2></div>
+        <motion.div initial={reduceMotion ? false : "hidden"} whileInView={reduceMotion ? undefined : "show"} viewport={{ once: true, amount: 0.2 }} variants={list} className="fresh-proof-grid">
+          <StitchColorCard tone="lilac" className="fresh-stat-card"><span>01</span><strong>No bidding</strong><p>The brief arrives with the rate already set. Your portfolio speaks for you.</p></StitchColorCard>
+          <StitchColorCard tone="pink" className="fresh-stat-card"><span>02</span><strong>Protected delivery</strong><p>A supervisor handles the client relationship and keeps feedback useful.</p></StitchColorCard>
+          <StitchColorCard tone="mint" className="fresh-stat-card"><span>03</span><strong>Clear payouts</strong><p>See gross, withholding, and net in one simple ledger after approval.</p></StitchColorCard>
+        </motion.div>
       </Section>
 
-      {/* A deck you push */}
-      <Section labelledBy="differences" className="border-y-2 border-ink bg-blue">
-        <DifferenceRail />
+      <Section id="walkthrough" className="fresh-workflow">
+        <div className="fresh-section-heading"><div><span className="fresh-eyebrow">Inside the workflow</span><h2>From brief to paid, without the noise.</h2></div><p>Click through a real project journey. Every step is designed to keep your attention on the work.</p></div>
+        <div className="fresh-workflow-panel">
+          <div className="fresh-graphic-strip">
+            <StitchOrbitalGraphic />
+            <div>
+              <Badge tone="success">Live delivery system</Badge>
+              <h3>Every project has a visible path from brief to payout.</h3>
+              <p>The graphic language is decorative. The states underneath remain real and interactive.</p>
+            </div>
+          </div>
+          <WorkflowDemo />
+        </div>
       </Section>
 
-      {/* Comparison */}
-      <Section labelledBy="compare">
-        <ComparisonSwitch />
+      <Section className="fresh-difference">
+        <div className="fresh-section-heading"><div><span className="fresh-eyebrow">Why Dolancer</span><h2>More signal. Less freelance theatre.</h2></div><p>Professional work should feel clear before it starts and calm while it is happening.</p></div>
+        <div className="fresh-difference-grid">
+          {DIFFERENCES.slice(0, 4).map((difference, index) => (
+            <motion.article key={difference.title} initial={reduceMotion ? false : "hidden"} whileInView={reduceMotion ? undefined : "show"} viewport={{ once: true }} variants={rise} className={`fresh-difference-card fresh-difference-card-${index + 1}`}>
+              <span className="fresh-number">{String(index + 1).padStart(2, "0")}</span>
+              <h3>{difference.title}</h3>
+              <p>{difference.body}</p>
+            </motion.article>
+          ))}
+        </div>
       </Section>
 
-      {/* Payout breakdown */}
-      <Section labelledBy="payout" className="relative overflow-hidden border-y-2 border-ink bg-lime-light">
-        <Cylinder
-          className="float-bob pointer-events-none absolute -left-6 top-10 hidden w-24 opacity-90 xl:block"
-          style={{ animationDelay: "1.2s" }}
-        />
-        <PayoutExplainer />
+      <Section className="fresh-payout">
+        <div className="fresh-payout-heading"><span className="fresh-eyebrow">Money, made legible</span><h2>Know what lands in your account.</h2><p>Move the sliders and see exactly how the payout reconciles. No mystery numbers.</p></div>
+        <div className="fresh-payout-panel"><PayoutExplainer /></div>
       </Section>
 
-      {/* How you start */}
-      <Section labelledBy="how" className="border-y-2 border-ink bg-ink text-inverse">
-        <Eyebrow>How it works</Eyebrow>
-        <h2 id="how" className="max-w-2xl text-4xl font-extrabold tracking-[-0.04em]">
-          Four steps to your first payout
-        </h2>
-        <p className="mt-3 max-w-xl text-md text-white/60">
-          You can do the first one right now, and look around properly before the rest.
-        </p>
-
-        <ol className="scattered mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+      <Section className="fresh-steps">
+        <div className="fresh-section-heading"><div><span className="fresh-eyebrow">Getting started</span><h2>Four small steps to better work.</h2></div></div>
+        <div className="fresh-step-grid">
           {STEPS.map((step, index) => (
-            <li
-              key={step.title}
-              className="rounded-2xl border-2 border-white/25 bg-white/5 p-5 transition-all duration-[150ms] hover:-translate-y-1 hover:bg-white/10"
-            >
-              <span
-                className={`flex h-11 w-11 items-center justify-center rounded-xl border-2 border-ink text-lg font-extrabold ${ACCENTS[index % ACCENTS.length]} ${ACCENT_TEXT[index % ACCENT_TEXT.length]}`}
-              >
-                {index + 1}
-              </span>
-              <h3 className="mt-4 text-lg font-extrabold tracking-[-0.025em]">{step.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-white/60">{step.body}</p>
-            </li>
-          ))}
-        </ol>
-      </Section>
-
-      {/* Verification */}
-      <Section labelledBy="verification" className="relative overflow-hidden">
-        <Cradle
-          className="float-bob pointer-events-none absolute -right-4 top-16 hidden w-24 xl:block"
-          style={{ animationDelay: "0.5s" }}
-        />
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-          <div>
-            <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl border-2 border-ink bg-lime shadow-offset-sm">
-              <ShieldCheck className="h-5 w-5" aria-hidden="true" />
-            </span>
-            <Eyebrow>Verification</Eyebrow>
-        <h2 id="verification" className="mt-5 text-4xl font-extrabold tracking-[-0.04em]">
-              Why we verify you
-            </h2>
-            <p className="mt-4 text-md leading-relaxed text-ink-2">
-              Money is going to move to you, so we have to know who you are. That is the whole
-              reason, and it is the only thing verification is used for.
-            </p>
-            <p className="mt-3 text-md leading-relaxed text-ink-2">
-              You can sign up, look around, pick your skills and read the training before any
-              of it. Verification unlocks earning, it does not gate the door.
-            </p>
-          </div>
-
-          <Card className="space-y-4">
-            <h3 className="text-lg font-extrabold tracking-[-0.025em]">What we ask for</h3>
-            <ul className="space-y-3 text-sm leading-relaxed text-ink-2">
-              <li className="flex gap-2.5">
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink" />
-                <span>
-                  <strong className="font-extrabold text-ink">A government photo ID</strong>, so
-                  we can confirm you are a real person.
-                </span>
-              </li>
-              <li className="flex gap-2.5">
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink" />
-                <span>
-                  <strong className="font-extrabold text-ink">A photo of your face</strong>, to
-                  match against that ID.
-                </span>
-              </li>
-              <li className="flex gap-2.5">
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ink" />
-                <span>
-                  <strong className="font-extrabold text-ink">Where you want to be paid</strong>,
-                  a UPI ID or a bank account.
-                </span>
-              </li>
-            </ul>
-            <p className="border-t border-line-subtle pt-4 text-xs leading-relaxed text-ink-muted">
-              Documents are stored encrypted under a random reference, never under your name,
-              and are deleted once your identity is confirmed. Your full account number is
-              never stored: it is exchanged for a token with our payments provider, and we keep
-              only a masked version so you can tell which account it is.
-            </p>
-          </Card>
-        </div>
-      </Section>
-
-      {/*
-        Renders only when there are real quotes. The array ships empty by design and
-        must never carry invented, illustrative or placeholder testimonials. This is
-        the page promising people they will be paid, and a fabricated review on it
-        would undermine the only thing it is selling.
-      */}
-      {TESTIMONIALS.length > 0 ? (
-        <Section labelledBy="testimonials" className="border-y-2 border-ink bg-surface">
-          <h2 id="testimonials" className="text-4xl font-extrabold tracking-[-0.04em]">
-            From people doing the work
-          </h2>
-          <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {TESTIMONIALS.map((entry) => (
-              <Card key={entry.quote} className="h-full">
-                <p className="text-md font-bold leading-relaxed tracking-[-0.01em]">
-                  {entry.quote}
-                </p>
-                <footer className="mt-4 border-t border-line-subtle pt-3 text-sm">
-                  <span className="font-extrabold">{entry.name}</span>
-                  <span className="ml-2 text-ink-muted">{entry.discipline}</span>
-                </footer>
-              </Card>
-            ))}
-          </div>
-        </Section>
-      ) : null}
-
-      {/* FAQ */}
-      <Section labelledBy="faq" className="relative overflow-hidden border-y-2 border-ink bg-purple-light">
-        <Cube
-          className="float-bob pointer-events-none absolute -right-2 top-14 hidden w-20 xl:block"
-          style={{ animationDelay: "2s" }}
-        />
-        <Eyebrow>Common questions</Eyebrow>
-        <h2 id="faq" className="text-4xl font-extrabold tracking-[-0.04em]">
-          Questions people ask
-        </h2>
-
-        <div className="mt-10 max-w-3xl space-y-3">
-          {FAQS.map((faq) => (
-            <details
-              key={faq.question}
-              className="taped group relative rounded-xl border-2 border-ink bg-canvas shadow-offset-sm transition-all duration-[180ms] ease-spring open:shadow-offset-md hover:-translate-x-px hover:-translate-y-px"
-            >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-md font-extrabold tracking-[-0.015em] [&::-webkit-details-marker]:hidden">
-                {faq.question}
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md border-[1.5px] border-ink bg-surface">
-                  <Plus className="h-3 w-3 group-open:hidden" aria-hidden="true" />
-                  <Minus className="hidden h-3 w-3 group-open:block" aria-hidden="true" />
-                </span>
-              </summary>
-              <p className="border-t border-line-subtle px-5 py-4 text-sm leading-relaxed text-ink-2">
-                {faq.answer}
-              </p>
-            </details>
+            <motion.div key={step.title} initial={reduceMotion ? false : "hidden"} whileInView={reduceMotion ? undefined : "show"} viewport={{ once: true }} variants={rise} className={`fresh-step fresh-step-${index + 1}`}><span>{String(index + 1).padStart(2, "0")}</span><h3>{step.title}</h3><p>{step.body}</p><i aria-hidden="true" /></motion.div>
           ))}
         </div>
       </Section>
 
-      {/* Closing. Compact and on the light canvas: a full-bleed saturated slab
-          this close to the black footer was two loud beats in a row, and it
-          drowned the copy it was meant to carry. Lime is the accent now, not
-          the field. */}
-      <Section labelledBy="cta">
-        <div className="mx-auto max-w-4xl rounded-3xl border-2 border-ink bg-surface p-8 shadow-offset-xl lg:p-10">
-          <div className="flex flex-wrap items-center justify-between gap-8">
-            <div className="min-w-0 flex-1">
-              <span className="inline-block -rotate-[3deg] rounded-lg border-2 border-ink bg-lime px-3 py-1 text-2xs font-extrabold uppercase tracking-[0.08em] shadow-offset-xs">
-                Free to join
-              </span>
-              <h2
-                id="cta"
-                className="mt-4 max-w-md text-3xl font-extrabold leading-[1.1] tracking-[-0.04em]"
-              >
-                Good at something? Come and get paid for it.
-              </h2>
-              <p className="mt-3 max-w-md text-sm leading-relaxed text-ink-2">
-                Signing up takes a couple of minutes, and you can look around properly
-                before you decide to verify.
-              </p>
-            </div>
-
-            <div className="flex shrink-0 flex-col gap-2.5">
-              <Button asChild size="lg">
-                <Link to="/sign-up">
-                  Create your account
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </Link>
-              </Button>
-              <Button asChild variant="secondary">
-                <Link to="/contact">Talk to us first</Link>
-              </Button>
-            </div>
-          </div>
+      <Section className="fresh-faq">
+        <div className="fresh-section-heading"><div><span className="fresh-eyebrow">Questions, answered</span><h2>Everything clear before you join.</h2></div></div>
+        <div className="fresh-faq-grid">
+          <div className="fresh-faq-aside"><div className="fresh-faq-orbit"><ShieldCheck /></div><strong>Your time stays yours.</strong><p>Read the details, look around, and verify only when you are ready to earn.</p><Link to="/legal/terms">Read our standards <ArrowUpRight /></Link></div>
+          <div className="fresh-faq-list">{FAQS.slice(0, 6).map((faq) => <details key={faq.question}><summary>{faq.question}<ChevronDown /></summary><p>{faq.answer}</p></details>)}</div>
         </div>
       </Section>
-    </>
+
+      <Section className="fresh-final">
+        <div className="fresh-final-card"><div><Badge>Free to join</Badge><h2>Make room for your best work.</h2><p>Join in minutes. Explore the platform properly before you decide to verify.</p></div><StitchButton asChild><Link to="/sign-up">Create your account <ArrowUpRight /></Link></StitchButton></div>
+      </Section>
+    </div>
   );
 }

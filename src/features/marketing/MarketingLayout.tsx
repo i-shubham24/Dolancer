@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { ScrollToTop } from "@/routes/ScrollToTop";
-import { Menu, X, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { useAuth } from "@/providers/AuthProvider";
 import { Button } from "@/components/ui/button";
 import { SiteFooter } from "./SiteFooter";
+import { PaletteSwitcher } from "@/components/PaletteSwitcher";
 
 const NAV = [
   { to: "/how-it-works", label: "How it works" },
@@ -16,7 +17,7 @@ const NAV = [
 function Wordmark({ onClick }: { onClick?: () => void }) {
   return (
     <Link to="/" onClick={onClick} className="flex items-center gap-2.5">
-      <span className="flex h-9 w-9 rotate-[-4deg] items-center justify-center rounded-[10px] border-2 border-ink bg-blue text-inverse shadow-offset-sm">
+      <span className="flex h-9 w-9 rotate-[-4deg] items-center justify-center rounded-[10px] border border-line-card bg-blue text-inverse shadow-soft-sm">
         <span className="text-lg font-extrabold">D</span>
       </span>
       <span className="text-xl font-extrabold tracking-[-0.04em]">
@@ -38,17 +39,17 @@ export function MarketingLayout() {
   const { session } = useAuth();
 
   return (
-    <div className="flex min-h-dvh flex-col bg-canvas">
+    <div className="fresh-site flex min-h-dvh flex-col bg-canvas">
       <ScrollToTop />
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:border-2 focus:border-ink focus:bg-lime focus:px-4 focus:py-2 focus:text-sm focus:font-extrabold"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:border focus:border-line-card focus:bg-lime focus:px-4 focus:py-2 focus:text-sm focus:font-extrabold"
       >
         Skip to content
       </a>
 
-      <header className="sticky top-0 z-30 border-b-2 border-ink bg-canvas/95 backdrop-blur">
-        <div className="mx-auto flex w-full max-w-[1320px] items-center gap-6 px-4 py-3.5 lg:px-6">
+      <header className="fresh-header sticky top-0 z-30">
+        <div className="fresh-nav-shell mx-auto flex w-full max-w-[1320px] items-center gap-6 px-4 py-3 lg:px-5">
           <Wordmark />
 
           <nav className="ml-4 hidden items-center gap-1 md:flex" aria-label="Main">
@@ -69,6 +70,7 @@ export function MarketingLayout() {
           </nav>
 
           <div className="ml-auto hidden items-center gap-2 md:flex">
+            <PaletteSwitcher />
             {session ? (
               <Button asChild size="sm">
                 <Link to="/dashboard">
@@ -93,14 +95,21 @@ export function MarketingLayout() {
             onClick={() => setOpen((value) => !value)}
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
-            className="ml-auto flex h-10 w-10 items-center justify-center rounded-md border-2 border-ink bg-surface shadow-offset-xs md:hidden"
+            className={cn(
+              "fresh-menu-button ml-auto flex h-10 w-10 items-center justify-center rounded-full border border-line-card bg-surface shadow-soft-sm md:hidden",
+              open && "is-open",
+            )}
           >
-            {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            <span className="fresh-menu-icon" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </span>
           </button>
         </div>
 
         {open ? (
-          <div className="border-t-2 border-ink bg-surface px-4 py-4 md:hidden">
+          <div className="border-t border-line-card bg-surface px-4 py-4 md:hidden">
             <nav className="space-y-1" aria-label="Main">
               {NAV.map((item) => (
                 <NavLink
@@ -114,6 +123,7 @@ export function MarketingLayout() {
               ))}
             </nav>
             <div className="mt-4 flex flex-col gap-2">
+              <PaletteSwitcher />
               {session ? (
                 <Button asChild onClick={() => setOpen(false)}>
                   <Link to="/dashboard">Go to dashboard</Link>
@@ -133,7 +143,7 @@ export function MarketingLayout() {
         ) : null}
       </header>
 
-      <main id="main" className="flex-1">
+      <main id="main" className="fresh-main flex-1">
         <Outlet />
       </main>
 

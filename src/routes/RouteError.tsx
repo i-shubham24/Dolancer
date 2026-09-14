@@ -22,7 +22,7 @@ export function RouteError() {
 
   return (
     <div className="mx-auto max-w-xl py-10">
-      <Card className="border-2 text-center">
+      <Card className="border text-center">
         <AlertTriangle className="mx-auto h-8 w-8 text-warning-ink" aria-hidden="true" />
         <h1 className="mt-3 text-2xl font-extrabold tracking-[-0.03em]">
           This page did not load

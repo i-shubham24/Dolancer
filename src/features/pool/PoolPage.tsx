@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
+import { motion, useReducedMotion } from "framer-motion";
 import { Layers, Lock, SlidersHorizontal, ShieldCheck, BellRing, Bell } from "lucide-react";
 import { SkeletonCard, LoadingAnnounce } from "@/components/brutal/Skeleton";
 import { EmptyState, ErrorState } from "@/components/brutal/EmptyState";
@@ -16,6 +17,7 @@ import { PoolCard } from "./PoolCard";
 import { ClaimDrawer } from "./ClaimDrawer";
 import { useBoardNotify } from "./useBoardNotify";
 import type { PoolSort } from "./api";
+import { StitchOrbitalGraphic } from "@/components/stitch/StitchPrimitives";
 
 const SORTS = [
   { id: "newest" as const, label: "Newest" },
@@ -31,6 +33,7 @@ function sortFromParams(params: URLSearchParams): PoolSort {
 }
 
 export function PoolPage() {
+  const reduceMotion = useReducedMotion();
   const [params, setParams] = useSearchParams();
   const sort = sortFromParams(params);
   const setSort = (next: PoolSort) => {
@@ -68,16 +71,35 @@ export function PoolPage() {
   const offers = pool.data?.items ?? [];
 
   return (
-    <div className="space-y-6">
-      <header className="flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-extrabold tracking-[-0.035em] sm:text-4xl">Job board</h1>
+    <motion.div
+      className="relative space-y-7"
+      initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+    >
+      <div className="pointer-events-none absolute -left-24 -top-24 -z-10 h-72 w-72 rounded-full bg-purple-light/70 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute right-0 top-40 -z-10 h-64 w-64 rounded-full bg-blue-light/70 blur-3xl" aria-hidden="true" />
+      <header className="relative overflow-hidden rounded-[1.75rem] border border-line-card bg-gradient-to-br from-purple-light/80 via-surface to-blue-light/60 p-6 shadow-soft-md sm:p-8">
+        <StitchOrbitalGraphic className="absolute -right-10 -top-10 h-48 w-48 opacity-70" />
+        <div className="relative max-w-2xl">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-surface/80 px-3 py-1 text-xs font-bold uppercase tracking-wider text-purple shadow-soft-sm">
+            <span className="h-2 w-2 animate-pulse rounded-full bg-secondary" aria-hidden="true" />
+            Workspace live
+          </div>
+          <h1 className="text-3xl font-extrabold tracking-[-0.045em] sm:text-4xl">Job pool</h1>
           <p className="mt-2 max-w-xl text-md text-ink-2">
             Work matched to your skills. The pay is fixed and shown upfront, and the first
             qualified claim wins.
           </p>
         </div>
-        <AvailabilityToggle />
+        <div className="relative mt-5 flex flex-wrap items-center gap-2 text-xs font-semibold text-ink-2">
+          <span className="rounded-full bg-surface/80 px-3 py-1.5 shadow-soft-sm">No bidding</span>
+          <span className="rounded-full bg-surface/80 px-3 py-1.5 shadow-soft-sm">Supervisor reviewed</span>
+          <span className="rounded-full bg-surface/80 px-3 py-1.5 shadow-soft-sm">Escrow backed</span>
+        </div>
+        <div className="relative mt-5">
+          <AvailabilityToggle />
+        </div>
       </header>
 
       {/*
@@ -87,7 +109,7 @@ export function PoolPage() {
       {!availabilityLoading ? (
         <div
           className={cn(
-            "flex flex-wrap items-center gap-3 rounded-xl border-2 border-ink px-4 py-3 shadow-offset-sm",
+            "flex flex-wrap items-center gap-3 rounded-2xl border border-line-card px-4 py-3 shadow-soft-md",
             atCap ? "bg-warning-bg" : "bg-surface",
           )}
         >
@@ -112,7 +134,7 @@ export function PoolPage() {
         </div>
       ) : null}
 
-      <div className="flex flex-wrap items-center justify-between gap-3">
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-line-card bg-surface/70 p-2 pl-4 shadow-soft-sm backdrop-blur">
         <div className="flex items-center gap-2 text-sm font-bold text-ink-2">
           <SlidersHorizontal className="h-3.5 w-3.5" aria-hidden="true" />
           {pool.isLoading ? "Loading..." : `${offers.length} available`}
@@ -199,17 +221,19 @@ export function PoolPage() {
           />
         )
       ) : (
-        <div className="grid gap-4">
+        <motion.div className="grid gap-4" initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: reduceMotion ? 0 : 0.06 } } }}>
           {offers.map((offer) => (
-            <PoolCard
+            <motion.div key={offer.id} variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0 } }} transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}>
+              <PoolCard
               key={offer.id}
               offer={offer}
               selected={selected?.id === offer.id}
               hideAccessories={selected?.id === offer.id}
               onOpen={() => setSelected(offer)}
-            />
+              />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       )}
 
       <ClaimDrawer
@@ -220,6 +244,6 @@ export function PoolPage() {
         }}
         blockedReason={blockedReason}
       />
-    </div>
+    </motion.div>
   );
 }

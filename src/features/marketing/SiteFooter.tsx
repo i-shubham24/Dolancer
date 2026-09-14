@@ -73,7 +73,7 @@ export function SiteFooter() {
           <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr]">
             <div>
               <div className="flex items-center gap-2.5">
-                <span className="flex h-10 w-10 rotate-[-4deg] items-center justify-center rounded-xl border-2 border-white/40 bg-blue">
+                <span className="flex h-10 w-10 rotate-[-4deg] items-center justify-center rounded-xl border border-white/40 bg-blue">
                   <span className="text-xl font-extrabold text-ink">D</span>
                 </span>
                 <span className="text-2xl font-extrabold tracking-[-0.045em]">
@@ -89,7 +89,7 @@ export function SiteFooter() {
 
               <a
                 href={`mailto:${CONTACT.email}`}
-                className="mt-6 inline-flex items-center gap-2 rounded-full border-2 border-white/25 bg-white/5 px-4 py-2.5 text-sm font-bold transition-colors hover:bg-white/15"
+                className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/5 px-4 py-2.5 text-sm font-bold transition-colors hover:bg-white/15"
               >
                 <Mail className="h-3.5 w-3.5" aria-hidden="true" />
                 {CONTACT.email}

@@ -7,17 +7,18 @@ import { Outlet } from "react-router-dom";
 export function AuthLayout() {
   return (
     <div className="grid min-h-dvh lg:h-dvh lg:overflow-hidden lg:grid-cols-2">
-      <div className="flex items-center justify-center px-5 py-8 sm:px-10 lg:min-h-0 lg:overflow-y-auto lg:py-6">
+      <div className="auth-form-column flex min-w-0 items-center justify-center px-5 py-6 sm:px-10 lg:min-h-0 lg:overflow-y-auto lg:py-4">
         <Outlet />
       </div>
 
-      <div className="relative hidden overflow-hidden border-l-2 border-ink bg-canvas lg:block">
-        <div className="absolute -right-16 -top-16 h-72 w-72 rotate-12 rounded-3xl border-2 border-ink bg-coral" />
-        <div className="absolute -bottom-24 -left-10 h-80 w-80 -rotate-6 rounded-full border-2 border-ink bg-blue" />
-        <div className="absolute right-24 top-1/3 h-40 w-40 rotate-[18deg] rounded-2xl border-2 border-ink bg-lime" />
+      <div className="auth-art-panel relative hidden min-w-0 overflow-hidden bg-canvas lg:block">
+        <div className="auth-art-shape auth-art-shape-one absolute -right-16 -top-16 h-72 w-72 rotate-12 rounded-[4rem] bg-primary-light shadow-soft-lg" />
+        <div className="auth-art-shape auth-art-shape-two absolute -bottom-24 -left-10 h-80 w-80 -rotate-6 rounded-full bg-secondary-light shadow-soft-lg" />
+        <div className="auth-art-shape auth-art-shape-three absolute right-24 top-1/3 h-40 w-40 rotate-[18deg] rounded-[3rem] bg-accent-light shadow-soft-lg" />
+        <div className="auth-art-shape auth-art-shape-four absolute left-1/4 top-1/4 h-28 w-28 rounded-full bg-coral-light/70 blur-sm" />
 
-        <div className="relative flex h-full items-end p-12">
-          <blockquote className="max-w-sm rounded-2xl border-2 border-ink bg-surface p-6 shadow-modal">
+        <div className="relative flex h-full items-end p-10 xl:p-12">
+          <blockquote className="auth-art-quote max-w-sm rounded-[2rem] bg-surface/90 p-6 shadow-soft-lg">
             <p className="text-2xl font-extrabold leading-[1.25] tracking-[-0.03em]">
               No bidding wars. The pay is agreed before you start, and a supervisor has your
               back.
