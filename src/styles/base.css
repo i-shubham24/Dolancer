@@ -667,7 +667,8 @@
 
   .fresh-contact-hero {
     min-height: 410px;
-    padding-bottom: 4.5rem;
+    padding-top: 6.5rem;
+    padding-bottom: 3.5rem;
     background:
       linear-gradient(135deg, color-mix(in srgb, var(--dl-card-lilac) 58%, var(--color-canvas)), var(--color-canvas) 68%);
   }
@@ -682,8 +683,102 @@
 
   .fresh-contact-content {
     position: relative;
-    margin-top: -2rem;
+    margin-top: 0;
     z-index: 2;
+    padding-top: 2rem;
+  }
+
+  .fresh-contact-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.75fr);
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .fresh-contact-scene {
+    position: relative;
+    min-height: 13rem;
+  }
+
+  .fresh-contact-scene-main {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    display: grid;
+    width: 15rem;
+    gap: 0.35rem;
+    border-radius: 2rem 1.2rem 2rem 1.2rem;
+    background: var(--dl-card-mint);
+    padding: 1.4rem;
+    color: var(--color-ink);
+    box-shadow: var(--shadow-soft-lg);
+    transform: rotate(4deg);
+  }
+
+  .fresh-contact-scene-main svg {
+    width: 1.6rem;
+    color: var(--color-primary);
+  }
+
+  .fresh-contact-scene-main strong {
+    margin-top: 1rem;
+    font-size: 1rem;
+  }
+
+  .fresh-contact-scene-main span {
+    color: var(--color-ink-2);
+    font-size: 0.75rem;
+  }
+
+  .fresh-contact-scene-float {
+    position: absolute;
+    z-index: 2;
+    border-radius: 999px;
+    padding: 0.7rem 0.9rem;
+    color: var(--color-ink);
+    font-size: 0.72rem;
+    font-weight: 800;
+    box-shadow: var(--shadow-soft-md);
+  }
+
+  .fresh-contact-scene-float-one {
+    left: 0.5rem;
+    top: 2rem;
+    background: var(--dl-card-pink);
+    transform: rotate(-7deg);
+  }
+
+  .fresh-contact-scene-float-two {
+    bottom: 1rem;
+    right: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--dl-card-yellow);
+    transform: rotate(-4deg);
+  }
+
+  .fresh-contact-scene-float-two svg {
+    width: 0.9rem;
+  }
+
+  .fresh-contact-scene-dot {
+    position: absolute;
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+  }
+
+  .fresh-contact-scene-dot-one {
+    left: 4rem;
+    bottom: 1.5rem;
+    background: var(--dl-card-lilac);
+  }
+
+  .fresh-contact-scene-dot-two {
+    right: 2rem;
+    top: 0;
+    background: var(--dl-card-pink);
   }
 
   .fresh-contact-content::before {
@@ -1145,12 +1240,26 @@
     }
 
     .fresh-contact-content {
-      margin-top: -1rem;
+      margin-top: 0;
+      padding-top: 1rem;
     }
 
     .fresh-contact-hero {
       min-height: 0;
-      padding-bottom: 3rem;
+      padding-top: 5rem;
+      padding-bottom: 2rem;
+    }
+
+    .fresh-contact-hero-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .fresh-contact-scene {
+      min-height: 10rem;
+      max-width: 22rem;
+      margin-inline: auto;
+      width: 100%;
     }
 
     .fresh-hero::before {

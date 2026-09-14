@@ -21,15 +21,34 @@ export function ContactPage() {
   return (
     <div className="fresh-page fresh-contact-page">
       <StitchSection className="fresh-hero fresh-editorial-hero fresh-contact-hero">
-      <div className="fresh-container">
-        <StitchBadge>We are here to help</StitchBadge>
-        <motion.h1 initial={reduceMotion ? false : { opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65 }} className="mt-5 max-w-2xl">
-          Talk to <span className="fresh-highlight fresh-underline fresh-underline-pink">a person.</span>
-        </motion.h1>
-        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
-          Questions about payments, verification, a project you are on, or your account.
-          Someone answers every one of them.
-        </p>
+      <div className="fresh-container fresh-contact-hero-grid">
+        <div className="relative z-10">
+          <StitchBadge>We are here to help</StitchBadge>
+          <motion.h1 initial={reduceMotion ? false : { opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65 }} className="mt-5 max-w-2xl">
+            Talk to <span className="fresh-highlight fresh-underline fresh-underline-pink">a person.</span>
+          </motion.h1>
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
+            Questions about payments, verification, a project you are on, or your account.
+            Someone answers every one of them.
+          </p>
+        </div>
+        <motion.div
+          className="fresh-contact-scene"
+          initial={reduceMotion ? false : { opacity: 0, y: 18, rotate: 2 }}
+          animate={reduceMotion ? undefined : { opacity: 1, y: 0, rotate: 0 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          aria-hidden="true"
+        >
+          <div className="fresh-contact-scene-main">
+            <Mail />
+            <strong>We read every message.</strong>
+            <span>Support that feels human.</span>
+          </div>
+          <div className="fresh-contact-scene-float fresh-contact-scene-float-one">Reply within a day</div>
+          <div className="fresh-contact-scene-float fresh-contact-scene-float-two"><LifeBuoy /> Here to help</div>
+          <span className="fresh-contact-scene-dot fresh-contact-scene-dot-one" />
+          <span className="fresh-contact-scene-dot fresh-contact-scene-dot-two" />
+        </motion.div>
       </div>
       </StitchSection>
 
