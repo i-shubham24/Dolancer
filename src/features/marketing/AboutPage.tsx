@@ -7,7 +7,6 @@ import {
   StitchButton,
   StitchColorCard,
 } from "@/components/stitch/StitchPrimitives";
-import { CurvedSectionDivider } from "@/components/stitch/CurvedSectionDivider";
 import { AboutHeroInteractive } from "./AboutHeroInteractive";
 import { AboutComparison } from "./AboutComparison";
 
@@ -73,13 +72,7 @@ export function AboutPage() {
           </div>
         </div>
 
-        {/* Curvy divider into Final Section */}
-        <CurvedSectionDivider
-          variant="wave"
-          position="bottom"
-          fillColor="fill-canvas"
-          showAccentGlow
-        />
+        
       </section>
 
       <section className="fresh-section fresh-final">

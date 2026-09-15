@@ -143,7 +143,7 @@ export function SiteFooter() {
 
         {/* Giant Watermark Typography matching reference screenshot */}
         <div className="pt-6 sm:pt-8 select-none pointer-events-none text-left">
-          <span className="text-[64px] sm:text-[110px] md:text-[148px] font-extrabold tracking-tight text-[#141d30] leading-none block font-display">
+          <span className="text-[14vw] sm:text-[110px] md:text-[148px] font-extrabold tracking-tight text-[#141d30] leading-none block font-display">
             Dolancer
           </span>
         </div>

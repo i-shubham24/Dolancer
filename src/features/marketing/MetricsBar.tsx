@@ -33,7 +33,7 @@ const METRICS_LIST: MetricItem[] = [
   },
   {
     icon: Star,
-    stat: "4.9 ★",
+    stat: "4.9 / 5",
     label: "Specialist Rating",
     tag: "Verified Reviews",
   },

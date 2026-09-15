@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { Sparkles, MoreHorizontal, Wallet, ArrowUpRight } from "lucide-react";
 
@@ -11,7 +12,7 @@ export function HowItWorksHeroGraphic() {
         initial={reduceMotion ? false : { opacity: 0, y: 20 }}
         animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
         transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-        className="rounded-[2.5rem] border border-line-card bg-surface p-7 sm:p-9 shadow-soft-xl relative z-10"
+        className="rounded-[2.5rem] border border-line-card bg-surface p-7 sm:p-9 shadow-soft-xl relative z-10 rotate-[2deg] hover:rotate-[1deg] transition-transform duration-300"
       >
         {/* Top Header */}
         <div className="flex items-center justify-between mb-8">
@@ -53,10 +54,13 @@ export function HowItWorksHeroGraphic() {
         </div>
 
         {/* Action Button */}
-        <div className="w-full flex items-center justify-between rounded-full bg-purple text-inverse px-6 py-4 cursor-pointer hover:bg-purple-hover transition-colors shadow-soft-sm">
+        <Link 
+          to="/board"
+          className="w-full flex items-center justify-between rounded-full bg-purple text-inverse px-6 py-4 cursor-pointer hover:bg-purple-hover hover:scale-[1.02] active:scale-[0.98] transition-all shadow-soft-sm group"
+        >
           <span className="font-bold text-[15px]">View brief</span>
-          <ArrowUpRight className="h-5 w-5" />
-        </div>
+          <ArrowUpRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+        </Link>
       </motion.div>
 
       {/* Floating Success Card (Bottom Right) */}
@@ -64,7 +68,7 @@ export function HowItWorksHeroGraphic() {
         initial={reduceMotion ? false : { opacity: 0, scale: 0.9, x: -10 }}
         animate={reduceMotion ? undefined : { opacity: 1, scale: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute -bottom-2 -right-4 sm:-bottom-4 sm:-right-8 z-20 rounded-[1.25rem] border border-success-dot/30 bg-[#d1fae5] p-4 pr-6 shadow-soft-lg flex items-center gap-3"
+        className="absolute -bottom-2 -right-4 sm:-bottom-4 sm:-right-8 z-20 rounded-[1.25rem] border border-success-dot/30 bg-[#d1fae5] p-4 pr-6 shadow-soft-lg flex items-center gap-3 rotate-[5deg] hover:rotate-[7deg] transition-transform duration-300"
       >
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-success-dot/20 bg-success-dot/10 text-success-ink">
           <Wallet className="h-5 w-5" strokeWidth={1.5} />

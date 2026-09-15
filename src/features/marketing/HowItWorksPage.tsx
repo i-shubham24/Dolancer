@@ -36,7 +36,7 @@ export function HowItWorksPage() {
 
   return (
     <div className="fresh-page">
-      <section className="fresh-hero relative">
+      <section className="relative pt-32 pb-16 lg:pt-40 lg:pb-24">
         <div className="fresh-dot-field" aria-hidden="true" />
         <div className="fresh-container fresh-process-hero">
           <motion.div initial={reduceMotion ? false : "hidden"} animate="show" variants={reveal}>

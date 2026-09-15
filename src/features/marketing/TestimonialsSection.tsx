@@ -201,7 +201,7 @@ export function TestimonialsSection() {
 
         {/* Automatic Moving Dual-Track / Marquee Carousel */}
         <div
-          className="relative mt-8 space-y-6 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] sm:[mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]"
+          className="relative mt-8 space-y-6 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] sm:[mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
           onTouchStart={() => setPaused(true)}
