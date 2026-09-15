@@ -8,6 +8,7 @@ import {
   StitchColorCard,
 } from "@/components/stitch/StitchPrimitives";
 import { AboutHeroInteractive } from "./AboutHeroInteractive";
+import { MicroFloaties } from "./MicroFloaties";
 import { AboutComparison } from "./AboutComparison";
 
 export function AboutPage() {
@@ -39,6 +40,7 @@ export function AboutPage() {
     <div className="fresh-page">
       {/* Redesigned High-Craft Editorial & Interactive Hero */}
       <section className="fresh-hero relative pb-10">
+        <MicroFloaties zone="about-hero" />
         <div className="fresh-container">
           <AboutHeroInteractive />
         </div>
@@ -48,6 +50,7 @@ export function AboutPage() {
 
       {/* Principles Section with Curvy Framing */}
       <section className="fresh-section fresh-proof bg-[#faf8f5] pt-16 pb-32 relative overflow-hidden">
+        <MicroFloaties zone="about-principles" />
         <div className="fresh-container relative z-20">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <StitchBadge>Our Core Principles</StitchBadge>

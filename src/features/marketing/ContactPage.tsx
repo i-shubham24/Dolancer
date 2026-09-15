@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/providers/AuthProvider";
 import { CONTACT } from "./content";
 import { ContactForm } from "./ContactForm";
+import { MicroFloaties } from "./MicroFloaties";
 
 /**
  * Contact.
@@ -21,6 +22,7 @@ export function ContactPage() {
   return (
     <div className="fresh-page fresh-contact-page">
       <StitchSection className="fresh-hero fresh-editorial-hero fresh-contact-hero">
+        <MicroFloaties zone="contact-hero" />
       <div className="fresh-container fresh-contact-hero-grid">
         <div className="relative z-10">
           <StitchBadge>We are here to help</StitchBadge>
@@ -52,7 +54,8 @@ export function ContactPage() {
       </div>
       </StitchSection>
 
-      <div className="fresh-container fresh-contact-content grid gap-6 pb-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:pb-24">
+      <div className="fresh-container fresh-contact-content relative grid gap-6 pb-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:pb-24">
+        <MicroFloaties zone="contact-form" />
         <div className="fresh-contact-form-wrap">
           <ContactForm />
         </div>

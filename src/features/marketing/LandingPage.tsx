@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Briefcase, Sparkles, CheckCircle2 } from "lucide-react";
@@ -18,9 +19,13 @@ import { CtaBanner } from "./CtaBanner";
 import { PayoutExplainer } from "./PayoutExplainer";
 import { BackdropLetter } from "./BackdropLetter";
 import { MicroFloaties } from "./MicroFloaties";
+import VariableProximity from "@/components/react-bits/VariableProximity";
+import SwarmCursor from "@/components/react-bits/SwarmCursor";
+import { CurvedLoop } from "./CurvedLoop";
 
 export function LandingPage() {
   const reduceMotion = useReducedMotion();
+  const heroRef = useRef<HTMLElement>(null);
   const reveal = {
     hidden: { opacity: 0, y: 18 },
     show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] as const } },
@@ -29,10 +34,27 @@ export function LandingPage() {
   return (
     <div className="fresh-page">
       {/* Redesigned Hero Section aligning with HowItWorks / About theme */}
-      <section className="fresh-hero relative overflow-clip">
+      <section ref={heroRef} className="fresh-hero relative overflow-clip">
+        {/* Swarm one — vivid coral→blue — chasing the cursor across the hero.
+            Literal brand hexes (not palette vars) so the active palette's
+            remapped tokens can't muddy them into gray. z-20 floats the swarm
+            ABOVE the hero content; pointer-events-none keeps every click
+            landing on the real buttons underneath. */}
+        <SwarmCursor
+          className="absolute inset-0 z-20 pointer-events-none"
+          color="#ff6b5b"
+          accentColor="#6c8bff"
+          count={14}
+          size={9}
+          spread={115}
+          speed={2.2}
+          wander={0.3}
+          opacity={0.65}
+          scatterOnClick={false}
+        />
         <MicroFloaties zone="hero" />
         <div className="fresh-dot-field" aria-hidden="true" />
-        <div className="fresh-container fresh-hero-grid items-center py-10 lg:py-16">
+        <div className="fresh-container fresh-hero-grid relative z-10 items-center py-10 lg:py-16">
           {/* Left Hero Copy */}
           <motion.div
             initial={reduceMotion ? false : "hidden"}
@@ -46,10 +68,24 @@ export function LandingPage() {
             </StitchBadge>
 
             <h1 className="mt-5 max-w-2xl font-display !text-4xl sm:!text-6xl lg:!text-7xl !font-extrabold !leading-[1.04] tracking-[-0.045em] text-ink">
-              Turn your expertise into
+              <VariableProximity
+                label="Turn your expertise into"
+                fromFontVariationSettings="'wght' 640"
+                toFontVariationSettings="'wght' 800"
+                containerRef={heroRef}
+                radius={160}
+                falloff="gaussian"
+              />
               <br />
               <span className="fresh-highlight fresh-underline fresh-underline-mint">
-                reliable earnings.
+                <VariableProximity
+                  label="reliable earnings."
+                  fromFontVariationSettings="'wght' 640"
+                  toFontVariationSettings="'wght' 800"
+                  containerRef={heroRef}
+                  radius={160}
+                  falloff="gaussian"
+                />
               </span>
             </h1>
 
@@ -112,6 +148,20 @@ export function LandingPage() {
         <HowItWorksSteps />
       </div>
 
+      {/* Curved discipline ribbon bridging the steps and the live-brief marquee.
+          The band has no fixed height — the SVG's aspect ratio sizes it, and
+          the arc is fully contained in its own viewBox so nothing bleeds into
+          the neighbouring sections. */}
+      <div className="relative overflow-clip" aria-hidden="true">
+        <CurvedLoop
+          marqueeText="Graphic Design ✦ Web Development ✦ Copywriting ✦ Digital Marketing ✦ E-Commerce ✦ Support ✦ "
+          speed={1.6}
+          curveAmount={-170}
+          direction="right"
+          interactive
+        />
+      </div>
+
       {/* Animated Disciplines Marquee — O */}
       <div className="relative overflow-clip">
         <BackdropLetter letter="O" position="right" offsetY="20%" />
@@ -122,6 +172,19 @@ export function LandingPage() {
       <div className="relative overflow-clip">
         <BackdropLetter letter="L" position="left" offsetY="30%" />
         <MicroFloaties zone="features" />
+        {/* Swarm two — vivid lime→purple — floating over the benefits grid. */}
+        <SwarmCursor
+          className="absolute inset-0 z-20 pointer-events-none"
+          color="#c7ff3d"
+          accentColor="#7b61ff"
+          count={12}
+          size={8}
+          spread={100}
+          speed={2}
+          wander={0.35}
+          opacity={0.55}
+          scatterOnClick={false}
+        />
         <FeaturesGrid />
       </div>
 
@@ -159,14 +222,14 @@ export function LandingPage() {
 
       {/* High-Converting CTA Banner — E */}
       <div className="relative overflow-clip">
-        <BackdropLetter letter="E" position="left" offsetY="35%" />
+        <BackdropLetter letter="E" position="left" offsetY="35%" className="-ml-2" />
         <MicroFloaties zone="cta" />
         <CtaBanner />
       </div>
 
       {/* R — right, just before footer to complete DOLANCER */}
-      <div className="relative h-40 overflow-clip" aria-hidden="true">
-        <BackdropLetter letter="R" position="right" offsetY="30%" />
+      <div className="relative -mt-10 h-44 overflow-clip md:h-56" aria-hidden="true">
+        <BackdropLetter letter="R" position="right" className="text-[10rem] md:text-[13rem]" />
         <MicroFloaties zone="prefooter" />
       </div>
     </div>

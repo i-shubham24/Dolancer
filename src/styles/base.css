@@ -1609,8 +1609,56 @@
   .marquee-track:hover,
   .marquee-track:focus-within {
     animation-play-state: paused;
+  }  /* CurvedLoop (React Bits adaptation): draggable curved text marquee.
+     The jacket is an in-flow block sized by the SVG's aspect ratio — the
+     arc geometry is fully contained in its own viewBox, so it never
+     paints into the sections above or below. Fully transparent except the
+     painted glyphs, which keep pointer events for dragging. */
+  .curved-loop-jacket {
+    position: relative;
+    z-index: 2;
+    display: block;
+    width: 100%;
+    margin-top: 0;
+    pointer-events: none;
   }
 
+  .curved-loop-svg {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1440 / 170;
+    overflow: hidden;
+    font-size: clamp(2.5rem, 5.5vw, 5.5rem);
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+    fill: color-mix(in srgb, var(--color-ink) 22%, transparent);
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .curved-loop-svg text {
+    pointer-events: visiblePainted;
+  }
+
+  /* SwarmCursor (React Bits adaptation): a transparent WebGL overlay.
+     Pointer tracking happens on window, so the canvas itself never needs
+     pointer events and never blocks the content it floats above. */
+  .swarm-cursor {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .swarm-cursor__canvas {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    user-select: none;
+  }
 
   /* A slow bob, offset per element so a group never moves in lockstep. */
   @keyframes float-bob {

@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { useAuth } from "@/providers/AuthProvider";
 import { Button } from "@/components/ui/button";
+import { Dock, DockIcon, DockItem, DockLabel } from "@/components/motion-primitives/dock";
 import { SiteFooter } from "./SiteFooter";
 import { PaletteSwitcher } from "@/components/PaletteSwitcher";
 
@@ -56,21 +57,35 @@ export function MarketingLayout() {
         <div className="fresh-nav-shell mx-auto flex w-full max-w-[1320px] items-center gap-6 pl-5 pr-5 py-2.5 lg:pl-6 lg:pr-7 lg:py-3">
           <Wordmark />
 
-          <nav className="ml-8 lg:ml-12 hidden items-center gap-1.5 sm:gap-2 md:flex" aria-label="Main">
-            {NAV.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                className={({ isActive }) =>
-                  cn(
-                    "whitespace-nowrap rounded-lg px-3 py-2 text-sm font-bold transition-colors",
-                    isActive ? "bg-subtle text-ink" : "text-ink-2 hover:text-ink",
-                  )
-                }
-              >
-                {item.label}
-              </NavLink>
-            ))}
+          <nav className="ml-8 lg:ml-12 hidden md:flex" aria-label="Main">
+            {/* Dock-magnified nav links: each pill grows toward the cursor. */}
+            <Dock
+              expand={false}
+              panelHeight={40}
+              distance={110}
+              ariaLabel="Main navigation"
+              className="gap-1.5 rounded-full bg-transparent px-0"
+            >
+              {NAV.map((item) => (
+                <DockItem key={item.to} baseWidth={item.to === "/how-it-works" ? 118 : item.to === "/about" ? 70 : 82}>
+                  <DockIcon>
+                    <NavLink
+                      to={item.to}
+                      aria-label={item.label}
+                      className={({ isActive }) =>
+                        cn(
+                          "flex h-10 items-center justify-center whitespace-nowrap rounded-lg px-3 text-sm font-bold transition-colors",
+                          isActive ? "bg-subtle text-ink" : "text-ink-2 hover:text-ink",
+                        )
+                      }
+                    >
+                      {item.label}
+                    </NavLink>
+                  </DockIcon>
+                  <DockLabel className="border-line-card bg-surface text-ink-2 shadow-soft-xs">{item.label}</DockLabel>
+                </DockItem>
+              ))}
+            </Dock>
           </nav>
 
           <div className="ml-auto hidden items-center gap-2 md:flex">

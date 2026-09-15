@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams, Link, useLocation } from "react-router-dom";
 import { ArrowLeft, Check, Mail, ShieldCheck, Sparkles } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
@@ -11,10 +11,12 @@ import { safeNext } from "@/lib/safe-next";
 import { toUserError } from "@/lib/user-error";
 import { emailSchema, otpCodeSchema } from "@/lib/validations";
 import { sendEmailOtp, verifyEmailOtp, signInWithGoogle, signInDemo } from "./api";
+import VariableProximity from "@/components/react-bits/VariableProximity";
 
 type Stage = "email" | "code";
 
 export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
+  const titleRef = useRef<HTMLDivElement>(null);
   const [stage, setStage] = useState<Stage>("email");
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
@@ -122,7 +124,7 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
   const spring = { duration: 0.55, ease: [0.16, 1, 0.3, 1] as const };
 
   return (
-    <div className="auth-form relative w-full max-w-xl py-2 sm:py-4">
+    <div ref={titleRef} className="auth-form relative w-full max-w-xl py-2 sm:py-4">
       <div className="pointer-events-none absolute -left-16 top-2 h-28 w-28 rounded-full bg-purple-light blur-2xl sm:-left-28 sm:-top-8" aria-hidden="true" />
       <div className="pointer-events-none absolute -right-12 bottom-16 h-36 w-36 rounded-full bg-coral-light blur-3xl" aria-hidden="true" />
       <motion.div initial={rise} animate={{ opacity: 1, y: 0 }} transition={spring} className="relative">
@@ -148,13 +150,13 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
               <br />
               you are already
               <br />
-              <span className="relative inline-block text-purple"><span className="absolute inset-x-0 bottom-1 h-3 -rotate-1 rounded-full bg-lime-light" /><span className="relative">good at.</span></span>
+              <span className="relative inline-block text-purple"><span className="absolute inset-x-0 bottom-1 h-3 -rotate-1 rounded-full bg-lime-light" aria-hidden="true" /><VariableProximity label="good at." fromFontVariationSettings="'wght' 700" toFontVariationSettings="'wght' 800" containerRef={titleRef} radius={130} falloff="gaussian" /></span>
             </>
           ) : (
             <>
               Welcome
               <br />
-              <span className="relative inline-block text-purple"><span className="absolute inset-x-0 bottom-1 h-3 -rotate-1 rounded-full bg-coral-light" /><span className="relative">back.</span></span>
+              <span className="relative inline-block text-purple"><span className="absolute inset-x-0 bottom-1 h-3 -rotate-1 rounded-full bg-coral-light" aria-hidden="true" /><VariableProximity label="back." fromFontVariationSettings="'wght' 700" toFontVariationSettings="'wght' 800" containerRef={titleRef} radius={130} falloff="gaussian" /></span>
             </>
           )}
           </h1>

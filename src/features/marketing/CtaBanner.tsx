@@ -7,7 +7,7 @@ export function CtaBanner() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="fresh-section py-20">
+    <section className="fresh-section pt-20 pb-10">
       <div className="fresh-container">
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, scale: 0.98 }}

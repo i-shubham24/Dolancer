@@ -4,6 +4,7 @@ import { ArrowRight, Check, ShieldCheck, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StitchBadge, StitchSection } from "@/components/stitch/StitchPrimitives";
 import { GettingStartedInteractive } from "./GettingStartedInteractive";
+import { MicroFloaties } from "./MicroFloaties";
 import { InteractiveBentoPillars } from "./InteractiveBentoPillars";
 import { WorkflowDemo } from "./WorkflowDemo";
 import { PayoutExplainer } from "./PayoutExplainer";
@@ -37,6 +38,7 @@ export function HowItWorksPage() {
   return (
     <div className="fresh-page">
       <section className="fresh-hero relative z-10 !pt-10 lg:!pt-12 !pb-16 lg:!pb-24 flex items-center !min-h-0 !overflow-visible">
+        <MicroFloaties zone="hiw-hero" />
         <div className="fresh-dot-field" aria-hidden="true" />
         <div className="fresh-container fresh-process-hero">
           <motion.div initial={reduceMotion ? false : "hidden"} animate="show" variants={reveal}>
@@ -81,6 +83,7 @@ export function HowItWorksPage() {
       </Section>
 
       <section aria-labelledby="payout" className="fresh-section fresh-payout bg-[#faf8f5] py-20 relative overflow-hidden">
+        <MicroFloaties zone="payout" />
         <div className="fresh-container relative z-20">
           <PayoutExplainer />
         </div>
@@ -104,6 +107,7 @@ export function HowItWorksPage() {
       </Section>
 
       <Section labelledBy="cta">
+        <MicroFloaties zone="cta" />
         <div className="fresh-final-card mx-auto max-w-4xl">
           <div className="fresh-final-content flex flex-wrap items-center justify-between gap-8">
             <div className="min-w-0 flex-1">

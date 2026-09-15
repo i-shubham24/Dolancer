@@ -1,4 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&display=swap");
+/* Variable font: the wght axis 200..800 powers the VariableProximity
+   letter-weight effect. Static weights cannot interpolate. */
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
 @import "tailwindcss";
 @import "./styles/theme.css";
 @import "./styles/base.css";
