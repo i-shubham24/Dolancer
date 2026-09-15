@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { useAuth } from "@/providers/AuthProvider";
 import { Button } from "@/components/ui/button";
+import { Logo } from "@/components/ui/Logo";
 import { Dock, DockIcon, DockItem, DockLabel } from "@/components/motion-primitives/dock";
 import { SiteFooter } from "./SiteFooter";
 import { PaletteSwitcher } from "@/components/PaletteSwitcher";
@@ -19,9 +20,7 @@ const NAV = [
 function Wordmark({ onClick }: { onClick?: () => void }) {
   return (
     <Link to="/" onClick={onClick} className="flex items-center gap-2.5">
-      <span className="flex h-9 w-9 rotate-[-4deg] items-center justify-center rounded-[10px] border border-line-card bg-blue text-inverse shadow-soft-sm">
-        <span className="text-lg font-extrabold">D</span>
-      </span>
+      <Logo size="md" />
       <span className="text-xl font-extrabold tracking-[-0.04em]">
         Dolancer<span className="text-coral">.</span>
       </span>

@@ -44,7 +44,7 @@ export function AboutComparison() {
             {points.map((point, i) => (
               <div key={i} className="flex flex-col sm:flex-row items-stretch gap-4">
                 {/* Traditional Side */}
-                <div className="flex-1 rounded-2xl border border-line-card bg-[#f9fafb] p-5 flex items-center gap-4 opacity-75 grayscale-[50%]">
+                <div className="flex-1 rounded-2xl border border-line-card bg-surface-2 p-5 flex items-center gap-4 opacity-75 grayscale-[50%]">
                   <div className="h-8 w-8 rounded-full bg-red-100 flex items-center justify-center shrink-0">
                     <XCircle className="h-4 w-4 text-red-600" />
                   </div>

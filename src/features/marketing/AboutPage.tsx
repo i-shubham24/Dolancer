@@ -49,7 +49,7 @@ export function AboutPage() {
       <AboutComparison />
 
       {/* Principles Section with Curvy Framing */}
-      <section className="fresh-section fresh-proof bg-[#faf8f5] pt-16 pb-32 relative overflow-hidden">
+      <section className="fresh-section fresh-proof bg-surface-2 pt-16 pb-32 relative overflow-hidden">
         <MicroFloaties zone="about-principles" />
         <div className="fresh-container relative z-20">
           <div className="text-center max-w-2xl mx-auto mb-12">

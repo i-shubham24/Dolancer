@@ -233,7 +233,7 @@ export function GettingStartedInteractive() {
               {currentMoment.description}
             </p>
 
-            <div className="mt-6 p-4 rounded-2xl bg-[#fbf9f6] border border-line-card/70 flex items-start gap-3">
+            <div className="mt-6 p-4 rounded-2xl bg-surface-2 border border-line-card/70 flex items-start gap-3">
               <CheckCircle2 className="h-5 w-5 text-success-dot shrink-0 mt-0.5" />
               <p className="text-xs sm:text-sm font-semibold text-ink leading-relaxed">
                 {currentMoment.highlight}
@@ -275,7 +275,7 @@ export function GettingStartedInteractive() {
         </div>
 
         {/* Right Column: High-Craft Live Interactive Simulator */}
-        <div className="lg:col-span-7 rounded-3xl border border-line-card bg-[#faf8f5] p-6 sm:p-8 shadow-soft-sm flex flex-col justify-center min-h-[380px] relative overflow-hidden">
+        <div className="lg:col-span-7 rounded-3xl border border-line-card bg-surface-2 p-6 sm:p-8 shadow-soft-sm flex flex-col justify-center min-h-[380px] relative overflow-hidden">
           <AnimatePresence mode="wait">
             {/* STAGE 1 SIMULATOR: Interactive Skill Matching */}
             {activeStep === 1 && (

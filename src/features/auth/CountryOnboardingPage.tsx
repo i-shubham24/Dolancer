@@ -1,3 +1,4 @@
+import { Logo } from "@/components/ui/Logo";
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
@@ -82,7 +83,7 @@ export function CountryOnboardingPage() {
       <div className="pointer-events-none absolute -right-12 bottom-4 h-40 w-40 rounded-full bg-blue-light blur-3xl" aria-hidden="true" />
       <div className="relative mb-7 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="inline-flex h-11 w-11 rotate-[-5deg] items-center justify-center rounded-2xl bg-purple text-inverse shadow-soft-md"><span className="text-xl font-extrabold">D</span></div>
+          <Logo size="lg" className="rotate-[-5deg]" />
           <span className="text-sm font-extrabold tracking-[-0.02em] text-ink">Dolancer</span>
         </div>
         <StitchBadge tone="neutral"><ShieldCheck className="h-3.5 w-3.5 text-success-ink" /> Your details are private</StitchBadge>

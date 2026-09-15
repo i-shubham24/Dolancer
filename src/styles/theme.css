@@ -153,12 +153,12 @@
 
 :root,
 :root[data-palette="cobalt"] {
-  --dl-canvas: #f0f4f9;
-  --dl-surface: #ffffff;
-  --dl-surface-2: #f8fafc;
-  --dl-subtle: #e4eaf4;
-  --dl-muted: #d4dfec;
-  --dl-hover: #e8f0fe;
+  --dl-canvas: color-mix(in srgb, var(--dl-primary) 18%, #ffffff);
+  --dl-surface: color-mix(in srgb, var(--dl-primary) 8%, #ffffff);
+  --dl-surface-2: color-mix(in srgb, var(--dl-primary) 24%, #ffffff);
+  --dl-subtle: color-mix(in srgb, var(--dl-primary) 30%, #ffffff);
+  --dl-muted: color-mix(in srgb, var(--dl-primary) 24%, #ffffff);
+  --dl-hover: color-mix(in srgb, var(--dl-primary) 10%, #ffffff);
   --dl-ink: #090e1a;
   --dl-ink-2: #1e293b;
   --dl-ink-muted: #475569;
@@ -194,10 +194,10 @@
   --dl-neutral-bg: #eef2f7;
   --dl-neutral-ink: #334155;
   --dl-neutral-dot: #64748b;
-  --dl-card-pink: #ffd6e0;
-  --dl-card-lilac: #e0d7ff;
-  --dl-card-yellow: #fef08a;
-  --dl-card-mint: #a7f3d0;
+  --dl-card-pink: #fda4af;
+  --dl-card-lilac: #c4b5fd;
+  --dl-card-yellow: #fde047;
+  --dl-card-mint: #6ee7b7;
   --dl-graphic: #6366f1;
   --dl-graphic-soft: #ede9fe;
   --dl-gradient-a: #ddd6fe;
@@ -205,12 +205,12 @@
 }
 
 :root[data-palette="violet"] {
-  --dl-canvas: #f3f0f9;
-  --dl-surface: #ffffff;
-  --dl-surface-2: #faf8fe;
-  --dl-subtle: #e9e3f7;
-  --dl-muted: #dbd3f0;
-  --dl-hover: #f2edfd;
+  --dl-canvas: color-mix(in srgb, var(--dl-primary) 18%, #ffffff);
+  --dl-surface: color-mix(in srgb, var(--dl-primary) 8%, #ffffff);
+  --dl-surface-2: color-mix(in srgb, var(--dl-primary) 24%, #ffffff);
+  --dl-subtle: color-mix(in srgb, var(--dl-primary) 30%, #ffffff);
+  --dl-muted: color-mix(in srgb, var(--dl-primary) 24%, #ffffff);
+  --dl-hover: color-mix(in srgb, var(--dl-primary) 10%, #ffffff);
   --dl-ink: #0f0a1e;
   --dl-ink-2: #241838;
   --dl-ink-muted: #52456c;
@@ -246,10 +246,10 @@
   --dl-neutral-bg: #ede9f7;
   --dl-neutral-ink: #3b2d56;
   --dl-neutral-dot: #6e5e8e;
-  --dl-card-pink: #ffd6e0;
-  --dl-card-lilac: #ddd6fe;
-  --dl-card-yellow: #fef08a;
-  --dl-card-mint: #a7f3d0;
+  --dl-card-pink: #fda4af;
+  --dl-card-lilac: #c4b5fd;
+  --dl-card-yellow: #fde047;
+  --dl-card-mint: #6ee7b7;
   --dl-graphic: #8b5cf6;
   --dl-graphic-soft: #eee9ff;
   --dl-gradient-a: #dfd3ff;
@@ -257,12 +257,12 @@
 }
 
 :root[data-palette="mint"] {
-  --dl-canvas: #edf5f2;
-  --dl-surface: #ffffff;
-  --dl-surface-2: #f6faf9;
-  --dl-subtle: #deede7;
-  --dl-muted: #cde1db;
-  --dl-hover: #e6f4ef;
+  --dl-canvas: color-mix(in srgb, var(--dl-primary) 18%, #ffffff);
+  --dl-surface: color-mix(in srgb, var(--dl-primary) 8%, #ffffff);
+  --dl-surface-2: color-mix(in srgb, var(--dl-primary) 24%, #ffffff);
+  --dl-subtle: color-mix(in srgb, var(--dl-primary) 30%, #ffffff);
+  --dl-muted: color-mix(in srgb, var(--dl-primary) 24%, #ffffff);
+  --dl-hover: color-mix(in srgb, var(--dl-primary) 10%, #ffffff);
   --dl-ink: #071714;
   --dl-ink-2: #16302b;
   --dl-ink-muted: #3a5953;
@@ -298,10 +298,10 @@
   --dl-neutral-bg: #e2edea;
   --dl-neutral-ink: #2a4742;
   --dl-neutral-dot: #567872;
-  --dl-card-pink: #ffd6e0;
-  --dl-card-lilac: #dbeafe;
-  --dl-card-yellow: #fef08a;
-  --dl-card-mint: #99f6e4;
+  --dl-card-pink: #fda4af;
+  --dl-card-lilac: #c4b5fd;
+  --dl-card-yellow: #fde047;
+  --dl-card-mint: #6ee7b7;
   --dl-graphic: #0f766e;
   --dl-graphic-soft: #ccfbf1;
   --dl-gradient-a: #d4e1ff;
@@ -309,12 +309,12 @@
 }
 
 :root[data-palette="sunset"] {
-  --dl-canvas: #f7f1ee;
-  --dl-surface: #ffffff;
-  --dl-surface-2: #fdfaf8;
-  --dl-subtle: #f3e5e0;
-  --dl-muted: #e6d5cf;
-  --dl-hover: #faebe6;
+  --dl-canvas: color-mix(in srgb, var(--dl-primary) 18%, #ffffff);
+  --dl-surface: color-mix(in srgb, var(--dl-primary) 8%, #ffffff);
+  --dl-surface-2: color-mix(in srgb, var(--dl-primary) 24%, #ffffff);
+  --dl-subtle: color-mix(in srgb, var(--dl-primary) 30%, #ffffff);
+  --dl-muted: color-mix(in srgb, var(--dl-primary) 24%, #ffffff);
+  --dl-hover: color-mix(in srgb, var(--dl-primary) 10%, #ffffff);
   --dl-ink: #1c0e0a;
   --dl-ink-2: #3d1f17;
   --dl-ink-muted: #6b463c;
@@ -350,10 +350,10 @@
   --dl-neutral-bg: #f2e3de;
   --dl-neutral-ink: #472d25;
   --dl-neutral-dot: #7b5950;
-  --dl-card-pink: #ffd6e0;
-  --dl-card-lilac: #e9d5ff;
+  --dl-card-pink: #fda4af;
+  --dl-card-lilac: #c4b5fd;
   --dl-card-yellow: #fde047;
-  --dl-card-mint: #bbf7d0;
+  --dl-card-mint: #6ee7b7;
   --dl-graphic: #ea580c;
   --dl-graphic-soft: #ffedd5;
   --dl-gradient-a: #fed7aa;

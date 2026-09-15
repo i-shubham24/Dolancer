@@ -25,6 +25,7 @@ import { useAuth } from "@/providers/AuthProvider";
 import { signOut } from "@/features/auth/api";
 import { useProfile } from "@/features/dashboard/queries";
 import { PaletteSwitcher } from "@/components/PaletteSwitcher";
+import { Logo } from "@/components/ui/Logo";
 
 const NAV = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -111,9 +112,7 @@ function SidebarContent({ onNavigate, collapsed, setCollapsed }: { onNavigate?: 
     <div className="flex h-full flex-col overflow-x-hidden scrollbar-hide">
       <div className={cn("mb-8 flex px-1", collapsed ? "flex-col items-center gap-4 mt-2" : "items-center justify-between")}>
         <Link to="/dashboard" onClick={onNavigate} className="flex items-center gap-2.5 overflow-hidden shrink-0">
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--dl-purple)] to-[var(--dl-secondary)] text-inverse shadow-soft-md">
-            <span className="text-lg font-extrabold">D</span>
-          </span>
+          <Logo size="lg" />
           {!collapsed && (
             <span className="text-xl font-extrabold tracking-[-0.04em] whitespace-nowrap">
               Dolancer<span className="text-coral">.</span>
@@ -221,9 +220,7 @@ export function AppShell() {
       {/* Mobile bar */}
       <div className="sticky top-0 z-30 flex items-center justify-between border-b border-line-card/80 bg-surface/90 px-4 py-3 shadow-soft-sm backdrop-blur-xl lg:hidden">
         <Link to="/dashboard" className="flex items-center gap-2 min-w-0">
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--dl-purple)] to-[var(--dl-secondary)] text-inverse shadow-soft-sm">
-            <span className="text-base font-extrabold">D</span>
-          </span>
+          <Logo size="sm" />
           <span className="text-lg font-extrabold tracking-[-0.04em] hidden sm:block truncate">Dolancer</span>
           {isDemo() ? <DemoBadge /> : null}
         </Link>

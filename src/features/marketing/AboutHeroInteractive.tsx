@@ -70,7 +70,7 @@ export function AboutHeroInteractive() {
           </div>
           
           {/* The clean foreground card */}
-          <div className="relative bg-[#faf8f5] border border-line-card rounded-3xl p-7 shadow-soft-xl z-10 overflow-hidden">
+          <div className="relative bg-surface-2 border border-line-card rounded-3xl p-7 shadow-soft-xl z-10 overflow-hidden">
             <div className="absolute -top-10 -right-10 w-32 h-32 bg-coral/10 rounded-full blur-2xl"></div>
             <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-blue/10 rounded-full blur-2xl"></div>
             
@@ -107,7 +107,7 @@ export function AboutHeroInteractive() {
             
             <div className="mt-8 pt-4 border-t border-line-card/60 flex items-center justify-between text-xs">
               <span className="font-bold text-ink-3">Platform Overhead</span>
-              <span className="font-extrabold text-ink px-2 py-1 bg-white rounded-md border border-line-card">0%</span>
+              <span className="font-extrabold text-ink px-2 py-1 bg-surface rounded-md border border-line-card">0%</span>
             </div>
           </div>
         </motion.div>

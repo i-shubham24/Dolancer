@@ -29,7 +29,7 @@ export function InteractiveBentoPillars() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 my-10">
       {/* CARD 1: Matched, not marketed (Lilac tone) */}
-      <div className="relative isolate overflow-hidden rounded-3xl p-6 sm:p-7 shadow-soft-md transition-all duration-300 hover:-translate-y-1 hover:shadow-soft-lg bg-gradient-to-b from-[#f5f0ff] to-[#fbf9ff] border border-purple/20 flex flex-col justify-between min-h-[340px]">
+      <div className="relative isolate overflow-hidden rounded-3xl p-6 sm:p-7 shadow-soft-md transition-all duration-300 hover:-translate-y-1 hover:shadow-soft-lg bg-card-lilac border border-purple/20 flex flex-col justify-between min-h-[340px]">
         {/* Ambient glow accent */}
         <span className="absolute -top-16 -right-16 h-36 w-36 rounded-full bg-purple/10 blur-2xl pointer-events-none" />
 
@@ -106,7 +106,7 @@ export function InteractiveBentoPillars() {
       </div>
 
       {/* CARD 2: Protected while you work (Pink / Coral tone) */}
-      <div className="relative isolate overflow-hidden rounded-3xl p-6 sm:p-7 shadow-soft-md transition-all duration-300 hover:-translate-y-1 hover:shadow-soft-lg bg-gradient-to-b from-[#fff0f3] to-[#fffbfc] border border-coral/20 flex flex-col justify-between min-h-[340px]">
+      <div className="relative isolate overflow-hidden rounded-3xl p-6 sm:p-7 shadow-soft-md transition-all duration-300 hover:-translate-y-1 hover:shadow-soft-lg bg-card-pink border border-coral/20 flex flex-col justify-between min-h-[340px]">
         {/* Ambient glow accent */}
         <span className="absolute -top-16 -right-16 h-36 w-36 rounded-full bg-coral/10 blur-2xl pointer-events-none" />
 
@@ -174,7 +174,7 @@ export function InteractiveBentoPillars() {
       </div>
 
       {/* CARD 3: Paid with the brief (Yellow / Amber tone) */}
-      <div className="relative isolate overflow-hidden rounded-3xl p-6 sm:p-7 shadow-soft-md transition-all duration-300 hover:-translate-y-1 hover:shadow-soft-lg bg-gradient-to-b from-[#fffbf0] to-[#fffdf7] border border-amber-300/30 flex flex-col justify-between min-h-[340px]">
+      <div className="relative isolate overflow-hidden rounded-3xl p-6 sm:p-7 shadow-soft-md transition-all duration-300 hover:-translate-y-1 hover:shadow-soft-lg bg-card-yellow border border-amber-300/30 flex flex-col justify-between min-h-[340px]">
         {/* Ambient glow accent */}
         <span className="absolute -top-16 -right-16 h-36 w-36 rounded-full bg-amber-400/10 blur-2xl pointer-events-none" />
 

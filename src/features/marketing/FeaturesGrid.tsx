@@ -42,21 +42,12 @@ const FEATURES: Feature[] = [
   },
 ];
 
-import { CurvedSectionDivider } from "@/components/stitch/CurvedSectionDivider";
 
 export function FeaturesGrid() {
   const reduceMotion = useReducedMotion();
 
   return (
     <section id="benefits" className="fresh-section py-18 bg-surface/40 relative">
-      {/* Top curved divider replacing the straight border-t */}
-      <CurvedSectionDivider
-        variant="wave"
-        position="top"
-        fillColor="fill-canvas"
-        showAccentGlow
-        showBorderLine
-      />
 
       <div className="fresh-container">
         {/* Section Header */}

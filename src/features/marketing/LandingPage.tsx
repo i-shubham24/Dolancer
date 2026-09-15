@@ -7,7 +7,6 @@ import {
   StitchButton,
   StitchSection,
 } from "@/components/stitch/StitchPrimitives";
-import { CurvedSectionDivider } from "@/components/stitch/CurvedSectionDivider";
 import { HeroCardStack } from "./HeroCardStack";
 import { MetricsBar } from "./MetricsBar";
 import { HowItWorksSteps } from "./HowItWorksSteps";
@@ -20,7 +19,6 @@ import { PayoutExplainer } from "./PayoutExplainer";
 import { BackdropLetter } from "./BackdropLetter";
 import { MicroFloaties } from "./MicroFloaties";
 import VariableProximity from "@/components/react-bits/VariableProximity";
-import SwarmCursor from "@/components/react-bits/SwarmCursor";
 import { CurvedLoop } from "./CurvedLoop";
 
 export function LandingPage() {
@@ -40,18 +38,7 @@ export function LandingPage() {
             remapped tokens can't muddy them into gray. z-20 floats the swarm
             ABOVE the hero content; pointer-events-none keeps every click
             landing on the real buttons underneath. */}
-        <SwarmCursor
-          className="absolute inset-0 z-20 pointer-events-none"
-          color="#ff6b5b"
-          accentColor="#6c8bff"
-          count={14}
-          size={9}
-          spread={115}
-          speed={2.2}
-          wander={0.3}
-          opacity={0.65}
-          scatterOnClick={false}
-        />
+        
         <MicroFloaties zone="hero" />
         <div className="fresh-dot-field" aria-hidden="true" />
         <div className="fresh-container fresh-hero-grid relative z-10 items-center py-10 lg:py-16">
@@ -173,18 +160,7 @@ export function LandingPage() {
         <BackdropLetter letter="L" position="left" offsetY="30%" />
         <MicroFloaties zone="features" />
         {/* Swarm two — vivid lime→purple — floating over the benefits grid. */}
-        <SwarmCursor
-          className="absolute inset-0 z-20 pointer-events-none"
-          color="#c7ff3d"
-          accentColor="#7b61ff"
-          count={12}
-          size={8}
-          spread={100}
-          speed={2}
-          wander={0.35}
-          opacity={0.55}
-          scatterOnClick={false}
-        />
+        
         <FeaturesGrid />
       </div>
 
@@ -200,13 +176,7 @@ export function LandingPage() {
         <BackdropLetter letter="N" position="left" />
         <MicroFloaties zone="payout" />
         {/* Top curved divider replacing straight border-t */}
-        <CurvedSectionDivider
-          variant="wave"
-          position="top"
-          fillColor="fill-canvas"
-          showAccentGlow
-          showBorderLine
-        />
+        
 
         <div className="fresh-container">
           <PayoutExplainer />

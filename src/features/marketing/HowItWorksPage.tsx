@@ -68,7 +68,7 @@ export function HowItWorksPage() {
       </section>
 
       {/* Redesigned 5x Creative Interactive Four Moments Section */}
-      <section className="bg-[#faf8f5] py-14 lg:py-20 relative">
+      <section className="bg-surface-2 py-14 lg:py-20 relative">
         <div className="fresh-container">
           <GettingStartedInteractive />
         </div>
@@ -82,7 +82,7 @@ export function HowItWorksPage() {
         <WorkflowDemo />
       </Section>
 
-      <section aria-labelledby="payout" className="fresh-section fresh-payout bg-[#faf8f5] py-20 relative overflow-hidden">
+      <section aria-labelledby="payout" className="fresh-section fresh-payout bg-surface-2 py-20 relative overflow-hidden">
         <MicroFloaties zone="payout" />
         <div className="fresh-container relative z-20">
           <PayoutExplainer />

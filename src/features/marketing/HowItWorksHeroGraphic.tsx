@@ -68,7 +68,7 @@ export function HowItWorksHeroGraphic() {
         initial={reduceMotion ? false : { opacity: 0, scale: 0.9, x: -10 }}
         animate={reduceMotion ? undefined : { opacity: 1, scale: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute -bottom-2 -right-4 sm:-bottom-4 sm:-right-8 z-20 rounded-[1.25rem] border border-success-dot/30 bg-[#d1fae5] p-4 pr-6 shadow-soft-lg flex items-center gap-3 rotate-[5deg] hover:rotate-[7deg] transition-transform duration-300"
+        className="absolute -bottom-2 -right-4 sm:-bottom-4 sm:-right-8 z-20 rounded-[1.25rem] border border-success-dot/30 bg-success-bg p-4 pr-6 shadow-soft-lg flex items-center gap-3 rotate-[5deg] hover:rotate-[7deg] transition-transform duration-300"
       >
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-success-dot/20 bg-success-dot/10 text-success-ink">
           <Wallet className="h-5 w-5" strokeWidth={1.5} />
