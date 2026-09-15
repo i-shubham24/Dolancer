@@ -106,15 +106,21 @@ export function TicketPage() {
               <li key={message.id} className={cn("flex", mine ? "justify-end" : "justify-start")}>
                 <div
                   className={cn(
-                    "max-w-[85%] rounded-xl border border-line-card px-4 py-3 shadow-soft-sm",
-                    mine ? "bg-lime" : "bg-surface",
+                    "max-w-[85%] rounded-xl border px-4 py-3 shadow-soft-sm",
+                    mine ? "border-transparent bg-coral text-inverse" : "border-line-card bg-surface text-ink",
                   )}
                 >
-                  <div className="text-2xs font-extrabold uppercase tracking-[0.05em] text-ink-muted">
+                  <div className={cn(
+                    "text-2xs font-extrabold uppercase tracking-[0.05em]",
+                    mine ? "text-inverse/70" : "text-ink-muted"
+                  )}>
                     {mine ? "You" : "Support"}
                   </div>
                   <p className="mt-1 whitespace-pre-wrap text-sm leading-relaxed">{message.body}</p>
-                  <div className="mt-1.5 text-[11px] text-ink-muted">
+                  <div className={cn(
+                    "mt-1.5 text-[11px]",
+                    mine ? "text-inverse/70" : "text-ink-muted"
+                  )}>
                     {formatDateTime(message.createdAt)}
                   </div>
                 </div>

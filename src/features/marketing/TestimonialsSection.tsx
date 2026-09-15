@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import {
   Star,
@@ -7,6 +8,7 @@ import {
   Pause,
   Play,
   Award,
+  ArrowRight,
 } from "lucide-react";
 import { StitchBadge } from "@/components/stitch/StitchPrimitives";
 
@@ -199,16 +201,12 @@ export function TestimonialsSection() {
 
         {/* Automatic Moving Dual-Track / Marquee Carousel */}
         <div
-          className="relative mt-8 space-y-6"
+          className="relative mt-8 space-y-6 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] sm:[mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
           onTouchStart={() => setPaused(true)}
           onTouchEnd={() => setPaused(false)}
         >
-          {/* Subtle side fade gradients */}
-          <div className="pointer-events-none absolute left-0 top-0 bottom-0 z-10 w-12 sm:w-24 bg-gradient-to-r from-canvas via-canvas/70 to-transparent" />
-          <div className="pointer-events-none absolute right-0 top-0 bottom-0 z-10 w-12 sm:w-24 bg-gradient-to-l from-canvas via-canvas/70 to-transparent" />
-
           {/* Row 1: Smooth Leftward Animation */}
           <div className="flex w-max overflow-hidden">
             <motion.div
@@ -295,12 +293,12 @@ export function TestimonialsSection() {
             </div>
           </div>
 
-          <a
-            href="/sign-up"
+          <Link
+            to="/sign-up"
             className="rounded-xl bg-coral text-white font-extrabold text-xs px-4 py-2.5 hover:bg-coral-hover transition-colors shadow-soft-xs whitespace-nowrap"
           >
-            Apply to Join →
-          </a>
+            Apply to Join <ArrowRight className="h-3.5 w-3.5 inline ml-1" />
+          </Link>
         </div>
       </div>
     </section>

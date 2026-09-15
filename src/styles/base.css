@@ -243,7 +243,8 @@
 
   @media (min-width: 900px) {
     .fresh-header .fresh-nav-shell {
-      width: min(60%, 1180px) !important;
+      width: max-content !important;
+      max-width: calc(100% - 2rem) !important;
     }
   }
 
@@ -1749,4 +1750,12 @@
       animation-duration: 0.01ms !important;
     }
   }
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

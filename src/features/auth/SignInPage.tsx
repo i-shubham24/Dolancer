@@ -126,13 +126,15 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
       <div className="pointer-events-none absolute -left-16 top-2 h-28 w-28 rounded-full bg-purple-light blur-2xl sm:-left-28 sm:-top-8" aria-hidden="true" />
       <div className="pointer-events-none absolute -right-12 bottom-16 h-36 w-36 rounded-full bg-coral-light blur-3xl" aria-hidden="true" />
       <motion.div initial={rise} animate={{ opacity: 1, y: 0 }} transition={spring} className="relative">
-        <div className="mb-7 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="inline-flex h-11 w-11 rotate-[-5deg] items-center justify-center rounded-2xl bg-purple text-inverse shadow-soft-md">
-              <span className="text-xl font-extrabold">D</span>
-            </div>
-            <span className="text-sm font-extrabold tracking-[-0.02em] text-ink">Dolancer</span>
-          </div>
+        <div className="mb-6 flex items-center justify-between">
+          <Link 
+            to="/" 
+            className="inline-flex items-center gap-2 rounded-full px-3 py-2 -ml-3 text-sm font-bold text-ink-2 transition-colors hover:bg-surface hover:text-ink"
+            aria-label="Back to main site"
+          >
+            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+            Back to main site
+          </Link>
           <StitchBadge tone="neutral"><ShieldCheck className="h-3.5 w-3.5 text-success-ink" /> Secure access</StitchBadge>
         </div>
         <div className="mb-7 max-w-lg">
@@ -201,12 +203,13 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               placeholder="you@example.com"
+              className="min-h-[44px]"
             />
           </div>
           <Button
             type="submit"
             size="lg"
-            className="w-full"
+            className="w-full min-h-[44px]"
             disabled={busy || !email.trim() || (turnstileConfigured() && !captchaToken)}
           >
             <Mail className="h-4 w-4" aria-hidden="true" />
@@ -223,9 +226,9 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
               setCode("");
               setError(null);
             }}
-            className="inline-flex items-center gap-1.5 text-sm font-bold text-ink-2 hover:text-ink"
+            className="inline-flex min-h-[44px] items-center gap-1.5 text-sm font-bold text-ink-2 hover:text-ink"
           >
-            <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
+            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             Use a different email
           </button>
           <div className="space-y-2">
@@ -239,11 +242,11 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
               value={code}
               onChange={(event) => setCode(event.target.value)}
               placeholder="123456"
-              className="text-center text-2xl font-extrabold tracking-[0.4em]"
+              className="text-center text-2xl font-extrabold tracking-[0.4em] min-h-[56px]"
             />
             <p className="text-xs text-ink-muted">Sent to {email}. It expires shortly.</p>
           </div>
-          <Button type="submit" size="lg" className="w-full" disabled={busy || !code.trim()}>
+          <Button type="submit" size="lg" className="w-full min-h-[44px]" disabled={busy || !code.trim()}>
             {busy ? "Checking..." : "Continue"}
           </Button>
           <div className="flex items-center justify-between gap-3 text-xs">
@@ -274,7 +277,7 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
         <span className="h-px flex-1 bg-line-subtle" />
       </div>
 
-      <Button variant="secondary" size="lg" className="w-full" onClick={handleGoogle} disabled={busy}>
+      <Button variant="secondary" size="lg" className="w-full min-h-[44px]" onClick={handleGoogle} disabled={busy}>
         Continue with Google
       </Button>
 
@@ -282,7 +285,7 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
         {isSignUp ? "Already have an account? " : "New to Dolancer? "}
         <Link
           to={isSignUp ? `/sign-in${location.search}` : `/sign-up${location.search}`}
-          className="font-bold text-ink underline decoration-2 underline-offset-2 hover:text-coral"
+          className="inline-flex min-h-[44px] items-center font-bold text-ink underline decoration-2 underline-offset-2 hover:text-coral"
         >
           {isSignUp ? "Sign in" : "Create one"}
         </Link>

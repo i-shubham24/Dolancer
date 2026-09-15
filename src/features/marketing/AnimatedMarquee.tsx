@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles,
@@ -367,13 +368,13 @@ export function AnimatedMarquee() {
                   <span className="text-xs text-ink-muted font-medium">
                     {activeDiscipline.briefsCount} similar briefs available
                   </span>
-                  <a
-                    href="#pool"
+                  <Link
+                    to="/pool"
                     className="inline-flex items-center gap-1.5 rounded-xl bg-ink px-4 py-2.5 text-xs font-extrabold text-inverse hover:bg-ink/90 transition-colors shadow-soft-xs"
                   >
                     <span>Claim on Board</span>
                     <ArrowRight className="h-3.5 w-3.5" />
-                  </a>
+                  </Link>
                 </div>
               </motion.div>
             </AnimatePresence>

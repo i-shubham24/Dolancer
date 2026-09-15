@@ -83,8 +83,8 @@ export function HeroCardStack() {
     setActiveIndex((prev) => (prev + 1) % CARDS.length);
   };
 
-  const handleSelect = (idx: number) => {
-    setActiveIndex(idx);
+  const handleSelect = (index: number) => {
+    setActiveIndex(index);
   };
 
   return (
@@ -99,7 +99,16 @@ export function HeroCardStack() {
           className="h-[360px] w-[360px] sm:h-[450px] sm:w-[450px] text-coral/20 animate-pulse"
           viewBox="0 0 100 100"
           fill="none"
+          xmlns="http://www.w3.org/2000/svg"
         >
+          <circle
+            cx="50"
+            cy="50"
+            r="49"
+            stroke="currentColor"
+            strokeWidth="0.5"
+            strokeDasharray="4 4"
+          />
           <circle
             cx="50"
             cy="50"
@@ -265,7 +274,7 @@ export function HeroCardStack() {
             Avg. monthly payout
           </span>
           <span className="text-base font-extrabold tracking-tight text-ink font-display">
-            ₹18,400<span className="text-xs font-bold text-ink-muted">/mo</span>
+            ₹118,400<span className="text-xs font-bold text-ink-muted">/mo</span>
           </span>
         </div>
       </motion.div>

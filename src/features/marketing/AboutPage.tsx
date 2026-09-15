@@ -6,10 +6,10 @@ import {
   StitchBadge,
   StitchButton,
   StitchColorCard,
-  StitchSection,
 } from "@/components/stitch/StitchPrimitives";
 import { CurvedSectionDivider } from "@/components/stitch/CurvedSectionDivider";
 import { AboutHeroInteractive } from "./AboutHeroInteractive";
+import { AboutComparison } from "./AboutComparison";
 
 export function AboutPage() {
   const reduceMotion = useReducedMotion();
@@ -39,23 +39,17 @@ export function AboutPage() {
   return (
     <div className="fresh-page">
       {/* Redesigned High-Craft Editorial & Interactive Hero */}
-      <StitchSection className="fresh-hero relative">
+      <section className="fresh-hero relative pb-10">
         <div className="fresh-container">
           <AboutHeroInteractive />
         </div>
+      </section>
 
-        {/* Curvy Section Divider */}
-        <CurvedSectionDivider
-          variant="smooth-arch"
-          position="bottom"
-          fillColor="fill-[#faf8f5]"
-          showAccentGlow
-        />
-      </StitchSection>
+      <AboutComparison />
 
       {/* Principles Section with Curvy Framing */}
-      <section className="fresh-section fresh-proof bg-[#faf8f5] py-16">
-        <div className="fresh-container">
+      <section className="fresh-section fresh-proof bg-[#faf8f5] pt-16 pb-32 relative overflow-hidden">
+        <div className="fresh-container relative z-20">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <StitchBadge>Our Core Principles</StitchBadge>
             <h2 className="mt-3 text-3xl sm:text-4xl font-extrabold font-display text-ink tracking-tight">
@@ -78,29 +72,29 @@ export function AboutPage() {
             ))}
           </div>
         </div>
-      </section>
 
-      {/* Curvy divider into Final Section */}
-      <CurvedSectionDivider
-        variant="wave"
-        position="bottom"
-        fillColor="fill-surface"
-        showAccentGlow
-      />
+        {/* Curvy divider into Final Section */}
+        <CurvedSectionDivider
+          variant="wave"
+          position="bottom"
+          fillColor="fill-canvas"
+          showAccentGlow
+        />
+      </section>
 
       <section className="fresh-section fresh-final">
         <div className="fresh-container">
-          <div className="fresh-final-card">
+          <div className="fresh-final-card max-w-5xl mx-auto">
             <div>
               <StitchBadge className="fresh-who-runs-badge">Who runs this</StitchBadge>
               <h2>Clear work needs clear stewardship.</h2>
               <p>Dolancer is operated by {CONTACT.company}, registered in {CONTACT.jurisdiction}. We also run a client-facing brand, which is how work reaches this side of the platform. We do not hide that connection, and you are free to ask about it.</p>
             </div>
-            <div className="flex flex-wrap gap-3">
-              <StitchButton asChild>
-                <Link to="/sign-up">Start earning <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
+            <div className="flex flex-col gap-3 shrink-0">
+              <StitchButton asChild className="w-full">
+                <Link to="/sign-up">Start earning <ArrowRight className="h-4 w-4 ml-1.5" aria-hidden="true" /></Link>
               </StitchButton>
-              <StitchButton asChild variant="secondary">
+              <StitchButton asChild variant="secondary" className="w-full bg-surface">
                 <Link to="/contact">Ask us something</Link>
               </StitchButton>
             </div>

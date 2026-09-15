@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ScrollToTop } from "@/routes/ScrollToTop";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/cn";
@@ -37,6 +38,8 @@ function Wordmark({ onClick }: { onClick?: () => void }) {
 export function MarketingLayout() {
   const [open, setOpen] = useState(false);
   const { session } = useAuth();
+  const location = useLocation();
+  const reduceMotion = useReducedMotion();
 
   return (
     <div className="fresh-site flex min-h-dvh flex-col bg-canvas">
@@ -49,7 +52,7 @@ export function MarketingLayout() {
       </a>
 
       <header className="fresh-header sticky top-0 z-30">
-        <div className="fresh-nav-shell mx-auto flex w-full max-w-[1320px] items-center gap-6 px-4 py-3 lg:px-5">
+        <div className="fresh-nav-shell mx-auto flex w-full max-w-[1320px] items-center gap-6 pl-5 pr-5 py-2.5 lg:pl-6 lg:pr-7 lg:py-3">
           <Wordmark />
 
           <nav className="ml-8 lg:ml-12 hidden items-center gap-1.5 sm:gap-2 md:flex" aria-label="Main">
@@ -59,7 +62,7 @@ export function MarketingLayout() {
                 to={item.to}
                 className={({ isActive }) =>
                   cn(
-                    "rounded-lg px-3 py-2 text-sm font-bold transition-colors",
+                    "whitespace-nowrap rounded-lg px-3 py-2 text-sm font-bold transition-colors",
                     isActive ? "bg-subtle text-ink" : "text-ink-2 hover:text-ink",
                   )
                 }
@@ -144,7 +147,17 @@ export function MarketingLayout() {
       </header>
 
       <main id="main" className="fresh-main flex-1">
-        <Outlet />
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={location.pathname}
+            initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+            animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+            exit={reduceMotion ? undefined : { opacity: 0, y: -12 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <Outlet />
+          </motion.div>
+        </AnimatePresence>
       </main>
 
       <SiteFooter />

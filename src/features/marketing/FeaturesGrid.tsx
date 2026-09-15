@@ -51,7 +51,7 @@ export function FeaturesGrid() {
     <section id="benefits" className="fresh-section py-18 bg-surface/40 relative">
       {/* Top curved divider replacing the straight border-t */}
       <CurvedSectionDivider
-        variant="gentle-curve"
+        variant="wave"
         position="top"
         fillColor="fill-canvas"
         showAccentGlow
@@ -104,15 +104,6 @@ export function FeaturesGrid() {
           })}
         </div>
       </div>
-
-      {/* Bottom curved divider replacing the straight border-b */}
-      <CurvedSectionDivider
-        variant="smooth-arch"
-        position="bottom"
-        fillColor="fill-canvas"
-        showAccentGlow
-        showBorderLine
-      />
     </section>
   );
 }

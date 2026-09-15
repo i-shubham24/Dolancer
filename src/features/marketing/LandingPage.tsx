@@ -97,18 +97,9 @@ export function LandingPage() {
             <HeroCardStack />
           </motion.div>
         </div>
-
-        {/* Curvy divider below hero */}
-        <CurvedSectionDivider
-          variant="smooth-arch"
-          position="bottom"
-          fillColor="fill-canvas"
-          showAccentGlow
-          showBorderLine
-        />
       </section>
 
-      {/* Metrics Bar */}
+      {/* Social Proof / Trusted By */}
       <MetricsBar />
 
       {/* 3 Steps: How Dolancers Earn */}
@@ -137,15 +128,6 @@ export function LandingPage() {
         <div className="fresh-container">
           <PayoutExplainer />
         </div>
-
-        {/* Bottom curved divider replacing straight border-b */}
-        <CurvedSectionDivider
-          variant="organic-crest"
-          position="bottom"
-          fillColor="fill-canvas"
-          showAccentGlow
-          showBorderLine
-        />
       </StitchSection>
 
       {/* Real Dolancers, Real Earnings Testimonials */}

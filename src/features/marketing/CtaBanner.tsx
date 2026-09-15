@@ -45,17 +45,16 @@ export function CtaBanner() {
               </div>
             </div>
 
-            {/* Buttons sitting side-by-side in one line (left-right) */}
-            <div className="flex flex-row items-center justify-center lg:justify-end gap-3.5 sm:gap-4 shrink-0 flex-wrap sm:flex-nowrap">
-              <StitchButton asChild variant="primary" className="!w-auto !mt-0 px-6 sm:px-7 py-3.5 sm:py-4 text-sm sm:text-base justify-center whitespace-nowrap shadow-soft-sm">
-                <Link to="/sign-up" className="inline-flex items-center justify-center">
+            {/* Buttons stacked vertically */}
+            <div className="flex flex-col justify-center gap-3 w-full sm:w-auto min-w-[200px] shrink-0">
+              <StitchButton asChild variant="primary" className="!w-full !mt-0 px-6 sm:px-7 py-3.5 sm:py-4 text-sm sm:text-base justify-center whitespace-nowrap shadow-soft-sm">
+                <Link to="/sign-up" className="inline-flex items-center justify-center w-full">
                   Start Earning
                   <ArrowRight className="h-4 w-4 ml-1.5" />
                 </Link>
               </StitchButton>
-
-              <StitchButton asChild variant="secondary" className="!w-auto !mt-0 px-5 sm:px-6 py-3.5 sm:py-4 text-sm sm:text-base whitespace-nowrap justify-center bg-surface/95 hover:bg-surface border border-line-card text-ink shadow-soft-xs">
-                <Link to="/contact" className="inline-flex items-center justify-center">
+              <StitchButton asChild variant="secondary" className="!w-full !mt-0 px-5 sm:px-6 py-3.5 sm:py-4 text-sm sm:text-base justify-center whitespace-nowrap bg-surface/95 hover:bg-surface border border-line-card text-ink shadow-soft-xs">
+                <Link to="/contact" className="inline-flex items-center justify-center w-full">
                   Ask a question
                 </Link>
               </StitchButton>

@@ -30,7 +30,7 @@ export function CurvedSectionDivider({
   return (
     <div
       className={cn(
-        "w-full overflow-hidden leading-none select-none pointer-events-none z-10 block",
+        "absolute w-full overflow-hidden leading-none select-none pointer-events-none z-10 block left-0",
         isTop ? "-top-px" : "-bottom-px",
         className
       )}

@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, Check, CircleDollarSign, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight, Check, ShieldCheck, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { StitchBadge, StitchOrbitalGraphic, StitchSection } from "@/components/stitch/StitchPrimitives";
-import { CurvedSectionDivider } from "@/components/stitch/CurvedSectionDivider";
+import { StitchBadge, StitchSection } from "@/components/stitch/StitchPrimitives";
 import { GettingStartedInteractive } from "./GettingStartedInteractive";
 import { InteractiveBentoPillars } from "./InteractiveBentoPillars";
 import { WorkflowDemo } from "./WorkflowDemo";
 import { PayoutExplainer } from "./PayoutExplainer";
 import { DifferenceRail } from "./DifferenceRail";
 import { CategoryTags } from "./CategoryTags";
+import { HowItWorksHeroGraphic } from "./HowItWorksHeroGraphic";
 
 function Section({
   children,
@@ -58,26 +58,11 @@ export function HowItWorksPage() {
             initial={reduceMotion ? false : { opacity: 0, y: 18, rotate: 2 }}
             animate={reduceMotion ? undefined : { opacity: 1, y: 0, rotate: 0 }}
             transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-            className="fresh-process-hero-art"
+            className="relative w-full lg:pr-10 xl:pr-16"
           >
-            <StitchOrbitalGraphic />
-            <div className="fresh-process-ticket">
-              <span className="fresh-live-dot" />
-              Matched project
-              <strong>₹24,000</strong>
-              <small>7 days · Writing and content</small>
-            </div>
-            <div className="fresh-process-chip"><CircleDollarSign /> payout protected</div>
+            <HowItWorksHeroGraphic />
           </motion.div>
         </div>
-
-        {/* Curvy divider transitioning into Getting Started */}
-        <CurvedSectionDivider
-          variant="smooth-arch"
-          position="bottom"
-          fillColor="fill-[#faf8f5]"
-          showAccentGlow
-        />
       </section>
 
       {/* Redesigned 5x Creative Interactive Four Moments Section */}
@@ -85,18 +70,9 @@ export function HowItWorksPage() {
         <div className="fresh-container">
           <GettingStartedInteractive />
         </div>
-
-        {/* Curvy wave separator replacing straight border-b */}
-        <CurvedSectionDivider
-          variant="wave"
-          position="bottom"
-          fillColor="fill-canvas"
-          showAccentGlow
-          showBorderLine
-        />
       </section>
 
-      <Section labelledBy="walkthrough" className="fresh-workflow pt-6">
+      <Section labelledBy="walkthrough" className="fresh-workflow !pt-6 !pb-12 lg:!pb-16">
         {/* Redesigned Bento Pillars (formerly the empty pastel cards in screenshot) */}
         <InteractiveBentoPillars />
 
@@ -104,9 +80,11 @@ export function HowItWorksPage() {
         <WorkflowDemo />
       </Section>
 
-      <Section labelledBy="payout" className="fresh-payout">
-        <PayoutExplainer />
-      </Section>
+      <section aria-labelledby="payout" className="fresh-section fresh-payout bg-[#faf8f5] py-20 relative overflow-hidden">
+        <div className="fresh-container relative z-20">
+          <PayoutExplainer />
+        </div>
+      </section>
 
       <Section labelledBy="differences" className="fresh-difference">
         <DifferenceRail />

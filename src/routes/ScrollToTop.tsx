@@ -24,7 +24,7 @@ export function ScrollToTop() {
       | undefined;
     if (navigation?.type === "back_forward") return;
 
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, [pathname, hash]);
 
   return null;

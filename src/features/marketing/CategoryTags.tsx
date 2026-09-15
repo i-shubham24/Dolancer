@@ -1,5 +1,6 @@
 import { cn } from "@/lib/cn";
 import { CATEGORIES } from "./content";
+import { motion, useReducedMotion } from "framer-motion";
 
 /**
  * Disciplines drawn as luggage tags rather than boxes.
@@ -27,11 +28,16 @@ const BANDS = [
 const TILTS = ["-rotate-[1.2deg]", "rotate-[0.9deg]", "-rotate-[0.5deg]", "rotate-[1.5deg]"];
 
 export function CategoryTags() {
+  const reduceMotion = useReducedMotion();
   return (
     <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {CATEGORIES.map((category, index) => (
         <li key={category.name}>
-          <div
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+            whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.4, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
             className={cn(
               "group relative flex h-full overflow-hidden rounded-2xl border border-line-card bg-surface",
               "shadow-soft-sm transition-all duration-[220ms] ease-spring",
@@ -69,7 +75,7 @@ export function CategoryTags() {
 
               <p className="mt-2 text-xs leading-relaxed text-ink-2">{category.blurb}</p>
             </div>
-          </div>
+          </motion.div>
         </li>
       ))}
     </ul>

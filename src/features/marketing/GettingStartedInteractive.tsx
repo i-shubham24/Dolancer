@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles,
@@ -266,7 +267,7 @@ export function GettingStartedInteractive() {
                 </button>
               ) : (
                 <Button asChild size="sm" className="rounded-full">
-                  <a href="/sign-up">Start Earning Now</a>
+                  <Link to="/sign-up">Start Earning Now</Link>
                 </Button>
               )}
             </div>

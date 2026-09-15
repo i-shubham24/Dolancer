@@ -108,7 +108,7 @@ function SidebarContent({ onNavigate, collapsed, setCollapsed }: { onNavigate?: 
   const initial = (profile.data?.full_name?.trim()?.[0] ?? user?.email?.[0] ?? "D").toUpperCase();
 
   return (
-    <div className="flex h-full flex-col overflow-x-hidden">
+    <div className="flex h-full flex-col overflow-x-hidden scrollbar-hide">
       <div className={cn("mb-8 flex px-1", collapsed ? "flex-col items-center gap-4 mt-2" : "items-center justify-between")}>
         <Link to="/dashboard" onClick={onNavigate} className="flex items-center gap-2.5 overflow-hidden shrink-0">
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-purple to-blue text-inverse shadow-soft-md">
@@ -269,7 +269,7 @@ export function AppShell() {
                   setMobileOpen(false);
                 }
               }}
-              className="absolute inset-y-0 left-0 w-[85%] max-w-xs overflow-y-auto overscroll-contain border-r border-line-card bg-canvas p-5 shadow-soft-lg"
+              className="absolute inset-y-0 left-0 w-[85%] max-w-xs overflow-y-auto overscroll-contain border-r border-line-card bg-canvas p-5 shadow-soft-lg scrollbar-hide"
             >
               <SidebarContent onNavigate={() => setMobileOpen(false)} />
             </motion.div>
@@ -278,7 +278,7 @@ export function AppShell() {
       </AnimatePresence>
 
       <div className="mx-auto flex w-full max-w-[1320px] gap-6 px-4 lg:px-6">
-        <aside className={cn("sticky top-0 hidden h-dvh shrink-0 overflow-y-auto py-6 lg:block transition-[width] duration-300 ease-in-out", collapsed ? "w-20" : "w-64")}>
+        <aside className={cn("sticky top-0 hidden h-dvh shrink-0 overflow-y-auto py-6 lg:block transition-[width] duration-300 ease-in-out scrollbar-hide", collapsed ? "w-20" : "w-64")}>
           <SidebarContent collapsed={collapsed} setCollapsed={toggleCollapsed} />
         </aside>
 

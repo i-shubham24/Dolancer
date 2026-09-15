@@ -1,60 +1,53 @@
 import { Link } from "react-router-dom";
 import { Mail } from "lucide-react";
 import { CONTACT } from "./content";
+import { cn } from "@/lib/cn";
+
+const MOSAIC: { col: number; row: number; solid: boolean }[] = [
+  { col: 2, row: 0, solid: true },
+  { col: 5, row: 0, solid: false },
+  { col: 9, row: 0, solid: true },
+  { col: 14, row: 0, solid: false },
+  { col: 18, row: 0, solid: true },
+  { col: 23, row: 0, solid: false },
+  { col: 1, row: 1, solid: false },
+  { col: 4, row: 1, solid: true },
+  { col: 7, row: 1, solid: true },
+  { col: 11, row: 1, solid: false },
+  { col: 13, row: 1, solid: true },
+  { col: 17, row: 1, solid: true },
+  { col: 20, row: 1, solid: false },
+  { col: 22, row: 1, solid: true },
+  { col: 25, row: 1, solid: false },
+];
+
+function Mosaic() {
+  return (
+    <div aria-hidden="true" className="relative h-[72px] overflow-hidden -mb-px">
+      {MOSAIC.map((tile) => (
+        <span
+          key={`${tile.col}-${tile.row}`}
+          className={cn(
+            "absolute h-9 w-9 rounded-[3px]",
+            tile.solid ? "bg-[#0b0f19]" : "bg-[#0b0f19]/25"
+          )}
+          style={{
+            left: `${tile.col * 4}%`,
+            bottom: tile.row === 0 ? 36 : 0,
+          }}
+        />
+      ))}
+      <span className="absolute inset-x-0 bottom-0 h-9 bg-[#0b0f19]" />
+    </div>
+  );
+}
 
 export function SiteFooter() {
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="relative text-slate-300">
-      {/* Seamless Curvy Upper Border Crest Transition from Canvas */}
-      <div className="relative w-full overflow-hidden leading-none select-none pointer-events-none bg-canvas -mb-px">
-        <svg
-          viewBox="0 0 1440 76"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-10 sm:h-16 md:h-20 lg:h-24 block"
-          preserveAspectRatio="none"
-        >
-          {/* Footer dark body rising smoothly into canvas */}
-          <path
-            d="M0 56C360 12 1080 12 1440 56V76H0V56Z"
-            fill="#0b0f19"
-          />
-          {/* Crisp structural border line replacing the straight top edge */}
-          <path
-            d="M0 56C360 12 1080 12 1440 56"
-            stroke="#1e293b"
-            strokeWidth="1.5"
-          />
-          {/* Luminous multi-stop glowing crest border replacing straight border line */}
-          <path
-            d="M0 56C360 12 1080 12 1440 56"
-            stroke="url(#footer-crest-glow)"
-            strokeWidth="3"
-            className="opacity-90"
-          />
-          <defs>
-            <linearGradient id="footer-crest-glow" x1="0" y1="0" x2="1440" y2="0" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#f97316" stopOpacity="0.9" />
-              <stop offset="0.25" stopColor="#8b5cf6" stopOpacity="0.85" />
-              <stop offset="0.5" stopColor="#ec4899" stopOpacity="0.8" />
-              <stop offset="0.75" stopColor="#3b82f6" stopOpacity="0.85" />
-              <stop offset="1" stopColor="#10b981" stopOpacity="0.9" />
-            </linearGradient>
-          </defs>
-        </svg>
-
-        {/* Floating Centerpiece Guarantee Badge on the Curved Crest */}
-        <div className="absolute left-1/2 bottom-2 sm:bottom-4 md:bottom-6 -translate-x-1/2 z-20 hidden sm:inline-flex items-center gap-2.5 rounded-full border border-slate-700/80 bg-[#111827]/95 px-4.5 py-1.5 text-xs font-semibold text-slate-200 shadow-2xl backdrop-blur-md select-none pointer-events-auto">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-          </span>
-          <span className="tracking-wide">Pre-funded Briefs · Dedicated Supervisor Shield · Instant Direct Release</span>
-        </div>
-      </div>
-
+      <Mosaic />
       {/* Main Dark Footer Content */}
       <div className="bg-[#0b0f19] relative overflow-hidden">
         {/* Ambient Top Glow */}
@@ -160,6 +153,7 @@ export function SiteFooter() {
           <p>Operated by {CONTACT.company}, {CONTACT.jurisdiction}.</p>
           <p>© {currentYear} {CONTACT.company}. Support {CONTACT.hours}.</p>
         </div>
+      </div>
       </div>
     </footer>
   );
