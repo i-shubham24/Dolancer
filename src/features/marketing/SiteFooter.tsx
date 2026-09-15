@@ -142,8 +142,8 @@ export function SiteFooter() {
         <div className="mt-12 sm:mt-16 h-px w-full bg-gradient-to-r from-transparent via-slate-800/90 to-transparent" />
 
         {/* Giant Watermark Typography matching reference screenshot */}
-        <div className="pt-6 sm:pt-8 select-none pointer-events-none text-left">
-          <span className="text-[14vw] sm:text-[110px] md:text-[148px] font-extrabold tracking-tight text-[#141d30] leading-none block font-display">
+        <div className="pt-6 sm:pt-10 pb-4 select-none pointer-events-none text-left px-4 sm:px-8 relative z-0">
+          <span className="text-[12.5vw] sm:text-[90px] md:text-[120px] lg:text-[140px] font-extrabold tracking-tight text-[#141d30] leading-tight block font-display">
             Dolancer
           </span>
         </div>

@@ -16,6 +16,8 @@ import { NumbersSection } from "./NumbersSection";
 import { TestimonialsSection } from "./TestimonialsSection";
 import { CtaBanner } from "./CtaBanner";
 import { PayoutExplainer } from "./PayoutExplainer";
+import { BackdropLetter } from "./BackdropLetter";
+import { MicroFloaties } from "./MicroFloaties";
 
 export function LandingPage() {
   const reduceMotion = useReducedMotion();
@@ -27,7 +29,8 @@ export function LandingPage() {
   return (
     <div className="fresh-page">
       {/* Redesigned Hero Section aligning with HowItWorks / About theme */}
-      <section className="fresh-hero relative">
+      <section className="fresh-hero relative overflow-clip">
+        <MicroFloaties zone="hero" />
         <div className="fresh-dot-field" aria-hidden="true" />
         <div className="fresh-container fresh-hero-grid items-center py-10 lg:py-16">
           {/* Left Hero Copy */}
@@ -102,20 +105,37 @@ export function LandingPage() {
       {/* Social Proof / Trusted By */}
       <MetricsBar />
 
-      {/* 3 Steps: How Dolancers Earn */}
-      <HowItWorksSteps />
+      {/* 3 Steps: How Dolancers Earn — D */}
+      <div className="relative overflow-clip">
+        <BackdropLetter letter="D" position="left" offsetY="25%" />
+        <MicroFloaties zone="how" />
+        <HowItWorksSteps />
+      </div>
 
-      {/* Animated Disciplines Marquee */}
-      <AnimatedMarquee />
+      {/* Animated Disciplines Marquee — O */}
+      <div className="relative overflow-clip">
+        <BackdropLetter letter="O" position="right" offsetY="20%" />
+        <AnimatedMarquee />
+      </div>
 
-      {/* Why Dolancers Love It / 8 Benefits */}
-      <FeaturesGrid />
+      {/* Why Dolancers Love It / 8 Benefits — L */}
+      <div className="relative overflow-clip">
+        <BackdropLetter letter="L" position="left" offsetY="30%" />
+        <MicroFloaties zone="features" />
+        <FeaturesGrid />
+      </div>
 
-      {/* Numbers That Speak */}
-      <NumbersSection />
+      {/* Numbers That Speak — A */}
+      <div className="relative overflow-clip">
+        <BackdropLetter letter="A" position="right" offsetY="25%" />
+        <MicroFloaties zone="numbers" />
+        <NumbersSection />
+      </div>
 
-      {/* Payout Explainer Interactive Slider with Curvy Borders (No Straight Lines) */}
-      <StitchSection className="fresh-section py-20 bg-surface/50 relative">
+      {/* Payout Explainer Interactive Slider with Curvy Borders (No Straight Lines) — N */}
+      <StitchSection className="fresh-section py-20 bg-surface/50 relative overflow-clip">
+        <BackdropLetter letter="N" position="left" />
+        <MicroFloaties zone="payout" />
         {/* Top curved divider replacing straight border-t */}
         <CurvedSectionDivider
           variant="wave"
@@ -130,11 +150,25 @@ export function LandingPage() {
         </div>
       </StitchSection>
 
-      {/* Real Dolancers, Real Earnings Testimonials */}
-      <TestimonialsSection />
+      {/* Real Dolancers, Real Earnings Testimonials — C */}
+      <div className="relative overflow-clip">
+        <BackdropLetter letter="C" position="right" />
+        <MicroFloaties zone="testimonials" />
+        <TestimonialsSection />
+      </div>
 
-      {/* High-Converting CTA Banner */}
-      <CtaBanner />
+      {/* High-Converting CTA Banner — E */}
+      <div className="relative overflow-clip">
+        <BackdropLetter letter="E" position="left" offsetY="35%" />
+        <MicroFloaties zone="cta" />
+        <CtaBanner />
+      </div>
+
+      {/* R — right, just before footer to complete DOLANCER */}
+      <div className="relative h-40 overflow-clip" aria-hidden="true">
+        <BackdropLetter letter="R" position="right" offsetY="30%" />
+        <MicroFloaties zone="prefooter" />
+      </div>
     </div>
   );
 }

@@ -1613,6 +1613,40 @@
     animation: float-bob 5.5s ease-in-out infinite;
   }
 
+  /* Giant faded backdrop letters (D-O-L-A-N-C-E-R system). Faded solid ink,
+     professional at 4-6% opacity. Alternates left/right down the homepage. */
+  .giant-letter {
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+    pointer-events: none;
+    user-select: none;
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: clamp(11rem, 22vw, 22rem);
+    line-height: 1;
+    letter-spacing: -0.06em;
+    color: color-mix(in srgb, var(--color-ink) 6%, transparent);
+    transform: translateY(-50%);
+  }
+  .giant-letter-left { left: 1rem; }
+  .giant-letter-right { right: 1rem; }
+
+  @media (max-width: 768px) {
+    .giant-letter {
+      font-size: clamp(7rem, 32vw, 11rem);
+      opacity: 0.7;
+    }
+    .giant-letter-left { left: 0.5rem; }
+    .giant-letter-right { right: 0.5rem; }
+  }
+
+  /* Tiny floating micro-graphics: slow independent bob. */
+  .micro-float {
+    animation: float-bob 6s ease-in-out infinite;
+    opacity: 0.9;
+  }
+
   /* Horizontal drag rail. Snaps to each card and hides its scrollbar, so it reads
      as a deck you push rather than a scrolling div. */
   .drag-rail {
@@ -1736,7 +1770,8 @@
     .cursor-tilt {
       transform: none !important;
     }
-    .float-bob {
+    .float-bob,
+    .micro-float {
       animation: none;
     }
     .fresh-orb,
