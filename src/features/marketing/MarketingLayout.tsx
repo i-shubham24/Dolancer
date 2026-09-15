@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useOutlet } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ScrollToTop } from "@/routes/ScrollToTop";
 import { ArrowRight } from "lucide-react";
@@ -39,6 +39,7 @@ export function MarketingLayout() {
   const [open, setOpen] = useState(false);
   const { session } = useAuth();
   const location = useLocation();
+  const currentOutlet = useOutlet();
   const reduceMotion = useReducedMotion();
 
   return (
@@ -155,7 +156,7 @@ export function MarketingLayout() {
             exit={reduceMotion ? undefined : { opacity: 0, y: -12 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
           >
-            <Outlet />
+            {currentOutlet}
           </motion.div>
         </AnimatePresence>
       </main>
