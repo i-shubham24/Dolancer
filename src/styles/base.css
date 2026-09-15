@@ -719,6 +719,11 @@
     color: var(--color-ink);
     box-shadow: var(--shadow-soft-lg);
     transform: rotate(4deg);
+    transition: transform 0.3s ease;
+  }
+
+  .fresh-contact-scene-main:hover {
+    transform: rotate(8deg);
   }
 
   .fresh-contact-scene-main svg {
@@ -745,6 +750,7 @@
     font-size: 0.72rem;
     font-weight: 800;
     box-shadow: var(--shadow-soft-md);
+    transition: transform 0.3s ease;
   }
 
   .fresh-contact-scene-float-one {
@@ -752,6 +758,10 @@
     top: 2rem;
     background: var(--dl-card-pink);
     transform: rotate(-7deg);
+  }
+
+  .fresh-contact-scene-float-one:hover {
+    transform: rotate(-3deg);
   }
 
   .fresh-contact-scene-float-two {
@@ -762,6 +772,10 @@
     gap: 0.4rem;
     background: var(--dl-card-yellow);
     transform: rotate(-4deg);
+  }
+
+  .fresh-contact-scene-float-two:hover {
+    transform: rotate(0deg);
   }
 
   .fresh-contact-scene-float-two svg {

@@ -46,7 +46,7 @@ export function CapacityRail({
       className="space-y-4"
       aria-label="Capacity and next steps"
     >
-      <Card className="border-blue/15 bg-gradient-to-br from-blue-light/60 to-surface shadow-soft-lg">
+      <Card className="border-[var(--dl-secondary)]/15 bg-gradient-to-br from-[var(--dl-secondary-light)]/60 to-surface shadow-soft-lg">
         <div className="flex items-center justify-between gap-3">
           <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.05em] text-ink-muted">
             <Layers className="h-3.5 w-3.5" aria-hidden="true" />
@@ -55,7 +55,7 @@ export function CapacityRail({
           <span
             className={cn(
               "rounded-full border border-line-card px-2.5 py-0.5 text-2xs font-extrabold",
-              atCap ? "bg-warning-bg text-warning-ink" : "bg-lime",
+              atCap ? "bg-warning-bg text-warning-ink" : "bg-[var(--dl-accent)]",
             )}
           >
             {activeCount} of {MAX_ACTIVE_PROJECTS}
@@ -68,7 +68,7 @@ export function CapacityRail({
               key={index}
               className={cn(
                 "h-2.5 flex-1 rounded-full border border-line-card transition-colors",
-                index < activeCount ? (atCap ? "bg-coral" : "bg-lime") : "bg-surface",
+                index < activeCount ? (atCap ? "bg-[var(--dl-primary)]" : "bg-[var(--dl-accent)]") : "bg-surface",
               )}
             />
           ))}
@@ -85,7 +85,7 @@ export function CapacityRail({
       </Card>
 
       {gate && !gate.unlocked ? (
-        <Card className="border-purple/15 bg-purple-light/35 shadow-soft-md">
+        <Card className="border-[var(--dl-purple)]/15 bg-[var(--dl-purple-light)]/35 shadow-soft-md">
           <h3 className="text-sm font-extrabold uppercase tracking-[0.05em] text-ink-muted">
             To unlock earning
           </h3>
@@ -98,13 +98,13 @@ export function CapacityRail({
                     "flex items-center gap-2.5 rounded-lg border px-3 py-2 text-sm font-bold transition-colors",
                     step.done
                       ? "border-line-card bg-surface-2 text-ink-muted"
-                      : "border-purple/20 bg-surface shadow-soft-sm hover:bg-purple-light",
+                      : "border-[var(--dl-purple)]/20 bg-surface shadow-soft-sm hover:bg-[var(--dl-purple-light)]",
                   )}
                 >
                   <span
                     className={cn(
                       "flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-line-card",
-                      step.done ? "bg-success-bg text-success-ink" : "bg-lime",
+                      step.done ? "bg-success-bg text-success-ink" : "bg-[var(--dl-accent)]",
                     )}
                   >
                     {step.done ? (

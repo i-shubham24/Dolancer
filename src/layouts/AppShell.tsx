@@ -67,8 +67,8 @@ function NavItem({
           "group relative flex items-center rounded-2xl px-3.5 py-2.5 text-sm font-bold tracking-[-0.01em] transition-all duration-200 overflow-hidden",
           collapsed ? "justify-center" : "gap-3",
           isActive
-            ? "bg-purple text-inverse shadow-soft-sm font-extrabold"
-            : "border border-transparent text-ink-2 hover:border-line-card hover:bg-surface hover:text-ink hover:shadow-soft-sm",
+            ? "bg-[var(--dl-primary)] text-inverse font-extrabold"
+            : "border border-transparent text-ink-2 hover:text-[var(--dl-primary)] hover:bg-[var(--dl-primary)]/5",
         )
       }
     >
@@ -76,8 +76,8 @@ function NavItem({
         <>
           <Icon
             className={cn(
-              "h-4 w-4 shrink-0 transition-transform duration-200 group-hover:scale-110",
-              isActive ? "text-inverse" : "text-ink-2 group-hover:text-purple",
+              "h-4 w-4 shrink-0 transition-transform duration-200",
+              isActive ? "text-inverse" : "text-ink-2 group-hover:text-[var(--dl-primary)]",
             )}
             aria-hidden="true"
           />
@@ -111,7 +111,7 @@ function SidebarContent({ onNavigate, collapsed, setCollapsed }: { onNavigate?: 
     <div className="flex h-full flex-col overflow-x-hidden scrollbar-hide">
       <div className={cn("mb-8 flex px-1", collapsed ? "flex-col items-center gap-4 mt-2" : "items-center justify-between")}>
         <Link to="/dashboard" onClick={onNavigate} className="flex items-center gap-2.5 overflow-hidden shrink-0">
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-purple to-blue text-inverse shadow-soft-md">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--dl-purple)] to-[var(--dl-secondary)] text-inverse shadow-soft-md">
             <span className="text-lg font-extrabold">D</span>
           </span>
           {!collapsed && (
@@ -221,7 +221,7 @@ export function AppShell() {
       {/* Mobile bar */}
       <div className="sticky top-0 z-30 flex items-center justify-between border-b border-line-card/80 bg-surface/90 px-4 py-3 shadow-soft-sm backdrop-blur-xl lg:hidden">
         <Link to="/dashboard" className="flex items-center gap-2 min-w-0">
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-purple to-blue text-inverse shadow-soft-sm">
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--dl-purple)] to-[var(--dl-secondary)] text-inverse shadow-soft-sm">
             <span className="text-base font-extrabold">D</span>
           </span>
           <span className="text-lg font-extrabold tracking-[-0.04em] hidden sm:block truncate">Dolancer</span>

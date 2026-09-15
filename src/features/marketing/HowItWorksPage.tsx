@@ -112,7 +112,7 @@ export function HowItWorksPage() {
                 id="cta"
                 className="mt-4 max-w-md text-3xl font-extrabold leading-[1.1] tracking-[-0.04em]"
               >
-                Ready when you are.
+                Start earning on your terms.
               </h2>
             </div>
 

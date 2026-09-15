@@ -80,8 +80,8 @@ export function ReadinessCard({ gate }: { gate: DoerGateState }) {
   const pct = Math.round((gate.stepsDone / gate.totalSteps) * 100);
 
   return (
-    <Card className="relative overflow-hidden border-purple/20 bg-gradient-to-br from-purple-light via-surface to-lime-light shadow-soft-lg">
-      <div className="pointer-events-none absolute -right-10 -top-16 h-40 w-40 rounded-full bg-purple/10 blur-3xl" />
+    <Card className="relative overflow-hidden border-[var(--dl-purple)]/20 bg-gradient-to-br from-[var(--dl-purple-light)] via-surface to-[var(--dl-accent-light)] shadow-soft-lg">
+      <div className="pointer-events-none absolute -right-10 -top-16 h-40 w-40 rounded-full bg-[var(--dl-purple)]/10 blur-3xl" />
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h2 className="text-2xl font-extrabold tracking-[-0.03em] text-ink">
@@ -105,7 +105,7 @@ export function ReadinessCard({ gate }: { gate: DoerGateState }) {
         aria-label="Readiness progress"
       >
         <div
-          className="h-full rounded-full bg-gradient-to-r from-purple to-blue transition-[width] duration-500 ease-spring"
+          className="h-full rounded-full bg-gradient-to-r from-[var(--dl-purple)] to-[var(--dl-secondary)] transition-[width] duration-500 ease-spring"
           style={{ width: `${pct}%` }}
         />
       </div>

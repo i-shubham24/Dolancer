@@ -39,7 +39,7 @@ export function SpotlightHero({
   return (
     <motion.section
       aria-label="Today spotlight"
-      className="relative overflow-hidden rounded-[28px] border border-purple/30 bg-gradient-to-br from-purple via-[#6654d8] to-blue text-inverse shadow-soft-lg"
+      className="relative overflow-hidden rounded-[28px] border border-purple/20 bg-gradient-to-br from-[var(--dl-purple)] via-[var(--dl-primary)] to-[var(--dl-secondary)] text-inverse shadow-soft-lg"
       initial={reduceMotion ? false : { opacity: 0, scale: 0.985 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, delay: 0.08 }}
@@ -76,13 +76,13 @@ export function SpotlightHero({
           <div           className="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/15 px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.08em] text-white backdrop-blur-sm">
             Fixed pay <ArrowUpRight className="h-3 w-3" aria-hidden="true" /> No bidding
           </div>
-          <h2 className="mt-4 text-3xl font-extrabold leading-[1.02] tracking-[-0.035em] sm:text-4xl">
+          <h2 className="mt-4 text-3xl font-extrabold leading-[1.02] tracking-[-0.035em] sm:text-4xl text-white">
             {daypart}, {name}.
-            <span className="mt-1 block text-white/90">
+            <span className="mt-1 block text-white/95">
               {focus ? "Your next deadline is waiting." : freeSlots > 0 ? "Room to take something new." : "Finish strong, then claim again."}
             </span>
           </h2>
-          <p className="mt-3 max-w-md text-sm leading-relaxed text-white/85">
+          <p className="mt-3 max-w-md text-sm leading-relaxed text-white/90">
             {unlocked
               ? "Claim from the blind board, add your working link, submit for supervisor review. Pay stays fixed from the start."
               : "Browse freely. Finish verification to unlock claiming and payouts."}
@@ -91,7 +91,7 @@ export function SpotlightHero({
           <div className="mt-5 flex flex-wrap gap-2.5">
             <Link
               to="/pool"
-              className="inline-flex min-h-[44px] items-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-extrabold text-purple shadow-soft-md transition-all duration-150 hover:bg-lime"
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-extrabold text-[var(--dl-primary)] shadow-soft-md transition-all duration-150 hover:bg-hover"
             >
               Browse the board
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -123,7 +123,7 @@ export function SpotlightHero({
                   <Timer className="h-3.5 w-3.5" aria-hidden="true" />
                   Up next
                 </span>
-                <span className="rounded-full border border-blue/20 bg-blue-light px-2 py-0.5 text-[11px] font-extrabold text-info-ink">
+                <span className="rounded-full border border-[var(--dl-secondary)]/20 bg-[var(--dl-secondary-light)] px-2 py-0.5 text-[11px] font-extrabold text-[var(--dl-ink)]">
                   {relativeDeadline(focus.deliveryAt)}
                 </span>
               </div>
@@ -135,7 +135,7 @@ export function SpotlightHero({
                   <div className="text-[11px] font-bold uppercase tracking-[0.08em] text-ink-muted">Payout before tax</div>
                   <div className="break-words text-3xl font-extrabold tracking-[-0.03em]">{formatPaise(focus.payoutPaise)}</div>
                 </div>
-                <span className="inline-flex min-h-[44px] items-center gap-1 rounded-xl bg-purple px-3 py-2 text-xs font-extrabold text-inverse transition-transform group-hover:translate-x-0.5">
+                <span className="inline-flex min-h-[44px] items-center gap-1 rounded-xl bg-[var(--dl-primary)] px-3 py-2 text-xs font-extrabold text-inverse transition-transform group-hover:translate-x-0.5">
                   Open <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                 </span>
               </div>
@@ -191,7 +191,7 @@ export function SpotlightHero({
         <div className="flex w-max animate-none gap-8 whitespace-nowrap font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-white/75 [animation:dolancer-marquee_28s_linear_infinite]">
           {[0, 1].map((copy) => (
             <span key={copy} className="flex gap-8">
-              <span>Blind board</span><span className="text-lime/70">Fixed payout</span><span>Supervisor review</span><span className="text-coral/80">Working link first</span><span>3 slot cap</span><span className="text-blue/80">No client contact</span>
+              <span>Blind board</span><span className="text-[var(--dl-accent)]">Fixed payout</span><span>Supervisor review</span><span className="text-[var(--dl-primary)]">Working link first</span><span>3 slot cap</span><span className="text-[var(--dl-secondary)]">No client contact</span>
             </span>
           ))}
         </div>

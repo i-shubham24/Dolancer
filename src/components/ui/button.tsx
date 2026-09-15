@@ -24,8 +24,8 @@ const buttonVariants = cva(
           "border-line-card bg-surface text-ink shadow-soft-sm hover:-translate-y-0.5 hover:bg-hover hover:shadow-soft-md active:translate-y-0",
         blue:
           "bg-blue text-inverse shadow-soft-md hover:bg-blue-hover hover:-translate-y-0.5 hover:shadow-soft-lg active:translate-y-0",
-        lime:
-          "bg-lime text-ink shadow-soft-md hover:bg-lime-hover hover:-translate-y-0.5 hover:shadow-soft-lg active:translate-y-0",
+        neutral:
+          "bg-surface-2 text-ink border border-line-card shadow-soft-sm hover:bg-hover hover:-translate-y-0.5 hover:shadow-soft-md active:translate-y-0",
         dark:
           "bg-ink text-inverse shadow-soft-md hover:-translate-y-0.5 hover:shadow-soft-lg active:translate-y-0",
         ghost:
