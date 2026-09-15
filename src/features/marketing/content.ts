@@ -19,14 +19,14 @@ export interface Category {
 
 /** The disciplines work is briefed under. These map to the platform's own labels. */
 export const CATEGORIES: Category[] = [
-  { name: "Writing and content", blurb: "Articles, documentation, scripts, editing." },
-  { name: "Design", blurb: "Brand, product, print, presentation." },
-  { name: "Creative and media", blurb: "Video, audio, motion, illustration." },
-  { name: "IT and software", blurb: "Web, mobile, data, infrastructure." },
-  { name: "AI agents and automations", blurb: "Workflows, integrations, agent builds." },
-  { name: "Marketing", blurb: "Campaigns, copy, social, performance." },
-  { name: "Research and business", blurb: "Analysis, decks, market and competitor work." },
-  { name: "Something else", blurb: "If it is skilled work, brief it and we will match it." },
+  { name: "Web Development", blurb: "Website design, programming, WordPress, Shopify & more." },
+  { name: "Graphic Design", blurb: "Logo, websites, branding, infographics & more." },
+  { name: "Copywriting", blurb: "Sales copy, product listings, sales funnels & articles." },
+  { name: "Digital Marketing", blurb: "Social media management, SEO, PPC, email marketing & more." },
+  { name: "Amazon & E-Commerce", blurb: "Product listing, sourcing, Amazon PPC, & more." },
+  { name: "Customer Service", blurb: "Phone, live chat, support tickets, onboarding & more." },
+  { name: "IT & Programming", blurb: "Automation scripts, REST APIs, apps & data infrastructure." },
+  { name: "Research & Analysis", blurb: "Competitor reports, market decks, datasets & insights." },
 ];
 
 export interface Step {

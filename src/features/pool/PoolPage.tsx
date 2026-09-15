@@ -95,7 +95,7 @@ export function PoolPage() {
         <div className="relative mt-5 flex flex-wrap items-center gap-2 text-xs font-semibold text-ink-2">
           <span className="rounded-full bg-surface/80 px-3 py-1.5 shadow-soft-sm">No bidding</span>
           <span className="rounded-full bg-surface/80 px-3 py-1.5 shadow-soft-sm">Supervisor reviewed</span>
-          <span className="rounded-full bg-surface/80 px-3 py-1.5 shadow-soft-sm">Escrow backed</span>
+          <span className="rounded-full bg-surface/80 px-3 py-1.5 shadow-soft-sm">Pre-funded</span>
         </div>
         <div className="relative mt-5">
           <AvailabilityToggle />
@@ -134,7 +134,7 @@ export function PoolPage() {
         </div>
       ) : null}
 
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-line-card bg-surface/70 p-2 pl-4 shadow-soft-sm backdrop-blur">
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-line-card bg-surface p-3 shadow-soft-md">
         <div className="flex items-center gap-2 text-sm font-bold text-ink-2">
           <SlidersHorizontal className="h-3.5 w-3.5" aria-hidden="true" />
           {pool.isLoading ? "Loading..." : `${offers.length} available`}

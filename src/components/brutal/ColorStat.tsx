@@ -1,4 +1,5 @@
 import * as React from "react";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/cn";
 
 /**
@@ -40,11 +41,16 @@ export function ColorStat({
   const inverse = tone === "blue" || tone === "purple" || tone === "ink";
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -4, scale: 1.01, transition: { duration: 0.22, ease: [0.16, 1, 0.3, 1] } }}
+      whileTap={{ scale: 0.99 }}
+      transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
         "relative isolate overflow-hidden rounded-2xl border border-line-card p-5 shadow-soft-md",
-        "transition-all duration-[180ms] ease-spring",
-        "hover:-translate-y-1 hover:shadow-soft-lg",
+        "transition-shadow duration-[200ms] ease-spring",
+        "hover:shadow-soft-lg",
         TONES[tone],
         className,
       )}
@@ -75,7 +81,7 @@ export function ColorStat({
         <span
           className={cn(
             "text-xs font-extrabold uppercase tracking-[0.05em]",
-            inverse ? "text-white/75" : "text-ink/65",
+            inverse ? "text-white/95" : "text-ink",
           )}
         >
           {label}
@@ -98,12 +104,12 @@ export function ColorStat({
         <p
           className={cn(
             "mt-2.5 text-xs font-semibold leading-snug",
-            inverse ? "text-white/70" : "text-ink/60",
+            inverse ? "text-white/90" : "text-ink-2",
           )}
         >
           {subtext}
         </p>
       ) : null}
-    </div>
+    </motion.div>
   );
 }

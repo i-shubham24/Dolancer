@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { Layers, ArrowUpRight, ShieldCheck, Sparkles, GraduationCap, Check } from "lucide-react";
 import { Card } from "@/components/brutal/Card";
 import { cn } from "@/lib/cn";
@@ -38,7 +39,13 @@ export function CapacityRail({
     : [];
 
   return (
-    <aside className="space-y-4" aria-label="Capacity and next steps">
+    <motion.aside
+      initial={{ opacity: 0, x: 12 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+      className="space-y-4"
+      aria-label="Capacity and next steps"
+    >
       <Card className="border-blue/15 bg-gradient-to-br from-blue-light/60 to-surface shadow-soft-lg">
         <div className="flex items-center justify-between gap-3">
           <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.05em] text-ink-muted">
@@ -136,6 +143,6 @@ export function CapacityRail({
           </li>
         </ul>
       </Card>
-    </aside>
+    </motion.aside>
   );
 }

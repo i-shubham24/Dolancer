@@ -43,13 +43,13 @@ export function PaletteSwitcher() {
         aria-haspopup="menu"
         onClick={() => setOpen((value) => !value)}
         style={{ "--palette-tray-color": active.swatches[0] } as CSSProperties}
-        className="palette-tray-button inline-flex min-h-10 min-w-10 items-center justify-center gap-1.5 rounded-full border border-white/35 px-2.5 text-xs font-bold text-white shadow-soft-sm transition-all hover:-translate-y-0.5 hover:brightness-105 hover:shadow-soft-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
+        className="palette-tray-button inline-flex min-h-10 min-w-10 items-center justify-center gap-1.5 rounded-full border border-line-card bg-surface px-2.5 text-xs font-bold text-ink shadow-soft-sm transition-all hover:-translate-y-0.5 hover:border-purple/40 hover:shadow-soft-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
       >
-        <span className="flex h-5 w-5 overflow-hidden rounded-full bg-white/20 ring-1 ring-white/50" aria-hidden="true">
+        <span className="flex h-5 w-5 overflow-hidden rounded-full ring-1 ring-black/10" aria-hidden="true">
           <span className="w-1/2" style={{ backgroundColor: active.swatches[0] }} />
           <span className="w-1/2" style={{ backgroundColor: active.swatches[1] }} />
         </span>
-        <PaletteIcon className="h-4 w-4" aria-hidden="true" />
+        <PaletteIcon className="h-4 w-4 text-ink-2" aria-hidden="true" />
       </button>
 
       {open ? (

@@ -2,8 +2,10 @@ import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Check, CircleDollarSign, ShieldCheck, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { StitchBadge, StitchColorCard, StitchOrbitalGraphic, StitchSection } from "@/components/stitch/StitchPrimitives";
-import { STEPS } from "./content";
+import { StitchBadge, StitchOrbitalGraphic, StitchSection } from "@/components/stitch/StitchPrimitives";
+import { CurvedSectionDivider } from "@/components/stitch/CurvedSectionDivider";
+import { GettingStartedInteractive } from "./GettingStartedInteractive";
+import { InteractiveBentoPillars } from "./InteractiveBentoPillars";
 import { WorkflowDemo } from "./WorkflowDemo";
 import { PayoutExplainer } from "./PayoutExplainer";
 import { DifferenceRail } from "./DifferenceRail";
@@ -34,7 +36,7 @@ export function HowItWorksPage() {
 
   return (
     <div className="fresh-page">
-      <section className="fresh-hero">
+      <section className="fresh-hero relative">
         <div className="fresh-dot-field" aria-hidden="true" />
         <div className="fresh-container fresh-process-hero">
           <motion.div initial={reduceMotion ? false : "hidden"} animate="show" variants={reveal}>
@@ -68,30 +70,37 @@ export function HowItWorksPage() {
             <div className="fresh-process-chip"><CircleDollarSign /> payout protected</div>
           </motion.div>
         </div>
+
+        {/* Curvy divider transitioning into Getting Started */}
+        <CurvedSectionDivider
+          variant="smooth-arch"
+          position="bottom"
+          fillColor="fill-[#faf8f5]"
+          showAccentGlow
+        />
       </section>
 
-      <Section labelledBy="steps" className="fresh-process-steps">
-        <div className="fresh-section-heading">
-          <div><span className="fresh-eyebrow">The route is simple</span><h2 id="steps">Getting started</h2></div>
-          <p>Four clear moments. No proposal treadmill, no mystery invoice, no disappearing client.</p>
+      {/* Redesigned 5x Creative Interactive Four Moments Section */}
+      <section className="bg-[#faf8f5] py-14 lg:py-20 relative">
+        <div className="fresh-container">
+          <GettingStartedInteractive />
         </div>
-        <ol className="fresh-step-grid mt-10">
-          {STEPS.map((step, index) => (
-            <motion.li key={step.title} initial={reduceMotion ? false : "hidden"} whileInView={reduceMotion ? undefined : "show"} viewport={{ once: true, amount: 0.2 }} variants={reveal} className="fresh-step">
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <h3 className="mt-4 text-lg font-extrabold tracking-[-0.025em]">{step.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-ink-2">{step.body}</p>
-            </motion.li>
-          ))}
-        </ol>
-      </Section>
 
-      <Section labelledBy="walkthrough" className="fresh-workflow">
-        <div className="fresh-process-bento">
-          <StitchColorCard tone="lilac"><span className="fresh-bento-icon"><Sparkles /></span><strong>Matched, not marketed</strong><p>Your skills decide what appears on your board.</p></StitchColorCard>
-          <StitchColorCard tone="pink"><span className="fresh-bento-icon"><ShieldCheck /></span><strong>Protected while you work</strong><p>Feedback and client conversations stay with the supervisor.</p></StitchColorCard>
-          <StitchColorCard tone="yellow"><span className="fresh-bento-icon"><CircleDollarSign /></span><strong>Paid with the brief</strong><p>The amount is clear before you decide to claim.</p></StitchColorCard>
-        </div>
+        {/* Curvy wave separator replacing straight border-b */}
+        <CurvedSectionDivider
+          variant="wave"
+          position="bottom"
+          fillColor="fill-canvas"
+          showAccentGlow
+          showBorderLine
+        />
+      </section>
+
+      <Section labelledBy="walkthrough" className="fresh-workflow pt-6">
+        {/* Redesigned Bento Pillars (formerly the empty pastel cards in screenshot) */}
+        <InteractiveBentoPillars />
+
+        {/* Real Product Walkthrough */}
         <WorkflowDemo />
       </Section>
 

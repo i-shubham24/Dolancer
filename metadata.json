@@ -1,0 +1,6 @@
+{
+  "name": "Dolancer",
+  "description": "Dolancer: vetted specialists claim fixed-price tasks from a blind board, deliver with supervisor review, and get paid.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

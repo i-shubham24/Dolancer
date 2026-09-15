@@ -7,7 +7,7 @@ import { EmptyState, ErrorState } from "@/components/brutal/EmptyState";
 import { ProjectCard } from "@/components/brutal/ProjectCard";
 import { ColorStat } from "@/components/brutal/ColorStat";
 import { SegmentedToggle } from "@/components/brutal/SegmentedToggle";
-import { Card, CardTitle } from "@/components/brutal/Card";
+import { MotionCard, CardTitle } from "@/components/brutal/Card";
 import { CategoryPill } from "@/components/brutal/Pill";
 import { Button } from "@/components/ui/button";
 import { formatPaise } from "@/lib/paise";
@@ -90,7 +90,7 @@ export function DashboardPage() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, ease: "easeOut" }}
     >
-      <header className="flex flex-wrap items-start justify-between gap-4 rounded-3xl border border-line-card/70 bg-surface/70 p-5 shadow-soft-sm backdrop-blur-sm sm:p-6">
+      <header className="flex flex-wrap items-start justify-between gap-4 rounded-2xl border border-line-card bg-surface p-5 shadow-soft-md transition-all duration-200 hover:shadow-soft-lg sm:p-6">
         <div>
           <h1 className="text-3xl font-extrabold tracking-[-0.04em] text-ink sm:text-4xl">
             {profile.isLoading ? (
@@ -99,7 +99,7 @@ export function DashboardPage() {
               <>Hey {firstName(profile.data?.full_name)}.</>
             )}
           </h1>
-          <p className="mt-2 text-md text-ink-2">
+          <p className="mt-2 text-md font-medium text-ink-2">
             Here is where your work and your money stand today.
           </p>
         </div>
@@ -120,7 +120,7 @@ export function DashboardPage() {
         Three figures, and only three. Gross, tax and net are always shown as separate
         numbers rather than collapsed into one, so what was withheld is never implicit.
       */}
-      <section aria-labelledby="figures" className="rounded-3xl border border-line-card/70 bg-surface/50 p-4 shadow-soft-sm sm:p-5">
+      <section aria-labelledby="figures" className="rounded-2xl border border-line-card bg-surface p-4 shadow-soft-md transition-all duration-200 hover:shadow-soft-lg sm:p-5">
         <h2 id="figures" className="sr-only">
           Your figures
         </h2>
@@ -261,7 +261,7 @@ export function DashboardPage() {
         <CapacityRail activeCount={activeCount} gate={gate.data} />
       </div>
 
-      <section aria-labelledby="board" className="space-y-4 rounded-3xl border border-line-card/70 bg-surface/50 p-4 shadow-soft-sm sm:p-5">
+      <section aria-labelledby="board" className="space-y-4 rounded-2xl border border-line-card bg-surface p-5 shadow-soft-md transition-all duration-200 hover:shadow-soft-lg sm:p-6">
             <div className="flex items-center justify-between gap-4">
               <h2 id="board" className="text-2xl font-extrabold tracking-[-0.03em]">
                 On the board
@@ -288,29 +288,33 @@ export function DashboardPage() {
             ) : (
               <div className="grid gap-3 md:grid-cols-2">
                 {pool.data.map((offer) => (
-                  <Card
+                  <Link
                     key={offer.id}
-                    hoverable
-                    className="flex flex-wrap items-center gap-4"
+                    to="/pool"
                     onMouseEnter={() => preloadRoute("/pool")}
                     onFocus={() => preloadRoute("/pool")}
                   >
-                    <div className="min-w-0 flex-1 space-y-2">
-                      <CategoryPill>{offer.category}</CategoryPill>
-                      <CardTitle className="line-clamp-2" title={offer.brief?.trim() || `${offer.category} task`}>
-                        {offer.brief?.trim() || `${offer.category} task`}
-                      </CardTitle>
-                      <p className="text-xs text-ink-muted">{relativeDeadline(offer.deliveryAt)}</p>
-                    </div>
-                    <div className="shrink-0 text-right">
-                      <div className="text-2xs font-bold uppercase tracking-[0.05em] text-ink-muted">
-                        Payout
+                    <MotionCard
+                      hoverable
+                      className="flex h-full flex-wrap items-center gap-4 transition-colors hover:border-purple/35"
+                    >
+                      <div className="min-w-0 flex-1 space-y-2">
+                        <CategoryPill>{offer.category}</CategoryPill>
+                        <CardTitle className="line-clamp-2" title={offer.brief?.trim() || `${offer.category} task`}>
+                          {offer.brief?.trim() || `${offer.category} task`}
+                        </CardTitle>
+                        <p className="text-xs text-ink-muted">{relativeDeadline(offer.deliveryAt)}</p>
                       </div>
-                      <div className="text-2xl font-extrabold tracking-[-0.03em]">
-                        {formatPaise(offer.payoutPaise)}
+                      <div className="shrink-0 text-right">
+                        <div className="text-2xs font-bold uppercase tracking-[0.05em] text-ink-muted">
+                          Payout
+                        </div>
+                        <div className="text-2xl font-extrabold tracking-[-0.03em]">
+                          {formatPaise(offer.payoutPaise)}
+                        </div>
                       </div>
-                    </div>
-                  </Card>
+                    </MotionCard>
+                  </Link>
                 ))}
               </div>
             )}

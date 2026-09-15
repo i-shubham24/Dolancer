@@ -8,6 +8,8 @@ import {
   StitchColorCard,
   StitchSection,
 } from "@/components/stitch/StitchPrimitives";
+import { CurvedSectionDivider } from "@/components/stitch/CurvedSectionDivider";
+import { AboutHeroInteractive } from "./AboutHeroInteractive";
 
 export function AboutPage() {
   const reduceMotion = useReducedMotion();
@@ -36,35 +38,55 @@ export function AboutPage() {
 
   return (
     <div className="fresh-page">
-      <StitchSection className="fresh-hero fresh-editorial-hero">
+      {/* Redesigned High-Craft Editorial & Interactive Hero */}
+      <StitchSection className="fresh-hero relative">
         <div className="fresh-container">
-          <StitchBadge>About Dolancer</StitchBadge>
-          <motion.h1 initial={reduceMotion ? false : "hidden"} animate="show" variants={reveal} className="fresh-about-title mt-5 max-w-3xl">
-            Skilled work should feel
-            <br className="hidden sm:block" />
-            <span className="fresh-highlight fresh-underline fresh-underline-yellow"> simpler than this.</span>
-          </motion.h1>
-          <motion.div initial={reduceMotion ? false : "hidden"} animate="show" variants={reveal} className="mt-8 max-w-3xl space-y-5 text-lg leading-relaxed text-ink-2">
-            <p>Most freelance platforms put the entire burden on the person doing the work. You find the client, you pitch, you price yourself against strangers, you manage the relationship, you absorb the revisions, and then you chase the invoice. The platform takes a cut for introducing you and steps back.</p>
-            <p>We run it the other way around. We find the client, scope the work properly, and agree a price before anyone starts. A supervisor briefs you, reviews what you produce, and handles the client entirely. You do the part you are actually good at, and you get paid for it.</p>
-            <p>That means we carry things you would otherwise carry alone: the cost of winning work, the disputes, the refunds, the awkward conversations. It is why we keep a share of what a client pays, and why we would rather tell you that plainly than let you discover it later.</p>
-          </motion.div>
+          <AboutHeroInteractive />
         </div>
+
+        {/* Curvy Section Divider */}
+        <CurvedSectionDivider
+          variant="smooth-arch"
+          position="bottom"
+          fillColor="fill-[#faf8f5]"
+          showAccentGlow
+        />
       </StitchSection>
 
-      <section className="fresh-section fresh-proof">
-        <div className="fresh-container grid gap-5 md:grid-cols-3">
-          {principles.map((card, index) => (
-            <motion.div key={card.title} initial={reduceMotion ? false : "hidden"} whileInView={reduceMotion ? undefined : "show"} viewport={{ once: true, amount: 0.2 }} variants={reveal}>
-              <StitchColorCard tone={card.tone} className="fresh-principle-card h-full">
-                <span className="text-xs font-bold tracking-[0.08em] text-ink/45">0{index + 1}</span>
-                <h2 className="mt-12 text-xl font-extrabold leading-tight tracking-[-0.03em]">{card.title}</h2>
-                <p className="mt-3 text-sm leading-relaxed text-ink/75">{card.body}</p>
-              </StitchColorCard>
-            </motion.div>
-          ))}
+      {/* Principles Section with Curvy Framing */}
+      <section className="fresh-section fresh-proof bg-[#faf8f5] py-16">
+        <div className="fresh-container">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <StitchBadge>Our Core Principles</StitchBadge>
+            <h2 className="mt-3 text-3xl sm:text-4xl font-extrabold font-display text-ink tracking-tight">
+              Three rules we will not compromise on
+            </h2>
+            <p className="mt-2 text-sm sm:text-base text-ink-2 font-medium">
+              Freelancing works best when incentives are aligned and rules are clear.
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-3">
+            {principles.map((card, index) => (
+              <motion.div key={card.title} initial={reduceMotion ? false : "hidden"} whileInView={reduceMotion ? undefined : "show"} viewport={{ once: true, amount: 0.2 }} variants={reveal}>
+                <StitchColorCard tone={card.tone} className="fresh-principle-card h-full p-7 rounded-3xl">
+                  <span className="text-xs font-bold tracking-[0.08em] text-ink/45 font-mono">0{index + 1}</span>
+                  <h3 className="mt-8 text-xl font-extrabold leading-tight tracking-[-0.03em]">{card.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-ink/75 font-medium">{card.body}</p>
+                </StitchColorCard>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
+
+      {/* Curvy divider into Final Section */}
+      <CurvedSectionDivider
+        variant="wave"
+        position="bottom"
+        fillColor="fill-surface"
+        showAccentGlow
+      />
 
       <section className="fresh-section fresh-final">
         <div className="fresh-container">

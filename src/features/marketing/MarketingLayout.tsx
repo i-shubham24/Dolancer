@@ -52,7 +52,7 @@ export function MarketingLayout() {
         <div className="fresh-nav-shell mx-auto flex w-full max-w-[1320px] items-center gap-6 px-4 py-3 lg:px-5">
           <Wordmark />
 
-          <nav className="ml-4 hidden items-center gap-1 md:flex" aria-label="Main">
+          <nav className="ml-8 lg:ml-12 hidden items-center gap-1.5 sm:gap-2 md:flex" aria-label="Main">
             {NAV.map((item) => (
               <NavLink
                 key={item.to}

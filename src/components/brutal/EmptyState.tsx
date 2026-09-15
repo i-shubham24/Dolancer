@@ -1,4 +1,5 @@
 import * as React from "react";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/cn";
 
 /**
@@ -19,7 +20,10 @@ export function EmptyState({
   className?: string;
 }) {
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, scale: 0.98, y: 10 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
         "flex flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-line-card",
         "bg-surface px-6 py-12 text-center shadow-soft-md",
@@ -38,7 +42,7 @@ export function EmptyState({
         ) : null}
       </div>
       {action}
-    </div>
+    </motion.div>
   );
 }
 
@@ -55,7 +59,10 @@ export function ErrorState({
   className?: string;
 }) {
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, scale: 0.98, y: 10 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
         "flex flex-col items-center justify-center gap-4 rounded-2xl border border-danger-ink/15",
         "bg-danger-bg px-6 py-10 text-center shadow-soft-md",
@@ -78,6 +85,6 @@ export function ErrorState({
           Try again
         </button>
       ) : null}
-    </div>
+    </motion.div>
   );
 }

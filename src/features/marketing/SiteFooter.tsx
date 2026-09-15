@@ -1,173 +1,164 @@
 import { Link } from "react-router-dom";
-import { Mail, ArrowUpRight } from "lucide-react";
-import { cn } from "@/lib/cn";
+import { Mail } from "lucide-react";
 import { CONTACT } from "./content";
 
-const NAV = [
-  { to: "/how-it-works", label: "How it works" },
-  { to: "/about", label: "About" },
-  { to: "/contact", label: "Contact" },
-  { to: "/sign-up", label: "Start earning" },
-];
-
-const LEGAL = [
-  { to: "/legal/terms", label: "Terms of service" },
-  { to: "/legal/privacy", label: "Privacy policy" },
-];
-
-/**
- * A pixel matrix along the top edge, dissolving the boundary into the dark.
- *
- * The sibling app steps into its black footer through a sculpted wave. This does
- * the same job with squares, which suits a system built on hard edges better than a
- * curve would: the tiles thin out as they rise, so the block appears to assemble
- * rather than start abruptly at a rule.
- */
-const MOSAIC: { col: number; row: number; solid: boolean }[] = [
-  { col: 2, row: 0, solid: true },
-  { col: 5, row: 0, solid: false },
-  { col: 9, row: 0, solid: true },
-  { col: 14, row: 0, solid: false },
-  { col: 18, row: 0, solid: true },
-  { col: 23, row: 0, solid: false },
-  { col: 1, row: 1, solid: false },
-  { col: 4, row: 1, solid: true },
-  { col: 7, row: 1, solid: true },
-  { col: 11, row: 1, solid: false },
-  { col: 13, row: 1, solid: true },
-  { col: 17, row: 1, solid: true },
-  { col: 20, row: 1, solid: false },
-  { col: 22, row: 1, solid: true },
-  { col: 25, row: 1, solid: false },
-];
-
-function Mosaic() {
-  return (
-    <div aria-hidden="true" className="relative h-[72px] overflow-hidden">
-      {MOSAIC.map((tile) => (
-        <span
-          key={`${tile.col}-${tile.row}`}
-          className={cn(
-            "absolute h-9 w-9 rounded-[3px]",
-            tile.solid ? "bg-ink" : "bg-ink/25",
-          )}
-          style={{
-            left: `${tile.col * 4}%`,
-            bottom: tile.row === 0 ? 36 : 0,
-          }}
-        />
-      ))}
-      {/* The solid ground the tiles sit on. */}
-      <span className="absolute inset-x-0 bottom-0 h-9 bg-ink" />
-    </div>
-  );
-}
-
 export function SiteFooter() {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="mt-auto">
-      <Mosaic />
+    <footer className="relative text-slate-300">
+      {/* Seamless Curvy Upper Border Crest Transition from Canvas */}
+      <div className="relative w-full overflow-hidden leading-none select-none pointer-events-none bg-canvas -mb-px">
+        <svg
+          viewBox="0 0 1440 76"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-full h-10 sm:h-16 md:h-20 lg:h-24 block"
+          preserveAspectRatio="none"
+        >
+          {/* Footer dark body rising smoothly into canvas */}
+          <path
+            d="M0 56C360 12 1080 12 1440 56V76H0V56Z"
+            fill="#0b0f19"
+          />
+          {/* Crisp structural border line replacing the straight top edge */}
+          <path
+            d="M0 56C360 12 1080 12 1440 56"
+            stroke="#1e293b"
+            strokeWidth="1.5"
+          />
+          {/* Luminous multi-stop glowing crest border replacing straight border line */}
+          <path
+            d="M0 56C360 12 1080 12 1440 56"
+            stroke="url(#footer-crest-glow)"
+            strokeWidth="3"
+            className="opacity-90"
+          />
+          <defs>
+            <linearGradient id="footer-crest-glow" x1="0" y1="0" x2="1440" y2="0" gradientUnits="userSpaceOnUse">
+              <stop stopColor="#f97316" stopOpacity="0.9" />
+              <stop offset="0.25" stopColor="#8b5cf6" stopOpacity="0.85" />
+              <stop offset="0.5" stopColor="#ec4899" stopOpacity="0.8" />
+              <stop offset="0.75" stopColor="#3b82f6" stopOpacity="0.85" />
+              <stop offset="1" stopColor="#10b981" stopOpacity="0.9" />
+            </linearGradient>
+          </defs>
+        </svg>
 
-      <div className="bg-ink text-inverse">
-        <div className="mx-auto w-full max-w-[1320px] px-4 pb-10 pt-12 lg:px-6">
-          <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr]">
+        {/* Floating Centerpiece Guarantee Badge on the Curved Crest */}
+        <div className="absolute left-1/2 bottom-2 sm:bottom-4 md:bottom-6 -translate-x-1/2 z-20 hidden sm:inline-flex items-center gap-2.5 rounded-full border border-slate-700/80 bg-[#111827]/95 px-4.5 py-1.5 text-xs font-semibold text-slate-200 shadow-2xl backdrop-blur-md select-none pointer-events-auto">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+          </span>
+          <span className="tracking-wide">Pre-funded Briefs · Dedicated Supervisor Shield · Instant Direct Release</span>
+        </div>
+      </div>
+
+      {/* Main Dark Footer Content */}
+      <div className="bg-[#0b0f19] relative overflow-hidden">
+        {/* Ambient Top Glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[160px] bg-gradient-to-b from-blue/15 via-purple/10 to-transparent blur-3xl pointer-events-none" />
+
+        <div className="mx-auto max-w-7xl px-6 pt-10 pb-8 sm:px-8 sm:pt-14 sm:pb-10 relative z-10">
+        {/* Top 3-Column Area */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 sm:gap-8">
+          {/* Column 1: Brand & Email (Left) */}
+          <div className="md:col-span-6 lg:col-span-6 space-y-4">
+            <Link to="/" className="inline-flex items-center gap-2.5 group">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue text-white shadow-soft-xs font-bold text-base">
+                D
+              </span>
+              <span className="text-xl font-bold tracking-tight text-white font-display">
+                Dolancer<span className="text-[#f97316]">.</span>
+              </span>
+            </Link>
+
+            <p className="text-sm text-slate-300 leading-snug">
+              Skilled work, briefed properly,
+              <br />
+              <span className="text-[#f97316] font-semibold">paid reliably.</span>
+            </p>
+
             <div>
-              <div className="flex items-center gap-2.5">
-                <span className="flex h-10 w-10 rotate-[-4deg] items-center justify-center rounded-xl border border-white/40 bg-blue">
-                  <span className="text-xl font-extrabold text-ink">D</span>
-                </span>
-                <span className="text-2xl font-extrabold tracking-[-0.045em]">
-                  Dolancer<span className="text-coral">.</span>
-                </span>
-              </div>
-
-              <p className="mt-5 max-w-xs text-lg font-extrabold leading-[1.25] tracking-[-0.03em]">
-                Skilled work, briefed properly,
-                <br />
-                <span className="text-lime">paid reliably.</span>
-              </p>
-
               <a
                 href={`mailto:${CONTACT.email}`}
-                className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/5 px-4 py-2.5 text-sm font-bold transition-colors hover:bg-white/15"
+                className="mt-2 inline-flex items-center gap-2 rounded-full border border-slate-700/80 bg-slate-900/40 px-3.5 py-1.5 text-xs font-semibold text-slate-200 hover:border-slate-500 hover:text-white transition-colors"
               >
-                <Mail className="h-3.5 w-3.5" aria-hidden="true" />
-                {CONTACT.email}
+                <Mail className="h-3.5 w-3.5 text-slate-400" />
+                <span>{CONTACT.email}</span>
               </a>
             </div>
-
-            <nav aria-label="Site">
-              <h2 className="text-2xs font-extrabold uppercase tracking-[0.12em] text-white/40">
-                Product
-              </h2>
-              <ul className="mt-5 space-y-3 text-sm">
-                {NAV.map((item) => (
-                  <li key={item.to}>
-                    <Link
-                      to={item.to}
-                      className="group inline-flex items-center gap-1.5 font-bold text-white/70 transition-colors hover:text-inverse"
-                    >
-                      {item.label}
-                      <ArrowUpRight
-                        className="h-3 w-3 opacity-0 transition-opacity group-hover:opacity-100"
-                        aria-hidden="true"
-                      />
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-
-            <nav aria-label="Legal">
-              <h2 className="text-2xs font-extrabold uppercase tracking-[0.12em] text-white/40">
-                Legal
-              </h2>
-              <ul className="mt-5 space-y-3 text-sm">
-                {LEGAL.map((item) => (
-                  <li key={item.to}>
-                    <Link
-                      to={item.to}
-                      className="group inline-flex items-center gap-1.5 font-bold text-white/70 transition-colors hover:text-inverse"
-                    >
-                      {item.label}
-                      <ArrowUpRight
-                        className="h-3 w-3 opacity-0 transition-opacity group-hover:opacity-100"
-                        aria-hidden="true"
-                      />
-                    </Link>
-                  </li>
-                ))}
-                <li>
-                  <a
-                    href={`mailto:${CONTACT.grievanceEmail}`}
-                    className="font-bold text-white/70 transition-colors hover:text-inverse"
-                  >
-                    Grievances
-                  </a>
-                </li>
-              </ul>
-            </nav>
           </div>
 
-          {/* An oversized wordmark, cropped by the footer edge. */}
-          <div
-            aria-hidden="true"
-            className="mt-14 select-none overflow-hidden border-t border-white/10 pt-6"
-          >
-            <span className="block text-[15vw] font-extrabold leading-[0.78] tracking-[-0.06em] text-white/[0.06] lg:text-[11rem]">
-              Dolancer
-            </span>
+          {/* Column 2: PRODUCT */}
+          <div className="md:col-span-3 lg:col-span-3">
+            <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4 font-display">
+              PRODUCT
+            </h4>
+            <ul className="space-y-2.5 text-sm font-medium text-slate-300">
+              <li>
+                <Link to="/how-it-works" className="hover:text-white transition-colors">
+                  How it works
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" className="hover:text-white transition-colors">
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-white transition-colors">
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link to="/sign-up" className="hover:text-white transition-colors">
+                  Start earning
+                </Link>
+              </li>
+            </ul>
           </div>
 
-          <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-6 text-xs text-white/40">
-            {/* Operator disclosure is required, not optional. */}
-            <p>
-              Operated by {CONTACT.company}, {CONTACT.jurisdiction}.
-            </p>
-            <p>
-              &copy; {new Date().getFullYear()} {CONTACT.company}. Support {CONTACT.hours}.
-            </p>
+          {/* Column 3: LEGAL */}
+          <div className="md:col-span-3 lg:col-span-3">
+            <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4 font-display">
+              LEGAL
+            </h4>
+            <ul className="space-y-2.5 text-sm font-medium text-slate-300">
+              <li>
+                <Link to="/legal" className="hover:text-white transition-colors">
+                  Terms of service
+                </Link>
+              </li>
+              <li>
+                <Link to="/legal" className="hover:text-white transition-colors">
+                  Privacy policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-white transition-colors">
+                  Grievances
+                </Link>
+              </li>
+            </ul>
           </div>
+        </div>
+
+        {/* Soft Organic Divider */}
+        <div className="mt-12 sm:mt-16 h-px w-full bg-gradient-to-r from-transparent via-slate-800/90 to-transparent" />
+
+        {/* Giant Watermark Typography matching reference screenshot */}
+        <div className="pt-6 sm:pt-8 select-none pointer-events-none text-left">
+          <span className="text-[64px] sm:text-[110px] md:text-[148px] font-extrabold tracking-tight text-[#141d30] leading-none block font-display">
+            Dolancer
+          </span>
+        </div>
+
+        {/* Bottom Row */}
+        <div className="pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 text-xs text-slate-500 font-medium">
+          <p>Operated by {CONTACT.company}, {CONTACT.jurisdiction}.</p>
+          <p>© {currentYear} {CONTACT.company}. Support {CONTACT.hours}.</p>
         </div>
       </div>
     </footer>

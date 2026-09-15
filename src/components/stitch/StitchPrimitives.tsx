@@ -14,10 +14,10 @@ export function StitchBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-semibold tracking-wide shadow-sm",
-        tone === "brand" && "bg-purple-light text-purple",
-        tone === "success" && "bg-success-bg text-success-ink",
-        tone === "neutral" && "bg-subtle text-ink-2",
+        "inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-bold tracking-wide shadow-soft-sm",
+        tone === "brand" && "bg-coral-light text-coral border border-coral/20",
+        tone === "success" && "bg-success-bg text-success-ink border border-success-ink/20",
+        tone === "neutral" && "bg-subtle text-ink-2 border border-line-card",
         className,
       )}
     >
@@ -40,12 +40,12 @@ export function StitchButton({
   return (
     <Component
       className={cn(
-        "inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 text-sm font-semibold transition-all duration-200",
+        "inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 text-sm font-bold transition-all duration-200 ease-spring select-none",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue",
         variant === "primary" &&
-          "bg-purple text-inverse shadow-soft-md hover:-translate-y-0.5 hover:bg-purple-hover hover:shadow-soft-lg",
+          "bg-coral text-inverse shadow-soft-md hover:-translate-y-0.5 hover:bg-coral-hover hover:shadow-soft-lg active:translate-y-0",
         variant === "secondary" &&
-          "border border-line-card bg-surface text-ink shadow-soft-sm hover:-translate-y-0.5 hover:bg-subtle hover:shadow-soft-md",
+          "border border-line-card bg-surface text-ink shadow-soft-sm hover:-translate-y-0.5 hover:bg-hover hover:shadow-soft-md active:translate-y-0",
         className,
       )}
       {...props}

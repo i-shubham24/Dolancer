@@ -36,8 +36,8 @@ export function MicroChip({ children, className }: { children: React.ReactNode; 
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full border border-line-card bg-[#f6f6f9] px-2.5 py-[3px]",
-        "text-[11.5px] font-semibold text-ink",
+        "inline-flex items-center rounded-full border border-line-card bg-subtle px-2.5 py-[3px]",
+        "text-[11.5px] font-semibold text-ink-2",
         className,
       )}
     >

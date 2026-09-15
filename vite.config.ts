@@ -12,8 +12,11 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
-  // PORT lets the harness assign a free port when 5173 is taken.
-  server: { port: Number(process.env.PORT) || 5173 },
+  server: {
+    host: "0.0.0.0",
+    port: 3000,
+    allowedHosts: true,
+  },
   build: {
     rollupOptions: {
       output: {

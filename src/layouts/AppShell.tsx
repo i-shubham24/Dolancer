@@ -64,17 +64,23 @@ function NavItem({
       title={collapsed ? label : undefined}
       className={({ isActive }) =>
         cn(
-          "group flex items-center rounded-xl px-3 py-2.5 text-sm font-semibold tracking-[-0.01em] transition-all duration-200 overflow-hidden",
+          "group relative flex items-center rounded-2xl px-3.5 py-2.5 text-sm font-bold tracking-[-0.01em] transition-all duration-200 overflow-hidden",
           collapsed ? "justify-center" : "gap-3",
           isActive
-            ? "bg-blue-light text-blue"
-            : "border border-transparent text-ink-2 hover:border-line-card hover:bg-surface hover:text-ink",
+            ? "bg-purple text-inverse shadow-soft-sm font-extrabold"
+            : "border border-transparent text-ink-2 hover:border-line-card hover:bg-surface hover:text-ink hover:shadow-soft-sm",
         )
       }
     >
       {({ isActive }) => (
         <>
-          <Icon className={cn("h-4 w-4 shrink-0", isActive ? "text-ink" : "text-ink-muted")} aria-hidden="true" />
+          <Icon
+            className={cn(
+              "h-4 w-4 shrink-0 transition-transform duration-200 group-hover:scale-110",
+              isActive ? "text-inverse" : "text-ink-2 group-hover:text-purple",
+            )}
+            aria-hidden="true"
+          />
           {!collapsed && <span className="whitespace-nowrap">{label}</span>}
         </>
       )}
@@ -147,22 +153,27 @@ function SidebarContent({ onNavigate, collapsed, setCollapsed }: { onNavigate?: 
       </nav>
 
       <div className="mt-auto pt-6">
-        <div className={cn("rounded-2xl border border-line-card/80 bg-surface/85 p-3 shadow-soft-lg backdrop-blur-sm", collapsed && "p-2 flex justify-center")}>
+        <div
+          className={cn(
+            "rounded-2xl border border-line-card bg-surface p-3.5 shadow-soft-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-soft-lg",
+            collapsed && "flex justify-center p-2",
+          )}
+        >
           <Link
             to="/profile"
             onClick={onNavigate}
             className="flex items-center gap-2.5 overflow-hidden"
             aria-label="Open your profile"
           >
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-lime-light text-sm font-extrabold text-ink">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-lime text-sm font-extrabold text-ink shadow-soft-sm">
               {initial}
             </span>
             {!collapsed && (
               <span className="min-w-0 flex-1 whitespace-nowrap">
-                <span className="block truncate text-sm font-extrabold tracking-[-0.01em]">
+                <span className="block truncate text-sm font-extrabold tracking-[-0.01em] text-ink">
                   {name}
                 </span>
-                <span className="block truncate text-[11px] text-ink-muted">View profile</span>
+                <span className="block truncate text-xs font-semibold text-ink-muted">View profile</span>
               </span>
             )}
           </Link>
@@ -172,7 +183,7 @@ function SidebarContent({ onNavigate, collapsed, setCollapsed }: { onNavigate?: 
               <button
                 type="button"
                 onClick={() => void signOut()}
-                className="flex w-full items-center gap-2 rounded-md px-1 py-1.5 text-xs font-bold text-ink-muted transition-colors hover:text-danger-ink whitespace-nowrap"
+                className="flex w-full items-center gap-2 rounded-xl px-2 py-1.5 text-xs font-bold text-ink-muted transition-colors hover:bg-danger-bg hover:text-danger-ink whitespace-nowrap"
               >
                 <LogOut className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                 Sign out
@@ -197,7 +208,7 @@ export function AppShell() {
   };
 
   return (
-    <div className="app-shell min-h-dvh bg-canvas bg-[radial-gradient(circle_at_12%_0%,color-mix(in_srgb,var(--dl-purple)_10%,transparent),transparent_28%),radial-gradient(circle_at_90%_18%,color-mix(in_srgb,var(--dl-secondary)_8%,transparent),transparent_24%)]">
+    <div className="app-shell min-h-dvh bg-canvas bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,color-mix(in_srgb,var(--dl-purple)_12%,transparent),transparent_50%),radial-gradient(circle_at_95%_25%,color-mix(in_srgb,var(--dl-card-mint)_25%,transparent),transparent_30%),radial-gradient(circle_at_5%_75%,color-mix(in_srgb,var(--dl-card-pink)_20%,transparent),transparent_35%)]">
       <ScrollToTop />
       <CommandMenu />
       <a
@@ -208,7 +219,7 @@ export function AppShell() {
       </a>
 
       {/* Mobile bar */}
-      <div className="sticky top-0 z-30 flex items-center justify-between border-b border-line-card/80 bg-surface/80 px-4 py-3 shadow-soft-sm backdrop-blur-xl lg:hidden">
+      <div className="sticky top-0 z-30 flex items-center justify-between border-b border-line-card/80 bg-surface/90 px-4 py-3 shadow-soft-sm backdrop-blur-xl lg:hidden">
         <Link to="/dashboard" className="flex items-center gap-2 min-w-0">
           <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-purple to-blue text-inverse shadow-soft-sm">
             <span className="text-base font-extrabold">D</span>
@@ -271,7 +282,7 @@ export function AppShell() {
           <SidebarContent collapsed={collapsed} setCollapsed={toggleCollapsed} />
         </aside>
 
-        <main id="main" className="min-w-0 flex-1 rounded-[28px] py-6 lg:my-4 lg:bg-surface/35 lg:px-7 lg:py-8 lg:shadow-soft-sm">
+        <main id="main" className="min-w-0 flex-1 py-6 lg:my-2 lg:py-4">
           <Outlet />
         </main>
       </div>
