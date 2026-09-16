@@ -30,7 +30,7 @@ import { Logo } from "@/components/ui/Logo";
 const NAV = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/work", label: "My work", icon: Briefcase },
-  { to: "/pool", label: "Job board", icon: Layers },
+  { to: "/pool", label: "Assigned offers", icon: Layers },
   { to: "/earnings", label: "Earnings", icon: Wallet },
   { to: "/notifications", label: "Alerts", icon: Bell },
 ];

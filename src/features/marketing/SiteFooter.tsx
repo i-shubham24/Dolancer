@@ -120,12 +120,12 @@ export function SiteFooter() {
             </h4>
             <ul className="space-y-2.5 text-sm font-medium text-slate-300">
               <li>
-                <Link to="/legal" className="hover:text-white transition-colors">
+                <Link to="/legal/terms" className="hover:text-white transition-colors">
                   Terms of service
                 </Link>
               </li>
               <li>
-                <Link to="/legal" className="hover:text-white transition-colors">
+                <Link to="/legal/privacy" className="hover:text-white transition-colors">
                   Privacy policy
                 </Link>
               </li>

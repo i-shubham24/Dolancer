@@ -26,7 +26,7 @@ const FEATURES: Feature[] = [
   {
     icon: ShieldCheck,
     title: "Supervisor Shield",
-    body: "Academic supervisors review drafts and handle all client coordination on your behalf.",
+    body: "Supervisors review drafts and handle all client coordination on your behalf.",
     badgeClass: "bg-blue-light text-blue",
   },
   {
@@ -38,7 +38,7 @@ const FEATURES: Feature[] = [
   {
     icon: Calendar,
     title: "Autonomous Schedule",
-    body: "Accept briefs matched strictly to your verified major. Work entirely when and where you want.",
+    body: "Accept offers matched to your verified disciplines. Work within the agreed scope and deadline.",
     badgeClass: "bg-purple-light text-purple",
   },
 ];

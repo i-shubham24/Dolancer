@@ -7,7 +7,7 @@ import { DeadlineBadge } from "@/components/brutal/DeadlineBadge";
 import type { PoolOffer } from "@/types/domain";
 
 /**
- * A pool card.
+ * An assigned offer card.
  *
  * Payout is the largest thing on the card, because it is the fixed, pre-disclosed
  * number the whole model rests on: no bidding, no negotiation, agreed before you
@@ -38,7 +38,7 @@ export function PoolCard({
     <motion.button
       type="button"
       onClick={onOpen}
-      aria-label={`Open ${offer.category} task, ${formatPaise(offer.payoutPaise)}`}
+      aria-label={`Review assigned ${offer.category} offer, ${formatPaise(offer.payoutPaise)}`}
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -4, transition: { duration: 0.2, ease: [0.16, 1, 0.3, 1] } }}
@@ -71,7 +71,7 @@ export function PoolCard({
           {!hideAccessories ? (
             <div className="flex flex-wrap items-center gap-2 pt-0.5">
               <MicroChip>{CLIENT_LABEL}</MicroChip>
-              <MicroChip>Fixed payout</MicroChip>
+              <MicroChip>Assigned offer</MicroChip>
             </div>
           ) : null}
         </div>

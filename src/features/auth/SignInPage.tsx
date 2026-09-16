@@ -25,6 +25,9 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [cooldown, setCooldown] = useState(0);
   const [sends, setSends] = useState(0);
+  const [ageConfirmed, setAgeConfirmed] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const location = useLocation();
@@ -34,6 +37,7 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
   const oauthError = params.get("error");
   const isSignUp = mode === "sign-up";
   const sendLimitReached = sends >= 5;
+  const canCreateAccount = !isSignUp || (ageConfirmed && termsAccepted && privacyAccepted);
 
   // Resend cooldown ticks down while the code stage is visible.
   useEffect(() => {
@@ -44,6 +48,10 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
 
   /** Demo mode sends no email and needs no code: straight in as the sample doer. */
   function enterDemo() {
+    if (isSignUp && !canCreateAccount) {
+      setError("Confirm that you are 18 or older and accept the Terms and Privacy Policy before creating an account.");
+      return;
+    }
     signInDemo();
     navigate(next, { replace: true });
   }
@@ -51,6 +59,10 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
   async function handleSendCode(event: React.FormEvent) {
     event.preventDefault();
     if (isDemo()) return enterDemo();
+    if (!canCreateAccount) {
+      setError("Confirm that you are 18 or older and accept the Terms and Privacy Policy before creating an account.");
+      return;
+    }
     
     const parseResult = emailSchema.safeParse(email.trim());
     if (!parseResult.success) {
@@ -110,6 +122,10 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
 
   async function handleGoogle() {
     if (isDemo()) return enterDemo();
+    if (!canCreateAccount) {
+      setError("Confirm that you are 18 or older and accept the Terms and Privacy Policy before creating an account.");
+      return;
+    }
     setBusy(true);
     setError(null);
     try {
@@ -163,7 +179,7 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
           <p className="mt-4 max-w-md text-md leading-relaxed text-ink-2">
           {isSignUp
             ? "Join in minutes. Projects come to you, and the pay is agreed upfront."
-            : "Sign in to pick up work and track your earnings."}
+            : "Sign in to review assigned offers, track your work and see your earnings."}
           </p>
         </div>
       {oauthError ? (
@@ -208,11 +224,27 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
               className="min-h-[44px]"
             />
           </div>
+          {isSignUp ? (
+            <div className="space-y-3 rounded-2xl border border-line-card bg-surface-2 p-4 text-sm text-ink-2">
+              <label className="flex items-start gap-3">
+                <input type="checkbox" checked={ageConfirmed} onChange={(event) => setAgeConfirmed(event.target.checked)} className="mt-0.5 h-4 w-4 accent-purple" />
+                <span>I confirm that I am 18 years of age or older.</span>
+              </label>
+              <label className="flex items-start gap-3">
+                <input type="checkbox" checked={termsAccepted} onChange={(event) => setTermsAccepted(event.target.checked)} className="mt-0.5 h-4 w-4 accent-purple" />
+                <span>I agree to the <Link to="/legal/terms" className="font-bold underline underline-offset-2">Terms of Service</Link>.</span>
+              </label>
+              <label className="flex items-start gap-3">
+                <input type="checkbox" checked={privacyAccepted} onChange={(event) => setPrivacyAccepted(event.target.checked)} className="mt-0.5 h-4 w-4 accent-purple" />
+                <span>I have read the <Link to="/legal/privacy" className="font-bold underline underline-offset-2">Privacy Policy</Link>.</span>
+              </label>
+            </div>
+          ) : null}
           <Button
             type="submit"
             size="lg"
             className="w-full min-h-[44px]"
-            disabled={busy || !email.trim() || (turnstileConfigured() && !captchaToken)}
+            disabled={busy || !email.trim() || !canCreateAccount || (turnstileConfigured() && !captchaToken)}
           >
             <Mail className="h-4 w-4" aria-hidden="true" />
             {busy ? "Sending code..." : "Email me a code"}

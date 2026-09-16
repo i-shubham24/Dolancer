@@ -21,7 +21,7 @@ import { StitchBadge } from "@/components/stitch/StitchPrimitives";
 interface Discipline {
   id: string;
   name: string;
-  category: "design" | "web" | "writing" | "marketing" | "ecom" | "support";
+  category: "design" | "it" | "writing" | "creative" | "ai" | "marketing" | "research" | "something";
   icon: typeof Palette;
   briefsCount: number;
   avgPay: string;
@@ -56,8 +56,8 @@ const DISCIPLINES: Discipline[] = [
   },
   {
     id: "web-development",
-    name: "Web Dev (WordPress & Shopify)",
-    category: "web",
+    name: "IT & Software",
+    category: "it",
     icon: Globe,
     briefsCount: 52,
     avgPay: "₹4,200",
@@ -94,7 +94,7 @@ const DISCIPLINES: Discipline[] = [
   },
   {
     id: "digital-marketing",
-    name: "Digital Marketing & SEO",
+    name: "Marketing",
     category: "marketing",
     icon: Megaphone,
     briefsCount: 36,
@@ -112,28 +112,28 @@ const DISCIPLINES: Discipline[] = [
     },
   },
   {
-    id: "amazon-ecom",
-    name: "Amazon & E-Commerce",
-    category: "ecom",
+    id: "creative-media",
+    name: "Creative & Media",
+    category: "creative",
     icon: ShoppingBag,
     briefsCount: 31,
     avgPay: "₹2,700",
     sampleBrief: {
-      title: "Amazon Product Listing, Sourcing & PPC Optimization",
+    title: "Short-form Video, Motion & Social Asset Package",
       deadline: "2 Days",
       pay: "₹3,000",
       supervisor: "K. Bansal · E-Com QA",
       requirements: [
-        "Backend Search Terms & Indexing Strategy",
-        "A+ Enhanced Content Module Layouts",
-        "PPC Negative Keyword Screening Table",
+        "Edited vertical video clips with captions",
+        "Motion treatment and export-ready social assets",
+        "Organised source files and usage notes",
       ],
     },
   },
   {
-    id: "customer-service",
-    name: "Customer Service & Support",
-    category: "support",
+    id: "something-else",
+    name: "Something Else",
+    category: "something",
     icon: Headphones,
     briefsCount: 44,
     avgPay: "₹2,000",
@@ -150,9 +150,9 @@ const DISCIPLINES: Discipline[] = [
     },
   },
   {
-    id: "programming-scripts",
-    name: "Programming & Scripts",
-    category: "web",
+    id: "ai-automations",
+    name: "AI Agents & Automations",
+    category: "ai",
     icon: Code2,
     briefsCount: 29,
     avgPay: "₹4,600",
@@ -169,9 +169,9 @@ const DISCIPLINES: Discipline[] = [
     },
   },
   {
-    id: "research-analysis",
-    name: "Market Research & Analysis",
-    category: "writing",
+    id: "research-business",
+    name: "Research & Business",
+    category: "research",
     icon: FileText,
     briefsCount: 26,
     avgPay: "₹3,400",
@@ -190,13 +190,15 @@ const DISCIPLINES: Discipline[] = [
 ];
 
 const CATEGORIES = [
-  { id: "all", label: "All Works" },
-  { id: "design", label: "Graphic Design" },
-  { id: "web", label: "Web Dev & IT" },
-  { id: "writing", label: "Copywriting" },
-  { id: "marketing", label: "Digital Marketing" },
-  { id: "ecom", label: "Amazon & E-Com" },
-  { id: "support", label: "Customer Service" },
+  { id: "all", label: "All categories" },
+  { id: "design", label: "Design" },
+  { id: "it", label: "IT & Software" },
+  { id: "writing", label: "Writing & Content" },
+  { id: "creative", label: "Creative & Media" },
+  { id: "ai", label: "AI Automations" },
+  { id: "marketing", label: "Marketing" },
+  { id: "research", label: "Research & Business" },
+  { id: "something", label: "Something Else" },
 ] as const;
 
 export function AnimatedMarquee() {
@@ -217,13 +219,13 @@ export function AnimatedMarquee() {
         <div className="text-center max-w-2xl mx-auto mb-10">
           <StitchBadge tone="neutral">
             <Sparkles className="h-3.5 w-3.5 text-coral" />
-            Disciplines & Live Briefs
+            Disciplines & offer examples
           </StitchBadge>
           <h2 className="mt-4 text-3xl sm:text-5xl font-extrabold text-ink tracking-[-0.04em] font-display">
             Every subject. <span className="fresh-highlight fresh-underline fresh-underline-lilac">Your expertise.</span>
           </h2>
           <p className="mt-3 text-base text-ink-2 font-medium">
-            Only briefs strictly aligned to your verified degree and skills land on your board. Click any discipline below to preview real matching tasks.
+            Supervisors route specific offers to vetted doers whose verified disciplines fit the brief. Explore examples of the work and review flow below.
           </p>
         </div>
 
@@ -281,7 +283,7 @@ export function AnimatedMarquee() {
                       {d.name}
                     </span>
                     <div className="mt-0.5 flex items-center gap-2 text-[11px] font-semibold text-ink-muted">
-                      <span className="text-coral font-bold">{d.briefsCount} open briefs</span>
+                      <span className="text-coral font-bold">{d.briefsCount} offer examples</span>
                       <span>·</span>
                       <span>Avg. {d.avgPay}</span>
                     </div>
@@ -311,7 +313,7 @@ export function AnimatedMarquee() {
                   <div className="flex items-center gap-2">
                     <span className="inline-flex items-center gap-1.5 rounded-full bg-coral-light px-3 py-1 text-xs font-bold text-coral">
                       <Sparkles className="h-3 w-3" />
-                      Live Verified Brief
+                      Offer example
                     </span>
                     <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold text-success-ink bg-success-bg px-2.5 py-1 rounded-full">
                       <ShieldCheck className="h-3 w-3" /> Pay Protected
@@ -342,7 +344,7 @@ export function AnimatedMarquee() {
 
                   <div className="flex items-center justify-between">
                     <span className="flex items-center gap-1.5 text-ink-muted">
-                      <CheckCircle2 className="h-3.5 w-3.5 text-blue" /> QA Support:
+                      <CheckCircle2 className="h-3.5 w-3.5 text-blue" /> Supervisor review:
                     </span>
                     <span className="font-bold text-ink">{activeDiscipline.sampleBrief.supervisor}</span>
                   </div>
@@ -366,13 +368,13 @@ export function AnimatedMarquee() {
                 {/* Call to Action on Brief Card */}
                 <div className="pt-2 border-t border-line-card flex items-center justify-between">
                   <span className="text-xs text-ink-muted font-medium">
-                    {activeDiscipline.briefsCount} similar briefs available
+                    {activeDiscipline.briefsCount} similar examples
                   </span>
                   <Link
                     to="/pool"
                     className="inline-flex items-center gap-1.5 rounded-xl bg-ink px-4 py-2.5 text-xs font-extrabold text-inverse hover:bg-ink/90 transition-colors shadow-soft-xs"
                   >
-                    <span>Claim on Board</span>
+                    <span>See the workflow</span>
                     <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
                 </div>

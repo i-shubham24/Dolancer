@@ -15,7 +15,7 @@ export interface DoerGateState {
   trainingDone: boolean;
   stepsDone: number;
   totalSteps: number;
-  /** Every gate is satisfied, so this doer can claim and earn. */
+  /** Every gate is satisfied, so this doer can accept assigned offers and earn. */
   unlocked: boolean;
 }
 

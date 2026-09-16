@@ -57,7 +57,7 @@ export function AboutHeroInteractive() {
           transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
           className="relative w-full max-w-[450px]"
         >
-          {/* The messy "old way" background card — rotated, faded, grayscale */}
+          {/* The messy "old way" background card - rotated, faded, grayscale */}
           <div className="absolute inset-0 bg-white border-2 border-red-200/60 rounded-3xl shadow-soft-sm transform rotate-[-6deg] opacity-50 flex flex-col p-6 grayscale">
             <div className="h-4 w-1/2 bg-red-200/60 rounded-full mb-4"></div>
             <div className="h-2 w-3/4 bg-red-100 rounded-full mb-2"></div>

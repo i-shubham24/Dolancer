@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * Dock — macOS-style magnification strip, adapted from Motion Primitives
+ * Dock - macOS-style magnification strip, adapted from Motion Primitives
  * (https://motion-primitives.com, MIT). Changes from the stock file:
  * - imports `framer-motion` (this project's single animation lib) instead of `motion/react`
  * - `cn` from `@/lib/cn` (the project's util), `dark:` variants stripped (light site)

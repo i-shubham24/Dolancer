@@ -5,7 +5,7 @@ import { cn } from "@/lib/cn";
  *
  * One letter per homepage zone, alternating left/right so the eye
  * travels down the page and spells DOLANCER by the footer.
- * Faded solid ink at 4-6% opacity — professional, palette-safe,
+ * Faded solid ink at 4-6% opacity - professional, palette-safe,
  * decorative only (aria-hidden, pointer-events-none).
  */
 

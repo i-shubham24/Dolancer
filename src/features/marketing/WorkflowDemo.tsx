@@ -32,12 +32,12 @@ interface Stage {
 
 const STAGES: Stage[] = [
   {
-    id: "claim",
-    nav: "You claim it",
+    id: "offer",
+    nav: "An offer arrives",
     tone: "assigned",
     badge: "Ready to start",
     heading: "The pay is on the brief before you commit",
-    body: "You see the discipline, the deadline, and exactly what you earn. No bidding against anyone, no proposal to write. If it suits you, take it.",
+    body: "You see the discipline, deadline and exact payout. No bidding against anyone and no proposal to write. If the scope fits, accept the offer.",
     action: { icon: Play, label: "Start work", enabled: true },
     progress: 0,
   },
@@ -47,7 +47,7 @@ const STAGES: Stage[] = [
     tone: "changes",
     badge: "Link needed",
     heading: "You work wherever you already work",
-    body: "Paste a link to where the work is happening so your supervisor can follow along. Until that is in, progress and submission stay locked.",
+    body: "Paste the company workspace link where the work is happening so your supervisor can follow along. Until that is in, progress and submission stay locked.",
     action: { icon: Send, label: "Submit for review", enabled: false },
     note: "Nothing moves until your working link is in.",
     progress: 0,

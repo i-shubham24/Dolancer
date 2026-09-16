@@ -20,9 +20,9 @@ export type PoolSort = "newest" | "payout" | "deadline";
 
 const PAGE_SIZE = 20;
 
-const CLAIM_REJECTED = "Someone else claimed this first. It is no longer available.";
+const CLAIM_REJECTED = "This offer is no longer available. Ask your supervisor if you need clarification.";
 
-/** The demo board in the requested order. It is small, so it is always one page. */
+/** The demo assigned-offer list in the requested order. It is small, so it is always one page. */
 function sortDemoOffers(offers: PoolOffer[], sort: PoolSort): PoolOffer[] {
   if (sort === "payout") return offers.sort((a, b) => b.payoutPaise - a.payoutPaise);
   if (sort === "deadline") {
@@ -34,9 +34,9 @@ function sortDemoOffers(offers: PoolOffer[], sort: PoolSort): PoolOffer[] {
 }
 
 /**
- * Read the claim pool.
+ * Read private assigned offers.
  *
- * The view does the gatekeeping, not this query. doer_pool already requires
+ * The view does the gatekeeping, not this query. The assigned-offer view already requires
  * profiles.available, a doer_skills category match against the project, and (for a
  * doer below L2) that the head-start window from claim_pool_config has elapsed. So
  * an empty result is a legitimate state with several possible causes, not an error,
@@ -89,10 +89,10 @@ export async function fetchPool(input: {
 }
 
 /**
- * Claim a project. First qualified claim wins.
+ * Accept an assigned project offer.
  *
- * The RPC returns false when the update matched nothing, which means someone else
- * took it, or an eligibility gate failed. That is not an error and gets its own
+ * The RPC returns false when the update matched nothing, which means the offer was
+ * withdrawn or an eligibility gate failed. That is not an error and gets its own
  * message. A thrown error is different: the RPC raises for suspension, unapproved
  * KYC, and incomplete training, and those messages are worth surfacing as they are.
  *

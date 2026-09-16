@@ -28,7 +28,7 @@ export function HowItWorksSteps() {
             How Dolancers <span className="fresh-highlight fresh-underline fresh-underline-pink">earn.</span>
           </h2>
           <p className="mt-4 text-base sm:text-lg text-ink-2 font-medium">
-            Three clear steps to start earning with your expertise. No bidding wars, no unpaid invoices.
+            Three clear work steps after setup, from an assigned offer to an approval-based payout. No bidding wars, no unpaid invoices.
           </p>
         </div>
 
@@ -78,19 +78,19 @@ export function HowItWorksSteps() {
                   <span className="text-xs font-extrabold uppercase tracking-widest text-ink-muted font-display block">
                     STEP 01
                   </span>
-                  <span className="text-[11px] font-bold text-coral">Discovery</span>
+                    <span className="text-[11px] font-bold text-coral">Assigned offer</span>
                 </div>
               </div>
 
               <h3 className="text-2xl sm:text-4xl font-extrabold text-ink tracking-[-0.03em] font-display">
-                Browse Task Pool
+                Receive a project offer
               </h3>
               <p className="text-ink-2 text-base leading-relaxed font-medium">
-                Explore briefs in web development, graphic design, copywriting, digital marketing, or research matched to your profile. Each card shows the exact agreed payout and deadline before you claim.
+                A supervisor routes a specific project to you when the scope fits your verified disciplines. The offer shows the agreed payout, deadline and workspace before you accept it.
               </p>
               <div className="pt-2">
                 <div className="inline-flex items-center gap-2 text-sm font-bold text-coral hover:underline">
-                  <span>Matched automatically to your profile</span>
+                  <span>Manually routed by a supervisor</span>
                   <ArrowRight className="h-4 w-4" />
                 </div>
               </div>
@@ -126,8 +126,8 @@ export function HowItWorksSteps() {
                     Website Design & Responsive Setup
                   </p>
                   <div className="mt-2 flex items-center gap-2">
-                    <span className="inline-flex items-center gap-1 rounded-full bg-success-bg px-2.5 py-0.5 text-[11px] font-extrabold text-success-ink">
-                      <Check className="h-3 w-3" /> Ready to Claim
+                      <span className="inline-flex items-center gap-1 rounded-full bg-success-bg px-2.5 py-0.5 text-[11px] font-extrabold text-success-ink">
+                      <Check className="h-3 w-3" /> Ready to review
                     </span>
                     <span className="text-xs text-ink-muted font-medium">Verified milestone</span>
                   </div>
@@ -215,7 +215,7 @@ export function HowItWorksSteps() {
                 Accept & Deliver
               </h3>
               <p className="text-ink-2 text-base leading-relaxed font-medium">
-                Work on your schedule. You collaborate directly with a seasoned supervisor who reviews your drafts and shields you from client friction.
+                Accept the offer when the scope and deadline work for you. Your supervisor reviews drafts and handles the client side, so you do not need to identify or chase the client.
               </p>
               <div className="pt-2">
                 <div className="inline-flex items-center gap-2 text-sm font-bold text-coral hover:underline">
@@ -252,7 +252,7 @@ export function HowItWorksSteps() {
                 Get Paid Fast
               </h3>
               <p className="text-ink-2 text-base leading-relaxed font-medium">
-                Once approved, payment releases automatically to your registered bank account via UPI or NEFT within 48 hours. No invoicing, no chasing.
+                Once the approval gate clears, the payout follows the configured release process to your registered payout account. No invoicing and no chasing.
               </p>
               <div className="pt-2">
                 <div className="inline-flex items-center gap-2 text-sm font-bold text-success-ink hover:underline">

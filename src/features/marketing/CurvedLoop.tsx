@@ -3,7 +3,7 @@ import { useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/cn";
 
 /**
- * CurvedLoop — a draggable curved text marquee, adapted from React Bits
+ * CurvedLoop - a draggable curved text marquee, adapted from React Bits
  * (https://reactbits.dev). Text rides a quadratic SVG path and loops
  * forever; dragging flings it and flips the direction.
  *
@@ -45,7 +45,7 @@ export function CurvedLoop({
   const uid = useId();
   const pathId = `curve-${uid}`;
   // Contained geometry: baseline ends at y=190 inside a 1440×240 viewBox, so
-  // the whole arc — apex AND glyph tops/descenders — stays inside the SVG box
+  // the whole arc - apex AND glyph tops/descenders - stays inside the SVG box
   // for curveAmount ∈ ~[-240, +100]. Nothing paints outside the component's
   // own rect, so the band it sits in can hug it exactly (no bleed into the
   // neighbouring sections).

@@ -226,13 +226,13 @@ export function DashboardPage() {
                 title="No active work yet"
                 description={
                   gate.data?.unlocked
-                    ? "Nothing on your plate right now. Check the board for work that matches your skills."
-                    : "Once you are verified, matching projects will show up here."
+                    ? "Nothing on your plate right now. New offers appear here when a supervisor routes a suitable project to you."
+                    : "Once you are verified, assigned offers can appear here when a supervisor routes a suitable project."
                 }
                 action={
                   <Button asChild>
                     <Link to={gate.data?.unlocked ? "/pool" : "/verification"}>
-                      {gate.data?.unlocked ? "Browse the board" : "Get verified"}
+                      {gate.data?.unlocked ? "View assigned offers" : "Get verified"}
                     </Link>
                   </Button>
                 }
@@ -261,14 +261,14 @@ export function DashboardPage() {
         <CapacityRail activeCount={activeCount} gate={gate.data} />
       </div>
 
-      <section aria-labelledby="board" className="space-y-4 rounded-2xl border border-line-card bg-surface p-5 shadow-soft-md transition-all duration-200 hover:shadow-soft-lg sm:p-6">
+      <section aria-labelledby="assigned-offers" className="space-y-4 rounded-2xl border border-line-card bg-surface p-5 shadow-soft-md transition-all duration-200 hover:shadow-soft-lg sm:p-6">
             <div className="flex items-center justify-between gap-4">
-              <h2 id="board" className="text-2xl font-extrabold tracking-[-0.03em]">
-                On the board
+              <h2 id="assigned-offers" className="text-2xl font-extrabold tracking-[-0.03em]">
+                Assigned offers
               </h2>
               <Button asChild variant="ghost" size="sm">
                 <Link to="/pool">
-                  Open board
+                  View all offers
                   <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                 </Link>
               </Button>
@@ -276,14 +276,14 @@ export function DashboardPage() {
 
             {pool.isLoading ? (
               <div className="grid gap-3">
-                <LoadingAnnounce label="Loading available work" />
+                <LoadingAnnounce label="Loading assigned offers" />
                 <SkeletonCard />
               </div>
             ) : pool.isError || !pool.data?.length ? (
               <EmptyState
                 icon={<Layers className="h-6 w-6" aria-hidden="true" />}
                 title="Nothing matching right now"
-                description="Work appears here when it matches your skills and you are set to Available. New briefs land through the day."
+                description="Offers appear here when a supervisor routes a project that fits your verified disciplines and capacity."
               />
             ) : (
               <div className="grid gap-3 md:grid-cols-2">
@@ -300,8 +300,8 @@ export function DashboardPage() {
                     >
                       <div className="min-w-0 flex-1 space-y-2">
                         <CategoryPill>{offer.category}</CategoryPill>
-                        <CardTitle className="line-clamp-2" title={offer.brief?.trim() || `${offer.category} task`}>
-                          {offer.brief?.trim() || `${offer.category} task`}
+                        <CardTitle className="line-clamp-2" title={offer.brief?.trim() || `${offer.category} offer`}>
+                          {offer.brief?.trim() || `${offer.category} offer`}
                         </CardTitle>
                         <p className="text-xs text-ink-muted">{relativeDeadline(offer.deliveryAt)}</p>
                       </div>

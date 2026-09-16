@@ -1,7 +1,7 @@
 import { cn } from "@/lib/cn";
 
 /**
- * Tiny floating micro-graphics — playful but professional.
+ * Tiny floating micro-graphics - playful but professional.
  *
  * Minimal density: exactly 2 shapes per zone. Small (10-20px),
  * palette-token colours, slow independent bob so they read as
@@ -55,7 +55,7 @@ const ZONES: Record<string, FloatItem[]> = {
     { kind: "squiggle", className: "left-[8%] bottom-[20%] hidden sm:block", delay: "2s", duration: "7s", color: "var(--color-coral)" },
   ],
 
-  // Nav pages — same grammar, one accent pair per zone.
+  // Nav pages - same grammar, one accent pair per zone.
   "hiw-hero": [
     { kind: "ring", className: "left-[5%] top-[16%]", delay: "0.5s", duration: "6.5s", color: "var(--color-blue)" },
     { kind: "sparkle", className: "right-[7%] bottom-[16%] hidden sm:block", delay: "1.8s", duration: "7s", color: "var(--color-coral)" },

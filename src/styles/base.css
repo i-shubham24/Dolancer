@@ -7,6 +7,8 @@
   html {
     -webkit-text-size-adjust: 100%;
     min-width: 0;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
   }
 
   body {
@@ -22,6 +24,12 @@
 
   #root {
     min-width: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 
   h1,
@@ -69,6 +77,46 @@
 }
 
 @layer components {
+  .scroll-progress-track {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 80;
+    height: 3px;
+    pointer-events: none;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--color-inverse) 18%, transparent);
+  }
+
+  .scroll-progress-bar {
+    height: 100%;
+    width: 100%;
+    transform-origin: left center;
+    background: linear-gradient(90deg, var(--color-coral), var(--color-purple), var(--color-blue));
+    box-shadow: 0 0 14px color-mix(in srgb, var(--color-coral) 72%, transparent);
+    transition: transform 120ms ease-out, background 240ms ease;
+    will-change: transform;
+  }
+
+  .scroll-reveal {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+    transition: opacity 620ms cubic-bezier(0.16, 1, 0.3, 1), transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .scroll-reveal.is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-reveal,
+    .scroll-reveal.is-visible {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
   .app-shell .border.border-line-card,
   .app-shell .border-line-card {
     border-color: var(--color-line-card) !important;
@@ -1604,7 +1652,7 @@
   .marquee-track:focus-within {
     animation-play-state: paused;
   }  /* CurvedLoop (React Bits adaptation): draggable curved text marquee.
-     The jacket is an in-flow block sized by the SVG's aspect ratio — the
+     The jacket is an in-flow block sized by the SVG's aspect ratio - the
      arc geometry is fully contained in its own viewBox, so it never
      paints into the sections above or below. Fully transparent except the
      painted glyphs, which keep pointer events for dragging. */

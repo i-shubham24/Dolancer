@@ -35,7 +35,7 @@ export function LandingPage() {
     <div className="fresh-page">
       {/* Redesigned Hero Section aligning with HowItWorks / About theme */}
       <section ref={heroRef} className="fresh-hero relative overflow-clip">
-        {/* Swarm one — vivid coral→blue — chasing the cursor across the hero.
+        {/* Swarm one - vivid coral→blue - chasing the cursor across the hero.
             Literal brand hexes (not palette vars) so the active palette's
             remapped tokens can't muddy them into gray. z-20 floats the swarm
             ABOVE the hero content; pointer-events-none keeps every click
@@ -78,7 +78,7 @@ export function LandingPage() {
             </h1>
 
             <p className="mt-6 max-w-xl text-base sm:text-lg text-ink-2 font-medium leading-relaxed">
-              Accept academic and technical briefs that match your verified skills. Deliver quality work on your schedule. Get paid reliably with upfront rates and dedicated supervisor support.
+              Receive carefully scoped project offers that match your verified disciplines. Work with a supervisor, deliver through a protected workspace, and get paid after the approval gate clears.
             </p>
 
             <div className="fresh-actions">
@@ -93,7 +93,7 @@ export function LandingPage() {
               <StitchButton asChild variant="secondary" className="px-7 py-4 text-base">
                 <Link to="/pool">
                   <Briefcase className="h-4 w-4 mr-1 text-ink-2" />
-                  Browse Task Board
+                  See how offers work
                 </Link>
               </StitchButton>
             </div>
@@ -109,7 +109,7 @@ export function LandingPage() {
               </span>
               <span>
                 <CheckCircle2 className="h-4 w-4 text-success-dot" />
-                Payout guaranteed
+                Approval-based payout
               </span>
             </div>
           </motion.div>
@@ -129,7 +129,7 @@ export function LandingPage() {
       {/* Social Proof / Trusted By */}
       <MetricsBar />
 
-      {/* 3 Steps: How Dolancers Earn — D */}
+      {/* 3 Steps: How Dolancers Earn - D */}
       <div className="relative overflow-clip">
         <BackdropLetter letter="D" position="left" offsetY="25%" />
         <MicroFloaties zone="how" />
@@ -137,12 +137,12 @@ export function LandingPage() {
       </div>
 
       {/* Curved discipline ribbon bridging the steps and the live-brief marquee.
-          The band has no fixed height — the SVG's aspect ratio sizes it, and
+          The band has no fixed height - the SVG's aspect ratio sizes it, and
           the arc is fully contained in its own viewBox so nothing bleeds into
           the neighbouring sections. */}
       <div className="relative overflow-clip" aria-hidden="true">
-        <CurvedLoop
-          marqueeText="Graphic Design ✦ Web Development ✦ Copywriting ✦ Digital Marketing ✦ E-Commerce ✦ Support ✦ "
+          <CurvedLoop
+          marqueeText="Writing & Content ✦ Design ✦ Creative & Media ✦ IT & Software ✦ AI Automations ✦ Marketing ✦ Research & Business ✦ "
           speed={1.6}
           curveAmount={-170}
           direction="right"
@@ -150,29 +150,29 @@ export function LandingPage() {
         />
       </div>
 
-      {/* Animated Disciplines Marquee — O */}
+      {/* Animated Disciplines Marquee - O */}
       <div className="relative overflow-clip">
         <BackdropLetter letter="O" position="right" offsetY="20%" />
         <AnimatedMarquee />
       </div>
 
-      {/* Why Dolancers Love It / 8 Benefits — L */}
+      {/* Why Dolancers Love It / 8 Benefits - L */}
       <div className="relative overflow-clip">
         <BackdropLetter letter="L" position="left" offsetY="30%" />
         <MicroFloaties zone="features" />
-        {/* Swarm two — vivid lime→purple — floating over the benefits grid. */}
+        {/* Swarm two - vivid lime→purple - floating over the benefits grid. */}
         
         <FeaturesGrid />
       </div>
 
-      {/* Numbers That Speak — A */}
+      {/* Numbers That Speak - A */}
       <div className="relative overflow-clip">
         <BackdropLetter letter="A" position="right" offsetY="25%" />
         <MicroFloaties zone="numbers" />
         <NumbersSection />
       </div>
 
-      {/* Payout Explainer Interactive Slider with Curvy Borders (No Straight Lines) — N */}
+      {/* Payout Explainer Interactive Slider with Curvy Borders (No Straight Lines) - N */}
       <StitchSection className="fresh-section py-20 bg-surface/50 relative overflow-clip">
         <CurvedSectionDivider variant="wave" position="top" fillColor="fill-[var(--color-canvas)]" />
         <BackdropLetter letter="N" position="left" />
@@ -183,21 +183,21 @@ export function LandingPage() {
         </div>
       </StitchSection>
 
-      {/* Real Dolancers, Real Earnings Testimonials — C */}
+      {/* Real Dolancers, Real Earnings Testimonials - C */}
       <div className="relative overflow-clip">
         <BackdropLetter letter="C" position="right" />
         <MicroFloaties zone="testimonials" />
         <TestimonialsSection />
       </div>
 
-      {/* High-Converting CTA Banner — E */}
+      {/* High-Converting CTA Banner - E */}
       <div className="relative overflow-clip">
         <BackdropLetter letter="E" position="left" offsetY="35%" className="-ml-2" />
         <MicroFloaties zone="cta" />
         <CtaBanner />
       </div>
 
-      {/* R — right, just before footer to complete DOLANCER */}
+      {/* R - right, just before footer to complete DOLANCER */}
       <div className="relative -mt-10 h-44 overflow-clip md:h-56" aria-hidden="true">
         <BackdropLetter letter="R" position="right" className="text-[10rem] md:text-[13rem]" />
         <MicroFloaties zone="prefooter" />

@@ -57,13 +57,13 @@ const MOMENTS: Moment[] = [
   {
     id: 3,
     stepNumber: "03",
-    tabTitle: "Claim Without Bidding",
+    tabTitle: "Review an assigned offer",
     tabSubtitle: "No proposal treadmill",
     badge: "Guaranteed Rates",
     title: "Real briefs with transparent payouts",
     description:
-      "Projects matched strictly to your verified skills appear with fixed rates and clear deadlines. One click claims the brief. No competing on price or bidding against bots.",
-    highlight: "Every single brief is pre-funded before it hits your board.",
+      "A supervisor routes a specific project to you with a fixed payout and clear deadline. Review the scope and accept it when it fits. No competing on price or bidding against bots.",
+    highlight: "The offer is specific to you, not a public task-board listing.",
   },
   {
     id: 4,
@@ -135,7 +135,7 @@ export function GettingStartedInteractive() {
             Getting started in four clear moments
           </h2>
           <p className="mt-2 text-base text-ink-2 max-w-2xl font-medium">
-            No proposal treadmill, no mystery invoices, and no disappearing clients. See exactly how each stage protects your time and income.
+            No proposal treadmill, no mystery invoices, and no direct client chasing. See exactly how each stage protects your time and income.
           </p>
         </div>
 

@@ -1,15 +1,8 @@
 /**
  * Public site content.
  *
- * Everything a visitor reads before signing up lives here, so copy can be changed
- * without touching layout.
- *
- * One hard rule governs this file: **nothing here may be invented.** No made-up
- * statistics, no fabricated testimonials, no ratings we did not receive, no logos of
- * companies that are not customers. The product's entire pitch is that a doer will
- * reliably be paid by people who do not lie to them, and a fake review on the page
- * making that promise is the one falsehood that would undo it. It is also an
- * explicit platform rule, not merely good taste.
+ * The visual system is expressive, but the product language stays precise. Public
+ * copy describes a managed, supervisor-routed service rather than an open market.
  */
 
 export interface Category {
@@ -17,16 +10,15 @@ export interface Category {
   blurb: string;
 }
 
-/** The disciplines work is briefed under. These map to the platform's own labels. */
 export const CATEGORIES: Category[] = [
-  { name: "Web Development", blurb: "Website design, programming, WordPress, Shopify & more." },
-  { name: "Graphic Design", blurb: "Logo, websites, branding, infographics & more." },
-  { name: "Copywriting", blurb: "Sales copy, product listings, sales funnels & articles." },
-  { name: "Digital Marketing", blurb: "Social media management, SEO, PPC, email marketing & more." },
-  { name: "Amazon & E-Commerce", blurb: "Product listing, sourcing, Amazon PPC, & more." },
-  { name: "Customer Service", blurb: "Phone, live chat, support tickets, onboarding & more." },
-  { name: "IT & Programming", blurb: "Automation scripts, REST APIs, apps & data infrastructure." },
-  { name: "Research & Analysis", blurb: "Competitor reports, market decks, datasets & insights." },
+  { name: "Writing & Content", blurb: "Articles, editing, technical writing, product content and copy." },
+  { name: "Design", blurb: "Brand identity, UI and UX, presentations, illustration and print." },
+  { name: "Creative & Media", blurb: "Video, motion, audio, photo retouching and social assets." },
+  { name: "IT & Software", blurb: "Web development, apps, scripts, APIs, QA and integrations." },
+  { name: "AI Agents & Automations", blurb: "Workflow automation, integrations, data processing and AI pipelines." },
+  { name: "Marketing", blurb: "SEO, paid media, social, email and content strategy." },
+  { name: "Research & Business", blurb: "Market research, competitor analysis, business plans and data work." },
+  { name: "Something Else", blurb: "Tell us what you need. A coordinator will categorise it internally." },
 ];
 
 export interface Step {
@@ -36,20 +28,20 @@ export interface Step {
 
 export const STEPS: Step[] = [
   {
-    title: "Join in minutes",
-    body: "Your name, your email, and a code we send you. You land in a working dashboard straight away, with nothing blocking you.",
+    title: "Create your account",
+    body: "Use passwordless email access, confirm that you are 18 or older, and tell us which disciplines you can genuinely deliver.",
   },
   {
-    title: "Get verified",
-    body: "An ID and where you want to be paid. A supervisor confirms it. This is what unlocks earning, and you keep full access while it happens.",
+    title: "Complete verification",
+    body: "Share the identity and payout details required for safe payments. Verification can be reviewed while you explore your account, but it must be complete before payout.",
   },
   {
-    title: "Work comes to you",
-    body: "Projects matched to the skills you picked show up on your board with the pay already set. Claim what suits you. No bidding, no proposals.",
+    title: "Receive an assigned offer",
+    body: "A supervisor sends you a specific project with its scope, deadline, workspace and agreed doer payout. There is no public task pool, bidding or proposal race.",
   },
   {
-    title: "Deliver and get paid",
-    body: "You work with a supervisor who reviews it before it goes out. Once it is approved, your payout is released.",
+    title: "Deliver through review",
+    body: "Work in the company workspace, speak with your supervisor, submit for quality review, and receive payout only after the approval gate clears.",
   },
 ];
 
@@ -61,27 +53,27 @@ export interface Difference {
 export const DIFFERENCES: Difference[] = [
   {
     title: "No bidding wars",
-    body: "You never undercut anyone to win work, and nobody undercuts you. The rate is set before the job reaches your board.",
+    body: "You never undercut anyone to win work. A supervisor routes a specific project to you when it fits your verified disciplines.",
   },
   {
     title: "The pay is agreed upfront",
-    body: "Every brief shows exactly what you earn before you claim it. No estimates, no scope arguments halfway through.",
+    body: "Every assigned offer shows exactly what you earn before you accept it. There are no surprise discounts or mid-project negotiations.",
   },
   {
     title: "A supervisor has your back",
-    body: "Someone experienced reviews your work before a client sees it, and handles the client conversation so you do not have to.",
+    body: "A supervisor reviews your work before delivery and handles the client conversation. You do not need to chase or identify the client.",
   },
   {
-    title: "You work your own hours",
-    body: "Take up to three projects at a time, or pause and take none. Your availability is yours to set.",
+    title: "You choose what to accept",
+    body: "You can accept or decline an offer. When you accept, you commit to the stated scope and deadline and work within the active-project limit.",
   },
   {
     title: "No chasing invoices",
-    body: "You are not billing anyone. Once work is approved, the payout is released to the account you registered.",
+    body: "You are not billing a client. When the project clears its approval gate, the payout is released to the account you registered.",
   },
   {
     title: "Your share grows",
-    body: "Consistent, well-rated work moves you up, and higher levels see new work sooner.",
+    body: "Consistent, well-rated work can move you through the platform levels and unlock stronger opportunities over time.",
   },
 ];
 
@@ -94,52 +86,51 @@ export const FAQS: Faq[] = [
   {
     question: "When do I get paid?",
     answer:
-      "After the work you delivered is approved. Your supervisor reviews it first, then it goes to the client for approval, and the payout is released to the account you registered during verification.",
+      "After your supervisor has cleared the delivery and the client approval gate is satisfied. If a client does not respond, the approved timeout process may release the payout later. Your earnings page shows the gross, withholding and net as separate figures.",
   },
   {
     question: "How much does a project pay?",
     answer:
-      "It depends on the brief, and it is always shown in full before you claim anything. There is no rate card, because the pay reflects the specific piece of work rather than a category average.",
+      "Each assigned offer states the doer payout before you accept it. There is no public rate card because the payout reflects the specific scope, deadline and level rules for that project.",
   },
   {
     question: "What about tax?",
     answer:
-      "Tax is withheld when a payout is released, calculated across your earnings for the financial year rather than per project. Your earnings page shows the gross, what was withheld, and what you received, as three separate figures.",
+      "Where required by law, tax is withheld when a payout is released. Your earnings record shows the amount used for the payout calculation and the relevant withholding information.",
   },
   {
-    question: "How much work will I get?",
+    question: "How do projects reach me?",
     answer:
-      "That depends on the skills you pick and how much work is coming in for them. Only projects matching your skills reach you, so picking accurately matters more than picking broadly.",
+      "A supervisor manually routes specific projects to vetted doers whose verified disciplines fit the brief. There is no public work pool, bidding, proposal process or client search.",
   },
   {
     question: "Can I work on several projects at once?",
     answer:
-      "Up to three at a time. When you are holding three, the board is hidden until you finish one. This is not a penalty and does not affect your standing.",
+      "The platform limits active projects so that delivery quality stays manageable. The current limit is shown in your dashboard and may prevent new offers while your slots are full.",
   },
   {
     question: "Do I talk to the client?",
     answer:
-      "No. You work with a supervisor, who is your only point of contact and handles everything on the client side. You will not know who the client is, and they will not know who you are.",
+      "No. You work with a supervisor, who is your point of contact. The client sees only a discipline label and does not receive your name or personal details.",
   },
   {
     question: "What do you need to verify me?",
     answer:
-      "A government photo ID, a photo of your face so we can match it, and where you want to be paid. Documents are stored under a random reference, never your name, and are deleted once your identity is confirmed.",
+      "Verification may require a PAN, a government photo identity document and payout details. The exact fields and retention rules are explained in the Privacy Policy before submission.",
+  },
+  {
+    question: "What work is not allowed?",
+    answer:
+      "Dolancer does not accept coursework, essays, dissertations, exams, graded assignments, impersonation, plagiarism, fabrication, unauthorised cyber security work or other unlawful requests. Ask support if a brief is unclear.",
   },
   {
     question: "What happens if my work needs changes?",
     answer:
-      "Your supervisor tells you what to fix and you revise it. Revisions within the brief you accepted are part of the work. If something is genuinely outside the brief, raise it with your supervisor.",
+      "Your supervisor explains what needs changing and you revise within the accepted brief. Work outside the original scope must be raised with the supervisor before you continue.",
   },
 ];
 
-/**
- * Real quotes only, from real doers who gave permission.
- *
- * This array is deliberately empty, and the section does not render while it is.
- * Do not populate it with invented, illustrative, or placeholder testimonials, and
- * do not add names or photos of people who did not agree to appear here.
- */
+/** Existing proof sections are intentionally left unchanged until the evidence review. */
 export interface Testimonial {
   quote: string;
   name: string;
@@ -149,9 +140,7 @@ export interface Testimonial {
 export const TESTIMONIALS: Testimonial[] = [];
 
 export const CONTACT = {
-  /** Replace with the real support address before launch. */
   email: "support@dolancer.in",
-  /** Replace with the real grievance officer address before launch. */
   grievanceEmail: "grievance@assignexperts.in",
   hours: "24 hours a day, 7 days a week",
   company: "Assign Experts Private Limited",

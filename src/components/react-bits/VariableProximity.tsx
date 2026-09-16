@@ -1,16 +1,16 @@
 import { forwardRef, useEffect, useMemo, useRef } from "react";
 
 /**
- * VariableProximity — letters swell in weight as the cursor nears them,
+ * VariableProximity - letters swell in weight as the cursor nears them,
  * adapted from React Bits (https://reactbits.dev).
  *
  * Changes from the source: TypeScript, no motion/react dependency (the
- * stock file wraps letters in motion.spans it never animates — plain
+ * stock file wraps letters in motion.spans it never animates - plain
  * spans do the same), no font-family override (letters inherit the
  * site's variable Plus Jakarta Sans instead of Roboto Flex), and the
  * rAF loop is skipped entirely under prefers-reduced-motion.
  *
- * The `label` must be plain text — per-letter spans are generated inside.
+ * The `label` must be plain text - per-letter spans are generated inside.
  * Requires a variable font (see the @import in src/index.css).
  */
 

@@ -52,7 +52,7 @@ export function HowItWorksPage() {
               No part of this is hidden until after you sign up. Read it all, then decide.
             </p>
             <div className="fresh-process-proof">
-              <span><Check /> Pay is visible before you claim.</span>
+              <span><Check /> Pay is visible before you accept an offer.</span>
               <span><ShieldCheck /> A supervisor carries the client side.</span>
             </div>
           </motion.div>
@@ -96,11 +96,11 @@ export function HowItWorksPage() {
 
       <Section labelledBy="disciplines" className="fresh-steps">
         <h2 id="disciplines" className="fresh-section-heading-text">
-          What gets briefed here
+          What gets offered here
         </h2>
         <p className="mt-3 max-w-xl text-md text-ink-2">
-          Pick the disciplines you are genuinely strong in. Only work matching them reaches
-          your board, so accuracy matters more than breadth.
+          Pick the disciplines you are genuinely strong in. Supervisors use them to route suitable
+          offers, so accuracy matters more than breadth.
         </p>
         <div className="mt-10">
           <CategoryTags />

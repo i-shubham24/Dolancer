@@ -2,21 +2,21 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 
 const messages = [
-  'Aarav from Pune just claimed a brief — ₹1,500',
-  'Priya in Bangalore delivered a project — ₹4,200',
-  'Rohan from Mumbai received payout — ₹3,800',
-  'Sneha in Hyderabad claimed a copywriting brief — ₹2,100',
-  'Vikram from Delhi completed brand identity — ₹6,500',
-  'Ananya in Chennai started a new project — ₹2,800',
+  'Aarav from Pune just claimed a brief - ₹1,500',
+  'Priya in Bangalore delivered a project - ₹4,200',
+  'Rohan from Mumbai received payout - ₹3,800',
+  'Sneha in Hyderabad claimed a copywriting brief - ₹2,100',
+  'Vikram from Delhi completed brand identity - ₹6,500',
+  'Ananya in Chennai started a new project - ₹2,800',
   'Karthik from Kolkata received ₹5,200 payout',
-  'Divya in Jaipur claimed SEO audit brief — ₹1,800',
-  'Arjun from Ahmedabad delivered presentation — ₹3,200',
-  'Meera in Lucknow completed content writing — ₹2,400',
+  'Divya in Jaipur claimed SEO audit brief - ₹1,800',
+  'Arjun from Ahmedabad delivered presentation - ₹3,200',
+  'Meera in Lucknow completed content writing - ₹2,400',
   'Rahul from Chandigarh just signed up',
-  'Pooja in Indore claimed her first brief — ₹1,200',
+  'Pooja in Indore claimed her first brief - ₹1,200',
   'Amit from Surat received ₹7,800 payout',
-  'Neha in Bhopal delivered web design — ₹4,500',
-  'Siddharth from Nagpur started React project — ₹5,000'
+  'Neha in Bhopal delivered web design - ₹4,500',
+  'Siddharth from Nagpur started React project - ₹5,000'
 ];
 
 function shuffleArray<T>(array: T[]): T[] {
