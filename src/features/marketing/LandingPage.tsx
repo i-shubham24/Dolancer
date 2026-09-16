@@ -19,6 +19,8 @@ import { BackdropLetter } from "./BackdropLetter";
 import { MicroFloaties } from "./MicroFloaties";
 import VariableProximity from "@/components/react-bits/VariableProximity";
 import { CurvedLoop } from "./CurvedLoop";
+import { HeroMarquee } from "./HeroMarquee";
+import { NetworkNumbers } from "./NetworkNumbers";
 
 
 export function LandingPage() {
@@ -40,7 +42,7 @@ export function LandingPage() {
             landing on the real buttons underneath. */}
         
         <MicroFloaties zone="hero" />
-                        <div className="fresh-container fresh-hero-grid relative z-10 items-center pt-0 pb-10 lg:pb-16">
+                        <div className="fresh-container fresh-hero-grid relative z-10 items-center pt-0 pb-4 lg:pb-6">
           {/* Left Hero Copy */}
           <motion.div
             initial={reduceMotion ? false : "hidden"}
@@ -112,21 +114,24 @@ export function LandingPage() {
             </div>
           </motion.div>
 
-          {/* Right Hero Visual Stack */}
+          {/* Right Hero Visual Stack - nudged up to sit level with the copy */}
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, y: 20, scale: 0.96 }}
             animate={reduceMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-            className="relative"
+            className="relative lg:-mt-6"
           >
             <HeroCardStack />
           </motion.div>
         </div>
       </section>
 
+      {/* Straight auto-running ribbon flush below the hero */}
+      <HeroMarquee />
+
       {/* 3 Steps: How Dolancers Earn - D */}
       <div className="relative overflow-clip">
-        <BackdropLetter letter="D" position="left" offsetY="25%" />
+        <BackdropLetter letter="D" position="left" offsetY="10%" />
         <MicroFloaties zone="how" />
         <HowItWorksSteps />
       </div>
@@ -147,23 +152,30 @@ export function LandingPage() {
 
       {/* Animated Disciplines Marquee - O */}
       <div className="relative overflow-clip">
-        <BackdropLetter letter="O" position="right" offsetY="20%" />
+        <BackdropLetter letter="O" position="right" offsetY="16%" />
         <AnimatedMarquee />
       </div>
 
       {/* Why Dolancers Love It / 8 Benefits - L */}
       <div className="relative overflow-clip">
-        <BackdropLetter letter="L" position="left" offsetY="30%" />
+        <BackdropLetter letter="L" position="left" offsetY="20%" />
         <MicroFloaties zone="features" />
         {/* Swarm two - vivid lime→purple - floating over the benefits grid. */}
         
         <FeaturesGrid />
       </div>
 
+      {/* Live Network Numbers - A (restored home between Why-Choose and Payout) */}
+      <div className="relative overflow-clip">
+        <BackdropLetter letter="A" position="right" offsetY="20%" />
+        <MicroFloaties zone="numbers" />
+        <NetworkNumbers />
+      </div>
+
       {/* Payout Explainer Interactive Slider with Curvy Borders (No Straight Lines) - N */}
       <StitchSection className="fresh-section py-20 bg-surface/50 relative overflow-clip">
         <CurvedSectionDivider variant="wave" position="top" fillColor="fill-[var(--color-canvas)]" />
-        <BackdropLetter letter="N" position="left" />
+        <BackdropLetter letter="N" position="left" offsetY="58%" />
         <MicroFloaties zone="payout" />
 
         <div className="fresh-container">
@@ -171,14 +183,14 @@ export function LandingPage() {
         </div>
       </StitchSection>
 
-      {/* Real Dolancers, Real Earnings Testimonials - C */}
+      {/* Real Dolancers, Real Earnings Testimonials - C (original position) */}
       <div className="relative overflow-clip">
         <BackdropLetter letter="C" position="right" />
         <MicroFloaties zone="testimonials" />
         <TestimonialsSection />
       </div>
 
-      {/* High-Converting CTA Banner - E */}
+      {/* High-Converting CTA Banner - E (original position) */}
       <div className="relative overflow-clip">
         <BackdropLetter letter="E" position="left" offsetY="35%" className="-ml-2" />
         <MicroFloaties zone="cta" />

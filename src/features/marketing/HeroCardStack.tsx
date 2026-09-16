@@ -98,7 +98,7 @@ export function HeroCardStack() {
 
   return (
     <div
-      className="relative flex flex-col items-center justify-center p-2 sm:p-6 min-h-[490px]"
+      className="relative flex flex-col items-center justify-center p-2 sm:p-6 min-h-[440px]"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -190,13 +190,13 @@ export function HeroCardStack() {
               ref={isTop ? tiltRef.ref : undefined}
               onPointerMove={isTop ? tiltRef.onPointerMove : undefined}
               onPointerLeave={isTop ? tiltRef.onPointerLeave : undefined}
-              className={`absolute inset-0 rounded-[2.2rem] border p-6 sm:p-7 shadow-soft-lg cursor-pointer backdrop-blur-md transition-colors ${isTop && !reduceMotion ? "cursor-tilt" : ""} ${
+              className={`absolute inset-0 rounded-[2.2rem] border p-6 sm:p-7 shadow-soft-lg cursor-pointer transition-colors ${isTop && !reduceMotion ? "cursor-tilt" : ""} ${
                 isTop
                   ? "border-line-card bg-surface hover:border-primary/50"
-                  : "border-line-card/70 bg-surface/90 hover:bg-surface"
+                  : "border-line-card/70 bg-surface hover:bg-surface"
               }`}
             >
-                            {isTop && !reduceMotion && <BorderBeam />}
+                            {isTop && isHovered && !reduceMotion && <BorderBeam />}
               {/* Card Content Wrapper */}
               <div className="relative z-20 h-full flex flex-col pointer-events-none">
                 {/* Card Header: Icon + Badge + Payout */}

@@ -87,6 +87,11 @@ const VariableProximity = forwardRef<HTMLSpanElement, VariableProximityProps>((p
   const letterRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const mousePositionRef = useMousePositionRef(containerRef);
   const lastPositionRef = useRef<Position>({ x: Number.NaN, y: Number.NaN });
+  // Cached letter centres relative to the container. Rebuilt only when the
+  // container moves/resizes (scroll, resize, layout shift) instead of
+  // getBoundingClientRect per letter on every frame while moving the mouse.
+  const cachedCentresRef = useRef<{ el: HTMLSpanElement; x: number; y: number }[] | null>(null);
+  const lastContainerKeyRef = useRef<string>("");
 
   const parsedSettings = useMemo(() => {
     const parseSettings = (settingsStr: string) =>
@@ -139,13 +144,25 @@ const VariableProximity = forwardRef<HTMLSpanElement, VariableProximityProps>((p
     }
     lastPositionRef.current = { x, y };
 
-    letterRefs.current.forEach((letterRef) => {
-      if (!letterRef) return;
+    // Single layout read per frame; letter centres come from cache unless
+    // the container moved (scroll/resize) or the letter list changed.
+    const containerKey = `${containerRect.left}|${containerRect.top}|${containerRect.width}|${containerRect.height}|${letterRefs.current.length}`;
+    if (!cachedCentresRef.current || lastContainerKeyRef.current !== containerKey) {
+      const centres: { el: HTMLSpanElement; x: number; y: number }[] = [];
+      letterRefs.current.forEach((letterRef) => {
+        if (!letterRef) return;
+        const rect = letterRef.getBoundingClientRect();
+        centres.push({
+          el: letterRef,
+          x: rect.left + rect.width / 2 - containerRect.left,
+          y: rect.top + rect.height / 2 - containerRect.top,
+        });
+      });
+      cachedCentresRef.current = centres;
+      lastContainerKeyRef.current = containerKey;
+    }
 
-      const rect = letterRef.getBoundingClientRect();
-      const letterCenterX = rect.left + rect.width / 2 - containerRect.left;
-      const letterCenterY = rect.top + rect.height / 2 - containerRect.top;
-
+    cachedCentresRef.current.forEach(({ el: letterRef, x: letterCenterX, y: letterCenterY }) => {
       const distance = calculateDistance(
         mousePositionRef.current.x,
         mousePositionRef.current.y,

@@ -667,9 +667,9 @@
 
   .fresh-hero {
     position: relative;
-    min-height: 680px;
+    min-height: 0;
     overflow: hidden;
-    padding: 3.5rem 0 7rem;
+    padding: 1.25rem 0 2.25rem;
     background:
       radial-gradient(circle at 82% 18%, color-mix(in srgb, var(--color-highlight) 20%, transparent), transparent 24rem),
       linear-gradient(180deg, color-mix(in srgb, var(--color-highlight-light) 78%, transparent), transparent);
@@ -935,7 +935,7 @@
 
   .fresh-hero::before {
     position: absolute;
-    inset: -88px 0 1.5rem;
+    inset: -88px 0 0.35rem;
     border-radius: 0 0 2.5rem 2.5rem;
     border-bottom: 1px solid color-mix(in srgb, var(--color-highlight) 15%, var(--dl-line-card));
     background: color-mix(in srgb, var(--color-surface-2) 88%, transparent);
@@ -1035,7 +1035,7 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 1.5rem;
-    margin-top: 2.2rem;
+    margin-top: 1.75rem;
   }
 
   .fresh-actions .inline-flex,
@@ -1079,7 +1079,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 1rem 1.4rem;
-    margin-top: 1.8rem;
+    margin-top: 1.4rem;
     color: var(--color-ink-2);
     font-size: 0.82rem;
     font-weight: 700;
@@ -1387,7 +1387,7 @@
       width: 100%;
       height: 13rem;
     }
-    .fresh-hero { padding: 4rem 0 5rem; }
+    .fresh-hero { padding: 2.25rem 0 1.75rem; }
     .fresh-hero-grid, .fresh-proof-intro, .fresh-faq-grid { grid-template-columns: 1fr; }
     .fresh-hero-grid { gap: 2rem; }
     .fresh-hero-art { min-height: 420px; padding-left: 0; }
@@ -1651,7 +1651,9 @@
   .marquee-track:hover,
   .marquee-track:focus-within {
     animation-play-state: paused;
-  }  /* CurvedLoop (React Bits adaptation): draggable curved text marquee.
+  }
+
+  /* CurvedLoop (React Bits adaptation): draggable curved text marquee.
      The jacket is an in-flow block sized by the SVG's aspect ratio - the
      arc geometry is fully contained in its own viewBox, so it never
      paints into the sections above or below. Fully transparent except the

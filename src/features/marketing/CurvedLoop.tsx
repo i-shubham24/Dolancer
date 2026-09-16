@@ -42,7 +42,8 @@ export function CurvedLoop({
   const textPathRef = useRef<SVGTextPathElement>(null);
   const [spacing, setSpacing] = useState(0);
   const [offset, setOffset] = useState(0);
-  const uid = useId();
+  // Sanitised: raw useId can contain characters that break SVG fragment refs.
+  const uid = useId().replace(/[^a-zA-Z0-9]/g, "");
   const pathId = `curve-${uid}`;
   // Contained geometry: baseline ends at y=190 inside a 1440×240 viewBox, so
   // the whole arc - apex AND glyph tops/descenders - stays inside the SVG box
@@ -63,7 +64,11 @@ export function CurvedLoop({
   const ready = spacing > 0;
 
   useEffect(() => {
-    if (measureRef.current) setSpacing(measureRef.current.getComputedTextLength());
+    if (measureRef.current) {
+      const measured = measureRef.current.getComputedTextLength();
+      // Fallback estimate so the band never stays hidden if measurement fails.
+      setSpacing(measured > 0 ? measured : Math.max(text.length * 30, 1));
+    }
   }, [text, className]);
 
   useEffect(() => {
