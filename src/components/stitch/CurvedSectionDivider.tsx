@@ -47,7 +47,7 @@ export function CurvedSectionDivider({
           {/* Fill shape beneath wave */}
           <path
             d="M0 48C240 16 480 72 720 44C960 16 1200 68 1440 40V84H0V48Z"
-            className={fillColor}
+            className={fillColor} style={fillColor.startsWith("fill-[") ? { fill: fillColor.replace("fill-[", "").replace("]", "") } : undefined}
           />
           {/* Crisp structural border replacing the straight line */}
           {showBorderLine && (
@@ -90,7 +90,7 @@ export function CurvedSectionDivider({
           {/* Fill shape beneath arch */}
           <path
             d="M0 60C420 8 1020 8 1440 60V64H0V60Z"
-            className={fillColor}
+            className={fillColor} style={fillColor.startsWith("fill-[") ? { fill: fillColor.replace("fill-[", "").replace("]", "") } : undefined}
           />
           {/* Crisp replacing border line */}
           {showBorderLine && (
@@ -130,7 +130,7 @@ export function CurvedSectionDivider({
           {/* Fill shape beneath gentle curve */}
           <path
             d="M0 46C380 14 1060 14 1440 46V56H0V46Z"
-            className={fillColor}
+            className={fillColor} style={fillColor.startsWith("fill-[") ? { fill: fillColor.replace("fill-[", "").replace("]", "") } : undefined}
           />
           {/* Crisp replacing border line */}
           {showBorderLine && (
@@ -170,7 +170,7 @@ export function CurvedSectionDivider({
           {/* Fill shape beneath organic crest */}
           <path
             d="M0 32C320 60 540 10 720 36C900 62 1120 12 1440 32V72H0V32Z"
-            className={fillColor}
+            className={fillColor} style={fillColor.startsWith("fill-[") ? { fill: fillColor.replace("fill-[", "").replace("]", "") } : undefined}
           />
           {/* Crisp replacing border line */}
           {showBorderLine && (
@@ -210,7 +210,7 @@ export function CurvedSectionDivider({
           {/* Fill shape beneath sculpted dip */}
           <path
             d="M0 10C420 54 1020 54 1440 10V60H0V10Z"
-            className={fillColor}
+            className={fillColor} style={fillColor.startsWith("fill-[") ? { fill: fillColor.replace("fill-[", "").replace("]", "") } : undefined}
           />
           {/* Crisp replacing border line */}
           {showBorderLine && (

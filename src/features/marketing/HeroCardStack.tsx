@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import {
   Star,
@@ -83,8 +84,13 @@ export function HeroCardStack() {
     setActiveIndex((prev) => (prev + 1) % CARDS.length);
   };
 
+  const navigate = useNavigate();
   const handleSelect = (index: number) => {
-    setActiveIndex(index);
+    if (index === activeIndex) {
+      navigate('/sign-up');
+    } else {
+      setActiveIndex(index);
+    }
   };
 
   return (

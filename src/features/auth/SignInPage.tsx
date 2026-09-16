@@ -150,13 +150,13 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
               <br />
               you are already
               <br />
-              <span className="relative inline-block text-purple"><span className="absolute inset-x-0 bottom-1 h-3 -rotate-1 rounded-full bg-lime-light" aria-hidden="true" /><VariableProximity label="good at." fromFontVariationSettings="'wght' 700" toFontVariationSettings="'wght' 800" containerRef={titleRef} radius={130} falloff="gaussian" /></span>
+              <span className="relative inline-block text-purple z-0"><span className="absolute -z-10 inset-x-0 bottom-1 h-3 -rotate-1 rounded-full bg-lime-light" aria-hidden="true" /><VariableProximity label="good at." fromFontVariationSettings="'wght' 700" toFontVariationSettings="'wght' 800" containerRef={titleRef} radius={130} falloff="gaussian" /></span>
             </>
           ) : (
             <>
               Welcome
               <br />
-              <span className="relative inline-block text-purple"><span className="absolute inset-x-0 bottom-1 h-3 -rotate-1 rounded-full bg-coral-light" aria-hidden="true" /><VariableProximity label="back." fromFontVariationSettings="'wght' 700" toFontVariationSettings="'wght' 800" containerRef={titleRef} radius={130} falloff="gaussian" /></span>
+              <span className="relative inline-block text-purple z-0"><span className="absolute -z-10 inset-x-0 bottom-1 h-3 -rotate-1 rounded-full bg-coral-light" aria-hidden="true" /><VariableProximity label="back." fromFontVariationSettings="'wght' 700" toFontVariationSettings="'wght' 800" containerRef={titleRef} radius={130} falloff="gaussian" /></span>
             </>
           )}
           </h1>

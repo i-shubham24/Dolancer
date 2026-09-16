@@ -7,6 +7,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { StitchBadge } from "@/components/stitch/StitchPrimitives";
+import { CurvedSectionDivider } from "@/components/stitch/CurvedSectionDivider";
 
 interface Feature {
   icon: React.ComponentType<{ className?: string }>;
@@ -47,7 +48,8 @@ export function FeaturesGrid() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section id="benefits" className="fresh-section py-18 bg-surface/40 relative">
+    <section id="benefits" className="fresh-section pt-20 pb-18 bg-surface/40 relative">
+      <CurvedSectionDivider variant="wave" position="top" fillColor="fill-[var(--color-canvas)]" />
 
       <div className="fresh-container">
         {/* Section Header */}

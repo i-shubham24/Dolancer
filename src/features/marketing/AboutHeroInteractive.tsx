@@ -57,22 +57,22 @@ export function AboutHeroInteractive() {
           transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
           className="relative w-full max-w-[450px]"
         >
-          {/* The messy background card */}
-          <div className="absolute inset-0 bg-surface border border-line-card rounded-3xl shadow-soft-sm transform rotate-[-6deg] opacity-60 flex flex-col p-6 grayscale">
-            <div className="h-4 w-1/2 bg-line-card/50 rounded-full mb-4"></div>
+          {/* The messy "old way" background card — rotated, faded, grayscale */}
+          <div className="absolute inset-0 bg-white border-2 border-red-200/60 rounded-3xl shadow-soft-sm transform rotate-[-6deg] opacity-50 flex flex-col p-6 grayscale">
+            <div className="h-4 w-1/2 bg-red-200/60 rounded-full mb-4"></div>
             <div className="h-2 w-3/4 bg-red-100 rounded-full mb-2"></div>
             <div className="h-2 w-full bg-red-100 rounded-full mb-2"></div>
             <div className="h-2 w-5/6 bg-red-100 rounded-full mb-6"></div>
             <div className="mt-auto flex justify-between">
-              <div className="h-8 w-8 bg-line-card/50 rounded-full"></div>
+              <div className="h-8 w-8 bg-red-200/60 rounded-full"></div>
               <div className="h-8 w-20 bg-red-100 rounded-full"></div>
             </div>
           </div>
           
-          {/* The clean foreground card */}
-          <div className="relative bg-surface border border-line-card rounded-3xl p-7 shadow-soft-xl z-10 overflow-hidden">
-            <div className="absolute -top-10 -right-10 w-32 h-32 bg-coral/10 rounded-full blur-2xl"></div>
-            <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-blue/10 rounded-full blur-2xl"></div>
+          {/* The clean "Dolancer way" foreground card */}
+          <div className="relative bg-white border-2 border-line-card rounded-3xl p-7 shadow-soft-xl z-10 overflow-hidden">
+            <div className="absolute -top-10 -right-10 w-32 h-32 bg-coral/15 rounded-full blur-2xl"></div>
+            <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-blue/15 rounded-full blur-2xl"></div>
             
             <div className="flex items-center gap-3 mb-8">
               <div className="h-10 w-10 rounded-2xl bg-coral flex items-center justify-center shadow-soft-sm">
@@ -85,29 +85,29 @@ export function AboutHeroInteractive() {
             </div>
 
             <div className="space-y-4 relative z-10">
-              <div className="flex items-center gap-3 bg-surface p-3 rounded-xl border border-line-card/50 shadow-soft-xs transition-transform hover:scale-[1.02]">
+              <div className="flex items-center gap-3 bg-blue/8 p-3 rounded-xl border border-blue/20 shadow-soft-xs transition-transform hover:scale-[1.02]">
                 <div className="h-8 w-8 rounded-full bg-blue/15 flex items-center justify-center shrink-0">
                   <ShieldCheck className="h-4 w-4 text-blue" />
                 </div>
-                <div className="text-sm font-bold text-ink-2">Shield Buffer</div>
+                <div className="text-sm font-bold text-ink">Shield Buffer</div>
               </div>
-              <div className="flex items-center gap-3 bg-surface p-3 rounded-xl border border-line-card/50 shadow-soft-xs transition-transform hover:scale-[1.02]">
+              <div className="flex items-center gap-3 bg-success-bg/40 p-3 rounded-xl border border-success-ink/15 shadow-soft-xs transition-transform hover:scale-[1.02]">
                 <div className="h-8 w-8 rounded-full bg-success-bg flex items-center justify-center shrink-0">
                   <CheckCircle2 className="h-4 w-4 text-success-ink" />
                 </div>
-                <div className="text-sm font-bold text-ink-2">Pre-funded</div>
+                <div className="text-sm font-bold text-ink">Pre-funded</div>
               </div>
-              <div className="flex items-center gap-3 bg-surface p-3 rounded-xl border border-line-card/50 shadow-soft-xs transition-transform hover:scale-[1.02]">
+              <div className="flex items-center gap-3 bg-coral/8 p-3 rounded-xl border border-coral/20 shadow-soft-xs transition-transform hover:scale-[1.02]">
                 <div className="h-8 w-8 rounded-full bg-coral/15 flex items-center justify-center shrink-0">
                   <Zap className="h-4 w-4 text-coral" />
                 </div>
-                <div className="text-sm font-bold text-ink-2">0 Cold Bids</div>
+                <div className="text-sm font-bold text-ink">0 Cold Bids</div>
               </div>
             </div>
             
             <div className="mt-8 pt-4 border-t border-line-card/60 flex items-center justify-between text-xs">
               <span className="font-bold text-ink-3">Platform Overhead</span>
-              <span className="font-extrabold text-ink px-2 py-1 bg-surface rounded-md border border-line-card">0%</span>
+              <span className="font-extrabold text-ink px-2 py-1 bg-lime-light rounded-md border border-lime/30">0%</span>
             </div>
           </div>
         </motion.div>

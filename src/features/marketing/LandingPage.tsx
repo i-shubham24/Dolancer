@@ -16,6 +16,7 @@ import { NumbersSection } from "./NumbersSection";
 import { TestimonialsSection } from "./TestimonialsSection";
 import { CtaBanner } from "./CtaBanner";
 import { PayoutExplainer } from "./PayoutExplainer";
+import { CurvedSectionDivider } from "@/components/stitch/CurvedSectionDivider";
 import { BackdropLetter } from "./BackdropLetter";
 import { MicroFloaties } from "./MicroFloaties";
 import VariableProximity from "@/components/react-bits/VariableProximity";
@@ -41,7 +42,7 @@ export function LandingPage() {
         
         <MicroFloaties zone="hero" />
         <div className="fresh-dot-field" aria-hidden="true" />
-        <div className="fresh-container fresh-hero-grid relative z-10 items-center py-10 lg:py-16">
+        <div className="fresh-container fresh-hero-grid relative z-10 items-center pt-0 pb-10 lg:pb-16">
           {/* Left Hero Copy */}
           <motion.div
             initial={reduceMotion ? false : "hidden"}
@@ -173,13 +174,12 @@ export function LandingPage() {
 
       {/* Payout Explainer Interactive Slider with Curvy Borders (No Straight Lines) — N */}
       <StitchSection className="fresh-section py-20 bg-surface/50 relative overflow-clip">
+        <CurvedSectionDivider variant="wave" position="top" fillColor="fill-[var(--color-canvas)]" />
         <BackdropLetter letter="N" position="left" />
         <MicroFloaties zone="payout" />
-        {/* Top curved divider replacing straight border-t */}
-        
 
         <div className="fresh-container">
-          <PayoutExplainer />
+        <PayoutExplainer />
         </div>
       </StitchSection>
 

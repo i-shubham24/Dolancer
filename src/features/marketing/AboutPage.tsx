@@ -39,7 +39,7 @@ export function AboutPage() {
   return (
     <div className="fresh-page">
       {/* Redesigned High-Craft Editorial & Interactive Hero */}
-      <section className="fresh-hero relative pb-10">
+      <section className="relative pb-10 pt-2">
         <MicroFloaties zone="about-hero" />
         <div className="fresh-container">
           <AboutHeroInteractive />

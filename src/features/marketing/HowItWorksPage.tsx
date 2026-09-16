@@ -38,7 +38,7 @@ export function HowItWorksPage() {
 
   return (
     <div className="fresh-page">
-      <section className="fresh-hero relative z-10 !pt-10 lg:!pt-12 !pb-16 lg:!pb-24 flex items-center !min-h-0 !overflow-visible">
+      <section className="fresh-hero relative z-10 !pt-2 lg:!pt-2 !pb-16 lg:!pb-24 flex items-center !min-h-0 !overflow-visible">
         <MicroFloaties zone="hiw-hero" />
         <div className="fresh-dot-field" aria-hidden="true" />
         <div className="fresh-container fresh-process-hero">
@@ -73,7 +73,7 @@ export function HowItWorksPage() {
         <div className="fresh-container">
           <GettingStartedInteractive />
         </div>
-        <CurvedSectionDivider variant="smooth-arch" position="bottom" fillColor="fill-surface" />
+        <CurvedSectionDivider variant="wave" position="bottom" fillColor="fill-[var(--color-canvas)]" />
       </section>
 
       <Section labelledBy="walkthrough" className="fresh-workflow !pt-20 !pb-12 lg:!pb-16">
@@ -81,7 +81,7 @@ export function HowItWorksPage() {
         <InteractiveBentoPillars />
 
         {/* Real Product Walkthrough */}
-        <WorkflowDemo />
+        <div className="mt-24 lg:mt-32"><WorkflowDemo /></div>
       </Section>
 
       <section aria-labelledby="payout" className="fresh-section fresh-payout bg-surface-2 py-20 relative overflow-hidden">

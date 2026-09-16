@@ -1,5 +1,6 @@
 import { CheckCircle2, XCircle, ArrowRight } from "lucide-react";
 import { StitchBadge } from "@/components/stitch/StitchPrimitives";
+import { CurvedSectionDivider } from "@/components/stitch/CurvedSectionDivider";
 
 export function AboutComparison() {
   const points = [
@@ -22,7 +23,8 @@ export function AboutComparison() {
   ];
 
   return (
-    <section className="fresh-section py-16 bg-surface">
+    <section className="fresh-section pt-20 pb-16 bg-surface relative">
+      <CurvedSectionDivider variant="wave" position="top" fillColor="fill-[var(--color-canvas)]" />
       <div className="fresh-container">
         <div className="text-center max-w-2xl mx-auto mb-14">
           <StitchBadge>The Difference</StitchBadge>

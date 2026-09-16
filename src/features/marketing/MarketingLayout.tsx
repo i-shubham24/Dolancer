@@ -20,8 +20,8 @@ function Wordmark({ onClick }: { onClick?: () => void }) {
   return (
     <Link to="/" onClick={onClick} className="flex items-center gap-2.5">
       <Logo size="md" />
-      <span className="text-xl font-extrabold tracking-[-0.04em]">
-        Dolancer<span className="text-coral">.</span>
+      <span className="text-xl font-extrabold tracking-[-0.04em] text-inverse">
+        Dolancer<span className="text-inverse/60">.</span>
       </span>
     </Link>
   );
@@ -63,7 +63,7 @@ export function MarketingLayout() {
                 className={({ isActive }) =>
                   cn(
                     "flex h-10 items-center justify-center whitespace-nowrap rounded-lg px-3 text-sm font-bold transition-colors",
-                    isActive ? "bg-subtle text-ink" : "text-ink-2 hover:bg-hover hover:text-ink"
+                    isActive ? "bg-inverse/20 text-inverse" : "text-inverse/70 hover:bg-inverse/10 hover:text-inverse"
                   )
                 }
               >
@@ -83,10 +83,10 @@ export function MarketingLayout() {
               </Button>
             ) : (
               <>
-                <Button asChild variant="ghost" size="sm">
+                <Button asChild variant="ghost" size="sm" className="text-inverse hover:bg-inverse hover:text-ink">
                   <Link to="/sign-in">Sign in</Link>
                 </Button>
-                <Button asChild size="sm">
+                <Button asChild variant="ghost" size="sm" className="text-inverse border border-inverse/30 hover:bg-inverse hover:text-ink">
                   <Link to="/sign-up">Start earning</Link>
                 </Button>
               </>
@@ -136,7 +136,7 @@ export function MarketingLayout() {
                   <Button asChild variant="secondary" onClick={() => setOpen(false)}>
                     <Link to="/sign-in">Sign in</Link>
                   </Button>
-                  <Button asChild onClick={() => setOpen(false)}>
+                  <Button asChild variant="secondary" onClick={() => setOpen(false)}>
                     <Link to="/sign-up">Start earning</Link>
                   </Button>
                 </>
