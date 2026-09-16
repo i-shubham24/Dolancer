@@ -150,38 +150,41 @@ export function LandingPage() {
         />
       </div>
 
-      {/* Animated Disciplines Marquee - O */}
-      <div className="relative overflow-clip">
+      {/* Animated Disciplines Marquee - O (uniform canvas bed so the wave
+          below lands on one continuous background with breathing room) */}
+      <div className="relative overflow-clip bg-canvas pb-8">
         <BackdropLetter letter="O" position="right" offsetY="16%" />
         <AnimatedMarquee />
       </div>
 
-      {/* Why Dolancers Love It / 8 Benefits - L */}
+      {/* Why Dolancers Love It / 8 Benefits - L (dark section, light ink) */}
       <div className="relative overflow-clip">
-        <BackdropLetter letter="L" position="left" offsetY="20%" />
+        <BackdropLetter letter="L" position="left" offsetY="20%" tone="light" />
         <MicroFloaties zone="features" />
         {/* Swarm two - vivid lime→purple - floating over the benefits grid. */}
         
         <FeaturesGrid />
       </div>
 
-      {/* Live Network Numbers - A (restored home between Why-Choose and Payout) */}
-      <div className="relative overflow-clip">
-        <BackdropLetter letter="A" position="right" offsetY="20%" />
-        <MicroFloaties zone="numbers" />
-        <NetworkNumbers />
-      </div>
-
-      {/* Payout Explainer Interactive Slider with Curvy Borders (No Straight Lines) - N */}
-      <StitchSection className="fresh-section py-20 bg-surface/50 relative overflow-clip">
-        <CurvedSectionDivider variant="wave" position="top" fillColor="fill-[var(--color-canvas)]" />
-        <BackdropLetter letter="N" position="left" offsetY="58%" />
+      {/* Follow-every-payout - A (fused with the dark benefits above: no
+          separation, no top wave; the wave sits at this section's bottom
+          border, opening into the light numbers below) */}
+      <StitchSection className="fresh-section py-20 bg-[#0b0f19] relative overflow-clip">
+        <BackdropLetter letter="A" position="right" offsetY="12%" tone="light" />
         <MicroFloaties zone="payout" />
 
         <div className="fresh-container">
         <PayoutExplainer />
         </div>
+        <CurvedSectionDivider variant="wave" position="bottom" fillColor="fill-[var(--color-surface)]" showBorderLine={false} showAccentGlow={false} />
       </StitchSection>
+
+      {/* Live Network Numbers - N (light wash below the dark pair) */}
+      <div className="relative overflow-clip">
+        <BackdropLetter letter="N" position="left" offsetY="20%" />
+        <MicroFloaties zone="numbers" />
+        <NetworkNumbers />
+      </div>
 
       {/* Real Dolancers, Real Earnings Testimonials - C (original position) */}
       <div className="relative overflow-clip">

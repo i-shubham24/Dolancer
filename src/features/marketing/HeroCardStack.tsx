@@ -191,7 +191,7 @@ export function HeroCardStack() {
                   : "border-line-card/70 bg-surface hover:bg-surface"
               }`}
             >
-                            {isTop && isHovered && !reduceMotion && <BorderBeam />}
+                            {isTop && !reduceMotion && <BorderBeam />}
               {/* Card Content Wrapper */}
               <div className="relative z-20 h-full flex flex-col pointer-events-none">
                 {/* Card Header: Icon + Badge + Payout */}

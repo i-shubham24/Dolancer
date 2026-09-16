@@ -8,16 +8,22 @@ export function StitchBadge({
   className,
 }: {
   children: ReactNode;
-  tone?: "brand" | "success" | "neutral";
+  tone?: "brand" | "success" | "neutral" | "light";
   className?: string;
 }) {
+  // Eyebrow kicker, never a pill: small uppercase text with its icon only.
+  // No bar, no background container, no border, no shadow.
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-bold tracking-wide shadow-soft-sm",
-        tone === "brand" && "bg-primary-light text-primary border border-primary/20",
-        tone === "success" && "bg-success-bg text-success-ink border border-success-ink/20",
-        tone === "neutral" && "bg-subtle text-ink-2 border border-line-card",
+        "inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.16em]",
+        tone === "success"
+          ? "text-success-ink"
+          : tone === "neutral"
+            ? "text-ink-2"
+            : tone === "light"
+              ? "text-white/75"
+              : "text-primary",
         className,
       )}
     >

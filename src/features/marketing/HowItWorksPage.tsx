@@ -78,14 +78,18 @@ export function HowItWorksPage() {
       </section>
 
       <Section labelledBy="walkthrough" className="fresh-workflow !pt-20 !pb-12 lg:!pb-16">
-        {/* Redesigned Bento Pillars (formerly the empty pastel cards in screenshot) */}
-        <InteractiveBentoPillars />
-
-        {/* Real Product Walkthrough */}
-        <div className="mt-24 lg:mt-32"><WorkflowDemo /></div>
+        {/* Real Product Walkthrough - what a project actually looks like, first */}
+        <div><WorkflowDemo /></div>
       </Section>
 
-      <section aria-labelledby="payout" className="fresh-section fresh-payout bg-surface-2 py-20 relative overflow-hidden">
+      {/* Trio pillars - dark, footer-symmetric */}
+      <section className="fresh-section bg-[#0b0f19] !py-20 relative overflow-clip">
+        <div className="fresh-container">
+          <InteractiveBentoPillars dark />
+        </div>
+      </section>
+
+      <section aria-labelledby="payout" className="fresh-section bg-[#0b0f19] py-20 relative overflow-hidden">
         <MicroFloaties zone="payout" />
         <div className="fresh-container relative z-20">
           <PayoutExplainer />

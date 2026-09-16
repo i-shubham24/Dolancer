@@ -135,30 +135,15 @@
     color: var(--color-ink);
   }
 
-  .auth-art-panel {
+  /* Numbers section wash: brand tints melting into a white base at the
+     corners, with a smoky-white pocket behind the centred header copy so
+     ink text stays readable. Card colours are left exactly as they are. */
+  .numbers-wash {
     background:
-      radial-gradient(circle at 18% 22%, color-mix(in srgb, var(--dl-card-pink) 72%, transparent), transparent 15rem),
-      radial-gradient(circle at 82% 76%, color-mix(in srgb, var(--dl-card-mint) 76%, transparent), transparent 20rem),
-      var(--color-canvas);
-  }
-
-  .auth-art-shape {
-    border: 0;
-    opacity: 1;
-    transition: transform 500ms ease;
-  }
-
-  .auth-art-shape-one { background: var(--dl-card-pink) !important; }
-  .auth-art-shape-two { background: var(--dl-card-mint) !important; }
-  .auth-art-shape-three { background: var(--dl-card-yellow) !important; }
-  .auth-art-shape-four { background: var(--dl-card-lilac) !important; }
-
-  .auth-art-panel:hover .auth-art-shape-one { transform: rotate(17deg) translate(-0.5rem, 0.5rem); }
-  .auth-art-panel:hover .auth-art-shape-two { transform: rotate(-12deg) translate(0.5rem, -0.5rem); }
-  .auth-art-panel:hover .auth-art-shape-three { transform: rotate(25deg) translateY(-0.5rem); }
-
-  .auth-art-quote {
-    border: 1px solid color-mix(in srgb, var(--color-highlight) 14%, transparent);
+      radial-gradient(42rem 17rem at 50% 6%, rgba(255, 255, 255, 0.9), transparent 70%),
+      radial-gradient(38rem 24rem at 4% 0%, color-mix(in srgb, var(--dl-card-lilac) 32%, white), transparent 70%),
+      radial-gradient(40rem 26rem at 100% 100%, color-mix(in srgb, var(--dl-card-mint) 32%, white), transparent 70%),
+      linear-gradient(180deg, color-mix(in srgb, var(--color-primary) 7%, white), color-mix(in srgb, var(--color-primary) 4%, white));
   }
 
   .auth-form .mb-7 { margin-bottom: 1.1rem; }
@@ -187,7 +172,7 @@
     right: 0.2rem;
     width: 5.8rem;
     height: 3.8rem;
-    background: var(--dl-card-pink);
+    background: var(--color-primary-light);
   }
 
   .auth-card-art-block-two {
@@ -195,7 +180,7 @@
     bottom: 0;
     width: 4.2rem;
     height: 2.5rem;
-    background: var(--dl-card-mint);
+    background: color-mix(in srgb, var(--color-primary) 22%, var(--color-surface));
     transform: rotate(-18deg);
   }
 
@@ -206,8 +191,8 @@
     width: 1.2rem;
     height: 1.2rem;
     border-radius: 50%;
-    background: var(--dl-card-yellow);
-    box-shadow: 0 0 0 0.45rem color-mix(in srgb, var(--dl-card-yellow) 28%, transparent);
+    background: var(--color-primary);
+    box-shadow: 0 0 0 0.45rem color-mix(in srgb, var(--color-primary) 22%, transparent);
   }
 
   @media (min-width: 1024px) {
@@ -229,6 +214,30 @@
     .auth-form .text-md { font-size: 0.9rem; }
     .auth-form .stitch-surface { border-radius: 1.5rem; }
   }
+
+  /* Cut-corner signature: chamfered top-left + bottom-right, sharp
+     elsewhere. Replaces every capsule/pill on the site. Borders survive
+     clipping (the stroke follows the chamfer); outer box-shadows do not,
+     so cut elements take drop-shadow filters instead. */
+  .cut-xs, .cut-sm, .cut-md, .cut-lg { border-radius: 0; }
+  .cut-xs {
+    --cut: 5px;
+    clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+  }
+  .cut-sm {
+    --cut: 8px;
+    clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+  }
+  .cut-md {
+    --cut: 12px;
+    clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+  }
+  .cut-lg {
+    --cut: 18px;
+    clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+  }
+  .cut-shadow-sm { filter: drop-shadow(0 1px 2px rgba(15, 23, 42, 0.14)); }
+  .cut-shadow-md { filter: drop-shadow(0 8px 16px rgba(15, 23, 42, 0.16)); }
 
   .stitch-surface,
   .stitch-color-surface {
@@ -282,11 +291,12 @@
 
   .fresh-header .fresh-nav-shell {
     min-height: 64px;
-    border: 1px solid color-mix(in srgb, var(--color-primary) 80%, transparent);
+    border: 1px solid color-mix(in srgb, #ffffff 28%, transparent);
     border-radius: 999px;
-    background: var(--color-primary);
+    background: color-mix(in srgb, var(--color-primary) 82%, transparent);
     box-shadow: 0 14px 34px color-mix(in srgb, var(--color-primary) 35%, transparent);
-    backdrop-filter: blur(14px);
+    backdrop-filter: blur(18px) saturate(1.3);
+    -webkit-backdrop-filter: blur(18px) saturate(1.3);
     color: var(--color-inverse);
   }
 
@@ -1025,10 +1035,11 @@
 
   .fresh-badge {
     border: 1px solid color-mix(in srgb, var(--color-primary) 20%, transparent);
-    border-radius: 999px;
+    border-radius: 0;
+    clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
     background: color-mix(in srgb, var(--color-surface) 70%, transparent);
     padding: 0.55rem 0.85rem;
-    box-shadow: var(--shadow-soft-sm);
+    filter: drop-shadow(0 1px 2px rgba(15, 23, 42, 0.1));
   }
 
   .fresh-actions {
@@ -1039,8 +1050,10 @@
     margin-top: 1.75rem;
   }
 
-  .fresh-actions .inline-flex,
-  .fresh-final-card .inline-flex {
+  .fresh-actions a.inline-flex,
+  .fresh-actions button.inline-flex,
+  .fresh-final-card a.inline-flex,
+  .fresh-final-card button.inline-flex {
     border: 0;
     border-radius: 999px;
     background: var(--color-primary);
@@ -1048,8 +1061,10 @@
     color: var(--color-inverse);
   }
 
-  .fresh-actions .inline-flex:hover,
-  .fresh-final-card .inline-flex:hover {
+  .fresh-actions a.inline-flex:hover,
+  .fresh-actions button.inline-flex:hover,
+  .fresh-final-card a.inline-flex:hover,
+  .fresh-final-card button.inline-flex:hover {
     background: var(--color-primary-hover);
     box-shadow: 0 16px 28px color-mix(in srgb, var(--color-primary) 30%, transparent);
     transform: translateY(-2px);
@@ -1474,7 +1489,8 @@
     display: inline-flex;
     align-items: center;
     border: 1px solid color-mix(in srgb, var(--color-secondary) 28%, transparent);
-    border-radius: 9999px;
+    border-radius: 0;
+    clip-path: polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px);
     background: color-mix(in srgb, var(--color-surface) 78%, transparent);
     padding: 0.5rem 0.9rem;
     color: var(--color-ink-2);

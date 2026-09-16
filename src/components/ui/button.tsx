@@ -16,28 +16,28 @@ const buttonVariants = cva(
     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary",
   ),
   {
-    variants: {
-      variant: {
-        primary:
-          "bg-primary text-inverse shadow-soft-md hover:bg-primary-hover hover:-translate-y-0.5 hover:shadow-soft-lg active:translate-y-0",
-        outline:
-          "border-line-card bg-surface text-ink shadow-soft-sm hover:-translate-y-0.5 hover:bg-hover hover:shadow-soft-md active:translate-y-0",
-        secondary:
-          "bg-secondary text-inverse shadow-soft-md hover:bg-secondary-hover hover:-translate-y-0.5 hover:shadow-soft-lg active:translate-y-0",
-        neutral:
-          "bg-surface-2 text-ink border border-line-card shadow-soft-sm hover:bg-hover hover:-translate-y-0.5 hover:shadow-soft-md active:translate-y-0",
-        dark:
-          "bg-ink text-inverse shadow-soft-md hover:-translate-y-0.5 hover:shadow-soft-lg active:translate-y-0",
-        ghost:
-          "border-transparent bg-transparent text-ink shadow-none hover:bg-surface hover:shadow-soft-sm",
-        danger:
-          "bg-danger-bg text-danger-ink shadow-soft-sm hover:-translate-y-0.5 hover:shadow-soft-md active:translate-y-0",
-      },
-      size: {
-        sm: "min-h-[44px] px-4 py-2 text-xs",
-        md: "min-h-[44px] px-5 py-2.5 text-sm",
-        lg: "min-h-[48px] px-7 py-3 text-md",
-        icon: "h-11 w-11 rounded-full p-0",
+      variants: {
+        variant: {
+          primary:
+            "bg-primary text-inverse shadow-soft-md hover:bg-primary-hover hover:-translate-y-0.5 hover:shadow-soft-lg active:translate-y-0",
+          outline:
+            "border-line-card bg-surface text-ink shadow-soft-sm hover:-translate-y-0.5 hover:bg-hover hover:shadow-soft-md active:translate-y-0",
+          secondary:
+            "bg-secondary text-inverse shadow-soft-md hover:bg-secondary-hover hover:-translate-y-0.5 hover:shadow-soft-lg active:translate-y-0",
+          neutral:
+            "bg-surface-2 text-ink border border-line-card shadow-soft-sm hover:bg-hover hover:-translate-y-0.5 hover:shadow-soft-md active:translate-y-0",
+          dark:
+            "bg-ink text-inverse shadow-soft-md hover:-translate-y-0.5 hover:shadow-soft-lg active:translate-y-0",
+          ghost:
+            "border-transparent bg-transparent text-ink shadow-none hover:bg-surface hover:shadow-soft-sm",
+          danger:
+            "bg-danger-bg text-danger-ink shadow-soft-sm hover:-translate-y-0.5 hover:shadow-soft-md active:translate-y-0",
+        },
+        size: {
+          sm: "min-h-[44px] px-4 py-2 text-xs",
+          md: "min-h-[44px] px-5 py-2.5 text-sm",
+          lg: "min-h-[48px] px-7 py-3 text-md",
+          icon: "h-11 w-11 rounded-full p-0",
       },
     },
     defaultVariants: { variant: "primary", size: "md" },

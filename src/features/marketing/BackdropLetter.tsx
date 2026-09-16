@@ -15,9 +15,11 @@ interface BackdropLetterProps {
   className?: string;
   /** Extra nudge for zones with dense cards. */
   offsetY?: string;
+  /** Light ink for dark sections, dark ink everywhere else. */
+  tone?: "dark" | "light";
 }
 
-export function BackdropLetter({ letter, position = "left", className, offsetY }: BackdropLetterProps) {
+export function BackdropLetter({ letter, position = "left", className, offsetY, tone = "dark" }: BackdropLetterProps) {
   return (
     <span
       aria-hidden="true"
@@ -26,7 +28,12 @@ export function BackdropLetter({ letter, position = "left", className, offsetY }
         position === "left" ? "giant-letter-left" : "giant-letter-right",
         className,
       )}
-      style={offsetY ? { top: offsetY } : undefined}
+      style={{
+        ...(offsetY ? { top: offsetY } : undefined),
+        ...(tone === "light"
+          ? { color: "color-mix(in srgb, var(--color-inverse) 9%, transparent)" }
+          : undefined),
+      }}
     >
       {letter}
     </span>

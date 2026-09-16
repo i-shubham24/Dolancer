@@ -86,7 +86,7 @@ export const FAQS: Faq[] = [
   {
     question: "When do I get paid?",
     answer:
-      "After your supervisor has cleared the delivery and the client approval gate is satisfied. If a client does not respond, the approved timeout process may release the payout later. Your earnings page shows the gross, withholding and net as separate figures.",
+      "After your supervisor has cleared the delivery and the client approval gate is satisfied. If a client does not respond, the approved timeout process may release the payout later. Your earnings page itemises every payout with its own receipt.",
   },
   {
     question: "How much does a project pay?",
@@ -94,9 +94,9 @@ export const FAQS: Faq[] = [
       "Each assigned offer states the doer payout before you accept it. There is no public rate card because the payout reflects the specific scope, deadline and level rules for that project.",
   },
   {
-    question: "What about tax?",
+    question: "How does the money reach me?",
     answer:
-      "Where required by law, tax is withheld when a payout is released. Your earnings record shows the amount used for the payout calculation and the relevant withholding information.",
+      "Payouts go to your registered payout account over UPI or NEFT once the approval gate clears. Each one lands with an itemised receipt you can check against your own records.",
   },
   {
     question: "How do projects reach me?",

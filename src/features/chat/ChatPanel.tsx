@@ -169,10 +169,16 @@ export function ChatPanel({ projectId }: { projectId: string }) {
                 <div
                   className={cn(
                     "max-w-[85%] rounded-xl border border-line-card px-3.5 py-2.5 shadow-soft-sm",
-                    mine ? "bg-accent" : "bg-surface-2",
+                    mine && "border-transparent bg-primary text-inverse",
+                    !mine && "bg-surface-2",
                   )}
                 >
-                  <div className="text-2xs font-extrabold uppercase tracking-[0.05em] text-ink-muted">
+                  <div
+                    className={cn(
+                      "text-2xs font-extrabold uppercase tracking-[0.05em]",
+                      mine ? "text-inverse/70" : "text-ink-muted",
+                    )}
+                  >
                     {mine ? "You" : "Supervisor"}
                   </div>
                   <p className="mt-1 whitespace-pre-wrap break-words text-sm leading-relaxed">
@@ -191,7 +197,7 @@ export function ChatPanel({ projectId }: { projectId: string }) {
                     </button>
                   ))}
 
-                  <div className="mt-1 text-[11px] text-ink-muted">
+                  <div className={cn("mt-1 text-[11px]", mine ? "text-inverse/70" : "text-ink-muted")}>
                     {formatDateTime(message.createdAt)}
                   </div>
                 </div>

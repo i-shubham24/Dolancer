@@ -508,7 +508,7 @@ export const demo: DemoState = {
       body:
         "Your supervisor is your only point of contact on a project. You never deal with the client directly, and the client never learns who you are.\n\n" +
         "Ask early. A short message when something in the brief is unclear saves a round of changes later.\n\n" +
-        "Your payout is fixed when you accept an offer and released once the work is approved. Tax is withheld at release and shown on your earnings page, so the figures there always reconcile.",
+        "Your payout is fixed when you accept an offer and released once the work is approved. Every payout lands with an itemised receipt on your earnings page.",
       questions: [
         {
           id: "lesson-3-q1",

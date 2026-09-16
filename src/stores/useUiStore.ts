@@ -25,9 +25,9 @@ export const PALETTE_META: Record<
     swatches: ["#0f9f8f", "#2563eb"],
   },
   sunset: {
-    label: "Sunset",
-    description: "Warm coral with indigo accents",
-    swatches: ["#e05a47", "#4f46e5"],
+    label: "Rose",
+    description: "Warm pink with indigo accents",
+    swatches: ["#f472b6", "#4f46e5"],
   },
 };
 

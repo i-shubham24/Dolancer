@@ -320,9 +320,9 @@
   --dl-ink-muted: #6b463c;
   --dl-ink-3: #8e685e;
   --dl-inverse: #ffffff;
-  --dl-primary: #ea580c;
-  --dl-primary-hover: #c2410c;
-  --dl-primary-light: #ffedd5;
+  --dl-primary: #f472b6;
+  --dl-primary-hover: #ec4899;
+  --dl-primary-light: #fce7f3;
   --dl-secondary: #4f46e5;
   --dl-secondary-hover: #4338ca;
   --dl-secondary-light: #e0e7ff;
@@ -354,8 +354,8 @@
   --dl-card-lilac: #c4b5fd;
   --dl-card-yellow: #fde047;
   --dl-card-mint: #6ee7b7;
-  --dl-graphic: #ea580c;
-  --dl-graphic-soft: #ffedd5;
-  --dl-gradient-a: #fed7aa;
+  --dl-graphic: #f472b6;
+  --dl-graphic-soft: #fce7f3;
+  --dl-gradient-a: #fbcfe8;
   --dl-gradient-b: #ffd6e0;
 }

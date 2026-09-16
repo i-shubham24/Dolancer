@@ -141,7 +141,7 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
 
   return (
     <div ref={titleRef} className="auth-form relative w-full max-w-xl py-2 sm:py-4">
-      <div className="pointer-events-none absolute -left-16 top-2 h-28 w-28 rounded-full bg-highlight-light blur-2xl sm:-left-28 sm:-top-8" aria-hidden="true" />
+      <div className="pointer-events-none absolute -left-16 top-2 h-28 w-28 rounded-full bg-primary-light blur-2xl sm:-left-28 sm:-top-8" aria-hidden="true" />
       <div className="pointer-events-none absolute -right-12 bottom-16 h-36 w-36 rounded-full bg-primary-light blur-3xl" aria-hidden="true" />
       <motion.div initial={rise} animate={{ opacity: 1, y: 0 }} transition={spring} className="relative">
         <div className="mb-6 flex items-center justify-between">
@@ -156,7 +156,7 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
           <StitchBadge tone="neutral"><ShieldCheck className="h-3.5 w-3.5 text-success-ink" /> Secure access</StitchBadge>
         </div>
         <div className="mb-7 max-w-lg">
-          <p className="mb-3 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-highlight">
+          <p className="mb-3 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-primary">
             <Sparkles className="h-4 w-4" aria-hidden="true" /> The better way to do work
           </p>
           <h1 className="text-3xl font-extrabold leading-[1.05] tracking-[-0.045em] sm:text-4xl lg:text-5xl">
@@ -166,13 +166,13 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
               <br />
               you are already
               <br />
-              <span className="relative inline-block text-highlight z-0"><span className="absolute -z-10 inset-x-0 bottom-1 h-3 -rotate-1 rounded-full bg-accent-light" aria-hidden="true" /><VariableProximity label="good at." fromFontVariationSettings="'wght' 700" toFontVariationSettings="'wght' 800" containerRef={titleRef} radius={130} falloff="gaussian" /></span>
+              <span className="relative inline-block text-primary z-0"><span className="absolute -z-10 inset-x-0 bottom-1 h-3 -rotate-1 rounded-full bg-accent-light" aria-hidden="true" /><VariableProximity label="good at." fromFontVariationSettings="'wght' 700" toFontVariationSettings="'wght' 800" containerRef={titleRef} radius={130} falloff="gaussian" /></span>
             </>
           ) : (
             <>
               Welcome
               <br />
-              <span className="relative inline-block text-highlight z-0"><span className="absolute -z-10 inset-x-0 bottom-1 h-3 -rotate-1 rounded-full bg-primary-light" aria-hidden="true" /><VariableProximity label="back." fromFontVariationSettings="'wght' 700" toFontVariationSettings="'wght' 800" containerRef={titleRef} radius={130} falloff="gaussian" /></span>
+              <span className="relative inline-block text-primary z-0"><span className="absolute -z-10 inset-x-0 bottom-1 h-3 -rotate-1 rounded-full bg-primary-light" aria-hidden="true" /><VariableProximity label="back." fromFontVariationSettings="'wght' 700" toFontVariationSettings="'wght' 800" containerRef={titleRef} radius={130} falloff="gaussian" /></span>
             </>
           )}
           </h1>

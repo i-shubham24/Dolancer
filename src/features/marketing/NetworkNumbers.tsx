@@ -59,13 +59,11 @@ export function NetworkNumbers() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="fresh-section pt-10 pb-20 relative">
-      {/* Background graphic - soft palette glows + orbital ring, static paint. */}
+    <section className="fresh-section -mt-4 pt-6 pb-20 relative numbers-wash">
+      {/* Quiet ornaments over the wash - the gradient carries the colour. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
-        <div className="absolute -left-32 top-6 h-96 w-96 rounded-full bg-[color-mix(in_srgb,var(--dl-card-lilac)_38%,transparent)] blur-3xl" />
-        <div className="absolute -right-32 bottom-0 h-[28rem] w-[28rem] rounded-full bg-[color-mix(in_srgb,var(--dl-card-mint)_38%,transparent)] blur-3xl" />
-        <div className="absolute right-[9%] top-[8%] hidden h-36 w-36 rounded-full border-2 border-dashed border-[var(--dl-card-pink)] opacity-50 md:block" />
-        <div className="absolute bottom-[10%] left-[6%] hidden h-5 w-5 rounded-full bg-[var(--dl-card-yellow)] opacity-70 md:block" />
+        <div className="absolute right-[9%] top-[8%] hidden h-36 w-36 rounded-full border-2 border-dashed border-[var(--dl-card-pink)] opacity-30 md:block" />
+        <div className="absolute bottom-[10%] left-[6%] hidden h-5 w-5 rounded-full bg-[var(--dl-card-yellow)] opacity-50 md:block" />
       </div>
       <div className="fresh-container">
         {/* Section Header */}

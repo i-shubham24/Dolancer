@@ -20,7 +20,7 @@ export function CtaBanner() {
         >
           <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
             <div className="text-center lg:text-left min-w-0 flex-1">
-              <StitchBadge tone="neutral" className="bg-surface/80">
+              <StitchBadge tone="neutral">
                 <Sparkles className="h-3.5 w-3.5 text-primary" />
                 Fair Pay for Real Expertise
               </StitchBadge>

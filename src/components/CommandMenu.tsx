@@ -34,7 +34,7 @@ const ACTIONS: Action[] = [
   { id: "dashboard", label: "Dashboard", hint: "Home", to: "/dashboard", icon: LayoutDashboard, keywords: "home overview start" },
   { id: "pool", label: "View assigned offers", hint: "Accept work", to: "/pool", icon: Layers, keywords: "assigned offers accept tasks projects" },
   { id: "work", label: "My work", hint: "Active projects", to: "/work", icon: Briefcase, keywords: "projects active tasks progress submit" },
-  { id: "earnings", label: "Earnings", hint: "Payouts", to: "/earnings", icon: Wallet, keywords: "money payout pay tax tds earnings" },
+  { id: "earnings", label: "Earnings", hint: "Payouts", to: "/earnings", icon: Wallet, keywords: "money payout pay earnings" },
   { id: "alerts", label: "Alerts", hint: "Notifications", to: "/notifications", icon: Bell, keywords: "notifications alerts updates" },
   { id: "verification", label: "Verification", hint: "Get verified", to: "/verification", icon: ShieldCheck, keywords: "verify kyc documents identity payout" },
   { id: "skills", label: "Skills", hint: "Match work", to: "/skills", icon: Sparkles, keywords: "skills match categories" },
