@@ -8,13 +8,14 @@ import { CategoryPill } from "@/components/brutal/Pill";
 import { StatusBadge } from "@/components/brutal/StatusBadge";
 import { DeadlineBadge } from "@/components/brutal/DeadlineBadge";
 import { Skeleton, LoadingAnnounce } from "@/components/brutal/Skeleton";
+import { LifecycleRail } from "@/components/ui/LifecycleRail";
+import { SupervisorCard } from "@/components/brutal/SupervisorCard";
 import { EmptyState, ErrorState } from "@/components/brutal/EmptyState";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/cn";
 import { formatPaise } from "@/lib/paise";
 import { formatDateTime } from "@/lib/datetime";
 import { statusDisplay } from "@/lib/status";
-import { CLIENT_LABEL } from "@/lib/constants";
+import { SUPERVISOR_LABEL } from "@/lib/constants";
 import { qk } from "@/lib/query-keys";
 import { useProjectChanges } from "@/lib/realtime";
 import { ChatPanel } from "@/features/chat/ChatPanel";
@@ -29,7 +30,7 @@ import { LifecycleActions } from "./LifecycleActions";
  * to the top of the rail because it gates everything below it. The rail is visually
  * part of the page rather than a walled-off panel.
  *
- * The counterparty is rendered as CLIENT_LABEL throughout. projects_doer carries no
+ * The counterparty is rendered as SUPERVISOR_LABEL throughout. projects_doer carries no
  * client identity, so there is nothing else available to render even by accident.
  */
 export function WorkbenchPage() {
@@ -108,13 +109,15 @@ export function WorkbenchPage() {
         <h1 className="break-words text-3xl font-extrabold leading-tight tracking-[-0.035em]">
           {data.brief?.trim().split("\n")[0] || `${data.category} task`}
         </h1>
-        <div className="mt-5 flex max-w-xl items-center gap-2 rounded-full bg-surface/75 p-1.5 shadow-soft-sm" aria-label="Project lifecycle">
-          {["Assigned", "In progress", "Review", "Approved"].map((step, index) => (
-            <span key={step} className="flex min-w-0 flex-1 items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-ink-muted">
-              <span className={cn("flex h-6 w-6 shrink-0 items-center justify-center rounded-full", index === 1 ? "bg-highlight text-inverse" : "bg-surface-2 text-ink-2")}>{index + 1}</span>
-              <span className="hidden truncate sm:inline">{step}</span>
-            </span>
-          ))}
+        <div className="mt-8 rounded-xl bg-surface/75 px-4 py-2 shadow-soft-sm backdrop-blur-md max-w-2xl">
+          <LifecycleRail 
+            currentStep={
+              data.status === "claimed" ? "assigned" :
+              data.status === "in_progress" ? "in_progress" :
+              data.status === "in_review" ? "in_review" :
+              data.status === "approved" || data.status === "paid" ? "approved" : "assigned"
+            } 
+          />
         </div>
         </div>
       </header>
@@ -176,6 +179,8 @@ export function WorkbenchPage() {
           />
 
           <LifecycleActions project={data} />
+          
+          <SupervisorCard />
 
           <Card>
             <dl className="space-y-3 text-sm">
@@ -193,7 +198,7 @@ export function WorkbenchPage() {
               </div>
               <div className="flex items-center justify-between gap-3 border-t border-line-subtle pt-3">
                 <dt className="text-ink-muted">Work for</dt>
-                <dd className="text-xs font-bold">{CLIENT_LABEL}</dd>
+                <dd className="text-xs font-bold">{SUPERVISOR_LABEL}</dd>
               </div>
               <div className="flex items-center justify-between gap-3 border-t border-line-subtle pt-3">
                 <dt className="text-ink-muted">Task ID</dt>

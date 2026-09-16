@@ -132,7 +132,7 @@ export function InteractiveBentoPillars() {
         <div className="mt-5 pt-4 border-t border-primary/15 space-y-2.5">
           <div className="p-3 rounded-2xl bg-surface/90 border border-primary/20 shadow-soft-xs">
             <div className="flex items-center justify-between text-[11px] font-bold mb-2">
-              <span className="text-ink-muted">Client Request</span>
+              <span className="text-ink-muted">Original Brief</span>
               <span className="text-primary flex items-center gap-1">
                 <Shield className="h-3 w-3" /> Shield Active
               </span>
@@ -155,7 +155,7 @@ export function InteractiveBentoPillars() {
             ) : (
               <div className="space-y-2">
                 <div className="p-2 rounded-xl bg-[#fff5f6] border border-primary/30 text-[11px] text-ink-2 font-medium">
-                  <span className="font-bold text-primary">Client attempted:</span> "Can you also design 3 extra banners tonight for free?"
+                  <span className="font-bold text-primary">Blocked Attempt:</span> "Can you also design 3 extra banners tonight for free?"
                 </div>
                 <div className="p-2 rounded-xl bg-success-bg border border-success-ink/20 text-[11px] text-success-ink font-bold">
                   <span className="font-extrabold">Supervisor response:</span> Blocked. Scope is fixed. Freelancer payout unaffected.

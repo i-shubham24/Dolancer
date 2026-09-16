@@ -58,7 +58,7 @@ const STAGES: Stage[] = [
     tone: "progress",
     badge: "In progress",
     heading: "Your supervisor can see where things stand",
-    body: "Move the progress along as you go. Questions go to your supervisor in one thread, and you never deal with the client.",
+    body: "Move the progress along as you go. Questions go to your supervisor in one thread, and you never deal with external counterparties.",
     action: { icon: Send, label: "Submit for review", enabled: true },
     progress: 60,
   },
@@ -67,8 +67,8 @@ const STAGES: Stage[] = [
     nav: "It gets reviewed",
     tone: "review",
     badge: "With your supervisor",
-    heading: "Someone checks it before a client sees it",
-    body: "Your supervisor reviews the work and handles the client conversation. If something needs changing they tell you exactly what.",
+    heading: "Someone checks it before final release",
+    body: "Your supervisor reviews the work and handles external conversations. If something needs changing they tell you exactly what.",
     action: { icon: Check, label: "Waiting on review", enabled: false },
     progress: 100,
   },
@@ -168,7 +168,7 @@ export function WorkflowDemo() {
             <div className="text-2xs font-bold uppercase tracking-[0.04em] text-ink-muted">
               Work for
             </div>
-            <div className="text-lg font-extrabold tracking-[-0.02em]">Client</div>
+            <div className="text-lg font-extrabold tracking-[-0.02em]">External Counterparty</div>
           </div>
         </div>
 

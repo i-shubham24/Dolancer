@@ -26,26 +26,56 @@ export function LifecycleActions({ project }: { project: DoerProject }) {
 
   if (project.status === "in_review" || project.status === "delivered") {
     return (
-      <Card className="bg-highlight-light">
+      <Card className="bg-highlight-light border-highlight/30">
         <h3 className="text-sm font-extrabold tracking-[-0.01em]">
-          {project.status === "in_review" ? "With your supervisor" : "Awaiting approval"}
+          {project.status === "in_review" ? "With your supervisor" : "QA Passed & Awaiting approval"}
         </h3>
-        <p className="mt-1.5 text-xs leading-relaxed text-ink-2">
+        <p className="mt-1.5 text-xs leading-relaxed text-ink-2 mb-4">
           {project.status === "in_review"
             ? "Your supervisor is reviewing this. They will come back to you here if anything needs changing."
-            : "Your supervisor has delivered this. Payment follows approval."}
+            : "Your supervisor cleared this through QA. Payment follows approval."}
         </p>
+        
+        <div className="space-y-2 mt-4 pt-4 border-t border-highlight/20">
+          <div className="flex items-center gap-2 text-xs font-bold text-success-ink">
+            <Check className="h-3.5 w-3.5 shrink-0" />
+            Working link verified
+          </div>
+          <div className="flex items-center gap-2 text-xs font-bold text-success-ink">
+            <Check className="h-3.5 w-3.5 shrink-0" />
+            Delivery received
+          </div>
+          <div className={`flex items-center gap-2 text-xs font-bold ${project.status === "delivered" ? "text-success-ink" : "text-ink-muted"}`}>
+            {project.status === "delivered" ? <Check className="h-3.5 w-3.5 shrink-0" /> : <Minus className="h-3.5 w-3.5 shrink-0" />}
+            Supervisor QA complete
+          </div>
+        </div>
       </Card>
     );
   }
 
-  if (project.status === "approved") {
+  if (project.status === "approved" || project.status === "paid") {
     return (
-      <Card className="bg-success-bg">
+      <Card className="bg-success-bg border-success-ink/30">
         <h3 className="text-sm font-extrabold tracking-[-0.01em]">Approved</h3>
-        <p className="mt-1.5 text-xs leading-relaxed text-ink-2">
+        <p className="mt-1.5 text-xs leading-relaxed text-ink-2 mb-4">
           This one is done. Your payout appears in earnings once it is released.
         </p>
+
+        <div className="space-y-2 mt-4 pt-4 border-t border-success-ink/20">
+          <div className="flex items-center gap-2 text-xs font-bold text-success-ink">
+            <Check className="h-3.5 w-3.5 shrink-0" />
+            Working link verified
+          </div>
+          <div className="flex items-center gap-2 text-xs font-bold text-success-ink">
+            <Check className="h-3.5 w-3.5 shrink-0" />
+            Supervisor QA complete
+          </div>
+          <div className="flex items-center gap-2 text-xs font-bold text-success-ink">
+            <Check className="h-3.5 w-3.5 shrink-0" />
+            Quality gate cleared
+          </div>
+        </div>
       </Card>
     );
   }

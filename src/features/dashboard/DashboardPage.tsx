@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Inbox, Layers, ArrowRight, Wallet, Receipt, Briefcase } from "lucide-react";
 import { SkeletonCard, LoadingAnnounce } from "@/components/brutal/Skeleton";
 import { EmptyState, ErrorState } from "@/components/brutal/EmptyState";
@@ -12,6 +12,7 @@ import { CategoryPill } from "@/components/brutal/Pill";
 import { Button } from "@/components/ui/button";
 import { formatPaise } from "@/lib/paise";
 import { relativeDeadline } from "@/lib/datetime";
+import { ActionHub } from "@/components/brutal/ActionHub";
 import { preloadRoute } from "@/lib/preload";
 import { isActiveStatus, statusDisplay } from "@/lib/status";
 import { MAX_ACTIVE_PROJECTS } from "@/lib/constants";
@@ -53,6 +54,7 @@ export function DashboardPage() {
   const projects = useActiveProjects();
   const pool = usePoolPreview();
   const earnings = useEarningsSummary();
+  const navigate = useNavigate();
   const [filter, setFilter] = useState<WorkFilter>("all");
 
   const all = useMemo(
@@ -115,6 +117,35 @@ export function DashboardPage() {
         focus={focus}
         unlocked={gate.data?.unlocked ?? false}
       />
+
+      {/* Action Hubs */}
+      {projects.data?.map(p => {
+        if (p.revisionCount > 0 && p.status === "in_progress") {
+          return (
+            <ActionHub
+              key={`rev-${p.id}`}
+              tone="warning"
+              title={`Revision requested: ${(p.brief?.split("\n")[0] || p.category || "").substring(0, 40)}`}
+              description="Your supervisor requested a revision. Please review the feedback and update your delivery."
+              actionLabel="View Revision"
+              onAction={() => navigate(`/work/${p.id}`)}
+            />
+          );
+        }
+        if (!p.workingDocUrl && p.status === "in_progress") {
+          return (
+            <ActionHub
+              key={`wl-${p.id}`}
+              tone="danger"
+              title={`Working link needed: ${(p.brief?.split("\n")[0] || p.category || "").substring(0, 40)}`}
+              description="You must provide a working link so your supervisor can monitor progress."
+              actionLabel="Add Link"
+              onAction={() => navigate(`/work/${p.id}`)}
+            />
+          );
+        }
+        return null;
+      })}
 
       {/*
         Three figures, and only three. Gross, tax and net are always shown as separate

@@ -11,7 +11,7 @@ import { cn } from "@/lib/cn";
 import { qk } from "@/lib/query-keys";
 import { toUserError } from "@/lib/user-error";
 import { formatDateTime } from "@/lib/datetime";
-import { MAX_MESSAGE_LENGTH, CLIENT_LABEL } from "@/lib/constants";
+import { MAX_MESSAGE_LENGTH, SUPERVISOR_LABEL } from "@/lib/constants";
 import { useAuth } from "@/providers/AuthProvider";
 import { useThreadStream } from "@/lib/realtime";
 import { fetchThreadId, fetchMessages, sendMessage, fetchAttachments, signedUrlFor } from "./api";
@@ -143,7 +143,7 @@ export function ChatPanel({ projectId }: { projectId: string }) {
         <MessagesSquare className="h-4 w-4 text-ink-muted" aria-hidden="true" />
         <h2 className="text-sm font-extrabold tracking-[-0.01em]">Your supervisor</h2>
         <span className="ml-auto text-[11px] text-ink-muted">
-          Never the {CLIENT_LABEL.toLowerCase()}
+          Never the {SUPERVISOR_LABEL.toLowerCase()}
         </span>
       </div>
 

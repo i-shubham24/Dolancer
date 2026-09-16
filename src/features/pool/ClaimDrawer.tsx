@@ -6,7 +6,7 @@ import { CategoryPill } from "@/components/brutal/Pill";
 import { DeadlineBadge } from "@/components/brutal/DeadlineBadge";
 import { formatPaise } from "@/lib/paise";
 import { formatDateTime } from "@/lib/datetime";
-import { CLIENT_LABEL, MAX_ACTIVE_PROJECTS } from "@/lib/constants";
+import { SUPERVISOR_LABEL, MAX_ACTIVE_PROJECTS } from "@/lib/constants";
 import type { PoolOffer } from "@/types/domain";
 import { useClaimProject } from "./queries";
 
@@ -94,14 +94,14 @@ export function ClaimDrawer({
                   </div>
                   <div className="rounded-xl border border-line-card bg-surface p-3">
                     <dt className="text-2xs font-bold uppercase tracking-[0.05em] text-ink-muted">Work for</dt>
-                    <dd className="mt-1 text-sm font-extrabold">{CLIENT_LABEL}</dd>
+                    <dd className="mt-1 text-sm font-extrabold">{SUPERVISOR_LABEL}</dd>
                   </div>
                 </dl>
 
                 <div className="flex items-start gap-2.5 rounded-xl border border-line-card bg-surface-2 p-4">
                   <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-success-ink" aria-hidden="true" />
                   <p className="text-xs leading-relaxed text-ink-2">
-                    You work with a supervisor, who is your only point of contact. The {CLIENT_LABEL.toLowerCase()} does not receive your name, contact details or other identifying information.
+                    You work with a supervisor, who is your only point of contact. The {SUPERVISOR_LABEL.toLowerCase()} does not receive your name, contact details or other identifying information.
                   </p>
                 </div>
 

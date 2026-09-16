@@ -544,7 +544,7 @@ export function GettingStartedInteractive() {
                       <span className="font-bold text-ink">₹18,400.00</span>
                     </div>
                     <div className="flex justify-between font-medium text-ink-2">
-                      <span>Client Deposit Status:</span>
+                      <span>Secured Payout Pool:</span>
                       <span className="text-success-ink font-bold">100% Pre-funded</span>
                     </div>
                     <div className="flex justify-between font-medium text-ink-2">

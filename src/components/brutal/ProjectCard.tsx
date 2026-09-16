@@ -5,7 +5,7 @@ import { formatPaise } from "@/lib/paise";
 import { relativeDeadline } from "@/lib/datetime";
 import { statusDisplay } from "@/lib/status";
 import { preloadWorkbench } from "@/lib/preload";
-import { CLIENT_LABEL } from "@/lib/constants";
+import { SUPERVISOR_LABEL } from "@/lib/constants";
 import type { DoerProject } from "@/types/domain";
 import { StatusBadge } from "./StatusBadge";
 import { CategoryPill, ProgressPill, MicroChip } from "./Pill";
@@ -13,7 +13,7 @@ import { CategoryPill, ProgressPill, MicroChip } from "./Pill";
 /**
  * Shared project surface used by work and pool views.
  *
- * The counterparty is always rendered as the CLIENT_LABEL constant. There is no
+ * The counterparty is always rendered as the SUPERVISOR_LABEL constant. There is no
  * client identity in projects_doer to render even if we wanted to, which is the
  * point: anonymity is structural, not a formatting choice.
  */
@@ -84,7 +84,7 @@ export function ProjectCard({ project, className }: { project: DoerProject; clas
         ) : null}
 
         <div className="mt-auto flex flex-wrap items-center gap-2 pt-1">
-          <MicroChip>{CLIENT_LABEL}</MicroChip>
+          <MicroChip>{SUPERVISOR_LABEL}</MicroChip>
           {project.qcBounceCount > 0 ? (
             <MicroChip>
               {project.qcBounceCount} revision{project.qcBounceCount === 1 ? "" : "s"}

@@ -181,7 +181,7 @@ export function HowItWorksSteps() {
 
                 <div className="pt-1.5 text-xs text-ink-2 font-medium flex items-center gap-2">
                   <span className="h-2 w-2 rounded-full bg-success-dot shrink-0" />
-                  <span className="truncate">"Deliverables & guidelines verified. Forwarding to client."</span>
+                  <span className="truncate">"Deliverables & guidelines verified. Forwarding for final release."</span>
                 </div>
               </div>
 
@@ -215,7 +215,7 @@ export function HowItWorksSteps() {
                 Accept & Deliver
               </h3>
               <p className="text-ink-2 text-base leading-relaxed font-medium">
-                Accept the offer when the scope and deadline work for you. Your supervisor reviews drafts and handles the client side, so you do not need to identify or chase the client.
+                Accept the offer when the scope and deadline work for you. Your supervisor reviews drafts and handles external reviews, so you do not need to identify or chase stakeholders.
               </p>
               <div className="pt-2">
                 <div className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:underline">

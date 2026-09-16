@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { cn } from "@/lib/cn";
 import { formatPaise } from "@/lib/paise";
-import { CLIENT_LABEL } from "@/lib/constants";
+import { SUPERVISOR_LABEL } from "@/lib/constants";
 import { CategoryPill, MicroChip } from "@/components/brutal/Pill";
 import { DeadlineBadge } from "@/components/brutal/DeadlineBadge";
 import type { PoolOffer } from "@/types/domain";
@@ -70,7 +70,7 @@ export function PoolCard({
 
           {!hideAccessories ? (
             <div className="flex flex-wrap items-center gap-2 pt-0.5">
-              <MicroChip>{CLIENT_LABEL}</MicroChip>
+              <MicroChip>{SUPERVISOR_LABEL}</MicroChip>
               <MicroChip>Assigned offer</MicroChip>
             </div>
           ) : null}

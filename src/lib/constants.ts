@@ -3,15 +3,14 @@
  */
 
 /**
- * The only string this app may ever use to refer to the person who submitted the
+ * The only string this app may ever use to refer to the counterparty reviewing the
  * work. A doer must never learn a client's name, email, phone, company, or domain.
  * That guarantee is enforced in Postgres RLS, not here, but this constant keeps the
  * UI from ever implying otherwise.
  *
- * Note the PRD does not actually specify this label: section 4.3 defines only the
- * labels a client sees. This fills that gap.
+ * The supervisor handles all assignments and reviews.
  */
-export const CLIENT_LABEL = "Client";
+export const SUPERVISOR_LABEL = "Supervisor";
 
 /**
  * Soft concurrency guardrail. There is no database constraint behind this, and

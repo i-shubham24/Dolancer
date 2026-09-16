@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Layers, ArrowUpRight, ShieldCheck, Sparkles, GraduationCap, Check } from "lucide-react";
 import { Card } from "@/components/brutal/Card";
 import { cn } from "@/lib/cn";
-import { MAX_ACTIVE_PROJECTS, CLIENT_LABEL } from "@/lib/constants";
+import { MAX_ACTIVE_PROJECTS, SUPERVISOR_LABEL } from "@/lib/constants";
 import type { DoerGateState } from "@/types/domain";
 
 /**
@@ -135,7 +135,7 @@ export function CapacityRail({
           </li>
           <li>
             <strong className="font-extrabold text-ink">One point of contact.</strong> You speak
-            to your supervisor, never to the {CLIENT_LABEL.toLowerCase()}.
+            to your supervisor, never to the {SUPERVISOR_LABEL.toLowerCase()}.
           </li>
           <li>
             <strong className="font-extrabold text-ink">Add your working link</strong> on a
