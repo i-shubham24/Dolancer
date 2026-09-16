@@ -1,4 +1,3 @@
-import React from "react";
 import type { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cn } from "@/lib/cn";
@@ -27,19 +26,22 @@ export function StitchBadge({
   );
 }
 
-export function StitchButton({
+import { forwardRef } from 'react';
+
+export const StitchButton = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HTMLButtonElement> & {
+  variant?: "primary" | "secondary";
+  asChild?: boolean;
+}>(({
   children,
   className,
   variant = "primary",
   asChild = false,
   ...props
-}: ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "primary" | "secondary";
-  asChild?: boolean;
-}) {
+}, ref) => {
   const Component = asChild ? Slot : "button";
   return (
     <Component
+      ref={ref}
       className={cn(
         "inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 text-sm font-bold transition-all duration-200 ease-spring select-none",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue",

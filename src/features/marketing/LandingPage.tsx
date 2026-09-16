@@ -21,8 +21,6 @@ import { BackdropLetter } from "./BackdropLetter";
 import { MicroFloaties } from "./MicroFloaties";
 import VariableProximity from "@/components/react-bits/VariableProximity";
 import { CurvedLoop } from "./CurvedLoop";
-import { HeroSpotlight } from "./HeroSpotlight";
-import { SkillsMarquee } from "./SkillsMarquee";
 
 
 export function LandingPage() {

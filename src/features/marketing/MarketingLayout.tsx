@@ -45,7 +45,7 @@ export function MarketingLayout() {
   const magneticRef = useMagneticHover(0.2, 20);
 
   return (
-    <div className="fresh-site flex min-h-dvh flex-col bg-canvas">
+    <div className="fresh-site flex min-h-dvh flex-col bg-canvas relative bg-[radial-gradient(color-mix(in_srgb,var(--color-ink)_16%,transparent)_1px,transparent_1px)] [background-size:24px_24px]">
       <ScrollToTop />
       <a
         href="#main"

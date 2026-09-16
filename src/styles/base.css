@@ -11,9 +11,6 @@
 
   body {
     background-color: var(--color-canvas);
-    background-image: radial-gradient(color-mix(in srgb, var(--color-ink) 12%, transparent) 1px, transparent 1px);
-    background-size: 32px 32px;
-    background-position: 0 0;
     color: var(--color-ink);
     font-family: var(--font-sans);
     font-size: var(--text-base);
@@ -372,7 +369,7 @@
 
   .fresh-page {
     overflow: hidden;
-    background: var(--color-canvas);
+    background: transparent;
   }
 
   /* The landing page uses a soft editorial frame rather than the app's
@@ -627,7 +624,7 @@
     padding: 3.5rem 0 7rem;
     background:
       radial-gradient(circle at 82% 18%, color-mix(in srgb, var(--color-purple) 20%, transparent), transparent 24rem),
-      linear-gradient(180deg, color-mix(in srgb, var(--color-purple-light) 78%, var(--color-canvas)), var(--color-canvas));
+      linear-gradient(180deg, color-mix(in srgb, var(--color-purple-light) 78%, transparent), transparent);
   }
 
   .fresh-editorial-hero {
@@ -895,7 +892,7 @@
     border-bottom: 1px solid color-mix(in srgb, var(--color-purple) 15%, var(--dl-line-card));
     background: color-mix(in srgb, var(--color-surface-2) 88%, transparent);
     box-shadow: 0 24px 70px color-mix(in srgb, var(--color-purple) 12%, transparent);
-    backdrop-filter: blur(16px);
+    /* backdrop-filter: blur(16px); removed to let body dots stay crisp */
     content: "";
   }
 

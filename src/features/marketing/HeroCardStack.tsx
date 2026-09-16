@@ -187,7 +187,9 @@ export function HeroCardStack() {
                     }
               }
               transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              ref={isTop ? tiltRef : undefined}
+              ref={isTop ? tiltRef.ref : undefined}
+              onPointerMove={isTop ? tiltRef.onPointerMove : undefined}
+              onPointerLeave={isTop ? tiltRef.onPointerLeave : undefined}
               className={`absolute inset-0 rounded-[2.2rem] border p-6 sm:p-7 shadow-soft-lg cursor-pointer backdrop-blur-md transition-colors ${isTop && !reduceMotion ? "cursor-tilt" : ""} ${
                 isTop
                   ? "border-line-card bg-surface hover:border-coral/50"
