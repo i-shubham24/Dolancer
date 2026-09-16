@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Sparkles, ShieldCheck, Check, Zap, ArrowRight, CheckCircle2 } from "lucide-react";
 import { StitchBadge, StitchButton } from "@/components/stitch/StitchPrimitives";
 import { motion, useReducedMotion } from "framer-motion";
+import { BorderBeam } from "@/components/ui/BorderBeam";
 
 export function AboutHeroInteractive() {
   const reduceMotion = useReducedMotion();
@@ -70,11 +71,14 @@ export function AboutHeroInteractive() {
           </div>
           
           {/* The clean "Dolancer way" foreground card */}
-          <div className="relative bg-white border-2 border-line-card rounded-3xl p-7 shadow-soft-xl z-10 overflow-hidden">
-            <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/15 rounded-full blur-2xl"></div>
-            <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-secondary/15 rounded-full blur-2xl"></div>
+          <div className="relative bg-surface border-2 border-line-card rounded-3xl shadow-soft-xl z-10 overflow-hidden pointer-events-auto">
+            {!reduceMotion && <BorderBeam className="opacity-70" />}
             
-            <div className="flex items-center gap-3 mb-8">
+            <div className="relative z-20 p-7 h-full flex flex-col pointer-events-none">
+              <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/15 rounded-full blur-2xl z-0"></div>
+              <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-secondary/15 rounded-full blur-2xl z-0"></div>
+              
+              <div className="flex items-center gap-3 mb-8 relative z-10">
               <div className="h-10 w-10 rounded-2xl bg-primary flex items-center justify-center shadow-soft-sm">
                 <Check className="h-5 w-5 text-white" />
               </div>
@@ -105,9 +109,10 @@ export function AboutHeroInteractive() {
               </div>
             </div>
             
-            <div className="mt-8 pt-4 border-t border-line-card/60 flex items-center justify-between text-xs">
+            <div className="mt-8 pt-4 border-t border-line-card/60 flex items-center justify-between text-xs relative z-10">
               <span className="font-bold text-ink-3">Platform Overhead</span>
               <span className="font-extrabold text-ink px-2 py-1 bg-accent-light rounded-md border border-accent/30">0%</span>
+            </div>
             </div>
           </div>
         </motion.div>

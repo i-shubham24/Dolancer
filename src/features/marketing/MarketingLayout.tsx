@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Link, NavLink, useLocation, useOutlet } from "react-router-dom";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { Link, NavLink, useOutlet } from "react-router-dom";
 import { ScrollToTop } from "@/routes/ScrollToTop";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/cn";
@@ -39,9 +38,7 @@ function Wordmark({ onClick }: { onClick?: () => void }) {
 export function MarketingLayout() {
   const [open, setOpen] = useState(false);
   const { session } = useAuth();
-  const location = useLocation();
   const currentOutlet = useOutlet();
-  const reduceMotion = useReducedMotion();
   const magneticRef = useMagneticHover(0.2, 20);
 
   return (

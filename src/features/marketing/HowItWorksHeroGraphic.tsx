@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { Sparkles, MoreHorizontal, Wallet, ArrowUpRight } from "lucide-react";
+import { BorderBeam } from "@/components/ui/BorderBeam";
 
 export function HowItWorksHeroGraphic() {
   const reduceMotion = useReducedMotion();
@@ -12,8 +13,10 @@ export function HowItWorksHeroGraphic() {
         initial={reduceMotion ? false : { opacity: 0, y: 20 }}
         animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
         transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-        className="rounded-[2.5rem] border border-line-card bg-surface p-7 sm:p-9 shadow-soft-xl relative z-10 rotate-[2deg] hover:rotate-[1deg] transition-transform duration-300"
+        className="rounded-[2.5rem] border border-line-card bg-surface shadow-soft-xl relative z-10 rotate-[2deg] hover:rotate-[1deg] transition-transform duration-300 pointer-events-auto"
       >
+        {!reduceMotion && <BorderBeam className="opacity-70" />}
+        <div className="relative z-20 p-7 sm:p-9 h-full flex flex-col pointer-events-none [&_a]:pointer-events-auto">
         {/* Top Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="h-2 w-2 rounded-full bg-success-dot shadow-[0_0_8px_rgba(16,185,129,0.6)]" />
@@ -61,6 +64,7 @@ export function HowItWorksHeroGraphic() {
           <span className="font-bold text-[15px]">View brief</span>
           <ArrowUpRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </Link>
+        </div>
       </motion.div>
 
       {/* Floating Success Card (Bottom Right) */}
