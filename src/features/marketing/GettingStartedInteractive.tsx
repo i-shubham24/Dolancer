@@ -18,6 +18,7 @@ import {
   Pause,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { CountUp } from "@/components/motion/CountUp";
 import { cn } from "@/lib/cn";
 
 interface Moment {
@@ -342,7 +343,7 @@ export function GettingStartedInteractive() {
                       Live Matching Engine
                     </span>
                     <p className="text-sm font-extrabold text-ink mt-0.5">
-                      {selectedSkills.length} disciplines selected · {totalBriefsCount} matching briefs unlocked
+                      {selectedSkills.length} disciplines selected · <CountUp end={totalBriefsCount} duration={0.8} /> matching briefs unlocked
                     </p>
                   </div>
                   <div className="text-right shrink-0">

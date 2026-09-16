@@ -13,6 +13,7 @@ import { CategoryTags } from "./CategoryTags";
 import { HowItWorksHeroGraphic } from "./HowItWorksHeroGraphic";
 import { CurvedSectionDivider } from "@/components/stitch/CurvedSectionDivider";
 import { FaqAccordion } from "./FaqAccordion";
+import { MagneticButton } from "@/components/motion/MagneticButton";
 
 function Section({
   children,
@@ -95,22 +96,27 @@ export function HowItWorksPage() {
         <DifferenceRail />
       </Section>
 
-      <Section labelledBy="disciplines" className="fresh-steps">
-        <h2 id="disciplines" className="fresh-section-heading-text">
-          What gets offered here
-        </h2>
-        <p className="mt-3 max-w-xl text-md text-ink-2">
-          Pick the disciplines you are genuinely strong in. Supervisors use them to route suitable
-          offers, so accuracy matters more than breadth.
-        </p>
-        <div className="mt-10">
-          <CategoryTags />
+      <section className="relative fresh-steps fresh-section">
+        <div className="fresh-container">
+          <h2 id="disciplines" className="fresh-section-heading-text">
+            What gets offered here
+          </h2>
+          <p className="mt-3 max-w-xl text-md text-ink-2">
+            Pick the disciplines you are genuinely strong in. Supervisors use them to route suitable
+            offers, so accuracy matters more than breadth.
+          </p>
+          <div className="mt-10 pb-16">
+            <CategoryTags />
+          </div>
         </div>
-      </Section>
+        <CurvedSectionDivider variant="wave" position="bottom" fillColor="fill-surface-2" />
+      </section>
 
-      <Section className="bg-surface/50 pb-16">
-        <FaqAccordion />
-      </Section>
+      <section className="bg-surface-2 py-16 fresh-section">
+        <div className="fresh-container">
+          <FaqAccordion />
+        </div>
+      </section>
 
       <Section labelledBy="cta">
         <MicroFloaties zone="cta" />
@@ -127,12 +133,14 @@ export function HowItWorksPage() {
             </div>
 
             <div className="fresh-cta-actions flex shrink-0 flex-col gap-2.5">
-              <Button asChild size="lg">
-                <Link to="/sign-up">
-                  Create your account
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </Link>
-              </Button>
+              <MagneticButton>
+                <Button asChild size="lg" className="w-full">
+                  <Link to="/sign-up">
+                    Create your account
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                </Button>
+              </MagneticButton>
               <Button asChild variant="outline">
                 <Link to="/contact">Ask a question first</Link>
               </Button>

@@ -150,17 +150,7 @@ export function MarketingLayout() {
       </header>
 
       <main id="main" className="fresh-main flex-1">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={location.pathname}
-            initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-            animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-            exit={reduceMotion ? undefined : { opacity: 0, y: -12 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          >
-            {currentOutlet}
-          </motion.div>
-        </AnimatePresence>
+        {currentOutlet}
       </main>
 
       <SiteFooter />

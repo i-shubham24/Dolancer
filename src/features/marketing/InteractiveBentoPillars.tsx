@@ -10,6 +10,9 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/cn";
 
+import { ScrollReveal } from "@/components/motion/ScrollReveal";
+import { TiltCard } from "@/components/motion/TiltCard";
+
 export function InteractiveBentoPillars() {
   // Card 1 state: selected skill to preview instant match
   const [selectedDemoSkill, setSelectedDemoSkill] = useState<number>(0);
@@ -29,12 +32,13 @@ export function InteractiveBentoPillars() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 my-10">
       {/* CARD 1: Matched, not marketed (Lilac tone) */}
-      <div className="relative isolate overflow-hidden rounded-3xl p-6 sm:p-7 shadow-soft-md transition-all duration-300 hover:-translate-y-1 hover:shadow-soft-lg bg-card-lilac border border-highlight/20 flex flex-col justify-between min-h-[340px]">
-        {/* Ambient glow accent */}
-        <span className="absolute -top-16 -right-16 h-36 w-36 rounded-full bg-highlight/10 blur-2xl pointer-events-none" />
+      <ScrollReveal delay={0.1}>
+        <TiltCard className="relative isolate overflow-hidden rounded-3xl p-6 sm:p-7 shadow-soft-md transition-all duration-300 hover:shadow-soft-lg bg-card-lilac border border-highlight/20 flex flex-col justify-between h-full min-h-[340px]">
+          {/* Ambient glow accent */}
+          <span className="absolute -top-16 -right-16 h-36 w-36 rounded-full bg-highlight/10 blur-2xl pointer-events-none" />
 
-        <div>
-          <div className="flex items-center justify-between mb-4">
+          <div>
+            <div className="flex items-center justify-between mb-4">
             <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-highlight/15 text-highlight shadow-soft-xs">
               <Sparkles className="h-5 w-5" />
             </span>
@@ -103,17 +107,19 @@ export function InteractiveBentoPillars() {
             </motion.div>
           </AnimatePresence>
         </div>
-      </div>
+        </TiltCard>
+      </ScrollReveal>
 
       {/* CARD 2: Protected while you work (Pink / Coral tone) */}
-      <div className="relative isolate overflow-hidden rounded-3xl p-6 sm:p-7 shadow-soft-md transition-all duration-300 hover:-translate-y-1 hover:shadow-soft-lg bg-card-pink border border-primary/20 flex flex-col justify-between min-h-[340px]">
-        {/* Ambient glow accent */}
-        <span className="absolute -top-16 -right-16 h-36 w-36 rounded-full bg-primary/10 blur-2xl pointer-events-none" />
+      <ScrollReveal delay={0.2}>
+        <TiltCard className="relative isolate overflow-hidden rounded-3xl p-6 sm:p-7 shadow-soft-md transition-all duration-300 hover:shadow-soft-lg bg-card-pink border border-primary/20 flex flex-col justify-between h-full min-h-[340px]">
+          {/* Ambient glow accent */}
+          <span className="absolute -top-16 -right-16 h-36 w-36 rounded-full bg-primary/10 blur-2xl pointer-events-none" />
 
-        <div>
-          <div className="flex items-center justify-between mb-4">
-            <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/15 text-primary shadow-soft-xs">
-              <ShieldCheck className="h-5 w-5" />
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/15 text-primary shadow-soft-xs">
+                <ShieldCheck className="h-5 w-5" />
             </span>
             <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-0.5 text-[11px] font-extrabold text-primary">
               Buffer Shield
@@ -171,12 +177,14 @@ export function InteractiveBentoPillars() {
             )}
           </div>
         </div>
-      </div>
+        </TiltCard>
+      </ScrollReveal>
 
       {/* CARD 3: Paid with the brief (Yellow / Amber tone) */}
-      <div className="relative isolate overflow-hidden rounded-3xl p-6 sm:p-7 shadow-soft-md transition-all duration-300 hover:-translate-y-1 hover:shadow-soft-lg bg-card-yellow border border-amber-300/30 flex flex-col justify-between min-h-[340px]">
-        {/* Ambient glow accent */}
-        <span className="absolute -top-16 -right-16 h-36 w-36 rounded-full bg-amber-400/10 blur-2xl pointer-events-none" />
+      <ScrollReveal delay={0.3}>
+        <TiltCard className="relative isolate overflow-hidden rounded-3xl p-6 sm:p-7 shadow-soft-md transition-all duration-300 hover:shadow-soft-lg bg-card-yellow border border-amber-300/30 flex flex-col justify-between h-full min-h-[340px]">
+          {/* Ambient glow accent */}
+          <span className="absolute -top-16 -right-16 h-36 w-36 rounded-full bg-amber-400/10 blur-2xl pointer-events-none" />
 
         <div>
           <div className="flex items-center justify-between mb-4">
@@ -237,7 +245,8 @@ export function InteractiveBentoPillars() {
             </div>
           </div>
         </div>
-      </div>
+        </TiltCard>
+      </ScrollReveal>
     </div>
   );
 }
