@@ -7,7 +7,7 @@ export function HowItWorksSteps() {
 
   return (
     <section id="how-it-works" className="fresh-section py-20 overflow-hidden">
-      <div className="fresh-container">
+      <div className="fresh-container relative">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16 sm:mb-20">
           <StitchBadge tone="neutral">
@@ -22,8 +22,37 @@ export function HowItWorksSteps() {
           </p>
         </div>
 
+        
+        {/* Animated Connected SVG Line */}
+        <div className="hidden lg:block absolute left-1/2 -translate-x-1/2 top-48 bottom-48 w-1 z-0" aria-hidden="true">
+          <svg className="h-full w-full" preserveAspectRatio="none" viewBox="0 0 4 100" fill="none">
+            <motion.line
+              x1="2"
+              y1="0"
+              x2="2"
+              y2="100"
+              stroke="var(--color-line-card)"
+              strokeWidth="2"
+              strokeDasharray="4 4"
+            />
+            <motion.line
+              x1="2"
+              y1="0"
+              x2="2"
+              y2="100"
+              stroke="var(--color-coral)"
+              strokeWidth="4"
+              initial={{ pathLength: 0 }}
+              whileInView={{ pathLength: 1 }}
+              viewport={{ once: true, margin: "-20% 0px" }}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
+            />
+          </svg>
+        </div>
+
         {/* 3 Step Showcase */}
-        <div className="space-y-16 sm:space-y-24">
+        <div className="space-y-16 sm:space-y-24 relative z-10">
+
           {/* STEP 01 */}
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, y: 24 }}

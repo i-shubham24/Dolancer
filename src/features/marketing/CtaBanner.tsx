@@ -2,9 +2,11 @@ import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, ShieldCheck, Zap, Clock, Sparkles } from "lucide-react";
 import { StitchBadge, StitchButton } from "@/components/stitch/StitchPrimitives";
+import { useMagneticHover } from "@/hooks/useMagneticHover";
 
 export function CtaBanner() {
   const reduceMotion = useReducedMotion();
+  const magneticRef = useMagneticHover();
 
   return (
     <section className="fresh-section pt-20 pb-10">
@@ -47,7 +49,8 @@ export function CtaBanner() {
 
             {/* Buttons stacked vertically */}
             <div className="flex flex-col justify-center gap-3 w-full sm:w-auto min-w-[200px] shrink-0">
-              <StitchButton asChild variant="primary" className="!w-full !mt-0 px-6 sm:px-7 py-3.5 sm:py-4 text-sm sm:text-base justify-center whitespace-nowrap shadow-soft-sm">
+              <StitchButton asChild variant="primary" ref={magneticRef as any}
+                className="!w-full !mt-0 px-6 sm:px-7 py-3.5 sm:py-4 text-sm sm:text-base justify-center whitespace-nowrap shadow-soft-sm relative overflow-hidden group">
                 <Link to="/sign-up" className="inline-flex items-center justify-center w-full">
                   Start Earning
                   <ArrowRight className="h-4 w-4 ml-1.5" />

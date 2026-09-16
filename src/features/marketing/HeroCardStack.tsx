@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
+import { useCursorTilt } from "@/lib/useCursorTilt";
+import { BorderBeam } from "@/components/ui/BorderBeam";
 import {
   Star,
   Clock,
@@ -77,6 +79,7 @@ const CARDS: BriefCardData[] = [
 
 export function HeroCardStack() {
   const reduceMotion = useReducedMotion();
+  const tiltRef = useCursorTilt();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -174,22 +177,25 @@ export function HeroCardStack() {
               animate={
                 reduceMotion
                   ? { opacity: isTop ? 1 : 0 }
-                  : {
+                                    : {
                       x: translateX,
                       y: translateY,
                       rotate: rotate,
+                      rotateY: isTop ? 0 : 180,
                       scale: scale,
                       opacity: opacity,
                       zIndex: zIndex,
                     }
               }
               transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              className={`absolute inset-0 rounded-[2.2rem] border p-6 sm:p-7 shadow-soft-lg cursor-pointer backdrop-blur-md transition-colors ${
+              ref={isTop ? tiltRef : undefined}
+              className={`absolute inset-0 rounded-[2.2rem] border p-6 sm:p-7 shadow-soft-lg cursor-pointer backdrop-blur-md transition-colors ${isTop && !reduceMotion ? "cursor-tilt" : ""} ${
                 isTop
                   ? "border-line-card bg-surface hover:border-coral/50"
                   : "border-line-card/70 bg-surface/90 hover:bg-surface"
               }`}
             >
+              {isTop && <BorderBeam />}
               {/* Card Header: Icon + Badge + Payout */}
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">

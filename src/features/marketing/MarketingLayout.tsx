@@ -7,8 +7,10 @@ import { cn } from "@/lib/cn";
 import { useAuth } from "@/providers/AuthProvider";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/ui/Logo";
+import { useMagneticHover } from "@/hooks/useMagneticHover";
 import { SiteFooter } from "./SiteFooter";
 import { PaletteSwitcher } from "@/components/PaletteSwitcher";
+import { LiveActivityTicker } from "./LiveActivityTicker";
 
 const NAV = [
   { to: "/how-it-works", label: "How it works" },
@@ -40,6 +42,7 @@ export function MarketingLayout() {
   const location = useLocation();
   const currentOutlet = useOutlet();
   const reduceMotion = useReducedMotion();
+  const magneticRef = useMagneticHover(0.2, 20);
 
   return (
     <div className="fresh-site flex min-h-dvh flex-col bg-canvas">
@@ -86,7 +89,7 @@ export function MarketingLayout() {
                 <Button asChild variant="ghost" size="sm" className="text-inverse hover:bg-inverse hover:text-ink">
                   <Link to="/sign-in">Sign in</Link>
                 </Button>
-                <Button asChild variant="ghost" size="sm" className="text-inverse border border-inverse/30 hover:bg-inverse hover:text-ink">
+                <Button ref={magneticRef as any} asChild variant="ghost" size="sm" className="text-inverse border border-inverse/30 hover:bg-inverse hover:text-ink">
                   <Link to="/sign-up">Start earning</Link>
                 </Button>
               </>
@@ -161,6 +164,7 @@ export function MarketingLayout() {
       </main>
 
       <SiteFooter />
+      <LiveActivityTicker />
     </div>
   );
 }
