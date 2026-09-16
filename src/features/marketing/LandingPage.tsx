@@ -25,51 +25,6 @@ import { HeroSpotlight } from "./HeroSpotlight";
 import { SkillsMarquee } from "./SkillsMarquee";
 
 
-function FloatingBadges() {
-  const reduceMotion = useReducedMotion();
-  if (reduceMotion) return null;
-
-  return (
-    <div className="hidden lg:block absolute inset-0 pointer-events-none z-10" aria-hidden="true">
-      {/* Top Left */}
-      <motion.div
-        animate={{ y: [0, -12, 0] }}
-        transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0 }}
-        className="absolute top-1/4 left-8 rounded-full border border-coral/30 bg-coral-light/70 px-4 py-1.5 text-sm font-bold text-coral shadow-soft-sm backdrop-blur-md"
-      >
-        UI/UX Design
-      </motion.div>
-      
-      {/* Bottom Left */}
-      <motion.div
-        animate={{ y: [0, -15, 0] }}
-        transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
-        className="absolute bottom-1/4 left-16 rounded-full border border-blue/30 bg-blue/10 px-4 py-1.5 text-sm font-bold text-blue shadow-soft-sm backdrop-blur-md"
-      >
-        Python & APIs
-      </motion.div>
-      
-      {/* Center Top */}
-      <motion.div
-        animate={{ y: [0, -10, 0] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2.5 }}
-        className="absolute top-12 left-1/2 -translate-x-1/2 rounded-full border border-success-ink/30 bg-success-bg/70 px-4 py-1.5 text-sm font-bold text-success-ink shadow-soft-sm backdrop-blur-md"
-      >
-        Content Writing
-      </motion.div>
-      
-      {/* Top Right */}
-      <motion.div
-        animate={{ y: [0, -14, 0] }}
-        transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
-        className="absolute top-1/3 right-12 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5 text-sm font-bold text-amber-600 shadow-soft-sm backdrop-blur-md"
-      >
-        SEO Strategy
-      </motion.div>
-    </div>
-  );
-}
-
 export function LandingPage() {
   const reduceMotion = useReducedMotion();
   const heroRef = useRef<HTMLElement>(null);
@@ -89,8 +44,7 @@ export function LandingPage() {
             landing on the real buttons underneath. */}
         
         <MicroFloaties zone="hero" />
-        <FloatingBadges />
-        <div className="fresh-dot-field" aria-hidden="true" />
+                <div className="fresh-dot-field" aria-hidden="true" />
         <div className="fresh-container fresh-hero-grid relative z-10 items-center pt-0 pb-10 lg:pb-16">
           {/* Left Hero Copy */}
           <motion.div
