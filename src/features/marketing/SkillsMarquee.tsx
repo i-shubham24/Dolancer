@@ -1,4 +1,4 @@
-import React from 'react';
+
 
 const row1Skills = [
   'UI/UX Design', 'React & Next.js', 'Content Writing', 'Data Analysis', 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 
 const messages = [
@@ -23,7 +23,9 @@ function shuffleArray<T>(array: T[]): T[] {
   const newArr = [...array];
   for (let i = newArr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+    const temp = newArr[i] as T;
+    newArr[i] = newArr[j] as T;
+    newArr[j] = temp;
   }
   return newArr;
 }
@@ -45,6 +47,7 @@ export function LiveActivityTicker() {
 
     const showNextMessage = () => {
       const msg = shuffledMessages[index % shuffledMessages.length];
+      if (!msg) return;
       setCurrentMessage(msg);
       
       // Hide message after 4s
