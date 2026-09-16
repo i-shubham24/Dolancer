@@ -44,8 +44,7 @@ export function LandingPage() {
             landing on the real buttons underneath. */}
         
         <MicroFloaties zone="hero" />
-                <div className="fresh-dot-field" aria-hidden="true" />
-        <div className="fresh-container fresh-hero-grid relative z-10 items-center pt-0 pb-10 lg:pb-16">
+                        <div className="fresh-container fresh-hero-grid relative z-10 items-center pt-0 pb-10 lg:pb-16">
           {/* Left Hero Copy */}
           <motion.div
             initial={reduceMotion ? false : "hidden"}

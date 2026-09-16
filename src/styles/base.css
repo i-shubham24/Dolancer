@@ -11,6 +11,9 @@
 
   body {
     background-color: var(--color-canvas);
+    background-image: radial-gradient(color-mix(in srgb, var(--color-ink) 12%, transparent) 1px, transparent 1px);
+    background-size: 32px 32px;
+    background-position: 0 0;
     color: var(--color-ink);
     font-family: var(--font-sans);
     font-size: var(--text-base);
@@ -1096,7 +1099,6 @@
   .fresh-orb { position: absolute; border-radius: 50%; filter: blur(4px); opacity: 0.55; }
   .fresh-orb-one { top: -8rem; right: 10%; width: 24rem; height: 24rem; background: var(--color-primary-light); }
   .fresh-orb-two { bottom: -12rem; left: -8rem; width: 28rem; height: 28rem; background: var(--color-secondary-light); }
-  .fresh-dot-field { position: absolute; inset: 0; opacity: 0.32; background-image: radial-gradient(color-mix(in srgb, var(--color-ink) 24%, transparent) 1px, transparent 1px); background-size: 22px 22px; mask-image: linear-gradient(135deg, black, transparent 58%); }
 
   .fresh-section { padding: 7rem 0; }
   .fresh-proof { background: var(--color-surface); }

@@ -40,8 +40,7 @@ export function HowItWorksPage() {
     <div className="fresh-page">
       <section className="fresh-hero relative z-10 !pt-2 lg:!pt-2 !pb-16 lg:!pb-24 flex items-center !min-h-0 !overflow-visible">
         <MicroFloaties zone="hiw-hero" />
-        <div className="fresh-dot-field" aria-hidden="true" />
-        <div className="fresh-container fresh-process-hero">
+                <div className="fresh-container fresh-process-hero">
           <motion.div initial={reduceMotion ? false : "hidden"} animate="show" variants={reveal}>
             <StitchBadge><Sparkles className="h-3.5 w-3.5" /> Everything, in the open</StitchBadge>
             <h1 className="mt-5 max-w-3xl">
