@@ -22,7 +22,7 @@ const STATS: NetworkStat[] = [
     suffix: "+",
     label: "Active Dolancers",
     body: "Verified specialists earning across disciplines",
-    cardClass: "bg-[color-mix(in_srgb,var(--dl-card-lilac)_45%,var(--color-surface))]",
+    cardClass: "bg-[color-mix(in_srgb,var(--dl-card-lilac)_65%,var(--color-surface))]",
     tiltClass: "-rotate-[1.4deg]",
   },
   {
@@ -32,7 +32,7 @@ const STATS: NetworkStat[] = [
     suffix: "Cr+",
     label: "Total Paid Out",
     body: "Reliably transferred directly to bank accounts",
-    cardClass: "bg-[color-mix(in_srgb,var(--dl-card-pink)_45%,var(--color-surface))]",
+    cardClass: "bg-[color-mix(in_srgb,var(--dl-card-pink)_65%,var(--color-surface))]",
     tiltClass: "rotate-[1deg] translate-y-1.5",
   },
   {
@@ -41,7 +41,7 @@ const STATS: NetworkStat[] = [
     suffix: "+",
     label: "Briefs Completed",
     body: "Approved by supervisors without client disputes",
-    cardClass: "bg-[color-mix(in_srgb,var(--dl-card-yellow)_45%,var(--color-surface))]",
+    cardClass: "bg-[color-mix(in_srgb,var(--dl-card-yellow)_65%,var(--color-surface))]",
     tiltClass: "-rotate-[0.6deg] -translate-y-1",
   },
   {
@@ -50,7 +50,7 @@ const STATS: NetworkStat[] = [
     suffix: "h",
     label: "Average Release",
     body: "From supervisor sign-off to direct payout",
-    cardClass: "bg-[color-mix(in_srgb,var(--dl-card-mint)_45%,var(--color-surface))]",
+    cardClass: "bg-[color-mix(in_srgb,var(--dl-card-mint)_65%,var(--color-surface))]",
     tiltClass: "rotate-[1.8deg] translate-y-1",
   },
 ];
@@ -60,6 +60,13 @@ export function NetworkNumbers() {
 
   return (
     <section className="fresh-section pt-10 pb-20 relative">
+      {/* Background graphic - soft palette glows + orbital ring, static paint. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
+        <div className="absolute -left-32 top-6 h-96 w-96 rounded-full bg-[color-mix(in_srgb,var(--dl-card-lilac)_38%,transparent)] blur-3xl" />
+        <div className="absolute -right-32 bottom-0 h-[28rem] w-[28rem] rounded-full bg-[color-mix(in_srgb,var(--dl-card-mint)_38%,transparent)] blur-3xl" />
+        <div className="absolute right-[9%] top-[8%] hidden h-36 w-36 rounded-full border-2 border-dashed border-[var(--dl-card-pink)] opacity-50 md:block" />
+        <div className="absolute bottom-[10%] left-[6%] hidden h-5 w-5 rounded-full bg-[var(--dl-card-yellow)] opacity-70 md:block" />
+      </div>
       <div className="fresh-container">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12">
