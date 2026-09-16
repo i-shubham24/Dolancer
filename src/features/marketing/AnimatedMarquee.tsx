@@ -251,7 +251,7 @@ export function AnimatedMarquee() {
         {/* Two-Column Showcase: Redesigned Interactive Pills on Left, Live Brief Inspector on Right */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left: Redesigned Pills Grid (Col 1-7) */}
-          <div className="lg:col-span-7 flex flex-wrap gap-2.5 sm:gap-3">
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             {filteredDisciplines.map((d) => {
               const Icon = d.icon;
               const isSelected = d.id === activeDiscipline.id;
@@ -260,7 +260,7 @@ export function AnimatedMarquee() {
                   key={d.id}
                   type="button"
                   onClick={() => setSelectedId(d.id)}
-                  className={`group relative flex items-center gap-3 rounded-2xl border px-4 py-3 text-left transition-all duration-200 cursor-pointer ${
+                  className={`w-full group relative flex items-center gap-3 rounded-2xl border px-4 py-3 text-left transition-all duration-200 cursor-pointer ${
                     isSelected
                       ? "border-coral bg-coral-light/30 shadow-soft-md ring-2 ring-coral/20 -translate-y-0.5"
                       : "border-line-card bg-surface hover:border-coral/40 hover:shadow-soft-xs hover:-translate-y-0.5"
