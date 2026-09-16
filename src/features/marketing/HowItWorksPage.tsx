@@ -11,6 +11,7 @@ import { PayoutExplainer } from "./PayoutExplainer";
 import { DifferenceRail } from "./DifferenceRail";
 import { CategoryTags } from "./CategoryTags";
 import { HowItWorksHeroGraphic } from "./HowItWorksHeroGraphic";
+import { CurvedSectionDivider } from "@/components/stitch/CurvedSectionDivider";
 
 function Section({
   children,
@@ -68,13 +69,14 @@ export function HowItWorksPage() {
       </section>
 
       {/* Redesigned 5x Creative Interactive Four Moments Section */}
-      <section className="bg-surface-2 py-14 lg:py-20 relative">
+      <section className="bg-surface-2 py-14 lg:py-28 relative">
         <div className="fresh-container">
           <GettingStartedInteractive />
         </div>
+        <CurvedSectionDivider variant="smooth-arch" position="bottom" fillColor="fill-surface" />
       </section>
 
-      <Section labelledBy="walkthrough" className="fresh-workflow !pt-6 !pb-12 lg:!pb-16">
+      <Section labelledBy="walkthrough" className="fresh-workflow !pt-20 !pb-12 lg:!pb-16">
         {/* Redesigned Bento Pillars (formerly the empty pastel cards in screenshot) */}
         <InteractiveBentoPillars />
 
