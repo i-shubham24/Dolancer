@@ -56,7 +56,7 @@ export const StitchButton = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<H
       {children}
     </Component>
   );
-}
+});
 
 export function StitchCard({
   children,
