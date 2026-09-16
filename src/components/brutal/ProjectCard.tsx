@@ -37,8 +37,8 @@ export function ProjectCard({ project, className }: { project: DoerProject; clas
         className={cn(
           "group flex h-full flex-col gap-[13px] rounded-3xl border border-line-card bg-surface px-[22px] pb-[22px] pt-5",
           "shadow-soft-md transition-[box-shadow,border-color] duration-[220ms] ease-spring",
-          "hover:border-blue/40 hover:shadow-soft-lg",
-          "focus-visible:border-blue/40 focus-visible:shadow-soft-lg",
+          "hover:border-secondary/40 hover:shadow-soft-lg",
+          "focus-visible:border-secondary/40 focus-visible:shadow-soft-lg",
           className,
         )}
       >
@@ -48,7 +48,7 @@ export function ProjectCard({ project, className }: { project: DoerProject; clas
           {progress > 0 ? <ProgressPill>{progress}%</ProgressPill> : null}
         </div>
 
-        <h3 className="line-clamp-3 break-words text-lg font-extrabold leading-[1.3] tracking-[-0.025em] transition-colors group-hover:text-coral">
+        <h3 className="line-clamp-3 break-words text-lg font-extrabold leading-[1.3] tracking-[-0.025em] transition-colors group-hover:text-primary">
           {project.brief?.trim() || `${project.category} task`}
         </h3>
 
@@ -77,7 +77,7 @@ export function ProjectCard({ project, className }: { project: DoerProject; clas
             aria-label="Work progress"
           >
             <div
-              className="h-full rounded-full bg-gradient-to-r from-blue to-purple transition-[width] duration-300"
+              className="h-full rounded-full bg-gradient-to-r from-secondary to-highlight transition-[width] duration-300"
               style={{ width: `${progress}%` }}
             />
           </div>

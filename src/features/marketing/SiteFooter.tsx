@@ -51,7 +51,7 @@ export function SiteFooter() {
       {/* Main Dark Footer Content */}
       <div className="bg-[#0b0f19] relative overflow-hidden">
         {/* Ambient Top Glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[160px] bg-gradient-to-b from-blue/15 via-purple/10 to-transparent blur-3xl pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[160px] bg-gradient-to-b from-secondary/15 via-highlight/10 to-transparent blur-3xl pointer-events-none" />
 
         <div className="mx-auto max-w-7xl px-6 pt-10 pb-8 sm:px-8 sm:pt-14 sm:pb-10 relative z-10">
         {/* Top 3-Column Area */}
@@ -59,7 +59,7 @@ export function SiteFooter() {
           {/* Column 1: Brand & Email (Left) */}
           <div className="md:col-span-6 lg:col-span-6 space-y-4">
             <Link to="/" className="inline-flex items-center gap-2.5 group">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue text-white shadow-soft-xs font-bold text-base">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-secondary text-white shadow-soft-xs font-bold text-base">
                 D
               </span>
               <span className="text-xl font-bold tracking-tight text-white font-display">

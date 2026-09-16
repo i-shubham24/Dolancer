@@ -21,7 +21,7 @@ export function ProgressPill({ children, className }: { children: React.ReactNod
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full border border-transparent bg-lime-light px-2.5 py-[3px]",
+        "inline-flex items-center rounded-full border border-transparent bg-accent-light px-2.5 py-[3px]",
         "text-[11.5px] font-bold text-ink",
         className,
       )}

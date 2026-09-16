@@ -46,13 +46,13 @@ export function PoolCard({
       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
         "group relative w-full overflow-hidden rounded-[1.5rem] border border-line-card bg-surface p-5 text-left",
-        "transition-colors duration-[220ms] ease-spring hover:border-purple/35",
+        "transition-colors duration-[220ms] ease-spring hover:border-highlight/35",
         selected
-          ? "border-purple/40 shadow-soft-lg"
+          ? "border-highlight/40 shadow-soft-lg"
           : "shadow-soft-md hover:shadow-soft-lg",
       )}
     >
-      <span className="pointer-events-none absolute -right-16 -top-20 h-48 w-48 rounded-full bg-purple-light/70 blur-3xl transition-transform duration-500 group-hover:scale-125" aria-hidden="true" />
+      <span className="pointer-events-none absolute -right-16 -top-20 h-48 w-48 rounded-full bg-highlight-light/70 blur-3xl transition-transform duration-500 group-hover:scale-125" aria-hidden="true" />
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="min-w-0 flex-1 space-y-2.5">
           <div className="flex flex-wrap items-center gap-2">
@@ -60,7 +60,7 @@ export function PoolCard({
             {!hideAccessories ? <DeadlineBadge deadline={offer.deliveryAt} /> : null}
           </div>
 
-          <h3 className="relative text-lg font-extrabold leading-[1.3] tracking-[-0.025em] transition-colors group-hover:text-purple">
+          <h3 className="relative text-lg font-extrabold leading-[1.3] tracking-[-0.025em] transition-colors group-hover:text-highlight">
             {offer.brief?.trim().split("\n")[0] || `${offer.category} task`}
           </h3>
 
@@ -76,7 +76,7 @@ export function PoolCard({
           ) : null}
         </div>
 
-        <div className="relative shrink-0 rounded-2xl bg-lime-light/70 px-3.5 py-2.5 text-right ring-1 ring-lime/30">
+        <div className="relative shrink-0 rounded-2xl bg-accent-light/70 px-3.5 py-2.5 text-right ring-1 ring-accent/30">
           <div className="text-2xs font-bold uppercase tracking-[0.05em] text-ink-muted">
             You earn
           </div>

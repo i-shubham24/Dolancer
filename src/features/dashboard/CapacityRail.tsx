@@ -79,8 +79,8 @@ export function CapacityRail({
 
         <p className="mt-3 text-xs leading-snug text-ink-2">
           {atCap
-            ? "You are at capacity, so the board is hidden. Finish something to free a slot. This does not affect your standing or your rating."
-            : "Pausing hides the board without affecting work you already hold."}
+            ? "You are at capacity, so new offers are paused. Finish something to free a slot. This does not affect your standing or your rating."
+            : "Pausing stops new offers without affecting work you already hold."}
         </p>
       </Card>
 
@@ -131,7 +131,7 @@ export function CapacityRail({
         <ul className="mt-3 space-y-2.5 text-xs leading-relaxed text-ink-2">
           <li>
             <strong className="font-extrabold text-ink">The pay is fixed.</strong> Every brief
-            shows exactly what you earn before you claim it. No bidding.
+            shows exactly what you earn before you accept it. No public marketplace.
           </li>
           <li>
             <strong className="font-extrabold text-ink">One point of contact.</strong> You speak

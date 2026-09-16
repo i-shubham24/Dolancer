@@ -188,7 +188,7 @@ export function WorkflowDemo() {
             </div>
             <div className="h-2.5 w-full overflow-hidden rounded-full bg-subtle">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-primary to-purple transition-[width] duration-500 ease-spring"
+                className="h-full rounded-full bg-gradient-to-r from-primary to-highlight transition-[width] duration-500 ease-spring"
                 style={{ width: `${stage.progress}%` }}
               />
             </div>

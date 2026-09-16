@@ -15,10 +15,10 @@ import { motion, useReducedMotion } from "framer-motion";
  */
 
 const BANDS = [
-  "bg-coral",
-  "bg-blue",
-  "bg-lime",
-  "bg-purple",
+  "bg-primary",
+  "bg-secondary",
+  "bg-accent",
+  "bg-highlight",
   "bg-warning-dot",
   "bg-success-dot",
   "bg-info-dot",

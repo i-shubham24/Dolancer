@@ -78,10 +78,10 @@ export function ReferPage() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
     >
-      <div className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full bg-purple/10 blur-3xl" aria-hidden="true" />
-      <div className="pointer-events-none absolute -right-20 top-48 h-64 w-64 rounded-full bg-blue/10 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full bg-highlight/10 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute -right-20 top-48 h-64 w-64 rounded-full bg-secondary/10 blur-3xl" aria-hidden="true" />
       <header className="relative rounded-3xl bg-surface/70 px-5 py-6 backdrop-blur-sm sm:px-7">
-        <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-purple">Network protocol · 5% bonus</p>
+        <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-highlight">Network protocol · 5% bonus</p>
         <h1 className="text-3xl font-extrabold tracking-[-0.035em] sm:text-4xl">Referrals &amp; network</h1>
         <p className="mt-2 text-md text-ink-2">
           Know someone good? Invite them, and you earn a bonus once they finish and get
@@ -98,8 +98,8 @@ export function ReferPage() {
         />
       ) : (
         <>
-          <Card className="relative overflow-hidden border-transparent bg-purple-light/60 shadow-soft-md">
-            <div className="pointer-events-none absolute -bottom-16 -right-10 h-40 w-40 rounded-full bg-purple/15 blur-2xl" aria-hidden="true" />
+          <Card className="relative overflow-hidden border-transparent bg-highlight-light/60 shadow-soft-md">
+            <div className="pointer-events-none absolute -bottom-16 -right-10 h-40 w-40 rounded-full bg-highlight/15 blur-2xl" aria-hidden="true" />
             <div className="text-xs font-extrabold uppercase tracking-[0.05em] text-ink/65">
               Your invite code
             </div>
@@ -111,7 +111,7 @@ export function ReferPage() {
                 <code className="min-w-0 flex-1 truncate rounded-xl border border-line-card bg-white/80 px-3 py-2 text-xs">
                   {link}
                 </code>
-                <Button variant="blue" size="sm" onClick={() => void copy()}>
+                <Button variant="outline" size="sm" onClick={() => void copy()}>
                   {copied ? (
                     <Check className="h-3.5 w-3.5" aria-hidden="true" />
                   ) : (

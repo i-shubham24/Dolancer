@@ -21,7 +21,7 @@ export function HowItWorksSteps() {
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16 sm:mb-20">
           <StitchBadge tone="neutral">
-            <Sparkles className="h-3.5 w-3.5 text-coral" />
+            <Sparkles className="h-3.5 w-3.5 text-primary" />
             Simple & Transparent
           </StitchBadge>
           <h2 className="mt-4 text-3xl sm:text-5xl font-extrabold text-ink tracking-[-0.04em]">
@@ -50,7 +50,7 @@ export function HowItWorksSteps() {
               y1="0"
               x2="2"
               y2="100"
-              stroke="var(--color-coral)"
+              stroke="var(--color-primary)"
               strokeWidth="4"
               style={{ pathLength: reduceMotion ? 1 : pathLength }}
             />
@@ -71,14 +71,14 @@ export function HowItWorksSteps() {
             {/* Copy side */}
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-blue-light text-blue border border-line-card/40">
+                <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-secondary-light text-secondary border border-line-card/40">
                   <Search className="h-5 w-5" />
                 </span>
                 <div>
                   <span className="text-xs font-extrabold uppercase tracking-widest text-ink-muted font-display block">
                     STEP 01
                   </span>
-                    <span className="text-[11px] font-bold text-coral">Assigned offer</span>
+                    <span className="text-[11px] font-bold text-primary">Assigned offer</span>
                 </div>
               </div>
 
@@ -89,7 +89,7 @@ export function HowItWorksSteps() {
                 A supervisor routes a specific project to you when the scope fits your verified disciplines. The offer shows the agreed payout, deadline and workspace before you accept it.
               </p>
               <div className="pt-2">
-                <div className="inline-flex items-center gap-2 text-sm font-bold text-coral hover:underline">
+                <div className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:underline">
                   <span>Manually routed by a supervisor</span>
                   <ArrowRight className="h-4 w-4" />
                 </div>
@@ -105,7 +105,7 @@ export function HowItWorksSteps() {
                     <span className="text-[11px] font-bold uppercase tracking-wider text-ink-muted">
                       Graphic Design · Branding
                     </span>
-                    <span className="text-sm sm:text-base font-extrabold text-coral font-display">₹2,400</span>
+                    <span className="text-sm sm:text-base font-extrabold text-primary font-display">₹2,400</span>
                   </div>
                   <p className="text-sm sm:text-base font-extrabold text-ink leading-tight">
                     Logo, Websites & Branding Suite
@@ -117,10 +117,10 @@ export function HowItWorksSteps() {
 
                 <div>
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-coral">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-primary">
                       Web Dev · Shopify & WP
                     </span>
-                    <span className="text-sm sm:text-base font-extrabold text-coral font-display">₹3,800</span>
+                    <span className="text-sm sm:text-base font-extrabold text-primary font-display">₹3,800</span>
                   </div>
                   <p className="text-sm sm:text-base font-extrabold text-ink leading-tight">
                     Website Design & Responsive Setup
@@ -137,7 +137,7 @@ export function HowItWorksSteps() {
               {/* Dedicated 20% reserved exclusively for number */}
               <div className="w-[22%] sm:w-[20%] flex items-center justify-center select-none pointer-events-none shrink-0 border-l border-line-card/40 pl-2">
                 <motion.span 
-                  whileInView={reduceMotion ? undefined : { scale: 1.15, textShadow: "0px 0px 20px rgba(var(--color-coral-rgb), 0.5)", color: "var(--color-coral)" }}
+                  whileInView={reduceMotion ? undefined : { scale: 1.15, textShadow: "0px 0px 20px rgba(var(--color-primary-rgb), 0.5)", color: "var(--color-primary)" }}
                   transition={{ duration: 0.5 }}
                   className="text-5xl sm:text-6xl font-extrabold font-display text-ink/15 transition-colors"
                 >
@@ -161,7 +161,7 @@ export function HowItWorksSteps() {
               <div className="w-[78%] sm:w-[80%] max-w-[80%] space-y-3.5 relative z-10 pr-3 sm:pr-5">
                 <div className="flex items-center justify-between pb-3 border-b border-line-card/60">
                   <div className="flex items-center gap-2">
-                    <ShieldCheck className="h-5 w-5 text-coral" />
+                    <ShieldCheck className="h-5 w-5 text-primary" />
                     <span className="text-sm font-extrabold text-ink">Supervisor Protected</span>
                   </div>
                   <span className="rounded-full bg-warning-bg px-2.5 py-0.5 text-[10px] font-extrabold text-warning-ink border border-warning-dot/20">
@@ -175,7 +175,7 @@ export function HowItWorksSteps() {
                     <span className="font-extrabold text-ink">95% complete</span>
                   </div>
                   <div className="h-2 w-full rounded-full bg-subtle overflow-hidden">
-                    <div className="h-full w-[95%] rounded-full bg-coral" />
+                    <div className="h-full w-[95%] rounded-full bg-primary" />
                   </div>
                 </div>
 
@@ -188,7 +188,7 @@ export function HowItWorksSteps() {
               {/* Dedicated 20% reserved exclusively for number */}
               <div className="w-[22%] sm:w-[20%] flex items-center justify-center select-none pointer-events-none shrink-0 border-l border-line-card/40 pl-2">
                 <motion.span 
-                  whileInView={reduceMotion ? undefined : { scale: 1.15, textShadow: "0px 0px 20px rgba(var(--color-coral-rgb), 0.5)", color: "var(--color-coral)" }}
+                  whileInView={reduceMotion ? undefined : { scale: 1.15, textShadow: "0px 0px 20px rgba(var(--color-primary-rgb), 0.5)", color: "var(--color-primary)" }}
                   transition={{ duration: 0.5 }}
                   className="text-5xl sm:text-6xl font-extrabold font-display text-ink/15 transition-colors"
                 >
@@ -200,14 +200,14 @@ export function HowItWorksSteps() {
             {/* Step 02 Copy */}
             <div className="order-1 lg:order-2 space-y-4">
               <div className="flex items-center gap-3">
-                <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-coral-light text-coral border border-line-card/40">
+                <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary-light text-primary border border-line-card/40">
                   <CheckCircle2 className="h-5 w-5" />
                 </span>
                 <div>
                   <span className="text-xs font-extrabold uppercase tracking-widest text-ink-muted font-display block">
                     STEP 02
                   </span>
-                  <span className="text-[11px] font-bold text-coral">Execution</span>
+                  <span className="text-[11px] font-bold text-primary">Execution</span>
                 </div>
               </div>
 
@@ -218,7 +218,7 @@ export function HowItWorksSteps() {
                 Accept the offer when the scope and deadline work for you. Your supervisor reviews drafts and handles the client side, so you do not need to identify or chase the client.
               </p>
               <div className="pt-2">
-                <div className="inline-flex items-center gap-2 text-sm font-bold text-coral hover:underline">
+                <div className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:underline">
                   <span>Zero direct client messaging hassle</span>
                   <ArrowRight className="h-4 w-4" />
                 </div>
@@ -237,7 +237,7 @@ export function HowItWorksSteps() {
             {/* Step 03 Copy */}
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-lime text-ink border border-line-card/40">
+                <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-accent text-ink border border-line-card/40">
                   <Wallet className="h-5 w-5" />
                 </span>
                 <div>
@@ -256,7 +256,7 @@ export function HowItWorksSteps() {
               </p>
               <div className="pt-2">
                 <div className="inline-flex items-center gap-2 text-sm font-bold text-success-ink hover:underline">
-                  <span>Payout guaranteed upfront</span>
+                  <span>Payout fixed upfront</span>
                   <ArrowRight className="h-4 w-4" />
                 </div>
               </div>
@@ -296,7 +296,7 @@ export function HowItWorksSteps() {
               {/* Dedicated 20% reserved exclusively for number */}
               <div className="w-[22%] sm:w-[20%] flex items-center justify-center select-none pointer-events-none shrink-0 border-l border-line-card/40 pl-2">
                 <motion.span 
-                  whileInView={reduceMotion ? undefined : { scale: 1.15, textShadow: "0px 0px 20px rgba(var(--color-coral-rgb), 0.5)", color: "var(--color-coral)" }}
+                  whileInView={reduceMotion ? undefined : { scale: 1.15, textShadow: "0px 0px 20px rgba(var(--color-primary-rgb), 0.5)", color: "var(--color-primary)" }}
                   transition={{ duration: 0.5 }}
                   className="text-5xl sm:text-6xl font-extrabold font-display text-ink/15 transition-colors"
                 >

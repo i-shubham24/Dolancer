@@ -63,10 +63,10 @@ export function WorkPage() {
 
   return (
     <motion.div className="relative space-y-7" initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }}>
-      <div className="pointer-events-none absolute -right-20 -top-24 -z-10 h-72 w-72 rounded-full bg-blue-light/70 blur-3xl" aria-hidden="true" />
-      <header className="flex flex-wrap items-end justify-between gap-4 rounded-[1.75rem] border border-line-card bg-gradient-to-br from-blue-light/70 via-surface to-purple-light/60 p-6 shadow-soft-md sm:p-8">
+      <div className="pointer-events-none absolute -right-20 -top-24 -z-10 h-72 w-72 rounded-full bg-secondary-light/70 blur-3xl" aria-hidden="true" />
+      <header className="flex flex-wrap items-end justify-between gap-4 rounded-[1.75rem] border border-line-card bg-gradient-to-br from-secondary-light/70 via-surface to-highlight-light/60 p-6 shadow-soft-md sm:p-8">
         <div>
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-surface/80 px-3 py-1 text-xs font-bold uppercase tracking-wider text-blue shadow-soft-sm">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-surface/80 px-3 py-1 text-xs font-bold uppercase tracking-wider text-secondary shadow-soft-sm">
             <span className="h-2 w-2 rounded-full bg-secondary" aria-hidden="true" /> Active pipeline
           </div>
           <h1 className="text-3xl font-extrabold tracking-[-0.045em] sm:text-4xl">My workbench</h1>
@@ -100,10 +100,10 @@ export function WorkPage() {
           <EmptyState
             icon={<Inbox className="h-6 w-6" aria-hidden="true" />}
             title="Nothing on your plate"
-            description="When you claim work from the board it lands here, grouped by what needs doing next."
+            description="When you accept an assigned offer it lands here, grouped by what needs doing next."
             action={
               <Button asChild>
-                <Link to="/pool">Browse the board</Link>
+                <Link to="/pool">View assigned offers</Link>
               </Button>
             }
           />

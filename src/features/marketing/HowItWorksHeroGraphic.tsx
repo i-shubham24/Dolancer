@@ -55,8 +55,8 @@ export function HowItWorksHeroGraphic() {
 
         {/* Action Button */}
         <Link 
-          to="/board"
-          className="w-full flex items-center justify-between rounded-full bg-purple text-inverse px-6 py-4 cursor-pointer hover:bg-purple-hover hover:scale-[1.02] active:scale-[0.98] transition-all shadow-soft-sm group"
+          to="/sign-up"
+          className="w-full flex items-center justify-between rounded-full bg-highlight text-inverse px-6 py-4 cursor-pointer hover:bg-highlight-hover hover:scale-[1.02] active:scale-[0.98] transition-all shadow-soft-sm group"
         >
           <span className="font-bold text-[15px]">View brief</span>
           <ArrowUpRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

@@ -26,7 +26,7 @@ export function LifecycleActions({ project }: { project: DoerProject }) {
 
   if (project.status === "in_review" || project.status === "delivered") {
     return (
-      <Card className="bg-purple-light">
+      <Card className="bg-highlight-light">
         <h3 className="text-sm font-extrabold tracking-[-0.01em]">
           {project.status === "in_review" ? "With your supervisor" : "Awaiting approval"}
         </h3>
@@ -91,12 +91,12 @@ export function LifecycleActions({ project }: { project: DoerProject }) {
               disabled={!gates.canSetProgress || busy}
               onChange={(event) => setPct(Number(event.target.value))}
               className={cn(
-                "w-full accent-coral",
+                "w-full accent-primary",
                 !gates.canSetProgress && "cursor-not-allowed opacity-45",
               )}
             />
             <Button
-              variant="secondary"
+              variant="outline"
               size="sm"
               className="w-full"
               disabled={!gates.canSetProgress || busy || pct === project.progressPct}

@@ -32,7 +32,7 @@ interface Action {
 
 const ACTIONS: Action[] = [
   { id: "dashboard", label: "Dashboard", hint: "Home", to: "/dashboard", icon: LayoutDashboard, keywords: "home overview start" },
-  { id: "pool", label: "Browse the board", hint: "Claim work", to: "/pool", icon: Layers, keywords: "board jobs claim tasks offers" },
+  { id: "pool", label: "View assigned offers", hint: "Accept work", to: "/pool", icon: Layers, keywords: "assigned offers accept tasks projects" },
   { id: "work", label: "My work", hint: "Active projects", to: "/work", icon: Briefcase, keywords: "projects active tasks progress submit" },
   { id: "earnings", label: "Earnings", hint: "Payouts", to: "/earnings", icon: Wallet, keywords: "money payout pay tax tds earnings" },
   { id: "alerts", label: "Alerts", hint: "Notifications", to: "/notifications", icon: Bell, keywords: "notifications alerts updates" },
@@ -125,7 +125,7 @@ export function CommandMenu() {
                   if (picked) go(picked.to);
                 }
               }}
-              placeholder="Where to? Try earnings, board, training..."
+              placeholder="Where to? Try earnings, offers, training..."
               aria-label="Where to"
               autoComplete="off"
               spellCheck={false}
@@ -139,7 +139,7 @@ export function CommandMenu() {
           <ul role="listbox" aria-label="Destinations" className="max-h-[50vh] overflow-y-auto p-2">
             {results.length === 0 ? (
               <li className="px-3 py-6 text-center text-sm text-ink-2">
-                Nothing matches that. Try board, earnings or training.
+                Nothing matches that. Try offers, earnings or training.
               </li>
             ) : (
               results.map((action, index) => (
@@ -161,7 +161,7 @@ export function CommandMenu() {
                     <span
                       className={cn(
                         "flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-line-card",
-                        index === active ? "bg-lime" : "bg-surface-2",
+                        index === active ? "bg-accent" : "bg-surface-2",
                       )}
                     >
                       <action.icon className="h-4 w-4" aria-hidden="true" />

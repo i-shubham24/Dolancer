@@ -14,6 +14,7 @@ import type { PoolOffer } from "@/types/domain";
 import { usePool } from "./queries";
 import { PoolCard } from "./PoolCard";
 import { ClaimDrawer } from "./ClaimDrawer";
+import { RouteLineLoader } from "@/components/motion/RouteLineLoader";
 import { useBoardNotify } from "./useBoardNotify";
 import { StitchOrbitalGraphic } from "@/components/stitch/StitchPrimitives";
 
@@ -44,13 +45,13 @@ export function PoolPage() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
     >
-      <div className="pointer-events-none absolute -left-24 -top-24 -z-10 h-72 w-72 rounded-full bg-purple-light/70 blur-3xl" aria-hidden="true" />
-      <div className="pointer-events-none absolute right-0 top-40 -z-10 h-64 w-64 rounded-full bg-blue-light/70 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute -left-24 -top-24 -z-10 h-72 w-72 rounded-full bg-highlight-light/70 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute right-0 top-40 -z-10 h-64 w-64 rounded-full bg-secondary-light/70 blur-3xl" aria-hidden="true" />
 
-      <header className="relative overflow-hidden rounded-[1.75rem] border border-line-card bg-gradient-to-br from-purple-light/80 via-surface to-blue-light/60 p-6 shadow-soft-md sm:p-8">
+      <header className="relative overflow-hidden rounded-[1.75rem] border border-line-card bg-gradient-to-br from-highlight-light/80 via-surface to-secondary-light/60 p-6 shadow-soft-md sm:p-8">
         <StitchOrbitalGraphic className="absolute -right-10 -top-10 h-48 w-48 opacity-70" />
         <div className="relative max-w-2xl">
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-surface/80 px-3 py-1 text-xs font-bold uppercase tracking-wider text-purple shadow-soft-sm">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-surface/80 px-3 py-1 text-xs font-bold uppercase tracking-wider text-highlight shadow-soft-sm">
             <span className="h-2 w-2 animate-pulse rounded-full bg-secondary" aria-hidden="true" />
             Private offer desk
           </div>
@@ -66,7 +67,7 @@ export function PoolPage() {
         </div>
         <div className="relative mt-5 flex flex-wrap items-center justify-between gap-3">
           <div className="inline-flex items-center gap-2 text-xs font-bold text-ink-2">
-            <ClipboardCheck className="h-4 w-4 text-purple" aria-hidden="true" />
+            <ClipboardCheck className="h-4 w-4 text-highlight" aria-hidden="true" />
             Offers are private to your account
           </div>
           <AvailabilityToggle />
@@ -94,7 +95,7 @@ export function PoolPage() {
               : "Your supervisor can route an offer while you have capacity."}
           </span>
           {atCap ? (
-            <Button asChild size="sm" variant="secondary" className="w-full sm:ml-auto sm:w-auto">
+            <Button asChild size="sm" variant="outline" className="w-full sm:ml-auto sm:w-auto">
               <Link to="/work">Go to my work</Link>
             </Button>
           ) : null}
@@ -106,7 +107,7 @@ export function PoolPage() {
           <ShieldCheck className="h-4 w-4 text-success-ink" aria-hidden="true" />
           {pool.isLoading ? "Checking your offers..." : `${offers.length} assigned offer${offers.length === 1 ? "" : "s"}`}
         </div>
-        <span className="text-xs font-semibold text-ink-muted">Offers are routed manually, not claimed from a public pool.</span>
+        <span className="text-xs font-semibold text-ink-muted">Offers are routed individually by supervisors.</span>
       </div>
 
       {pool.isLoading ? (
@@ -141,16 +142,23 @@ export function PoolPage() {
           />
         ) : (
           <EmptyState
-            icon={<Layers className="h-6 w-6" aria-hidden="true" />}
+            icon={null}
             title="No assigned offers right now"
-            description={watching ? "You are watching for new routing activity. Your supervisor will send an offer when a suitable project is ready." : "Suitable projects are routed by supervisors. Keep your disciplines and availability current so the team knows when to consider you."}
+            description={
+              <>
+                <div className="flex justify-center -mt-6 mb-2">
+                  <RouteLineLoader label="Waiting for supervisor routing..." />
+                </div>
+                <p>{watching ? "You are watching for new routing activity. Your supervisor will send an offer when a suitable project is ready." : "Suitable projects are routed by supervisors. Keep your disciplines and availability current so the team knows when to consider you."}</p>
+              </>
+            }
             action={
               <div className="flex flex-wrap justify-center gap-2">
                 <Button variant={watching ? "secondary" : "primary"} onClick={toggleWatch}>
                   <BellRing className="h-4 w-4" aria-hidden="true" />
                   {watching ? "Watching. Turn off" : "Notify me about routing"}
                 </Button>
-                <Button asChild variant="secondary"><Link to="/skills">Review my disciplines</Link></Button>
+                <Button asChild variant="outline"><Link to="/skills">Review my disciplines</Link></Button>
               </div>
             }
           />

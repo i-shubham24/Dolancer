@@ -35,7 +35,7 @@ export function RouteError() {
             <RotateCw className="h-4 w-4" aria-hidden="true" />
             Try again
           </Button>
-          <Button asChild variant="secondary">
+          <Button asChild variant="outline">
             <Link to="/dashboard">
               <LayoutDashboard className="h-4 w-4" aria-hidden="true" />
               Back to dashboard

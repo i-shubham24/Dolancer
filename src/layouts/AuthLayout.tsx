@@ -15,7 +15,7 @@ export function AuthLayout() {
         <div className="auth-art-shape auth-art-shape-one absolute -right-16 -top-16 h-72 w-72 rotate-12 rounded-[4rem] bg-primary-light shadow-soft-lg" />
         <div className="auth-art-shape auth-art-shape-two absolute -bottom-24 -left-10 h-80 w-80 -rotate-6 rounded-full bg-secondary-light shadow-soft-lg" />
         <div className="auth-art-shape auth-art-shape-three absolute right-24 top-1/3 h-40 w-40 rotate-[18deg] rounded-[3rem] bg-accent-light shadow-soft-lg" />
-        <div className="auth-art-shape auth-art-shape-four absolute left-1/4 top-1/4 h-28 w-28 rounded-full bg-coral-light/70 blur-sm" />
+        <div className="auth-art-shape auth-art-shape-four absolute left-1/4 top-1/4 h-28 w-28 rounded-full bg-primary-light/70 blur-sm" />
 
         <div className="relative flex h-full items-end p-10 xl:p-12">
           <blockquote className="auth-art-quote max-w-sm rounded-[2rem] bg-surface/90 p-6 shadow-soft-lg">

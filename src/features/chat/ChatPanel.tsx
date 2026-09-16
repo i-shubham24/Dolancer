@@ -169,7 +169,7 @@ export function ChatPanel({ projectId }: { projectId: string }) {
                 <div
                   className={cn(
                     "max-w-[85%] rounded-xl border border-line-card px-3.5 py-2.5 shadow-soft-sm",
-                    mine ? "bg-lime" : "bg-surface-2",
+                    mine ? "bg-accent" : "bg-surface-2",
                   )}
                 >
                   <div className="text-2xs font-extrabold uppercase tracking-[0.05em] text-ink-muted">

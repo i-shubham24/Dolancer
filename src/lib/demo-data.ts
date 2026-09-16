@@ -170,7 +170,7 @@ const FINTECH_ARTICLES_ID = "e71b3a09-4c2d-4e8f-a5b6-3d9c0f2e7a14";
 const activeProjects: DoerProject[] = [
   makeProject({
     id: BLOG_SERIES_ID,
-    category: "Content Writing",
+    category: "Writing & Content",
     status: "in_progress",
     brief:
       "Eight blog posts on cloud cost optimisation\n\n" +
@@ -185,7 +185,7 @@ const activeProjects: DoerProject[] = [
   }),
   makeProject({
     id: LAUNCH_CALENDAR_ID,
-    category: "Social Media",
+    category: "Marketing",
     status: "in_review",
     brief:
       "30-day launch calendar for a B2B software product\n\n" +
@@ -204,7 +204,7 @@ const activeProjects: DoerProject[] = [
 const closedProjects: DoerProject[] = [
   makeProject({
     id: FINTECH_ARTICLES_ID,
-    category: "Content Writing",
+    category: "Writing & Content",
     status: "approved",
     brief:
       "Five thought leadership articles on fintech\n\n" +
@@ -218,7 +218,7 @@ const closedProjects: DoerProject[] = [
   }),
   makeProject({
     id: "8d4c6f2a-1b7e-4a93-9c05-e6b2d8a1f437",
-    category: "SEO",
+    category: "Marketing",
     status: "approved",
     brief:
       "On-page SEO for 15 product pages\n\n" +
@@ -232,7 +232,7 @@ const closedProjects: DoerProject[] = [
   }),
   makeProject({
     id: "b5e0a8c3-7f19-4d6b-8e24-0a3c9f5d1b62",
-    category: "Content Writing",
+    category: "Writing & Content",
     status: "approved",
     brief:
       "Four customer case studies for an EdTech platform\n\n" +
@@ -246,7 +246,7 @@ const closedProjects: DoerProject[] = [
   }),
   makeProject({
     id: "4a9f1e6d-3c28-4b7a-a0d5-8f6e2c1b9a73",
-    category: "Social Media",
+    category: "Marketing",
     status: "approved",
     brief:
       "Quarterly social content for a skincare brand\n\n" +
@@ -260,7 +260,7 @@ const closedProjects: DoerProject[] = [
   }),
   makeProject({
     id: "f2c7b9e4-6d31-4a58-b8f0-5e1a3d7c0b29",
-    category: "SEO",
+    category: "Marketing",
     status: "approved",
     brief:
       "SEO content hub of 12 articles\n\n" +
@@ -294,7 +294,7 @@ const taxWithheldPaise = Math.round(grossPaise / 10);
 const pool: PoolOffer[] = [
   {
     id: "9e3d5b18-2f6a-4c7e-b9a1-4d8c0e6f2a53",
-    category: "Content Writing",
+    category: "Writing & Content",
     status: "paid",
     payoutPaise: 1_200_000,
     deliveryAt: daysFromNow(7),
@@ -305,7 +305,7 @@ const pool: PoolOffer[] = [
   },
   {
     id: "0e5c9a2b-4d86-4f13-b7e0-9a1d6c3f8e47",
-    category: "Copywriting",
+    category: "Writing & Content",
     status: "paid",
     payoutPaise: 650_000,
     deliveryAt: daysFromNow(5),
@@ -316,18 +316,18 @@ const pool: PoolOffer[] = [
   },
   {
     id: "1c6a8e40-7b3d-4f29-a6e5-0d2f9b4c7e81",
-    category: "SEO",
+    category: "Marketing",
     status: "paid",
     payoutPaise: 750_000,
     deliveryAt: daysFromNow(5),
     createdAt: daysAgo(0.6),
     brief:
       "On-page SEO pass for 20 landing pages\n\n" +
-      "Keyword mapping, rewritten titles and meta descriptions, and an internal linking plan, delivered in a single sheet. The search console export is shared once you claim.",
+      "Keyword mapping, rewritten titles and meta descriptions, and an internal linking plan, delivered in a single sheet. The search console export is shared once you accept.",
   },
   {
     id: "6b2f4d97-8e1c-4a05-9d3b-7c5e1a8f0b24",
-    category: "Social Media",
+    category: "Marketing",
     status: "paid",
     payoutPaise: 350_000,
     deliveryAt: daysFromNow(4),
@@ -338,7 +338,7 @@ const pool: PoolOffer[] = [
   },
   {
     id: "d8a1c5e3-0f47-4b92-8a6d-2e9b7f3c1d05",
-    category: "Content Writing",
+    category: "Writing & Content",
     status: "paid",
     payoutPaise: 500_000,
     deliveryAt: daysFromNow(6),
@@ -410,22 +410,22 @@ export const demo: DemoState = {
   ledger,
 
   skills: [
-    { id: "skill-blog", name: "Blog writing", category: "Content Writing", selected: true },
-    { id: "skill-content", name: "Content writing", category: "Content Writing", selected: true },
-    { id: "skill-case-studies", name: "Case studies", category: "Content Writing", selected: false },
-    { id: "skill-whitepapers", name: "Whitepapers", category: "Content Writing", selected: false },
-    { id: "skill-seo-writing", name: "SEO writing", category: "SEO", selected: true },
-    { id: "skill-keywords", name: "Keyword research", category: "SEO", selected: false },
-    { id: "skill-on-page", name: "On-page SEO", category: "SEO", selected: false },
-    { id: "skill-social-copy", name: "Social media copy", category: "Social Media", selected: true },
-    { id: "skill-calendars", name: "Content calendars", category: "Social Media", selected: false },
-    { id: "skill-ad-copy", name: "Ad copy", category: "Copywriting", selected: false },
-    { id: "skill-email", name: "Email campaigns", category: "Copywriting", selected: false },
-    { id: "skill-landing", name: "Landing pages", category: "Copywriting", selected: false },
+    { id: "skill-blog", name: "Blog writing", category: "Writing & Content", selected: true },
+    { id: "skill-content", name: "Content writing", category: "Writing & Content", selected: true },
+    { id: "skill-case-studies", name: "Case studies", category: "Writing & Content", selected: false },
+    { id: "skill-whitepapers", name: "Whitepapers", category: "Writing & Content", selected: false },
+    { id: "skill-seo-writing", name: "SEO writing", category: "Marketing", selected: true },
+    { id: "skill-keywords", name: "Keyword research", category: "Marketing", selected: false },
+    { id: "skill-on-page", name: "On-page SEO", category: "Marketing", selected: false },
+    { id: "skill-social-copy", name: "Social media copy", category: "Marketing", selected: true },
+    { id: "skill-calendars", name: "Content calendars", category: "Marketing", selected: false },
+    { id: "skill-ad-copy", name: "Ad copy", category: "Writing & Content", selected: false },
+    { id: "skill-email", name: "Email campaigns", category: "Writing & Content", selected: false },
+    { id: "skill-landing", name: "Landing pages", category: "Writing & Content", selected: false },
     { id: "skill-slides", name: "Presentation design", category: "Design", selected: false },
     { id: "skill-graphics", name: "Social graphics", category: "Design", selected: false },
-    { id: "skill-market", name: "Market research", category: "Research", selected: false },
-    { id: "skill-surveys", name: "Survey analysis", category: "Research", selected: false },
+    { id: "skill-market", name: "Market research", category: "Research & Business", selected: false },
+    { id: "skill-surveys", name: "Survey analysis", category: "Research & Business", selected: false },
   ],
 
   lessons: [
@@ -435,9 +435,9 @@ export const demo: DemoState = {
       moduleOrder: 1,
       completed: true,
       body:
-        "Every project is scoped by a supervisor before it reaches you. They turn the request into a clear brief, set the deadline and fix your payout, so anything on the board is ready to work on.\n\n" +
-        "The board only shows work in categories you have picked on the Skills page, and only while you are set to Available. If it looks empty, check those two things first.\n\n" +
-        "A claim is yours the moment you make it, and the first qualified claim wins. Read the brief and the deadline before you commit, because each claim uses one of your three slots.",
+        "Every project is scoped by a supervisor before it reaches you. They turn the request into a clear brief, set the deadline and fix your payout, so anything assigned to you is ready to work on.\n\n" +
+        "You will only receive offers in categories you have picked on the Skills page, and only while you are set to Available. If you are not receiving offers, check those two things first.\n\n" +
+        "An offer is yours the moment you accept it. Read the brief and the deadline before you commit, because each accepted offer uses one of your three slots.",
       questions: [
         {
           id: "lesson-1-q1",
@@ -508,7 +508,7 @@ export const demo: DemoState = {
       body:
         "Your supervisor is your only point of contact on a project. You never deal with the client directly, and the client never learns who you are.\n\n" +
         "Ask early. A short message when something in the brief is unclear saves a round of changes later.\n\n" +
-        "Your payout is fixed when you claim and released once the work is approved. Tax is withheld at release and shown on your earnings page, so the figures there always reconcile.",
+        "Your payout is fixed when you accept an offer and released once the work is approved. Tax is withheld at release and shown on your earnings page, so the figures there always reconcile.",
       questions: [
         {
           id: "lesson-3-q1",
@@ -520,7 +520,7 @@ export const demo: DemoState = {
           id: "lesson-3-q2",
           prompt: "When is your payout released?",
           options: [
-            "When you claim",
+            "When you accept an offer",
             "When you submit",
             "Once the work is approved",
             "At the end of the year",

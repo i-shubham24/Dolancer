@@ -8,11 +8,9 @@ import {
   StitchSection,
 } from "@/components/stitch/StitchPrimitives";
 import { HeroCardStack } from "./HeroCardStack";
-import { MetricsBar } from "./MetricsBar";
 import { HowItWorksSteps } from "./HowItWorksSteps";
 import { AnimatedMarquee } from "./AnimatedMarquee";
 import { FeaturesGrid } from "./FeaturesGrid";
-import { NumbersSection } from "./NumbersSection";
 import { TestimonialsSection } from "./TestimonialsSection";
 import { CtaBanner } from "./CtaBanner";
 import { PayoutExplainer } from "./PayoutExplainer";
@@ -51,7 +49,7 @@ export function LandingPage() {
             className="fresh-hero-copy"
           >
             <StitchBadge tone="brand">
-              <Sparkles className="h-3.5 w-3.5 text-coral" />
+              <Sparkles className="h-3.5 w-3.5 text-primary" />
               India's Premier Freelance Intelligence Network
             </StitchBadge>
 
@@ -85,26 +83,26 @@ export function LandingPage() {
               <StitchButton asChild variant="primary" className="px-8 py-4 text-base">
                 <Link to="/sign-up">
                   <Sparkles className="h-4 w-4" />
-                  Start Earning Today
+                  Join the verified doer network
                   <ArrowRight className="h-4 w-4 ml-1" />
                 </Link>
               </StitchButton>
 
-              <StitchButton asChild variant="secondary" className="px-7 py-4 text-base">
-                <Link to="/pool">
+              <StitchButton asChild variant="outline" className="px-7 py-4 text-base">
+                <Link to="/how-it-works">
                   <Briefcase className="h-4 w-4 mr-1 text-ink-2" />
-                  See how offers work
+                  See how supervision works
                 </Link>
               </StitchButton>
             </div>
 
             <div className="fresh-trust-row">
               <span>
-                <CheckCircle2 className="h-4 w-4 text-coral" />
+                <CheckCircle2 className="h-4 w-4 text-primary" />
                 Pay agreed upfront
               </span>
               <span>
-                <CheckCircle2 className="h-4 w-4 text-blue" />
+                <CheckCircle2 className="h-4 w-4 text-secondary" />
                 Supervisor reviewed
               </span>
               <span>
@@ -126,9 +124,6 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* Social Proof / Trusted By */}
-      <MetricsBar />
-
       {/* 3 Steps: How Dolancers Earn - D */}
       <div className="relative overflow-clip">
         <BackdropLetter letter="D" position="left" offsetY="25%" />
@@ -142,7 +137,7 @@ export function LandingPage() {
           the neighbouring sections. */}
       <div className="relative overflow-clip" aria-hidden="true">
           <CurvedLoop
-          marqueeText="Writing & Content ✦ Design ✦ Creative & Media ✦ IT & Software ✦ AI Automations ✦ Marketing ✦ Research & Business ✦ "
+          marqueeText="Writing & Content ✦ Design ✦ Creative & Media ✦ IT & Software ✦ AI Agents & Automations ✦ Marketing ✦ Research & Business ✦ Something Else ✦ "
           speed={1.6}
           curveAmount={-170}
           direction="right"
@@ -163,13 +158,6 @@ export function LandingPage() {
         {/* Swarm two - vivid lime→purple - floating over the benefits grid. */}
         
         <FeaturesGrid />
-      </div>
-
-      {/* Numbers That Speak - A */}
-      <div className="relative overflow-clip">
-        <BackdropLetter letter="A" position="right" offsetY="25%" />
-        <MicroFloaties zone="numbers" />
-        <NumbersSection />
       </div>
 
       {/* Payout Explainer Interactive Slider with Curvy Borders (No Straight Lines) - N */}

@@ -18,14 +18,14 @@ export function WorkingLinkCard({
     <div
       className={cn(
         "relative overflow-hidden rounded-2xl border border-line-card p-4 shadow-soft-md",
-        hasLink ? "bg-surface" : "bg-gradient-to-br from-warning-bg via-surface to-lime-light",
+        hasLink ? "bg-surface" : "bg-gradient-to-br from-warning-bg via-surface to-accent-light",
       )}
     >
       <div className="flex items-center gap-2">
         <span
           className={cn(
             "flex h-8 w-8 items-center justify-center rounded-full border border-line-card",
-            hasLink ? "bg-success-bg text-success-ink" : "bg-lime-light text-warning-ink",
+            hasLink ? "bg-success-bg text-success-ink" : "bg-accent-light text-warning-ink",
           )}
         >
           {hasLink ? (
@@ -50,7 +50,7 @@ export function WorkingLinkCard({
             href={workingDocUrl ?? "#"}
             target="_blank"
             rel="noreferrer noopener"
-            className="flex items-center gap-1.5 break-all text-xs font-bold text-blue underline decoration-2 underline-offset-2 hover:text-blue-hover"
+            className="flex items-center gap-1.5 break-all text-xs font-bold text-secondary underline decoration-2 underline-offset-2 hover:text-secondary-hover"
           >
             <ExternalLink className="h-3 w-3 shrink-0" aria-hidden="true" />
             {workingDocUrl}

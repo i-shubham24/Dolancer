@@ -218,7 +218,7 @@ export function AnimatedMarquee() {
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-10">
           <StitchBadge tone="neutral">
-            <Sparkles className="h-3.5 w-3.5 text-coral" />
+            <Sparkles className="h-3.5 w-3.5 text-primary" />
             Disciplines & offer examples
           </StitchBadge>
           <h2 className="mt-4 text-3xl sm:text-5xl font-extrabold text-ink tracking-[-0.04em] font-display">
@@ -241,7 +241,7 @@ export function AnimatedMarquee() {
                 className={`rounded-full px-4 py-2 text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${
                   isActive
                     ? "bg-ink text-inverse shadow-soft-sm scale-[1.02]"
-                    : "bg-surface border border-line-card text-ink-2 hover:border-coral/40 hover:text-ink"
+                    : "bg-surface border border-line-card text-ink-2 hover:border-primary/40 hover:text-ink"
                 }`}
               >
                 {cat.label}
@@ -264,15 +264,15 @@ export function AnimatedMarquee() {
                   onClick={() => setSelectedId(d.id)}
                   className={`w-full group relative flex items-center gap-3 rounded-2xl border px-4 py-3 text-left transition-all duration-200 cursor-pointer ${
                     isSelected
-                      ? "border-coral bg-coral-light/30 shadow-soft-md ring-2 ring-coral/20 -translate-y-0.5"
-                      : "border-line-card bg-surface hover:border-coral/40 hover:shadow-soft-xs hover:-translate-y-0.5"
+                      ? "border-primary bg-primary-light/30 shadow-soft-md ring-2 ring-primary/20 -translate-y-0.5"
+                      : "border-line-card bg-surface hover:border-primary/40 hover:shadow-soft-xs hover:-translate-y-0.5"
                   }`}
                 >
                   <div
                     className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-xl transition-colors ${
                       isSelected
-                        ? "bg-coral text-white"
-                        : "bg-subtle text-ink-2 group-hover:bg-coral-light group-hover:text-coral"
+                        ? "bg-primary text-white"
+                        : "bg-subtle text-ink-2 group-hover:bg-primary-light group-hover:text-primary"
                     }`}
                   >
                     <Icon className="h-4 w-4" />
@@ -283,14 +283,14 @@ export function AnimatedMarquee() {
                       {d.name}
                     </span>
                     <div className="mt-0.5 flex items-center gap-2 text-[11px] font-semibold text-ink-muted">
-                      <span className="text-coral font-bold">{d.briefsCount} offer examples</span>
+                      <span className="text-primary font-bold">{d.briefsCount} offer examples</span>
                       <span>·</span>
                       <span>Avg. {d.avgPay}</span>
                     </div>
                   </div>
 
                   {isSelected && (
-                    <span className="ml-auto h-2 w-2 rounded-full bg-coral animate-pulse" />
+                    <span className="ml-auto h-2 w-2 rounded-full bg-primary animate-pulse" />
                   )}
                 </button>
               );
@@ -311,7 +311,7 @@ export function AnimatedMarquee() {
                 {/* Top Badge & Upfront Pay Header */}
                 <div className="flex items-center justify-between pb-4 border-b border-line-card mb-4">
                   <div className="flex items-center gap-2">
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-coral-light px-3 py-1 text-xs font-bold text-coral">
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-light px-3 py-1 text-xs font-bold text-primary">
                       <Sparkles className="h-3 w-3" />
                       Offer example
                     </span>
@@ -322,7 +322,7 @@ export function AnimatedMarquee() {
 
                   <div className="text-right">
                     <span className="text-xs font-semibold text-ink-muted block">Fixed Pay</span>
-                    <span className="text-xl sm:text-2xl font-extrabold text-coral font-display">
+                    <span className="text-xl sm:text-2xl font-extrabold text-primary font-display">
                       {activeDiscipline.sampleBrief.pay}
                     </span>
                   </div>
@@ -337,14 +337,14 @@ export function AnimatedMarquee() {
                 <div className="rounded-xl bg-surface-2 p-3 border border-line-card/60 space-y-2 mb-4 text-xs font-medium text-ink-2">
                   <div className="flex items-center justify-between">
                     <span className="flex items-center gap-1.5 text-ink-muted">
-                      <Clock className="h-3.5 w-3.5 text-coral" /> Turnaround:
+                      <Clock className="h-3.5 w-3.5 text-primary" /> Turnaround:
                     </span>
                     <span className="font-bold text-ink">{activeDiscipline.sampleBrief.deadline}</span>
                   </div>
 
                   <div className="flex items-center justify-between">
                     <span className="flex items-center gap-1.5 text-ink-muted">
-                      <CheckCircle2 className="h-3.5 w-3.5 text-blue" /> Supervisor review:
+                      <CheckCircle2 className="h-3.5 w-3.5 text-secondary" /> Supervisor review:
                     </span>
                     <span className="font-bold text-ink">{activeDiscipline.sampleBrief.supervisor}</span>
                   </div>
@@ -358,7 +358,7 @@ export function AnimatedMarquee() {
                   <div className="space-y-1.5">
                     {activeDiscipline.sampleBrief.requirements.map((req, rIdx) => (
                       <div key={rIdx} className="flex items-center gap-2 text-xs font-semibold text-ink-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-coral shrink-0" />
+                        <span className="h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
                         <span>{req}</span>
                       </div>
                     ))}

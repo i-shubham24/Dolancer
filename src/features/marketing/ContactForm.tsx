@@ -122,7 +122,7 @@ export function ContactForm() {
             id="contact-category"
             value={category}
             onChange={(event) => setCategory(event.target.value)}
-            className="w-full rounded-xl border border-line-card bg-surface px-4 py-[11px] text-sm font-medium shadow-soft-sm outline-none transition-all focus:border-purple focus:ring-4 focus:ring-purple/15"
+            className="w-full rounded-xl border border-line-card bg-surface px-4 py-[11px] text-sm font-medium shadow-soft-sm outline-none transition-all focus:border-highlight focus:ring-4 focus:ring-highlight/15"
           >
             {TICKET_CATEGORIES.map((option) => (
               <option key={option.id} value={option.id}>

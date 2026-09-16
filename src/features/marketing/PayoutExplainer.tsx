@@ -63,7 +63,7 @@ export function PayoutExplainer() {
               step={500}
               value={rupees}
               onChange={(event) => setRupees(Number(event.target.value))}
-              className="mt-3 w-full accent-coral"
+              className="mt-3 w-full accent-primary"
             />
           </div>
 
@@ -85,7 +85,7 @@ export function PayoutExplainer() {
               step={1}
               value={ratePercent}
               onChange={(event) => setRatePercent(Number(event.target.value))}
-              className="mt-3 w-full accent-blue"
+              className="mt-3 w-full accent-secondary"
             />
             <p className="mt-2 text-xs text-ink-muted">
               Set this yourself. Your actual rate depends on your tax status, and we apply the
@@ -148,7 +148,7 @@ export function PayoutExplainer() {
               aria-hidden="true"
             >
               <div
-                className="bg-lime transition-[width] duration-200"
+                className="bg-accent transition-[width] duration-200"
                 style={{ width: `${netShare}%` }}
               />
               <div

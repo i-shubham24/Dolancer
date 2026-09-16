@@ -21,7 +21,7 @@ export function TrainingPage() {
         <h1 className="text-4xl font-extrabold tracking-[-0.035em]">Training</h1>
         <p className="mt-2 max-w-2xl text-md text-ink-2">
           Short modules on how work is briefed, reviewed and delivered here. Finishing them
-          is one of the steps that unlocks claiming.
+          is one of the steps that unlocks receiving offers.
         </p>
       </header>
 
@@ -31,7 +31,7 @@ export function TrainingPage() {
             <span className="text-xs font-extrabold uppercase tracking-[0.05em] text-ink-muted">
               Progress
             </span>
-            <span className="rounded-full border border-line-card bg-lime px-2.5 py-0.5 text-2xs font-extrabold">
+            <span className="rounded-full border border-line-card bg-accent px-2.5 py-0.5 text-2xs font-extrabold">
               {done} of {items.length}
             </span>
           </div>
@@ -44,7 +44,7 @@ export function TrainingPage() {
             aria-label="Training progress"
           >
             <div
-              className="h-full rounded-full bg-lime transition-[width] duration-500 ease-spring"
+              className="h-full rounded-full bg-accent transition-[width] duration-500 ease-spring"
               style={{ width: `${pct}%` }}
             />
           </div>
@@ -85,7 +85,7 @@ export function TrainingPage() {
                 <span
                   className={cn(
                     "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-line-card text-sm font-extrabold",
-                    lesson.completed ? "bg-success-bg text-success-ink" : "bg-lime",
+                    lesson.completed ? "bg-success-bg text-success-ink" : "bg-accent",
                   )}
                 >
                   {lesson.completed ? (

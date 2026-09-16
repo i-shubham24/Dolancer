@@ -73,11 +73,11 @@ export function EarningsPage() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
     >
-      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-purple/10 blur-3xl" aria-hidden="true" />
-      <div className="pointer-events-none absolute -right-20 top-40 h-64 w-64 rounded-full bg-blue/10 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-highlight/10 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute -right-20 top-40 h-64 w-64 rounded-full bg-secondary/10 blur-3xl" aria-hidden="true" />
       <header className="relative flex flex-col gap-4 rounded-3xl bg-surface/70 px-5 py-6 backdrop-blur-sm sm:px-7">
         <div>
-        <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-blue">
+        <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-secondary">
           Verified ledger · transparent settlement
         </p>
         <h1 className="text-3xl font-extrabold tracking-[-0.035em] sm:text-4xl">Earnings &amp; ledger</h1>
@@ -95,7 +95,7 @@ export function EarningsPage() {
       ) : (
         <div className="grid gap-4 sm:grid-cols-2">
           <ColorStat
-            tone="lime"
+            tone="accent"
             label="Paid out to date"
             value={formatPaise(summary.data?.netPaise ?? 0)}
             subtext="Released to you, net of tax withheld"
@@ -103,7 +103,7 @@ export function EarningsPage() {
             loading={summary.isLoading}
           />
           <ColorStat
-            tone="blue"
+            tone="secondary"
             label="Tax withheld"
             value={formatPaise(summary.data?.taxWithheldPaise ?? 0)}
             subtext="Cumulative TDS and GST, financial year to date"
@@ -177,7 +177,7 @@ export function EarningsPage() {
               id="fy"
               value={fy}
               onChange={(event) => setFy(event.target.value)}
-              className="rounded-full border border-line-card bg-white px-3 py-2 text-xs font-bold shadow-soft-sm outline-none transition focus:border-blue focus:ring-4 focus:ring-blue/10"
+              className="rounded-full border border-line-card bg-white px-3 py-2 text-xs font-bold shadow-soft-sm outline-none transition focus:border-secondary focus:ring-4 focus:ring-secondary/10"
             >
               <option value="all">All years</option>
               {years.map((year) => (
@@ -187,7 +187,7 @@ export function EarningsPage() {
               ))}
             </select>
             <Button
-              variant="secondary"
+              variant="outline"
               size="sm"
               onClick={exportCsv}
               disabled={visible.length === 0}
@@ -220,7 +220,7 @@ export function EarningsPage() {
             title="Nothing in this year"
             description="No payouts were released in the selected financial year. Try another year."
             action={
-              <Button variant="secondary" onClick={() => setFy("all")}>
+              <Button variant="outline" onClick={() => setFy("all")}>
                 Show all years
               </Button>
             }
@@ -253,7 +253,7 @@ export function EarningsPage() {
                       <td className="px-4 py-3">
                         <Link
                           to={`/work/${row.projectId}`}
-                          className="font-mono text-xs font-bold text-blue underline decoration-2 underline-offset-2 hover:text-blue-hover"
+                          className="font-mono text-xs font-bold text-secondary underline decoration-2 underline-offset-2 hover:text-secondary-hover"
                         >
                           {row.projectId.slice(0, 8)}
                         </Link>

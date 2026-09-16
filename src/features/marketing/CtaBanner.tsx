@@ -21,7 +21,7 @@ export function CtaBanner() {
           <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
             <div className="text-center lg:text-left min-w-0 flex-1">
               <StitchBadge tone="neutral" className="bg-surface/80">
-                <Sparkles className="h-3.5 w-3.5 text-coral" />
+                <Sparkles className="h-3.5 w-3.5 text-primary" />
                 Fair Pay for Real Expertise
               </StitchBadge>
 
@@ -31,15 +31,15 @@ export function CtaBanner() {
               </h2>
 
               <p className="mt-4 max-w-xl text-base sm:text-lg text-ink-2 font-medium">
-                Your expertise is in high demand. Create an account, get verified in minutes, and claim briefs with guaranteed upfront rates.
+                Your expertise is in high demand. Create an account, get verified in minutes, and accept assigned offers with fixed upfront rates.
               </p>
 
               <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs sm:text-sm font-bold text-ink-2">
                 <span className="flex items-center gap-2">
-                  <Zap className="h-4 w-4 text-coral" /> Set up in minutes
+                  <Zap className="h-4 w-4 text-primary" /> Set up in minutes
                 </span>
                 <span className="flex items-center gap-2">
-                  <Clock className="h-4 w-4 text-blue" /> 48h direct payout
+                  <Clock className="h-4 w-4 text-secondary" /> Direct payout
                 </span>
                 <span className="flex items-center gap-2">
                   <ShieldCheck className="h-4 w-4 text-success-dot" /> Payout protected
@@ -56,7 +56,7 @@ export function CtaBanner() {
                   <ArrowRight className="h-4 w-4 ml-1.5" />
                 </Link>
               </StitchButton>
-              <StitchButton asChild variant="secondary" className="!w-full !mt-0 px-5 sm:px-6 py-3.5 sm:py-4 text-sm sm:text-base justify-center whitespace-nowrap bg-surface/95 hover:bg-surface border border-line-card text-ink shadow-soft-xs">
+              <StitchButton asChild variant="outline" className="!w-full !mt-0 px-5 sm:px-6 py-3.5 sm:py-4 text-sm sm:text-base justify-center whitespace-nowrap bg-surface/95 hover:bg-surface border border-line-card text-ink shadow-soft-xs">
                 <Link to="/contact" className="inline-flex items-center justify-center w-full">
                   Ask a question
                 </Link>

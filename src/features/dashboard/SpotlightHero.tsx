@@ -39,13 +39,13 @@ export function SpotlightHero({
   return (
     <motion.section
       aria-label="Today spotlight"
-      className="relative overflow-hidden rounded-[28px] border border-purple/20 bg-gradient-to-br from-[var(--dl-purple)] via-[var(--dl-primary)] to-[var(--dl-secondary)] text-inverse shadow-soft-lg"
+      className="relative overflow-hidden rounded-[28px] border border-highlight/20 bg-gradient-to-br from-[var(--dl-purple)] via-[var(--dl-primary)] to-[var(--dl-secondary)] text-inverse shadow-soft-lg"
       initial={reduceMotion ? false : { opacity: 0, scale: 0.985 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, delay: 0.08 }}
     >
       <div className="pointer-events-none absolute -right-24 -top-28 h-72 w-72 rounded-full bg-white/15 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-32 left-1/3 h-64 w-64 rounded-full bg-coral/20 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-32 left-1/3 h-64 w-64 rounded-full bg-primary/20 blur-3xl" />
       <style>{`@keyframes dolancer-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }`}</style>
 
       {/* Top meta row */}
@@ -54,14 +54,14 @@ export function SpotlightHero({
           {today} <span className="mx-2 text-white/55">/</span> Doer mode
         </p>
         <div className="flex items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-lime/60 bg-lime/10 px-2.5 py-1 text-[11px] font-extrabold text-lime">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-lime" aria-hidden="true" />
-            {poolCount} on the board
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-accent/60 bg-accent/10 px-2.5 py-1 text-[11px] font-extrabold text-accent">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" aria-hidden="true" />
+            {poolCount} assigned offers
           </span>
           <span
             className={cn(
               "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-extrabold",
-              atCap ? "border-coral/70 bg-coral/15 text-coral" : "border-white/35 bg-white/10 text-white",
+              atCap ? "border-primary/70 bg-primary/15 text-primary" : "border-white/35 bg-white/10 text-white",
             )}
           >
             <Flame className="h-3 w-3" aria-hidden="true" />
@@ -79,13 +79,13 @@ export function SpotlightHero({
           <h2 className="mt-4 text-3xl font-extrabold leading-[1.02] tracking-[-0.035em] sm:text-4xl text-white">
             {daypart}, {name}.
             <span className="mt-1 block text-white/95">
-              {focus ? "Your next deadline is waiting." : freeSlots > 0 ? "Room to take something new." : "Finish strong, then claim again."}
+              {focus ? "Your next deadline is waiting." : freeSlots > 0 ? "Room to take something new." : "Finish strong, then accept again."}
             </span>
           </h2>
           <p className="mt-3 max-w-md text-sm leading-relaxed text-white/90">
             {unlocked
-              ? "Claim from the blind board, add your working link, submit for supervisor review. Pay stays fixed from the start."
-              : "Browse freely. Finish verification to unlock claiming and payouts."}
+              ? "Accept your assigned offer, add your working link, submit for supervisor review. Pay stays fixed from the start."
+              : "View your assignments. Finish verification to unlock offers and payouts."}
           </p>
 
           <div className="mt-5 flex flex-wrap gap-2.5">
@@ -93,7 +93,7 @@ export function SpotlightHero({
               to="/pool"
               className="inline-flex min-h-[44px] items-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-extrabold text-[var(--dl-primary)] shadow-soft-md transition-all duration-150 hover:bg-hover"
             >
-              Browse the board
+              View assigned offers
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
             <Link
@@ -147,7 +147,7 @@ export function SpotlightHero({
                 aria-valuemax={100}
                 aria-label="Task progress"
               >
-                <div className="h-full rounded-full bg-coral" style={{ width: `${Math.min(100, Math.max(0, focus.progressPct))}%` }} />
+                <div className="h-full rounded-full bg-primary" style={{ width: `${Math.min(100, Math.max(0, focus.progressPct))}%` }} />
               </div>
             </Link>
           ) : (
@@ -157,13 +157,13 @@ export function SpotlightHero({
                 No active work
               </div>
               <p className="mt-3 text-lg font-extrabold leading-snug">
-                Nothing on your plate. The board refreshes through the day.
+                Nothing on your plate. Offers are routed manually by your supervisor.
               </p>
               <Link
                 to={unlocked ? "/pool" : "/verification"}
-                className="mt-4 inline-flex items-center gap-2 rounded-lg border border-line-card bg-lime px-4 py-2.5 text-sm font-extrabold text-ink shadow-soft-sm transition-all hover:-translate-y-px"
+                className="mt-4 inline-flex items-center gap-2 rounded-lg border border-line-card bg-accent px-4 py-2.5 text-sm font-extrabold text-ink shadow-soft-sm transition-all hover:-translate-y-px"
               >
-                {unlocked ? "Find something to claim" : "Get verified"} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                {unlocked ? "View assigned offers" : "Get verified"} <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>
           )}
@@ -175,7 +175,7 @@ export function SpotlightHero({
                 key={i}
                 className={cn(
                   "h-2 flex-1 rounded-full border border-white/30",
-                  i < activeCount ? (atCap ? "bg-coral" : "bg-lime") : "bg-white/10",
+                  i < activeCount ? (atCap ? "bg-primary" : "bg-accent") : "bg-white/10",
                 )}
               />
             ))}
@@ -191,7 +191,7 @@ export function SpotlightHero({
         <div className="flex w-max animate-none gap-8 whitespace-nowrap font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-white/75 [animation:dolancer-marquee_28s_linear_infinite]">
           {[0, 1].map((copy) => (
             <span key={copy} className="flex gap-8">
-              <span>Blind board</span><span className="text-[var(--dl-accent)]">Fixed payout</span><span>Supervisor review</span><span className="text-[var(--dl-primary)]">Working link first</span><span>3 slot cap</span><span className="text-[var(--dl-secondary)]">No client contact</span>
+              <span>Assigned offers</span><span className="text-[var(--dl-accent)]">Fixed payout</span><span>Supervisor review</span><span className="text-[var(--dl-primary)]">Working link first</span><span>3 slot cap</span><span className="text-[var(--dl-secondary)]">No client contact</span>
             </span>
           ))}
         </div>

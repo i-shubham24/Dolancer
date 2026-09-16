@@ -50,7 +50,7 @@ export function WorkbenchPage() {
   if (project.isLoading) {
     return (
       <motion.div className="relative space-y-7" initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }}>
-        <div className="pointer-events-none absolute -left-24 top-16 -z-10 h-72 w-72 rounded-full bg-purple-light/70 blur-3xl" aria-hidden="true" />
+        <div className="pointer-events-none absolute -left-24 top-16 -z-10 h-72 w-72 rounded-full bg-highlight-light/70 blur-3xl" aria-hidden="true" />
         <LoadingAnnounce label="Loading this project" />
         <Skeleton className="h-8 w-40" />
         <Skeleton className="h-12 w-3/4" />
@@ -98,7 +98,7 @@ export function WorkbenchPage() {
         My work
       </Link>
 
-      <header className="relative overflow-hidden rounded-[1.75rem] border border-line-card bg-gradient-to-br from-purple-light/70 via-surface to-blue-light/60 p-6 shadow-soft-md sm:p-8">
+      <header className="relative overflow-hidden rounded-[1.75rem] border border-line-card bg-gradient-to-br from-highlight-light/70 via-surface to-secondary-light/60 p-6 shadow-soft-md sm:p-8">
         <div className="relative space-y-3">
         <div className="flex flex-wrap items-center gap-2">
           <CategoryPill>{data.category}</CategoryPill>
@@ -111,7 +111,7 @@ export function WorkbenchPage() {
         <div className="mt-5 flex max-w-xl items-center gap-2 rounded-full bg-surface/75 p-1.5 shadow-soft-sm" aria-label="Project lifecycle">
           {["Assigned", "In progress", "Review", "Approved"].map((step, index) => (
             <span key={step} className="flex min-w-0 flex-1 items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-ink-muted">
-              <span className={cn("flex h-6 w-6 shrink-0 items-center justify-center rounded-full", index === 1 ? "bg-purple text-inverse" : "bg-surface-2 text-ink-2")}>{index + 1}</span>
+              <span className={cn("flex h-6 w-6 shrink-0 items-center justify-center rounded-full", index === 1 ? "bg-highlight text-inverse" : "bg-surface-2 text-ink-2")}>{index + 1}</span>
               <span className="hidden truncate sm:inline">{step}</span>
             </span>
           ))}

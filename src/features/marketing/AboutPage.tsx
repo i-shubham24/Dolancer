@@ -26,7 +26,7 @@ export function AboutPage() {
     },
     {
       title: "You are not an employee",
-      body: "You choose what to claim and when to stop. Nothing is assigned to you against your will, and pausing is a switch you control.",
+      body: "You choose what to accept and when to stop. Nothing is assigned to you against your will, and pausing is a switch you control.",
       tone: "mint" as const,
     },
     {
@@ -90,7 +90,7 @@ export function AboutPage() {
               <StitchButton asChild className="w-full">
                 <Link to="/sign-up">Start earning <ArrowRight className="h-4 w-4 ml-1.5" aria-hidden="true" /></Link>
               </StitchButton>
-              <StitchButton asChild variant="secondary" className="w-full bg-surface">
+              <StitchButton asChild variant="outline" className="w-full bg-surface">
                 <Link to="/contact">Ask us something</Link>
               </StitchButton>
             </div>

@@ -35,14 +35,14 @@ const SCHOLAR_REVIEWS: ScholarReview[] = [
     role: "Doctoral Fellow, Literature",
     institution: "Jawaharlal Nehru University",
     category: "humanities",
-    earnings: "₹18,500/mo",
+    earnings: "",
     briefsCompleted: 34,
     highlightPill: "Strict discipline match",
     quote:
-      "Briefs strictly match my specialization. Having an academic supervisor review the brief first eliminates all client anxiety.",
+      "Offers strictly match my specialization. Having an academic supervisor review the offer first eliminates all client anxiety.",
     specialties: ["Comparative Lit", "Thematic Coding"],
     initials: "PM",
-    avatarGradient: "from-rose-500 to-coral text-white",
+    avatarGradient: "from-rose-500 to-primary text-white",
     tenure: "14 mos on platform",
   },
   {
@@ -51,14 +51,14 @@ const SCHOLAR_REVIEWS: ScholarReview[] = [
     role: "Postdoc Fellow, Economics",
     institution: "Delhi School of Economics",
     category: "econ",
-    earnings: "₹28,400/mo",
+    earnings: "",
     briefsCompleted: 52,
-    highlightPill: "48h bank release",
+    highlightPill: "Direct bank release",
     quote:
-      "Agreed pay is transparent upfront, and funds hit my bank via NEFT within 48 hours of sign-off. Never once had to chase an invoice.",
+      "Agreed pay is transparent upfront, and funds hit my bank via NEFT after sign-off. Never once had to chase an invoice.",
     specialties: ["Econometrics", "Stata/R"],
     initials: "AS",
-    avatarGradient: "from-indigo-600 to-purple text-white",
+    avatarGradient: "from-indigo-600 to-highlight text-white",
     tenure: "18 mos on platform",
   },
   {
@@ -67,14 +67,14 @@ const SCHOLAR_REVIEWS: ScholarReview[] = [
     role: "Quant Analyst & M.Sc",
     institution: "BITS Pilani Alumni",
     category: "stem",
-    earnings: "₹22,000/mo",
+    earnings: "",
     briefsCompleted: 41,
     highlightPill: "Clean datasets",
     quote:
-      "Datasets are clean and expectations are strictly scoped before claiming. The supervisor shields you from scope creep.",
+      "Datasets are clean and expectations are strictly scoped before accepting. The supervisor shields you from scope creep.",
     specialties: ["Python", "Time Series"],
     initials: "RK",
-    avatarGradient: "from-blue to-cyan-600 text-white",
+    avatarGradient: "from-secondary to-cyan-600 text-white",
     tenure: "9 mos on platform",
   },
   {
@@ -83,11 +83,11 @@ const SCHOLAR_REVIEWS: ScholarReview[] = [
     role: "Research Associate, Policy",
     institution: "Ashoka University",
     category: "econ",
-    earnings: "₹19,800/mo",
+    earnings: "",
     briefsCompleted: 29,
-    highlightPill: "Zero bidding",
+    highlightPill: "Zero proposals",
     quote:
-      "No writing endless proposals or bidding against bots. Briefs arrive on your board, you claim what fits your calendar, and get paid.",
+      "No writing endless proposals or competing against bots. Offers arrive in your queue, you accept what fits your calendar, and get paid.",
     specialties: ["Policy Models", "Surveys"],
     initials: "VP",
     avatarGradient: "from-emerald-600 to-teal-700 text-white",
@@ -99,11 +99,11 @@ const SCHOLAR_REVIEWS: ScholarReview[] = [
     role: "Bioinformatics Scholar",
     institution: "IISc Bangalore Research Scholar",
     category: "research",
-    earnings: "₹24,500/mo",
+    earnings: "",
     briefsCompleted: 38,
     highlightPill: "Pay protected",
     quote:
-      "Academic work is treated with genuine respect here. Every brief is protected upfront before you even open your editor.",
+      "Academic work is treated with genuine respect here. Every task is protected upfront before you even open your editor.",
     specialties: ["Genomics", "Biostatistics"],
     initials: "ST",
     avatarGradient: "from-amber-500 to-orange-600 text-white",
@@ -115,11 +115,11 @@ const SCHOLAR_REVIEWS: ScholarReview[] = [
     role: "Systems Architect & M.Tech",
     institution: "IIT Bombay",
     category: "stem",
-    earnings: "₹31,000/mo",
+    earnings: "",
     briefsCompleted: 46,
     highlightPill: "Direct payout",
     quote:
-      "The platform is rock solid, the supervisor handles all client friction, and the compensation is the fairest in Indian freelance.",
+      "The platform is rock solid, the supervisor handles all client friction, and the compensation is incredibly fair.",
     specialties: ["Distributed Systems", "Security"],
     initials: "AD",
     avatarGradient: "from-violet-600 to-pink text-white",
@@ -139,13 +139,13 @@ export function TestimonialsSection() {
   return (
     <section id="testimonials" className="fresh-section py-20 overflow-hidden relative">
       {/* Subtle radial ambient background light */}
-      <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[800px] rounded-full bg-coral/5 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[800px] rounded-full bg-primary/5 blur-3xl" aria-hidden="true" />
 
       <div className="fresh-container relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-10">
           <StitchBadge tone="neutral">
-            <Sparkles className="h-3.5 w-3.5 text-coral" />
+            <Sparkles className="h-3.5 w-3.5 text-primary" />
             Verified Specialist Outcomes
           </StitchBadge>
           <h2 className="mt-4 text-3xl sm:text-5xl font-extrabold text-ink tracking-[-0.04em] font-display">
@@ -171,7 +171,7 @@ export function TestimonialsSection() {
                 className={`rounded-full px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer ${
                   selectedFilter === filter.id
                     ? "bg-ink text-inverse shadow-soft-xs"
-                    : "bg-surface border border-line-card text-ink-2 hover:border-coral/40"
+                    : "bg-surface border border-line-card text-ink-2 hover:border-primary/40"
                 }`}
               >
                 {filter.label}
@@ -181,12 +181,12 @@ export function TestimonialsSection() {
             <button
               type="button"
               onClick={() => setPaused((p) => !p)}
-              className="inline-flex items-center gap-1.5 rounded-full border border-line-card bg-surface px-3 py-1.5 text-xs font-bold text-ink-2 hover:text-ink hover:border-coral/40 transition-colors ml-2 cursor-pointer"
+              className="inline-flex items-center gap-1.5 rounded-full border border-line-card bg-surface px-3 py-1.5 text-xs font-bold text-ink-2 hover:text-ink hover:border-primary/40 transition-colors ml-2 cursor-pointer"
               title={paused ? "Resume moving carousel" : "Pause moving carousel"}
             >
               {paused ? (
                 <>
-                  <Play className="h-3 w-3 text-coral fill-coral" />
+                  <Play className="h-3 w-3 text-primary fill-primary" />
                   <span>Resume Flow</span>
                 </>
               ) : (
@@ -221,7 +221,7 @@ export function TestimonialsSection() {
               {[...filteredReviews, ...filteredReviews, ...filteredReviews].map((rev, idx) => (
                 <div
                   key={`r1-${rev.id}-${idx}`}
-                  className="w-[270px] sm:w-[310px] shrink-0 rounded-2xl border border-line-card bg-surface p-4 sm:p-4.5 shadow-soft-xs hover:border-coral/30 hover:shadow-soft-sm transition-all duration-200 flex flex-col justify-between group"
+                  className="w-[270px] sm:w-[310px] shrink-0 rounded-2xl border border-line-card bg-surface p-4 sm:p-4.5 shadow-soft-xs hover:border-primary/30 hover:shadow-soft-sm transition-all duration-200 flex flex-col justify-between group"
                 >
                   {/* Top: Rating & Payout */}
                   <div>
@@ -280,7 +280,7 @@ export function TestimonialsSection() {
         {/* Bottom live stats banner */}
         <div className="mt-12 mx-auto max-w-3xl rounded-2xl border border-line-card bg-surface/80 p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left shadow-soft-xs">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-light text-blue">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-secondary-light text-secondary">
               <Award className="h-5 w-5" />
             </div>
             <div>
@@ -295,7 +295,7 @@ export function TestimonialsSection() {
 
           <Link
             to="/sign-up"
-            className="rounded-xl bg-coral text-white font-extrabold text-xs px-4 py-2.5 hover:bg-coral-hover transition-colors shadow-soft-xs whitespace-nowrap"
+            className="rounded-xl bg-primary text-white font-extrabold text-xs px-4 py-2.5 hover:bg-primary-hover transition-colors shadow-soft-xs whitespace-nowrap"
           >
             Apply to Join <ArrowRight className="h-3.5 w-3.5 inline ml-1" />
           </Link>

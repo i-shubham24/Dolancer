@@ -59,18 +59,18 @@ const MOMENTS: Moment[] = [
     stepNumber: "03",
     tabTitle: "Review an assigned offer",
     tabSubtitle: "No proposal treadmill",
-    badge: "Guaranteed Rates",
+    badge: "Fixed Rates",
     title: "Real briefs with transparent payouts",
     description:
       "A supervisor routes a specific project to you with a fixed payout and clear deadline. Review the scope and accept it when it fits. No competing on price or bidding against bots.",
-    highlight: "The offer is specific to you, not a public task-board listing.",
+    highlight: "The offer is specific to you, not a public listing.",
   },
   {
     id: 4,
     stepNumber: "04",
     tabTitle: "Deliver & Auto-Payout",
     tabSubtitle: "Direct to your bank",
-    badge: "Instant Transfer",
+    badge: "Direct Transfer",
     title: "Supervisor sign-off triggers release",
     description:
       "Submit your deliverables to your supervisor. Once reviewed and approved, your full agreed payout transfers directly to your bank account via NEFT, IMPS or UPI with zero surprises.",
@@ -79,8 +79,8 @@ const MOMENTS: Moment[] = [
 ];
 
 const SKILL_OPTIONS = [
-  { id: "design", label: "Graphic Design & Branding", briefs: 14, pay: "₹2,600" },
-  { id: "web", label: "Web Dev (WordPress & Shopify)", briefs: 18, pay: "₹4,200" },
+  { id: "design", label: "Design", briefs: 14, pay: "₹2,600" },
+  { id: "web", label: "IT & Software", briefs: 18, pay: "₹4,200" },
   { id: "copy", label: "Sales Copy & Product Listings", briefs: 11, pay: "₹2,400" },
   { id: "marketing", label: "Digital Marketing & SEO", briefs: 9, pay: "₹3,100" },
   { id: "ecom", label: "Amazon & E-Commerce", briefs: 8, pay: "₹2,700" },
@@ -95,7 +95,7 @@ export function GettingStartedInteractive() {
   const [selectedSkills, setSelectedSkills] = useState<string[]>(["design", "web"]);
 
   // Step 3 interactive state
-  const [claimedBrief, setClaimedBrief] = useState<boolean>(false);
+  const [acceptedOffer, setAcceptedOffer] = useState<boolean>(false);
 
   // Step 4 interactive state
   const [simulatedPayout, setSimulatedPayout] = useState<boolean>(false);
@@ -127,7 +127,7 @@ export function GettingStartedInteractive() {
       {/* Header & Subtitle */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
         <div>
-          <div className="inline-flex items-center gap-2 rounded-full bg-coral-light px-3 py-1 text-xs font-bold text-coral border border-coral/20">
+          <div className="inline-flex items-center gap-2 rounded-full bg-primary-light px-3 py-1 text-xs font-bold text-primary border border-primary/20">
             <Sparkles className="h-3.5 w-3.5" />
             The route is simple
           </div>
@@ -148,12 +148,12 @@ export function GettingStartedInteractive() {
           >
             {isPlaying ? (
               <>
-                <Pause className="h-3.5 w-3.5 text-coral" />
+                <Pause className="h-3.5 w-3.5 text-primary" />
                 <span>Pause tour</span>
               </>
             ) : (
               <>
-                <Play className="h-3.5 w-3.5 text-coral" />
+                <Play className="h-3.5 w-3.5 text-primary" />
                 <span>Auto-play tour</span>
               </>
             )}
@@ -176,7 +176,7 @@ export function GettingStartedInteractive() {
               className={cn(
                 "relative text-left p-4 rounded-2xl border transition-all duration-300 select-none group",
                 isActive
-                  ? "bg-surface border-coral shadow-soft-md ring-2 ring-coral/20"
+                  ? "bg-surface border-primary shadow-soft-md ring-2 ring-primary/20"
                   : "bg-surface/60 border-line-card hover:bg-surface hover:border-line-card/80 shadow-soft-xs"
               )}
             >
@@ -185,13 +185,13 @@ export function GettingStartedInteractive() {
                 <span
                   className={cn(
                     "text-xs font-black tracking-widest font-mono",
-                    isActive ? "text-coral" : "text-ink-muted group-hover:text-ink-2"
+                    isActive ? "text-primary" : "text-ink-muted group-hover:text-ink-2"
                   )}
                 >
                   {m.stepNumber}
                 </span>
                 {isActive && (
-                  <span className="h-2 w-2 rounded-full bg-coral animate-pulse" />
+                  <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
                 )}
               </div>
 
@@ -206,7 +206,7 @@ export function GettingStartedInteractive() {
               {isActive && (
                 <motion.div
                   layoutId="step-highlight-bar"
-                  className="absolute bottom-0 left-3 right-3 h-1 bg-coral rounded-full"
+                  className="absolute bottom-0 left-3 right-3 h-1 bg-primary rounded-full"
                   transition={{ duration: 0.3 }}
                 />
               )}
@@ -220,7 +220,7 @@ export function GettingStartedInteractive() {
         {/* Left Column: Context, Highlights & Actions */}
         <div className="lg:col-span-5 flex flex-col justify-between rounded-3xl border border-line-card bg-surface p-6 sm:p-8 shadow-soft-sm relative overflow-hidden">
           <div className="relative z-10">
-            <div className="inline-flex items-center gap-2 rounded-full bg-coral-light/60 px-3 py-1 text-xs font-extrabold text-coral mb-4">
+            <div className="inline-flex items-center gap-2 rounded-full bg-primary-light/60 px-3 py-1 text-xs font-extrabold text-primary mb-4">
               <Zap className="h-3 w-3" />
               {currentMoment.badge}
             </div>
@@ -260,7 +260,7 @@ export function GettingStartedInteractive() {
                 <button
                   type="button"
                   onClick={() => setActiveStep(activeStep + 1)}
-                  className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-coral text-white text-xs font-bold shadow-soft-xs hover:bg-coral-hover transition-colors"
+                  className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-primary text-white text-xs font-bold shadow-soft-xs hover:bg-primary-hover transition-colors"
                 >
                   Next Moment
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -289,7 +289,7 @@ export function GettingStartedInteractive() {
               >
                 <div className="flex items-center justify-between pb-3 border-b border-line-card/70">
                   <div className="flex items-center gap-2">
-                    <span className="h-2.5 w-2.5 rounded-full bg-coral animate-pulse" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-primary animate-pulse" />
                     <span className="text-xs font-extrabold uppercase tracking-wider text-ink font-display">
                       Interactive Discipline Selector
                     </span>
@@ -310,7 +310,7 @@ export function GettingStartedInteractive() {
                         className={cn(
                           "p-3 rounded-xl border text-left transition-all flex items-center justify-between gap-2 select-none",
                           isSelected
-                            ? "bg-surface border-coral shadow-soft-xs text-ink"
+                            ? "bg-surface border-primary shadow-soft-xs text-ink"
                             : "bg-surface/50 border-line-card text-ink-2 hover:bg-surface"
                         )}
                       >
@@ -324,7 +324,7 @@ export function GettingStartedInteractive() {
                           className={cn(
                             "h-5 w-5 rounded-md flex items-center justify-center shrink-0 border text-xs",
                             isSelected
-                              ? "bg-coral border-coral text-white"
+                              ? "bg-primary border-primary text-white"
                               : "border-line-card bg-surface"
                           )}
                         >
@@ -338,7 +338,7 @@ export function GettingStartedInteractive() {
                 {/* Real-time Match Indicator */}
                 <div className="p-4 rounded-2xl bg-surface border border-line-card flex items-center justify-between gap-4">
                   <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-coral block">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-primary block">
                       Live Matching Engine
                     </span>
                     <p className="text-sm font-extrabold text-ink mt-0.5">
@@ -347,7 +347,7 @@ export function GettingStartedInteractive() {
                   </div>
                   <div className="text-right shrink-0">
                     <span className="inline-flex items-center gap-1 rounded-full bg-success-bg px-2.5 py-1 text-xs font-extrabold text-success-ink">
-                      <Check className="h-3 w-3" /> Ready to Claim
+                      <Check className="h-3 w-3" /> Ready to Accept
                     </span>
                   </div>
                 </div>
@@ -366,7 +366,7 @@ export function GettingStartedInteractive() {
               >
                 <div className="flex items-center justify-between pb-3 border-b border-line-card/70">
                   <div className="flex items-center gap-2">
-                    <ShieldCheck className="h-4 w-4 text-coral" />
+                    <ShieldCheck className="h-4 w-4 text-primary" />
                     <span className="text-xs font-extrabold uppercase tracking-wider text-ink font-display">
                       Security & Payout Shield Check
                     </span>
@@ -380,7 +380,7 @@ export function GettingStartedInteractive() {
                 <div className="space-y-3">
                   <div className="p-3.5 rounded-2xl bg-surface border border-line-card flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="h-9 w-9 rounded-xl bg-blue-light text-blue flex items-center justify-center font-bold">
+                      <div className="h-9 w-9 rounded-xl bg-secondary-light text-secondary flex items-center justify-center font-bold">
                         <FileCheck2 className="h-4.5 w-4.5" />
                       </div>
                       <div>
@@ -395,7 +395,7 @@ export function GettingStartedInteractive() {
 
                   <div className="p-3.5 rounded-2xl bg-surface border border-line-card flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="h-9 w-9 rounded-xl bg-coral-light text-coral flex items-center justify-center font-bold">
+                      <div className="h-9 w-9 rounded-xl bg-primary-light text-primary flex items-center justify-center font-bold">
                         <Building2 className="h-4.5 w-4.5" />
                       </div>
                       <div>
@@ -408,9 +408,9 @@ export function GettingStartedInteractive() {
                     </span>
                   </div>
 
-                  <div className="p-3.5 rounded-2xl bg-surface border border-coral/30 flex items-center justify-between">
+                  <div className="p-3.5 rounded-2xl bg-surface border border-primary/30 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="h-9 w-9 rounded-xl bg-coral text-white flex items-center justify-center font-bold">
+                      <div className="h-9 w-9 rounded-xl bg-primary text-white flex items-center justify-center font-bold">
                         <ShieldCheck className="h-4.5 w-4.5" />
                       </div>
                       <div>
@@ -418,7 +418,7 @@ export function GettingStartedInteractive() {
                         <p className="text-[11px] text-ink-muted">R. Kapoor (Lead QA) allocated to your queue</p>
                       </div>
                     </div>
-                    <span className="text-xs font-extrabold text-coral">
+                    <span className="text-xs font-extrabold text-primary">
                       Shield Active
                     </span>
                   </div>
@@ -426,7 +426,7 @@ export function GettingStartedInteractive() {
               </motion.div>
             )}
 
-            {/* STAGE 3 SIMULATOR: Live Brief Claiming */}
+            {/* STAGE 3 SIMULATOR: Live Offer Accepting */}
             {activeStep === 3 && (
               <motion.div
                 key="step-3-sim"
@@ -443,7 +443,7 @@ export function GettingStartedInteractive() {
                       Live Brief Simulator
                     </span>
                   </div>
-                  <span className="text-xs font-semibold text-coral">
+                  <span className="text-xs font-semibold text-primary">
                     Fixed Rate · Pre-funded
                   </span>
                 </div>
@@ -451,7 +451,7 @@ export function GettingStartedInteractive() {
                 {/* Brief card */}
                 <div className="p-5 rounded-2xl bg-surface border border-line-card shadow-soft-xs space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-coral">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-primary">
                       Web Development · WordPress
                     </span>
                     <span className="text-lg font-extrabold text-ink font-display">
@@ -478,26 +478,26 @@ export function GettingStartedInteractive() {
                   </div>
 
                   <div className="pt-2">
-                    {!claimedBrief ? (
+                    {!acceptedOffer ? (
                       <button
                         type="button"
-                        onClick={() => setClaimedBrief(true)}
-                        className="w-full py-2.5 rounded-xl bg-coral hover:bg-coral-hover text-white text-xs font-bold transition-all shadow-soft-xs flex items-center justify-center gap-2"
+                        onClick={() => setAcceptedOffer(true)}
+                        className="w-full py-2.5 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs font-bold transition-all shadow-soft-xs flex items-center justify-center gap-2"
                       >
                         <Zap className="h-3.5 w-3.5" />
-                        Claim Brief (Simulate 1-Click Action)
+                        Accept Offer
                       </button>
                     ) : (
                       <div className="flex items-center justify-between p-2.5 rounded-xl bg-success-bg border border-success-ink/20">
                         <div className="flex items-center gap-2">
                           <Check className="h-4 w-4 text-success-ink" />
                           <span className="text-xs font-extrabold text-success-ink">
-                            Brief Claimed! Moved to Your Private Workroom
+                            Offer Accepted! Moved to Your Private Workroom
                           </span>
                         </div>
                         <button
                           type="button"
-                          onClick={() => setClaimedBrief(false)}
+                          onClick={() => setAcceptedOffer(false)}
                           className="text-[11px] text-ink-muted hover:text-ink font-bold flex items-center gap-1"
                         >
                           <RotateCcw className="h-3 w-3" /> Reset
@@ -523,7 +523,7 @@ export function GettingStartedInteractive() {
                   <div className="flex items-center gap-2">
                     <Wallet className="h-4 w-4 text-success-ink" />
                     <span className="text-xs font-extrabold uppercase tracking-wider text-ink font-display">
-                      Instant Payout Terminal
+                      Direct Payout Terminal
                     </span>
                   </div>
                   <span className="text-xs font-bold text-success-ink">
@@ -553,7 +553,7 @@ export function GettingStartedInteractive() {
                     </div>
                     <div className="pt-2 border-t border-line-card/60 flex justify-between text-sm font-extrabold text-ink">
                       <span>Net Direct Deposit:</span>
-                      <span className="text-coral text-base">₹18,400.00</span>
+                      <span className="text-primary text-base">₹18,400.00</span>
                     </div>
                   </div>
 
@@ -565,7 +565,7 @@ export function GettingStartedInteractive() {
                         className="w-full py-2.5 rounded-xl bg-success-ink hover:bg-success-ink/90 text-white text-xs font-bold transition-all shadow-soft-xs flex items-center justify-center gap-2 font-sans"
                       >
                         <Wallet className="h-3.5 w-3.5" />
-                        Simulate Instant Bank Release
+                        Simulate Bank Release
                       </button>
                     ) : (
                       <div className="p-3 rounded-xl bg-success-bg border border-success-ink/20 font-sans space-y-1">
@@ -582,7 +582,7 @@ export function GettingStartedInteractive() {
                           </button>
                         </div>
                         <p className="text-[11px] text-ink-2">
-                          Credited to HDFC Bank (****4910) via IMPS in 1.4s · Ref #TXN-88214
+                          Credited to HDFC Bank (****4910) via IMPS · Ref #TXN-88214
                         </p>
                       </div>
                     )}

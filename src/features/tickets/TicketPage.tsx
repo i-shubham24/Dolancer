@@ -107,7 +107,7 @@ export function TicketPage() {
                 <div
                   className={cn(
                     "max-w-[85%] rounded-xl border px-4 py-3 shadow-soft-sm",
-                    mine ? "border-transparent bg-coral text-inverse" : "border-line-card bg-surface text-ink",
+                    mine ? "border-transparent bg-primary text-inverse" : "border-line-card bg-surface text-ink",
                   )}
                 >
                   <div className={cn(

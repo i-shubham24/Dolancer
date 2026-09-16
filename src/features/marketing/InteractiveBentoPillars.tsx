@@ -29,16 +29,16 @@ export function InteractiveBentoPillars() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 my-10">
       {/* CARD 1: Matched, not marketed (Lilac tone) */}
-      <div className="relative isolate overflow-hidden rounded-3xl p-6 sm:p-7 shadow-soft-md transition-all duration-300 hover:-translate-y-1 hover:shadow-soft-lg bg-card-lilac border border-purple/20 flex flex-col justify-between min-h-[340px]">
+      <div className="relative isolate overflow-hidden rounded-3xl p-6 sm:p-7 shadow-soft-md transition-all duration-300 hover:-translate-y-1 hover:shadow-soft-lg bg-card-lilac border border-highlight/20 flex flex-col justify-between min-h-[340px]">
         {/* Ambient glow accent */}
-        <span className="absolute -top-16 -right-16 h-36 w-36 rounded-full bg-purple/10 blur-2xl pointer-events-none" />
+        <span className="absolute -top-16 -right-16 h-36 w-36 rounded-full bg-highlight/10 blur-2xl pointer-events-none" />
 
         <div>
           <div className="flex items-center justify-between mb-4">
-            <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-purple/15 text-purple shadow-soft-xs">
+            <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-highlight/15 text-highlight shadow-soft-xs">
               <Sparkles className="h-5 w-5" />
             </span>
-            <span className="inline-flex items-center gap-1 rounded-full bg-purple/10 px-2.5 py-0.5 text-[11px] font-extrabold text-purple">
+            <span className="inline-flex items-center gap-1 rounded-full bg-highlight/10 px-2.5 py-0.5 text-[11px] font-extrabold text-highlight">
               Zero Cold Pitching
             </span>
           </div>
@@ -47,12 +47,12 @@ export function InteractiveBentoPillars() {
             Matched, not marketed
           </h3>
           <p className="mt-1.5 text-xs sm:text-sm text-ink-2 font-medium leading-relaxed">
-            Your verified skills decide what appears on your board. No bids, no proposals, no algorithm games.
+            Your verified skills decide what appears in your assigned offers. No bids, no proposals, no algorithm games.
           </p>
         </div>
 
         {/* Interactive Micro-Matcher */}
-        <div className="mt-5 pt-4 border-t border-purple/15 space-y-3">
+        <div className="mt-5 pt-4 border-t border-highlight/15 space-y-3">
           <div className="flex flex-wrap gap-1.5">
             {DEMO_SKILLS.map((skill, idx) => (
               <button
@@ -62,8 +62,8 @@ export function InteractiveBentoPillars() {
                 className={cn(
                   "px-2.5 py-1 rounded-lg text-xs font-bold transition-all select-none",
                   selectedDemoSkill === idx
-                    ? "bg-purple text-white shadow-soft-xs"
-                    : "bg-surface/80 border border-purple/20 text-ink-2 hover:bg-surface"
+                    ? "bg-highlight text-white shadow-soft-xs"
+                    : "bg-surface/80 border border-highlight/20 text-ink-2 hover:bg-surface"
                 )}
               >
                 {skill.name}
@@ -79,21 +79,21 @@ export function InteractiveBentoPillars() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.2 }}
-              className="p-3 rounded-2xl bg-surface/90 border border-purple/20 shadow-soft-xs flex items-center justify-between"
+              className="p-3 rounded-2xl bg-surface/90 border border-highlight/20 shadow-soft-xs flex items-center justify-between"
             >
               <div className="min-w-0 pr-2">
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-purple block">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-highlight block">
                   Matched Live Brief
                 </span>
                 <p className="text-xs font-bold text-ink truncate mt-0.5">
                   {DEMO_SKILLS[selectedDemoSkill]?.task}
                 </p>
                 <p className="text-[11px] text-ink-muted mt-0.5 font-medium">
-                  {DEMO_SKILLS[selectedDemoSkill]?.time} · Direct Claim
+                  {DEMO_SKILLS[selectedDemoSkill]?.time} · Direct Offer
                 </p>
               </div>
               <div className="text-right shrink-0">
-                <span className="text-sm font-extrabold text-purple font-display block">
+                <span className="text-sm font-extrabold text-highlight font-display block">
                   {DEMO_SKILLS[selectedDemoSkill]?.pay}
                 </span>
                 <span className="inline-flex items-center gap-1 text-[10px] font-bold text-success-ink">
@@ -106,16 +106,16 @@ export function InteractiveBentoPillars() {
       </div>
 
       {/* CARD 2: Protected while you work (Pink / Coral tone) */}
-      <div className="relative isolate overflow-hidden rounded-3xl p-6 sm:p-7 shadow-soft-md transition-all duration-300 hover:-translate-y-1 hover:shadow-soft-lg bg-card-pink border border-coral/20 flex flex-col justify-between min-h-[340px]">
+      <div className="relative isolate overflow-hidden rounded-3xl p-6 sm:p-7 shadow-soft-md transition-all duration-300 hover:-translate-y-1 hover:shadow-soft-lg bg-card-pink border border-primary/20 flex flex-col justify-between min-h-[340px]">
         {/* Ambient glow accent */}
-        <span className="absolute -top-16 -right-16 h-36 w-36 rounded-full bg-coral/10 blur-2xl pointer-events-none" />
+        <span className="absolute -top-16 -right-16 h-36 w-36 rounded-full bg-primary/10 blur-2xl pointer-events-none" />
 
         <div>
           <div className="flex items-center justify-between mb-4">
-            <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-coral/15 text-coral shadow-soft-xs">
+            <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/15 text-primary shadow-soft-xs">
               <ShieldCheck className="h-5 w-5" />
             </span>
-            <span className="inline-flex items-center gap-1 rounded-full bg-coral/10 px-2.5 py-0.5 text-[11px] font-extrabold text-coral">
+            <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-0.5 text-[11px] font-extrabold text-primary">
               Buffer Shield
             </span>
           </div>
@@ -129,11 +129,11 @@ export function InteractiveBentoPillars() {
         </div>
 
         {/* Interactive Buffer Demo */}
-        <div className="mt-5 pt-4 border-t border-coral/15 space-y-2.5">
-          <div className="p-3 rounded-2xl bg-surface/90 border border-coral/20 shadow-soft-xs">
+        <div className="mt-5 pt-4 border-t border-primary/15 space-y-2.5">
+          <div className="p-3 rounded-2xl bg-surface/90 border border-primary/20 shadow-soft-xs">
             <div className="flex items-center justify-between text-[11px] font-bold mb-2">
               <span className="text-ink-muted">Client Request</span>
-              <span className="text-coral flex items-center gap-1">
+              <span className="text-primary flex items-center gap-1">
                 <Shield className="h-3 w-3" /> Shield Active
               </span>
             </div>
@@ -146,7 +146,7 @@ export function InteractiveBentoPillars() {
                 <button
                   type="button"
                   onClick={() => setShowFrictionDemo(true)}
-                  className="w-full mt-2 py-1.5 px-3 rounded-xl bg-coral-light text-coral text-xs font-bold hover:bg-coral-light/80 transition-colors flex items-center justify-center gap-1.5"
+                  className="w-full mt-2 py-1.5 px-3 rounded-xl bg-primary-light text-primary text-xs font-bold hover:bg-primary-light/80 transition-colors flex items-center justify-center gap-1.5"
                 >
                   <Zap className="h-3 w-3" />
                   Simulate Client Scope Creep
@@ -154,8 +154,8 @@ export function InteractiveBentoPillars() {
               </div>
             ) : (
               <div className="space-y-2">
-                <div className="p-2 rounded-xl bg-[#fff5f6] border border-coral/30 text-[11px] text-ink-2 font-medium">
-                  <span className="font-bold text-coral">Client attempted:</span> "Can you also design 3 extra banners tonight for free?"
+                <div className="p-2 rounded-xl bg-[#fff5f6] border border-primary/30 text-[11px] text-ink-2 font-medium">
+                  <span className="font-bold text-primary">Client attempted:</span> "Can you also design 3 extra banners tonight for free?"
                 </div>
                 <div className="p-2 rounded-xl bg-success-bg border border-success-ink/20 text-[11px] text-success-ink font-bold">
                   <span className="font-extrabold">Supervisor response:</span> Blocked. Scope is fixed. Freelancer payout unaffected.
@@ -163,7 +163,7 @@ export function InteractiveBentoPillars() {
                 <button
                   type="button"
                   onClick={() => setShowFrictionDemo(false)}
-                  className="text-[11px] text-coral font-bold hover:underline block text-center w-full"
+                  className="text-[11px] text-primary font-bold hover:underline block text-center w-full"
                 >
                   Reset simulation
                 </button>
@@ -192,7 +192,7 @@ export function InteractiveBentoPillars() {
             Paid with the brief
           </h3>
           <p className="mt-1.5 text-xs sm:text-sm text-ink-2 font-medium leading-relaxed">
-            The exact agreed amount is secured before you decide to claim. Zero hidden deductions.
+            The exact agreed amount is secured before you decide to accept. Zero hidden deductions.
           </p>
         </div>
 

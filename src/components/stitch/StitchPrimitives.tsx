@@ -15,7 +15,7 @@ export function StitchBadge({
     <span
       className={cn(
         "inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-bold tracking-wide shadow-soft-sm",
-        tone === "brand" && "bg-coral-light text-coral border border-coral/20",
+        tone === "brand" && "bg-primary-light text-primary border border-primary/20",
         tone === "success" && "bg-success-bg text-success-ink border border-success-ink/20",
         tone === "neutral" && "bg-subtle text-ink-2 border border-line-card",
         className,
@@ -29,7 +29,7 @@ export function StitchBadge({
 import { forwardRef } from 'react';
 
 export const StitchButton = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "outline";
   asChild?: boolean;
 }>(({
   children,
@@ -44,10 +44,10 @@ export const StitchButton = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<H
       ref={ref}
       className={cn(
         "inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 text-sm font-bold transition-all duration-200 ease-spring select-none",
-        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue",
+        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary",
         variant === "primary" &&
-          "bg-coral text-inverse shadow-soft-md hover:-translate-y-0.5 hover:bg-coral-hover hover:shadow-soft-lg active:translate-y-0",
-        variant === "secondary" &&
+          "bg-primary text-inverse shadow-soft-md hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-soft-lg active:translate-y-0",
+        variant === "outline" &&
           "border border-line-card bg-surface text-ink shadow-soft-sm hover:-translate-y-0.5 hover:bg-hover hover:shadow-soft-md active:translate-y-0",
         className,
       )}
@@ -69,7 +69,7 @@ export function StitchCard({
       className={cn(
         "stitch-surface rounded-2xl border border-line-card bg-surface shadow-soft-md",
         interactive &&
-          "transition-all duration-300 hover:-translate-y-1 hover:border-purple/30 hover:shadow-soft-lg",
+          "transition-all duration-300 hover:-translate-y-1 hover:border-highlight/30 hover:shadow-soft-lg",
         className,
       )}
       {...props}

@@ -78,7 +78,7 @@ const APPLICATION_COPY: Record<string, { tone: string; title: string; body: stri
   approved: {
     tone: "bg-success-bg text-success-ink",
     title: "Application approved",
-    body: "You are in. Finish the remaining setup steps to start claiming work.",
+    body: "You are in. Finish the remaining setup steps to start receiving offers.",
   },
   rejected: {
     tone: "bg-danger-bg text-danger-ink",
@@ -142,7 +142,7 @@ export function ProfilePage() {
       </header>
 
       {needsApplication ? (
-        <Card className="border bg-lime-light">
+        <Card className="border bg-accent-light">
           <h2 className="text-lg font-extrabold tracking-[-0.025em]">Apply to join</h2>
           <p className="mt-1 text-sm text-ink-2">
             Tell us what you do and where you are strongest. A couple of sentences is plenty.
@@ -192,7 +192,7 @@ export function ProfilePage() {
               Rating
             </div>
             <div className="mt-1 flex items-center gap-1.5">
-              <Star className="h-5 w-5 fill-lime text-ink" aria-hidden="true" />
+              <Star className="h-5 w-5 fill-accent text-ink" aria-hidden="true" />
               <span className="text-2xl font-extrabold tracking-[-0.03em]">
                 {rating.isLoading ? (
                   <Skeleton className="inline-block h-6 w-10 align-middle" />

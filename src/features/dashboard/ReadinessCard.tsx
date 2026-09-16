@@ -54,7 +54,7 @@ function buildSteps(gate: DoerGateState): Step[] {
     {
       id: "skills",
       label: "Pick your skills",
-      description: "This is how work finds you. Only matching projects appear on your board.",
+      description: "This is how work finds you. Only matching projects are routed to you.",
       done: gate.skillsDone,
       href: "/skills",
       cta: "Choose skills",
@@ -120,7 +120,7 @@ export function ReadinessCard({ gate }: { gate: DoerGateState }) {
                 ? "border-line-card bg-surface-2"
                 : step.waiting
                   ? "border-line-card bg-warning-bg"
-                  : "border-purple/20 bg-surface/80 shadow-soft-sm",
+                  : "border-highlight/20 bg-surface/80 shadow-soft-sm",
             )}
           >
             <span

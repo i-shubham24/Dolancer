@@ -10,7 +10,7 @@ import { Logo } from "@/components/ui/Logo";
 import { useMagneticHover } from "@/hooks/useMagneticHover";
 import { SiteFooter } from "./SiteFooter";
 import { PaletteSwitcher } from "@/components/PaletteSwitcher";
-import { LiveActivityTicker } from "./LiveActivityTicker";
+import { ScrollRevealController } from "@/components/common/ScrollEnhancements";
 
 const NAV = [
   { to: "/how-it-works", label: "How it works" },
@@ -49,7 +49,7 @@ export function MarketingLayout() {
       <ScrollToTop />
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:border focus:border-line-card focus:bg-lime focus:px-4 focus:py-2 focus:text-sm focus:font-extrabold"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:border focus:border-line-card focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:font-extrabold"
       >
         Skip to content
       </a>
@@ -136,10 +136,10 @@ export function MarketingLayout() {
                 </Button>
               ) : (
                 <>
-                  <Button asChild variant="secondary" onClick={() => setOpen(false)}>
+                  <Button asChild variant="outline" onClick={() => setOpen(false)}>
                     <Link to="/sign-in">Sign in</Link>
                   </Button>
-                  <Button asChild variant="secondary" onClick={() => setOpen(false)}>
+                  <Button asChild variant="outline" onClick={() => setOpen(false)}>
                     <Link to="/sign-up">Start earning</Link>
                   </Button>
                 </>
@@ -164,7 +164,7 @@ export function MarketingLayout() {
       </main>
 
       <SiteFooter />
-      <LiveActivityTicker />
+      <ScrollRevealController />
     </div>
   );
 }

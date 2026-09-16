@@ -56,7 +56,7 @@ export function SegmentedToggle<T extends string>({
               <span
                 className={cn(
                   "relative z-10 rounded-full px-1.5 py-0.5 text-[10px] font-extrabold",
-                  selected ? "bg-coral text-ink" : "bg-muted text-ink-2",
+                  selected ? "bg-primary text-ink" : "bg-muted text-ink-2",
                 )}
               >
                 {option.count}

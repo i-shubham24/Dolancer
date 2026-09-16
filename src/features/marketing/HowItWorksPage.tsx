@@ -12,6 +12,7 @@ import { DifferenceRail } from "./DifferenceRail";
 import { CategoryTags } from "./CategoryTags";
 import { HowItWorksHeroGraphic } from "./HowItWorksHeroGraphic";
 import { CurvedSectionDivider } from "@/components/stitch/CurvedSectionDivider";
+import { FaqAccordion } from "./FaqAccordion";
 
 function Section({
   children,
@@ -107,6 +108,10 @@ export function HowItWorksPage() {
         </div>
       </Section>
 
+      <Section className="bg-surface/50 pb-16">
+        <FaqAccordion />
+      </Section>
+
       <Section labelledBy="cta">
         <MicroFloaties zone="cta" />
         <div className="fresh-final-card mx-auto max-w-4xl">
@@ -128,7 +133,7 @@ export function HowItWorksPage() {
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
               </Button>
-              <Button asChild variant="secondary">
+              <Button asChild variant="outline">
                 <Link to="/contact">Ask a question first</Link>
               </Button>
             </div>

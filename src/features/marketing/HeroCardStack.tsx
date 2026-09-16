@@ -36,35 +36,35 @@ const CARDS: BriefCardData[] = [
   {
     id: "card-1",
     title: "Logo, Branding & Vector Assets",
-    discipline: "Graphic Design",
+    discipline: "Design",
     subdiscipline: "Logo, Websites, Branding & Infographics",
     payout: "₹2,800",
     deadline: "36 hrs left",
     tag: "High Demand",
     tagType: "featured",
     icon: Palette,
-    iconBg: "bg-coral-light",
-    iconColor: "text-coral",
+    iconBg: "bg-primary-light",
+    iconColor: "text-primary",
     criteria: ["Vector files included", "Pre-funded", "Supervisor review"],
   },
   {
     id: "card-2",
     title: "Website Design & Shopify Store",
-    discipline: "Web Development",
+    discipline: "IT & Software",
     subdiscipline: "Programming, WordPress & Shopify",
     payout: "₹4,200",
     deadline: "48 hrs left",
     tag: "Verified Brief",
     tagType: "verified",
     icon: Globe,
-    iconBg: "bg-blue-light",
-    iconColor: "text-blue",
+    iconBg: "bg-secondary-light",
+    iconColor: "text-secondary",
     criteria: ["Responsive mobile layout", "Pay locked", "Direct release"],
   },
   {
     id: "card-3",
     title: "Sales Copy & Product Listings",
-    discipline: "Copywriting",
+    discipline: "Writing & Content",
     subdiscipline: "Sales Copy, Funnels & Product Listings",
     payout: "₹2,500",
     deadline: "24 hrs left",
@@ -105,7 +105,7 @@ export function HeroCardStack() {
       {/* Dashed Orbital Aesthetic Rings */}
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center" aria-hidden="true">
         <svg
-          className="h-[360px] w-[360px] sm:h-[450px] sm:w-[450px] text-coral/20 animate-pulse"
+          className="h-[360px] w-[360px] sm:h-[450px] sm:w-[450px] text-primary/20 animate-pulse"
           viewBox="0 0 100 100"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -146,7 +146,7 @@ export function HeroCardStack() {
         onClick={handleNext}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.96 }}
-        className="absolute top-1 right-2 sm:top-2 sm:right-4 z-30 flex items-center gap-1.5 rounded-full border border-coral/30 bg-coral-light px-3 py-1 text-xs font-bold text-coral shadow-soft-sm hover:bg-coral hover:text-inverse transition-colors"
+        className="absolute top-1 right-2 sm:top-2 sm:right-4 z-30 flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary-light px-3 py-1 text-xs font-bold text-primary shadow-soft-sm hover:bg-primary hover:text-inverse transition-colors"
       >
         <MousePointerClick className="h-3.5 w-3.5" />
         <span>Flip brief ({activeIndex + 1}/{CARDS.length})</span>
@@ -192,7 +192,7 @@ export function HeroCardStack() {
               onPointerLeave={isTop ? tiltRef.onPointerLeave : undefined}
               className={`absolute inset-0 rounded-[2.2rem] border p-6 sm:p-7 shadow-soft-lg cursor-pointer backdrop-blur-md transition-colors ${isTop && !reduceMotion ? "cursor-tilt" : ""} ${
                 isTop
-                  ? "border-line-card bg-surface hover:border-coral/50"
+                  ? "border-line-card bg-surface hover:border-primary/50"
                   : "border-line-card/70 bg-surface/90 hover:bg-surface"
               }`}
             >
@@ -213,7 +213,7 @@ export function HeroCardStack() {
                         card.tagType === "urgent"
                           ? "border-warning-dot/40 bg-warning-bg text-warning-ink"
                           : card.tagType === "featured"
-                          ? "border-coral/30 bg-coral-light text-coral"
+                          ? "border-primary/30 bg-primary-light text-primary"
                           : "border-success-ink/30 bg-success-bg text-success-ink"
                       }`}
                     >
@@ -229,7 +229,7 @@ export function HeroCardStack() {
                   <span className="text-[10px] font-bold text-ink-muted uppercase tracking-wider block">
                     Fixed Pay
                   </span>
-                  <span className="text-2xl font-extrabold text-coral tracking-tight font-display">
+                  <span className="text-2xl font-extrabold text-primary tracking-tight font-display">
                     {card.payout}
                   </span>
                 </div>
@@ -263,8 +263,8 @@ export function HeroCardStack() {
                   <span>{card.deadline}</span>
                 </div>
 
-                <span className="inline-flex items-center gap-1 text-coral font-bold group-hover:underline">
-                  <span>{isTop ? "Claim brief" : "Bring to front"}</span>
+                <span className="inline-flex items-center gap-1 text-primary font-bold group-hover:underline">
+                  <span>{isTop ? "Accept offer" : "Bring to front"}</span>
                   <ChevronRight className="h-3.5 w-3.5" />
                 </span>
               </div>
@@ -282,7 +282,7 @@ export function HeroCardStack() {
         whileHover={{ scale: 1.03, y: -2 }}
         className="relative sm:absolute -bottom-4 right-0 sm:bottom-0 sm:right-0 z-30 mt-4 sm:mt-0 flex items-center gap-3 rounded-2xl border border-line-card bg-surface/95 px-4 py-2.5 shadow-soft-lg backdrop-blur-md"
       >
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-lime font-extrabold text-sm text-ink shadow-soft-sm">
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent font-extrabold text-sm text-ink shadow-soft-sm">
           ₹
         </span>
         <div>

@@ -32,7 +32,7 @@ export function AboutHeroInteractive() {
             <strong className="text-ink font-extrabold">Dolancer was built to flip this upside down.</strong> We secure the enterprise clients, lock in pre-funded budgets, and pair you with a human supervisor who shields you from scope creep and dispute friction.
           </p>
           <p>
-            You focus 100% on craft: delivering exceptional work, and receiving prompt, guaranteed payouts directly to your bank account.
+            You focus 100% on craft: delivering exceptional work, and receiving prompt, fixed payouts directly to your bank account.
           </p>
         </div>
 
@@ -43,7 +43,7 @@ export function AboutHeroInteractive() {
               Start earning <ArrowRight className="h-4 w-4 ml-1.5" />
             </Link>
           </StitchButton>
-          <StitchButton asChild variant="secondary">
+          <StitchButton asChild variant="outline">
             <Link to="/how-it-works">See how work flows</Link>
           </StitchButton>
         </div>
@@ -71,23 +71,23 @@ export function AboutHeroInteractive() {
           
           {/* The clean "Dolancer way" foreground card */}
           <div className="relative bg-white border-2 border-line-card rounded-3xl p-7 shadow-soft-xl z-10 overflow-hidden">
-            <div className="absolute -top-10 -right-10 w-32 h-32 bg-coral/15 rounded-full blur-2xl"></div>
-            <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-blue/15 rounded-full blur-2xl"></div>
+            <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/15 rounded-full blur-2xl"></div>
+            <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-secondary/15 rounded-full blur-2xl"></div>
             
             <div className="flex items-center gap-3 mb-8">
-              <div className="h-10 w-10 rounded-2xl bg-coral flex items-center justify-center shadow-soft-sm">
+              <div className="h-10 w-10 rounded-2xl bg-primary flex items-center justify-center shadow-soft-sm">
                 <Check className="h-5 w-5 text-white" />
               </div>
               <div>
                 <h3 className="font-extrabold text-ink font-display text-lg tracking-tight">The Dolancer Way</h3>
-                <p className="text-xs font-bold text-coral uppercase tracking-wider">Simplicity</p>
+                <p className="text-xs font-bold text-primary uppercase tracking-wider">Simplicity</p>
               </div>
             </div>
 
             <div className="space-y-4 relative z-10">
-              <div className="flex items-center gap-3 bg-blue/8 p-3 rounded-xl border border-blue/20 shadow-soft-xs transition-transform hover:scale-[1.02]">
-                <div className="h-8 w-8 rounded-full bg-blue/15 flex items-center justify-center shrink-0">
-                  <ShieldCheck className="h-4 w-4 text-blue" />
+              <div className="flex items-center gap-3 bg-secondary/8 p-3 rounded-xl border border-secondary/20 shadow-soft-xs transition-transform hover:scale-[1.02]">
+                <div className="h-8 w-8 rounded-full bg-secondary/15 flex items-center justify-center shrink-0">
+                  <ShieldCheck className="h-4 w-4 text-secondary" />
                 </div>
                 <div className="text-sm font-bold text-ink">Shield Buffer</div>
               </div>
@@ -97,9 +97,9 @@ export function AboutHeroInteractive() {
                 </div>
                 <div className="text-sm font-bold text-ink">Pre-funded</div>
               </div>
-              <div className="flex items-center gap-3 bg-coral/8 p-3 rounded-xl border border-coral/20 shadow-soft-xs transition-transform hover:scale-[1.02]">
-                <div className="h-8 w-8 rounded-full bg-coral/15 flex items-center justify-center shrink-0">
-                  <Zap className="h-4 w-4 text-coral" />
+              <div className="flex items-center gap-3 bg-primary/8 p-3 rounded-xl border border-primary/20 shadow-soft-xs transition-transform hover:scale-[1.02]">
+                <div className="h-8 w-8 rounded-full bg-primary/15 flex items-center justify-center shrink-0">
+                  <Zap className="h-4 w-4 text-primary" />
                 </div>
                 <div className="text-sm font-bold text-ink">0 Cold Bids</div>
               </div>
@@ -107,7 +107,7 @@ export function AboutHeroInteractive() {
             
             <div className="mt-8 pt-4 border-t border-line-card/60 flex items-center justify-between text-xs">
               <span className="font-bold text-ink-3">Platform Overhead</span>
-              <span className="font-extrabold text-ink px-2 py-1 bg-lime-light rounded-md border border-lime/30">0%</span>
+              <span className="font-extrabold text-ink px-2 py-1 bg-accent-light rounded-md border border-accent/30">0%</span>
             </div>
           </div>
         </motion.div>

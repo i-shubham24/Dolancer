@@ -64,12 +64,12 @@ export const AVAILABILITY_COPY: Record<
 > = {
   available: {
     label: "Available",
-    detail: "Matching work shows on your board.",
+    detail: "Matching work shows in your assigned offers.",
     canToggle: true,
   },
   paused: {
     label: "Paused",
-    detail: "You have hidden the board. Work you already hold is unaffected.",
+    detail: "You have paused new offers. Work you already hold is unaffected.",
     canToggle: true,
   },
   "at-capacity": {
@@ -77,7 +77,7 @@ export const AVAILABILITY_COPY: Record<
     detail:
       // Borrowed from how Fiverr handles a full queue. Naming the consequence that
       // does NOT happen is what stops the cap reading as a penalty.
-      `You are holding ${MAX_ACTIVE_PROJECTS} projects, so the board is hidden. This does not affect your standing or your rating.`,
+      `You are holding ${MAX_ACTIVE_PROJECTS} projects, so new offers are paused. This does not affect your standing or your rating.`,
     canToggle: false,
   },
 };

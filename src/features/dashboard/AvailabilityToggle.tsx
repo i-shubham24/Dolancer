@@ -5,7 +5,7 @@ import { availabilityState, AVAILABILITY_COPY } from "@/stores/useAvailabilitySt
 import { useAvailability } from "./queries";
 
 const TONE = {
-  available: "bg-lime",
+  available: "bg-accent",
   paused: "bg-neutral-bg",
   "at-capacity": "bg-warning-bg",
 } as const;

@@ -31,7 +31,7 @@ const STATUS_COPY: Record<KycStatus, { tone: string; icon: typeof Check; title: 
     tone: "bg-success-bg text-success-ink",
     icon: Check,
     title: "Verified",
-    body: "You are verified and can claim work and be paid.",
+    body: "You are verified and can accept assigned offers and be paid.",
   },
   rejected: {
     tone: "bg-danger-bg text-danger-ink",
@@ -153,10 +153,10 @@ export function VerificationPage() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
     >
-      <div className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-purple/10 blur-3xl" aria-hidden="true" />
-      <div className="pointer-events-none absolute -left-24 top-72 h-64 w-64 rounded-full bg-blue/10 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-highlight/10 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute -left-24 top-72 h-64 w-64 rounded-full bg-secondary/10 blur-3xl" aria-hidden="true" />
       <header className="relative rounded-3xl bg-surface/70 px-5 py-6 backdrop-blur-sm sm:px-7">
-        <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-blue">
+        <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-secondary">
           Trust &amp; clearance
         </p>
         <h1 className="text-3xl font-extrabold tracking-[-0.035em] sm:text-4xl">Verification</h1>
@@ -255,7 +255,7 @@ export function VerificationPage() {
                   className={cn(
                     "flex-1 rounded-full border border-line-card px-4 py-2.5 text-sm font-extrabold transition-all duration-200",
                     method === option
-                      ? "bg-purple text-white shadow-soft-sm"
+                      ? "bg-highlight text-white shadow-soft-sm"
                       : "bg-surface hover:bg-hover",
                   )}
                 >

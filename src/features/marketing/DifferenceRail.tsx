@@ -15,16 +15,16 @@ import { DIFFERENCES } from "./content";
 const ICONS = [Ban, Wallet, UserCheck, Clock, ShieldCheck, TrendingUp];
 const TINTS = [
   "bg-primary-light",
-  "bg-purple-light",
+  "bg-highlight-light",
   "bg-accent-light",
   "bg-secondary-light",
   "bg-warning-bg",
   "bg-success-bg",
 ];
-const INK = ["text-primary", "text-purple", "text-ink", "text-secondary", "text-warning-ink", "text-success-ink"];
+const INK = ["text-primary", "text-highlight", "text-ink", "text-secondary", "text-warning-ink", "text-success-ink"];
 const CARD_TINTS = [
   "bg-primary-light/55",
-  "bg-purple-light/55",
+  "bg-highlight-light/55",
   "bg-accent-light/55",
   "bg-secondary-light/55",
   "bg-warning-bg/55",
@@ -98,7 +98,7 @@ export function DifferenceRail() {
     <div>
       <div className="flex flex-wrap items-end justify-between gap-6">
         <div>
-          <span className="inline-flex items-center rounded-full bg-purple-light px-3 py-1 text-2xs font-extrabold uppercase tracking-[0.08em] text-purple">
+          <span className="inline-flex items-center rounded-full bg-highlight-light px-3 py-1 text-2xs font-extrabold uppercase tracking-[0.08em] text-highlight">
             Drag the cards
           </span>
           <h2 id="differences" className="mt-4 max-w-lg text-4xl font-extrabold tracking-[-0.04em]">

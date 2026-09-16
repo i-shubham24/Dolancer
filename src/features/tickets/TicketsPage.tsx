@@ -144,7 +144,7 @@ export function TicketsPage() {
 
           <div className="flex gap-2">
             <Button
-              variant="secondary"
+              variant="outline"
               className="flex-1"
               onClick={() => setComposing(false)}
               disabled={create.isPending}

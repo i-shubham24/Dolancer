@@ -115,7 +115,7 @@ export function NotificationsPage() {
           </p>
         </div>
         {unread > 0 ? (
-          <Button variant="secondary" onClick={() => markRead.mutate()} disabled={markRead.isPending}>
+          <Button variant="outline" onClick={() => markRead.mutate()} disabled={markRead.isPending}>
             <CheckCheck className="h-4 w-4" aria-hidden="true" />
             {markRead.isPending ? "Marking..." : "Mark all read"}
           </Button>
@@ -148,13 +148,13 @@ export function NotificationsPage() {
                 hoverable={Boolean(item.deepLink)}
                 className={cn(
                   "flex items-center gap-3.5",
-                  !item.readAt && "border bg-lime-light",
+                  !item.readAt && "border bg-accent-light",
                 )}
               >
                 <span
                   className={cn(
                     "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-line-card",
-                    item.readAt ? "bg-subtle text-ink-muted" : "bg-lime",
+                    item.readAt ? "bg-subtle text-ink-muted" : "bg-accent",
                   )}
                 >
                   <Bell className="h-4 w-4" aria-hidden="true" />
@@ -168,7 +168,7 @@ export function NotificationsPage() {
                   </span>
                 </span>
                 {!item.readAt ? (
-                  <span className="h-2 w-2 shrink-0 rounded-full bg-coral" aria-label="Unread" />
+                  <span className="h-2 w-2 shrink-0 rounded-full bg-primary" aria-label="Unread" />
                 ) : null}
               </Card>
             );

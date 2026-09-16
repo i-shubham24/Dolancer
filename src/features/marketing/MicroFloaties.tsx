@@ -23,58 +23,58 @@ interface FloatItem {
 
 const ZONES: Record<string, FloatItem[]> = {
   hero: [
-    { kind: "sparkle", className: "left-[6%] top-[18%]", delay: "0s", duration: "6s", color: "var(--color-coral)" },
-    { kind: "ring", className: "right-[8%] bottom-[14%] hidden sm:block", delay: "1.4s", duration: "7s", color: "var(--color-blue)" },
+    { kind: "sparkle", className: "left-[6%] top-[18%]", delay: "0s", duration: "6s", color: "var(--color-primary)" },
+    { kind: "ring", className: "right-[8%] bottom-[14%] hidden sm:block", delay: "1.4s", duration: "7s", color: "var(--color-secondary)" },
   ],
   how: [
-    { kind: "plus", className: "right-[5%] top-[10%]", delay: "0.6s", duration: "6.5s", color: "var(--color-purple)" },
-    { kind: "dot", className: "left-[4%] bottom-[12%] hidden sm:block", delay: "2s", duration: "5.5s", color: "var(--color-coral)" },
+    { kind: "plus", className: "right-[5%] top-[10%]", delay: "0.6s", duration: "6.5s", color: "var(--color-highlight)" },
+    { kind: "dot", className: "left-[4%] bottom-[12%] hidden sm:block", delay: "2s", duration: "5.5s", color: "var(--color-primary)" },
   ],
   features: [
-    { kind: "sparkle", className: "left-[3%] top-[14%]", delay: "1s", duration: "6s", color: "var(--color-blue)" },
-    { kind: "squiggle", className: "right-[4%] bottom-[10%] hidden sm:block", delay: "2.2s", duration: "7.5s", color: "var(--color-purple)" },
+    { kind: "sparkle", className: "left-[3%] top-[14%]", delay: "1s", duration: "6s", color: "var(--color-secondary)" },
+    { kind: "squiggle", className: "right-[4%] bottom-[10%] hidden sm:block", delay: "2.2s", duration: "7.5s", color: "var(--color-highlight)" },
   ],
   numbers: [
-    { kind: "ring", className: "right-[6%] top-[12%]", delay: "0.3s", duration: "6s", color: "var(--color-coral)" },
-    { kind: "plus", className: "left-[5%] bottom-[14%] hidden sm:block", delay: "1.8s", duration: "7s", color: "var(--color-blue)" },
+    { kind: "ring", className: "right-[6%] top-[12%]", delay: "0.3s", duration: "6s", color: "var(--color-primary)" },
+    { kind: "plus", className: "left-[5%] bottom-[14%] hidden sm:block", delay: "1.8s", duration: "7s", color: "var(--color-secondary)" },
   ],
   payout: [
-    { kind: "pill", className: "left-[4%] top-[16%]", delay: "0.9s", duration: "6s", color: "var(--color-purple)" },
-    { kind: "dot", className: "right-[5%] bottom-[12%] hidden sm:block", delay: "2.4s", duration: "5.5s", color: "var(--color-coral)" },
+    { kind: "pill", className: "left-[4%] top-[16%]", delay: "0.9s", duration: "6s", color: "var(--color-highlight)" },
+    { kind: "dot", className: "right-[5%] bottom-[12%] hidden sm:block", delay: "2.4s", duration: "5.5s", color: "var(--color-primary)" },
   ],
   testimonials: [
-    { kind: "sparkle", className: "right-[5%] top-[10%]", delay: "0.4s", duration: "6.5s", color: "var(--color-coral)" },
-    { kind: "ring", className: "left-[4%] bottom-[16%] hidden sm:block", delay: "1.6s", duration: "7s", color: "var(--color-purple)" },
+    { kind: "sparkle", className: "right-[5%] top-[10%]", delay: "0.4s", duration: "6.5s", color: "var(--color-primary)" },
+    { kind: "ring", className: "left-[4%] bottom-[16%] hidden sm:block", delay: "1.6s", duration: "7s", color: "var(--color-highlight)" },
   ],
   cta: [
-    { kind: "plus", className: "left-[6%] top-[20%]", delay: "1.2s", duration: "6s", color: "var(--color-coral)" },
-    { kind: "sparkle", className: "right-[6%] bottom-[18%] hidden sm:block", delay: "0.2s", duration: "5.5s", color: "var(--color-blue)" },
+    { kind: "plus", className: "left-[6%] top-[20%]", delay: "1.2s", duration: "6s", color: "var(--color-primary)" },
+    { kind: "sparkle", className: "right-[6%] bottom-[18%] hidden sm:block", delay: "0.2s", duration: "5.5s", color: "var(--color-secondary)" },
   ],
   prefooter: [
-    { kind: "dot", className: "right-[10%] top-[30%]", delay: "0.8s", duration: "6s", color: "var(--color-purple)" },
-    { kind: "squiggle", className: "left-[8%] bottom-[20%] hidden sm:block", delay: "2s", duration: "7s", color: "var(--color-coral)" },
+    { kind: "dot", className: "right-[10%] top-[30%]", delay: "0.8s", duration: "6s", color: "var(--color-highlight)" },
+    { kind: "squiggle", className: "left-[8%] bottom-[20%] hidden sm:block", delay: "2s", duration: "7s", color: "var(--color-primary)" },
   ],
 
   // Nav pages - same grammar, one accent pair per zone.
   "hiw-hero": [
-    { kind: "ring", className: "left-[5%] top-[16%]", delay: "0.5s", duration: "6.5s", color: "var(--color-blue)" },
-    { kind: "sparkle", className: "right-[7%] bottom-[16%] hidden sm:block", delay: "1.8s", duration: "7s", color: "var(--color-coral)" },
+    { kind: "ring", className: "left-[5%] top-[16%]", delay: "0.5s", duration: "6.5s", color: "var(--color-secondary)" },
+    { kind: "sparkle", className: "right-[7%] bottom-[16%] hidden sm:block", delay: "1.8s", duration: "7s", color: "var(--color-primary)" },
   ],
   "about-hero": [
-    { kind: "plus", className: "left-[5%] top-[14%]", delay: "0.2s", duration: "6s", color: "var(--color-coral)" },
-    { kind: "dot", className: "right-[6%] bottom-[18%] hidden sm:block", delay: "1.6s", duration: "6.5s", color: "var(--color-purple)" },
+    { kind: "plus", className: "left-[5%] top-[14%]", delay: "0.2s", duration: "6s", color: "var(--color-primary)" },
+    { kind: "dot", className: "right-[6%] bottom-[18%] hidden sm:block", delay: "1.6s", duration: "6.5s", color: "var(--color-highlight)" },
   ],
   "about-principles": [
-    { kind: "squiggle", className: "left-[4%] top-[10%]", delay: "0.9s", duration: "7s", color: "var(--color-blue)" },
-    { kind: "ring", className: "right-[5%] bottom-[12%] hidden sm:block", delay: "2.1s", duration: "6s", color: "var(--color-coral)" },
+    { kind: "squiggle", className: "left-[4%] top-[10%]", delay: "0.9s", duration: "7s", color: "var(--color-secondary)" },
+    { kind: "ring", className: "right-[5%] bottom-[12%] hidden sm:block", delay: "2.1s", duration: "6s", color: "var(--color-primary)" },
   ],
   "contact-hero": [
-    { kind: "sparkle", className: "left-[6%] bottom-[16%]", delay: "0.4s", duration: "6s", color: "var(--color-purple)" },
-    { kind: "plus", className: "right-[6%] top-[16%] hidden sm:block", delay: "1.5s", duration: "6.5s", color: "var(--color-blue)" },
+    { kind: "sparkle", className: "left-[6%] bottom-[16%]", delay: "0.4s", duration: "6s", color: "var(--color-highlight)" },
+    { kind: "plus", className: "right-[6%] top-[16%] hidden sm:block", delay: "1.5s", duration: "6.5s", color: "var(--color-secondary)" },
   ],
   "contact-form": [
-    { kind: "dot", className: "left-[3%] top-[12%]", delay: "0.7s", duration: "5.5s", color: "var(--color-coral)" },
-    { kind: "squiggle", className: "right-[4%] bottom-[10%] hidden sm:block", delay: "2.3s", duration: "7s", color: "var(--color-purple)" },
+    { kind: "dot", className: "left-[3%] top-[12%]", delay: "0.7s", duration: "5.5s", color: "var(--color-primary)" },
+    { kind: "squiggle", className: "right-[4%] bottom-[10%] hidden sm:block", delay: "2.3s", duration: "7s", color: "var(--color-highlight)" },
   ],
 };
 

@@ -152,8 +152,8 @@ export function LessonPage() {
                     className={cn(
                       "flex cursor-pointer items-center gap-2.5 rounded-lg border px-3 py-2.5 text-sm font-semibold transition-colors",
                       checked
-                        ? "border-coral bg-lime shadow-soft-sm"
-                        : "border-line-card bg-surface hover:border-coral/40",
+                        ? "border-primary bg-accent shadow-soft-sm"
+                        : "border-line-card bg-surface hover:border-primary/40",
                     )}
                   >
                     <input
@@ -165,7 +165,7 @@ export function LessonPage() {
                         setAnswers((prev) => ({ ...prev, [question.id]: value }));
                         setResult(null);
                       }}
-                      className="accent-coral"
+                      className="accent-primary"
                     />
                     {option}
                   </label>

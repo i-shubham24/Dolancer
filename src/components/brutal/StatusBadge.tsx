@@ -4,7 +4,7 @@ import type { StatusTone } from "@/types/domain";
 const TONES: Record<StatusTone | "neutral", { wrap: string; dot: string; pulse: boolean }> = {
   assigned: { wrap: "bg-info-bg text-info-ink", dot: "bg-info-dot", pulse: true },
   progress: { wrap: "bg-warning-bg text-warning-ink", dot: "bg-warning-dot", pulse: true },
-  review: { wrap: "bg-purple-light text-purple", dot: "bg-purple", pulse: true },
+  review: { wrap: "bg-highlight-light text-highlight", dot: "bg-highlight", pulse: true },
   changes: { wrap: "bg-danger-bg text-danger-ink", dot: "bg-danger-dot", pulse: false },
   approved: { wrap: "bg-success-bg text-success-ink", dot: "bg-success-dot", pulse: false },
   neutral: { wrap: "bg-neutral-bg text-neutral-ink", dot: "bg-neutral-dot", pulse: false },

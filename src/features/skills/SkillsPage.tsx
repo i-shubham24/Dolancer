@@ -48,14 +48,14 @@ export function SkillsPage() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
     >
-      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-blue/10 blur-3xl" aria-hidden="true" />
-      <div className="pointer-events-none absolute right-0 top-56 h-56 w-56 rounded-full bg-purple/10 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-secondary/10 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute right-0 top-56 h-56 w-56 rounded-full bg-highlight/10 blur-3xl" aria-hidden="true" />
       <header className="relative rounded-3xl bg-surface/70 px-5 py-6 backdrop-blur-sm sm:px-7">
-        <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-blue">Creator profile</p>
+        <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-secondary">Creator profile</p>
         <h1 className="text-4xl font-extrabold tracking-[-0.035em]">Your skills</h1>
         <p className="mt-2 max-w-2xl text-md text-ink-2">
-          This is how work finds you. Only projects in a category you have picked appear on
-          your board, so if the board looks empty, start here.
+          This is how work finds you. Only projects in a category you have picked appear in
+          your assigned offers, so if you aren't receiving offers, start here.
         </p>
       </header>
 
@@ -113,7 +113,7 @@ export function SkillsPage() {
                       "disabled:opacity-60",
                       skill.selected
                         ? "bg-success-bg text-success-ink shadow-soft-sm"
-                        : "bg-surface hover:-translate-y-0.5 hover:bg-blue-light hover:shadow-soft-sm",
+                        : "bg-surface hover:-translate-y-0.5 hover:bg-secondary-light hover:shadow-soft-sm",
                     )}
                   >
                     {skill.selected ? (

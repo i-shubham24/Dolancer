@@ -13,7 +13,7 @@ export const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttribute
           "w-full rounded-xl border border-line-card bg-surface px-4 py-[11px] min-h-[44px]",
           "font-sans text-sm font-medium text-ink placeholder:text-ink-3",
           "shadow-soft-sm outline-none transition-all duration-200",
-          "focus:border-blue focus:ring-4 focus:ring-blue/15",
+          "focus:border-secondary focus:ring-4 focus:ring-secondary/15",
           "disabled:opacity-50",
           className,
         )}
@@ -34,7 +34,7 @@ export const Textarea = React.forwardRef<
         "w-full rounded-xl border border-line-card bg-surface px-4 py-[11px]",
         "font-sans text-sm font-medium text-ink placeholder:text-ink-3",
         "shadow-soft-sm outline-none transition-all duration-200 resize-y",
-        "focus:border-blue focus:ring-4 focus:ring-blue/15",
+        "focus:border-secondary focus:ring-4 focus:ring-secondary/15",
         "disabled:opacity-50",
         className,
       )}

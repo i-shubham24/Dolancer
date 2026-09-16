@@ -6,11 +6,12 @@ export function AboutComparison() {
   const points = [
     {
       bad: "Writing dozens of unpaid proposals",
-      good: "Pre-funded briefs waiting on your board",
+      good: "Pre-funded offers waiting for you",
     },
     {
-      bad: "Race-to-the-bottom bidding wars",
-      good: "Payouts guaranteed and agreed upfront",
+      label: "Financial security",
+      bad: "Chasing invoices, late payments, haggling",
+      good: "Payouts fixed and agreed upfront",
     },
     {
       bad: "Absorbing client friction & scope creep",
@@ -39,7 +40,7 @@ export function AboutComparison() {
         <div className="max-w-4xl mx-auto">
           <div className="hidden sm:grid grid-cols-2 gap-6 mb-4 px-6">
             <div className="text-xs font-bold uppercase tracking-widest text-ink-muted">Traditional Platforms</div>
-            <div className="text-xs font-bold uppercase tracking-widest text-coral">The Dolancer Way</div>
+            <div className="text-xs font-bold uppercase tracking-widest text-primary">The Dolancer Way</div>
           </div>
           
           <div className="space-y-4">
@@ -59,9 +60,9 @@ export function AboutComparison() {
                 </div>
                 
                 {/* Dolancer Side */}
-                <div className="flex-1 rounded-2xl border border-coral/20 bg-coral/5 p-5 flex items-center gap-4 shadow-soft-xs">
-                  <div className="h-8 w-8 rounded-full bg-coral/15 flex items-center justify-center shrink-0">
-                    <CheckCircle2 className="h-4 w-4 text-coral" />
+                <div className="flex-1 rounded-2xl border border-primary/20 bg-primary/5 p-5 flex items-center gap-4 shadow-soft-xs">
+                  <div className="h-8 w-8 rounded-full bg-primary/15 flex items-center justify-center shrink-0">
+                    <CheckCircle2 className="h-4 w-4 text-primary" />
                   </div>
                   <p className="text-sm font-extrabold text-ink">{point.good}</p>
                 </div>

@@ -7,7 +7,7 @@
  * palette-aware.
  *
  * Declared through Tailwind v4 @theme, so each token generates its utility:
- *   --color-coral        -> bg-coral / text-coral / border-coral
+ *   --color-primary        -> bg-primary / text-primary / border-primary
  *   --shadow-soft-md   -> shadow-soft-md
  *   --radius-xl          -> rounded-xl
  */
@@ -28,24 +28,24 @@
   --color-inverse: #ffffff;
 
   /* Primary: coral */
-  --color-coral: #ff6b5b;
-  --color-coral-hover: #ff5542;
-  --color-coral-light: #ffebe8;
+  --color-primary: #ff6b5b;
+  --color-primary-hover: #ff5542;
+  --color-primary-light: #ffebe8;
 
   /* Secondary: blue */
-  --color-blue: #6c8bff;
-  --color-blue-hover: #5475f5;
-  --color-blue-light: #eef2ff;
+  --color-secondary: #6c8bff;
+  --color-secondary-hover: #5475f5;
+  --color-secondary-light: #eef2ff;
 
   /* Accent: lime */
-  --color-lime: #c7ff3d;
-  --color-lime-hover: #b5f220;
-  --color-lime-light: #f5ffdb;
+  --color-accent: #c7ff3d;
+  --color-accent-hover: #b5f220;
+  --color-accent-light: #f5ffdb;
 
   /* Accent: violet */
-  --color-purple: #7b61ff;
-  --color-purple-hover: #6849f5;
-  --color-purple-light: #f3f0ff;
+  --color-highlight: #7b61ff;
+  --color-highlight-hover: #6849f5;
+  --color-highlight-light: #f3f0ff;
 
   /* Borders */
   --color-line: #111111;
@@ -119,18 +119,18 @@
   --color-ink-muted: var(--dl-ink-muted);
   --color-ink-3: var(--dl-ink-3);
   --color-inverse: var(--dl-inverse);
-  --color-coral: var(--dl-primary);
-  --color-coral-hover: var(--dl-primary-hover);
-  --color-coral-light: var(--dl-primary-light);
-  --color-blue: var(--dl-secondary);
-  --color-blue-hover: var(--dl-secondary-hover);
-  --color-blue-light: var(--dl-secondary-light);
-  --color-lime: var(--dl-accent);
-  --color-lime-hover: var(--dl-accent-hover);
-  --color-lime-light: var(--dl-accent-light);
-  --color-purple: var(--dl-purple);
-  --color-purple-hover: var(--dl-purple-hover);
-  --color-purple-light: var(--dl-purple-light);
+  --color-primary: var(--dl-primary);
+  --color-primary-hover: var(--dl-primary-hover);
+  --color-primary-light: var(--dl-primary-light);
+  --color-secondary: var(--dl-secondary);
+  --color-secondary-hover: var(--dl-secondary-hover);
+  --color-secondary-light: var(--dl-secondary-light);
+  --color-accent: var(--dl-accent);
+  --color-accent-hover: var(--dl-accent-hover);
+  --color-accent-light: var(--dl-accent-light);
+  --color-highlight: var(--dl-purple);
+  --color-highlight-hover: var(--dl-purple-hover);
+  --color-highlight-light: var(--dl-purple-light);
   --color-line: var(--dl-line);
   --color-line-subtle: var(--dl-line-subtle);
   --color-line-card: var(--dl-line-card);

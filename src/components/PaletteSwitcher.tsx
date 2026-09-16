@@ -43,7 +43,7 @@ export function PaletteSwitcher() {
         aria-haspopup="menu"
         onClick={() => setOpen((value) => !value)}
         style={{ "--palette-tray-color": active.swatches[0] } as CSSProperties}
-        className="palette-tray-button inline-flex min-h-10 min-w-10 items-center justify-center gap-1.5 rounded-full border border-line-card bg-surface px-2.5 text-xs font-bold text-ink shadow-soft-sm transition-all hover:-translate-y-0.5 hover:border-purple/40 hover:shadow-soft-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
+        className="palette-tray-button inline-flex min-h-10 min-w-10 items-center justify-center gap-1.5 rounded-full border border-line-card bg-surface px-2.5 text-xs font-bold text-ink shadow-soft-sm transition-all hover:-translate-y-0.5 hover:border-highlight/40 hover:shadow-soft-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
       >
         <span className="flex h-5 w-5 overflow-hidden rounded-full ring-1 ring-black/10" aria-hidden="true">
           <span className="w-1/2" style={{ backgroundColor: active.swatches[0] }} />
@@ -72,8 +72,8 @@ export function PaletteSwitcher() {
                 aria-checked={selected}
                 onClick={() => choose(option)}
                 className={cn(
-                  "flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-blue",
-                  selected ? "bg-blue-light text-ink" : "text-ink-2 hover:bg-hover hover:text-ink",
+                  "flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-secondary",
+                  selected ? "bg-secondary-light text-ink" : "text-ink-2 hover:bg-hover hover:text-ink",
                 )}
               >
                 <span className="flex h-7 w-7 shrink-0 overflow-hidden rounded-full ring-1 ring-black/10" aria-hidden="true">
@@ -84,7 +84,7 @@ export function PaletteSwitcher() {
                   <span className="block text-sm font-extrabold">{meta.label}</span>
                   <span className="block truncate text-[11px] text-ink-muted">{meta.description}</span>
                 </span>
-                {selected ? <Check className="h-4 w-4 shrink-0 text-blue" aria-hidden="true" /> : null}
+                {selected ? <Check className="h-4 w-4 shrink-0 text-secondary" aria-hidden="true" /> : null}
               </button>
             );
           })}

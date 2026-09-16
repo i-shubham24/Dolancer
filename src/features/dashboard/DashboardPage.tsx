@@ -132,7 +132,7 @@ export function DashboardPage() {
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             <ColorStat
-              tone="lime"
+              tone="accent"
               label="Paid out to date"
               value={formatPaise(earnings.data?.netPaise ?? 0)}
               subtext="Net of everything withheld"
@@ -140,7 +140,7 @@ export function DashboardPage() {
               loading={earnings.isLoading}
             />
             <ColorStat
-              tone="blue"
+              tone="secondary"
               label="Tax withheld"
               value={formatPaise(earnings.data?.taxWithheldPaise ?? 0)}
               subtext={`Cumulative TDS and GST. Gross released ${formatPaise(
@@ -150,7 +150,7 @@ export function DashboardPage() {
               loading={earnings.isLoading}
             />
             <ColorStat
-              tone="coral"
+              tone="primary"
               label="Active work"
               value={`${activeCount} of ${MAX_ACTIVE_PROJECTS}`}
               subtext={
@@ -179,7 +179,7 @@ export function DashboardPage() {
                   ? "One project is frozen until you add its working link."
                   : `${linkNeeded} projects are frozen until you add their working links.`}
               </p>
-              <Button asChild size="sm" variant="secondary">
+              <Button asChild size="sm" variant="outline">
                 <Link to="/work">Fix now</Link>
               </Button>
             </div>
@@ -243,7 +243,7 @@ export function DashboardPage() {
                 title={`Nothing ${active.label.toLowerCase()}`}
                 description="Try another filter to see the rest of your work."
                 action={
-                  <Button variant="secondary" onClick={() => setFilter("all")}>
+                  <Button variant="outline" onClick={() => setFilter("all")}>
                     Show all
                   </Button>
                 }
@@ -296,7 +296,7 @@ export function DashboardPage() {
                   >
                     <MotionCard
                       hoverable
-                      className="flex h-full flex-wrap items-center gap-4 transition-colors hover:border-purple/35"
+                      className="flex h-full flex-wrap items-center gap-4 transition-colors hover:border-highlight/35"
                     >
                       <div className="min-w-0 flex-1 space-y-2">
                         <CategoryPill>{offer.category}</CategoryPill>

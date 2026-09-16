@@ -12,10 +12,10 @@ import { cn } from "@/lib/cn";
  */
 
 const TONES = {
-  lime: "bg-lime text-ink",
-  coral: "bg-coral text-ink",
-  blue: "bg-blue text-inverse",
-  purple: "bg-purple text-inverse",
+  accent: "bg-accent text-ink",
+  primary: "bg-primary text-ink",
+  secondary: "bg-secondary text-inverse",
+  highlight: "bg-highlight text-inverse",
   ink: "bg-ink text-inverse",
 } as const;
 
@@ -26,7 +26,7 @@ export function ColorStat({
   value,
   subtext,
   icon,
-  tone = "lime",
+  tone = "accent",
   loading = false,
   className,
 }: {
@@ -38,7 +38,7 @@ export function ColorStat({
   loading?: boolean;
   className?: string;
 }) {
-  const inverse = tone === "blue" || tone === "purple" || tone === "ink";
+  const inverse = tone === "secondary" || tone === "highlight" || tone === "ink";
 
   return (
     <motion.div
