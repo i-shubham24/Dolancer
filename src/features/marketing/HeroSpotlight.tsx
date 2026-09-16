@@ -13,6 +13,45 @@ export function HeroSpotlight({ className = '' }: { className?: string }) {
   useEffect(() => {
     if (reducedMotion) return;
 
+    let rafId: number | null = null;
+    let isSettled = false;
+
+    const animate = () => {
+      if (!spotlightRef.current || !wrapperRef.current) {
+        rafId = null;
+        return;
+      }
+
+      if (isHovering.current) {
+        isSettled = false;
+        current.current.x += (mouse.current.x - current.current.x) * 0.1;
+        current.current.y += (mouse.current.y - current.current.y) * 0.1;
+        spotlightRef.current.style.opacity = '1';
+        spotlightRef.current.style.transform = `translate(${current.current.x}px, ${current.current.y}px) translate(-50%, -50%)`;
+      } else {
+        const rect = wrapperRef.current.getBoundingClientRect();
+        const center = { x: rect.width / 2, y: rect.height / 2 };
+        
+        const diffX = Math.abs(center.x - current.current.x);
+        const diffY = Math.abs(center.y - current.current.y);
+        
+        if (diffX > 0.5 || diffY > 0.5) {
+          current.current.x += (center.x - current.current.x) * 0.05;
+          current.current.y += (center.y - current.current.y) * 0.05;
+          spotlightRef.current.style.transform = `translate(${current.current.x}px, ${current.current.y}px) translate(-50%, -50%)`;
+        } else {
+          isSettled = true;
+        }
+        spotlightRef.current.style.opacity = '0';
+      }
+      
+      if (isSettled && !isHovering.current) {
+        rafId = null; // Halt loop
+      } else {
+        rafId = requestAnimationFrame(animate);
+      }
+    };
+
     const onMouseMove = (e: MouseEvent) => {
       if (!wrapperRef.current) return;
       const rect = wrapperRef.current.getBoundingClientRect();
@@ -21,6 +60,7 @@ export function HeroSpotlight({ className = '' }: { className?: string }) {
         y: e.clientY - rect.top,
       };
       isHovering.current = true;
+      if (!rafId) rafId = requestAnimationFrame(animate);
     };
     
     const onMouseLeave = () => {
@@ -29,39 +69,14 @@ export function HeroSpotlight({ className = '' }: { className?: string }) {
 
     window.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseleave', onMouseLeave);
+    
+    rafId = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseleave', onMouseLeave);
+      if (rafId) cancelAnimationFrame(rafId);
     };
-  }, [reducedMotion]);
-
-  useEffect(() => {
-    if (reducedMotion) return;
-
-    let rafId: number;
-
-    const animate = () => {
-      if (spotlightRef.current && wrapperRef.current) {
-        if (isHovering.current) {
-          current.current.x += (mouse.current.x - current.current.x) * 0.1;
-          current.current.y += (mouse.current.y - current.current.y) * 0.1;
-          spotlightRef.current.style.opacity = '1';
-        } else {
-          const rect = wrapperRef.current.getBoundingClientRect();
-          const center = { x: rect.width / 2, y: rect.height / 2 };
-          current.current.x += (center.x - current.current.x) * 0.05;
-          current.current.y += (center.y - current.current.y) * 0.05;
-          spotlightRef.current.style.opacity = '0';
-        }
-        
-        spotlightRef.current.style.transform = `translate(${current.current.x}px, ${current.current.y}px) translate(-50%, -50%)`;
-      }
-      rafId = requestAnimationFrame(animate);
-    };
-
-    rafId = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(rafId);
   }, [reducedMotion]);
 
   const reducedMotionStyle = reducedMotion ? {

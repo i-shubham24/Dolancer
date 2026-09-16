@@ -1,20 +1,9 @@
-import { useEffect, useRef } from 'react';
-import { useReducedMotion } from 'framer-motion';
+import re
 
-export function useMagneticHover<T extends HTMLElement = HTMLDivElement>(
-  strength: number = 0.3,
-  radius: number = 40
-) {
-  const ref = useRef<T>(null);
-  const reducedMotion = useReducedMotion();
+with open('src/hooks/useMagneticHover.ts', 'r', encoding='utf-8') as f:
+    content = f.read()
 
-  useEffect(() => {
-    if (reducedMotion) return;
-
-    const element = ref.current;
-    if (!element) return;
-
-    let rafId: number | null = null;
+replacement = """    let rafId: number | null = null;
     let isHovering = false;
     let targetX = 0;
     let targetY = 0;
@@ -75,31 +64,15 @@ export function useMagneticHover<T extends HTMLElement = HTMLDivElement>(
         element.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
         element.style.transform = '';
       }
-    };
+    };"""
 
-    const animate = () => {
-      if (isHovering) {
-        currentX += (targetX - currentX) * 0.15;
-        currentY += (targetY - currentY) * 0.15;
-        element.style.transform = `translate(${currentX}px, ${currentY}px)`;
-      }
+content = re.sub(r'    let rafId: number;\n    let isHovering = false;[\s\S]*?const onMouseLeave = \(\) => \{[\s\S]*?element\.style\.transform = \'\';\n      \}\n    \};', replacement, content)
 
-      rafId = requestAnimationFrame(animate);
-    };
+# Remove the initial rafId = requestAnimationFrame(animate); 
+content = content.replace("    rafId = requestAnimationFrame(animate);\n\n    return () => {", "    return () => {")
 
-    window.addEventListener('mousemove', onMouseMove);
-    element.addEventListener('mouseleave', onMouseLeave);
-    
-    return () => {
-      window.removeEventListener('mousemove', onMouseMove);
-      element.removeEventListener('mouseleave', onMouseLeave);
-      if (rafId) cancelAnimationFrame(rafId);
-      
-      // Reset styles
-      element.style.transform = '';
-      element.style.transition = '';
-    };
-  }, [reducedMotion, strength, radius]);
+# Fix cancelAnimationFrame type issue
+content = content.replace("cancelAnimationFrame(rafId);", "if (rafId) cancelAnimationFrame(rafId);")
 
-  return ref;
-}
+with open('src/hooks/useMagneticHover.ts', 'w', encoding='utf-8') as f:
+    f.write(content)
