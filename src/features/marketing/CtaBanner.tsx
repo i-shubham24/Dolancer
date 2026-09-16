@@ -6,7 +6,7 @@ import { useMagneticHover } from "@/hooks/useMagneticHover";
 
 export function CtaBanner() {
   const reduceMotion = useReducedMotion();
-  const magneticRef = useMagneticHover();
+  const magneticRef = useMagneticHover<HTMLButtonElement>();
 
   return (
     <section className="fresh-section pt-20 pb-10">
@@ -49,7 +49,7 @@ export function CtaBanner() {
 
             {/* Buttons stacked vertically */}
             <div className="flex flex-col justify-center gap-3 w-full sm:w-auto min-w-[200px] shrink-0">
-              <StitchButton asChild variant="primary" ref={magneticRef as any}
+              <StitchButton asChild variant="primary" ref={magneticRef}
                 className="!w-full !mt-0 px-6 sm:px-7 py-3.5 sm:py-4 text-sm sm:text-base justify-center whitespace-nowrap shadow-soft-sm relative overflow-hidden group">
                 <Link to="/sign-up" className="inline-flex items-center justify-center w-full">
                   Start Earning

@@ -354,8 +354,22 @@
 
   .fresh-menu-button:hover {
     transform: translateY(-1px);
-    background: var(--color-primary-light);
+    background: color-mix(in srgb, var(--color-inverse) 22%, transparent);
     box-shadow: var(--shadow-soft-md);
+  }
+
+  /* Bare glyph variant: no circular backdrop, icon only in the dark
+     secondary tone of the active palette. */
+  .fresh-header .fresh-menu-button-bare {
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .fresh-header .fresh-menu-button-bare:hover {
+    background: transparent;
+    box-shadow: none;
+    opacity: 0.75;
   }
 
   .fresh-menu-icon {

@@ -41,6 +41,7 @@ function loadScript(): Promise<void> {
 }
 
 /** True once a site key is configured. Until then the widget renders nothing. */
+// eslint-disable-next-line react-refresh/only-export-components
 export function turnstileConfigured(): boolean {
   return env.turnstileSiteKey.length > 0;
 }

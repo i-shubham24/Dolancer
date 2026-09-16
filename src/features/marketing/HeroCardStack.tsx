@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
-import { useCursorTilt } from "@/lib/useCursorTilt";
 import { BorderBeam } from "@/components/ui/BorderBeam";
 import {
   Star,
@@ -79,7 +78,6 @@ const CARDS: BriefCardData[] = [
 
 export function HeroCardStack() {
   const reduceMotion = useReducedMotion();
-  const tiltRef = useCursorTilt();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -187,10 +185,7 @@ export function HeroCardStack() {
                     }
               }
               transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              ref={isTop ? tiltRef.ref : undefined}
-              onPointerMove={isTop ? tiltRef.onPointerMove : undefined}
-              onPointerLeave={isTop ? tiltRef.onPointerLeave : undefined}
-              className={`absolute inset-0 rounded-[2.2rem] border p-6 sm:p-7 shadow-soft-lg cursor-pointer transition-colors ${isTop && !reduceMotion ? "cursor-tilt" : ""} ${
+              className={`absolute inset-0 rounded-[2.2rem] border p-6 sm:p-7 shadow-soft-lg cursor-pointer transition-colors ${
                 isTop
                   ? "border-line-card bg-surface hover:border-primary/50"
                   : "border-line-card/70 bg-surface hover:bg-surface"

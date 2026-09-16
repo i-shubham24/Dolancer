@@ -39,7 +39,7 @@ export function MarketingLayout() {
   const [open, setOpen] = useState(false);
   const { session } = useAuth();
   const currentOutlet = useOutlet();
-  const magneticRef = useMagneticHover(0.2, 20);
+  const magneticRef = useMagneticHover<HTMLButtonElement>(0.2, 20);
 
   return (
     <div className="fresh-site flex min-h-dvh flex-col bg-canvas relative bg-[radial-gradient(color-mix(in_srgb,var(--color-ink)_16%,transparent)_1px,transparent_1px)] [background-size:24px_24px]">
@@ -86,7 +86,7 @@ export function MarketingLayout() {
                 <Button asChild variant="ghost" size="sm" className="text-inverse hover:bg-inverse hover:text-ink">
                   <Link to="/sign-in">Sign in</Link>
                 </Button>
-                <Button ref={magneticRef as any} asChild variant="ghost" size="sm" className="text-inverse border border-inverse/30 hover:bg-inverse hover:text-ink">
+                <Button ref={magneticRef} asChild variant="ghost" size="sm" className="text-inverse border border-inverse/30 hover:bg-inverse hover:text-ink">
                   <Link to="/sign-up">Start earning</Link>
                 </Button>
               </>
@@ -99,7 +99,7 @@ export function MarketingLayout() {
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             className={cn(
-              "fresh-menu-button ml-auto flex h-10 w-10 items-center justify-center rounded-full border border-line-card bg-surface shadow-soft-sm md:hidden",
+              "fresh-menu-button fresh-menu-button-bare ml-auto flex h-10 w-10 items-center justify-center text-secondary-hover md:hidden",
               open && "is-open",
             )}
           >

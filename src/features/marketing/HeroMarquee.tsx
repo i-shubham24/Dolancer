@@ -100,7 +100,7 @@ export function HeroMarquee() {
   return (
     <div
       aria-hidden="true"
-      className="relative z-[2] overflow-hidden py-5 [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)] md:py-6"
+      className="relative z-[2] overflow-hidden py-5 [-webkit-mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)] [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)] md:py-6"
     >
       <div className="marquee-track flex w-max items-center gap-4 pr-4">
         {[0, 1].map((half) => (

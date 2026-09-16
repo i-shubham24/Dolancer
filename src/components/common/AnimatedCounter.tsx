@@ -36,7 +36,14 @@ export function AnimatedCounter({
 
     const animate = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / (duration * 1000), 1);
+      // Guard: a zero duration (reduced-motion fast path) would divide 0/0
+      // on the first frame and flash "NaN" before settling.
+      const span = duration * 1000;
+      if (!(span > 0)) {
+        setCount(end);
+        return;
+      }
+      const progress = Math.min((timestamp - startTime) / span, 1);
       const easedProgress = easeOutExpo(progress);
       const current = easedProgress * end;
 
