@@ -99,7 +99,7 @@ export function MarketingLayout() {
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             className={cn(
-              "fresh-menu-button fresh-menu-button-bare ml-auto flex h-10 w-10 items-center justify-center text-secondary-hover md:hidden",
+              "fresh-menu-button ml-auto flex h-10 w-10 items-center justify-center rounded-full border border-inverse/40 bg-transparent text-inverse md:hidden",
               open && "is-open",
             )}
           >
@@ -136,7 +136,7 @@ export function MarketingLayout() {
                   <Button asChild variant="outline" onClick={() => setOpen(false)}>
                     <Link to="/sign-in">Sign in</Link>
                   </Button>
-                  <Button asChild variant="outline" onClick={() => setOpen(false)}>
+                  <Button asChild onClick={() => setOpen(false)}>
                     <Link to="/sign-up">Start earning</Link>
                   </Button>
                 </>
