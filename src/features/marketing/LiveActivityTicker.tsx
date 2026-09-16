@@ -80,7 +80,7 @@ export function LiveActivityTicker() {
   };
 
   return (
-    <div className="fixed bottom-6 left-6 z-40 pointer-events-none">
+    <div className="hidden sm:flex fixed bottom-6 left-6 z-40 pointer-events-none">
       <AnimatePresence>
         {currentMessage && (
           <motion.div

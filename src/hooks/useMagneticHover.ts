@@ -77,16 +77,6 @@ export function useMagneticHover<T extends HTMLElement = HTMLDivElement>(
       }
     };
 
-    const animate = () => {
-      if (isHovering) {
-        currentX += (targetX - currentX) * 0.15;
-        currentY += (targetY - currentY) * 0.15;
-        element.style.transform = `translate(${currentX}px, ${currentY}px)`;
-      }
-
-      rafId = requestAnimationFrame(animate);
-    };
-
     window.addEventListener('mousemove', onMouseMove);
     element.addEventListener('mouseleave', onMouseLeave);
     

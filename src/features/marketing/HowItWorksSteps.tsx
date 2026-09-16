@@ -1,13 +1,23 @@
-import { motion, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Search, CheckCircle2, Wallet, ArrowRight, ShieldCheck, Check, Sparkles } from "lucide-react";
 import { StitchBadge } from "@/components/stitch/StitchPrimitives";
 
 export function HowItWorksSteps() {
   const reduceMotion = useReducedMotion();
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start center", "end center"]
+  });
+
+  const pathLength = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
 
   return (
     <section id="how-it-works" className="fresh-section py-20 overflow-hidden">
-      <div className="fresh-container relative">
+      <div ref={containerRef} className="fresh-container relative">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16 sm:mb-20">
           <StitchBadge tone="neutral">
@@ -42,10 +52,7 @@ export function HowItWorksSteps() {
               y2="100"
               stroke="var(--color-coral)"
               strokeWidth="4"
-              initial={{ pathLength: 0 }}
-              whileInView={{ pathLength: 1 }}
-              viewport={{ once: true, margin: "-20% 0px" }}
-              transition={{ duration: 1.5, ease: "easeInOut" }}
+              style={{ pathLength: reduceMotion ? 1 : pathLength }}
             />
           </svg>
         </div>
@@ -129,9 +136,13 @@ export function HowItWorksSteps() {
 
               {/* Dedicated 20% reserved exclusively for number */}
               <div className="w-[22%] sm:w-[20%] flex items-center justify-center select-none pointer-events-none shrink-0 border-l border-line-card/40 pl-2">
-                <span className="text-5xl sm:text-6xl font-extrabold font-display text-ink/15">
+                <motion.span 
+                  whileInView={reduceMotion ? undefined : { scale: 1.15, textShadow: "0px 0px 20px rgba(var(--color-coral-rgb), 0.5)", color: "var(--color-coral)" }}
+                  transition={{ duration: 0.5 }}
+                  className="text-5xl sm:text-6xl font-extrabold font-display text-ink/15 transition-colors"
+                >
                   01
-                </span>
+                </motion.span>
               </div>
             </div>
           </motion.div>
@@ -176,9 +187,13 @@ export function HowItWorksSteps() {
 
               {/* Dedicated 20% reserved exclusively for number */}
               <div className="w-[22%] sm:w-[20%] flex items-center justify-center select-none pointer-events-none shrink-0 border-l border-line-card/40 pl-2">
-                <span className="text-5xl sm:text-6xl font-extrabold font-display text-ink/15">
+                <motion.span 
+                  whileInView={reduceMotion ? undefined : { scale: 1.15, textShadow: "0px 0px 20px rgba(var(--color-coral-rgb), 0.5)", color: "var(--color-coral)" }}
+                  transition={{ duration: 0.5 }}
+                  className="text-5xl sm:text-6xl font-extrabold font-display text-ink/15 transition-colors"
+                >
                   02
-                </span>
+                </motion.span>
               </div>
             </div>
 
@@ -280,9 +295,13 @@ export function HowItWorksSteps() {
 
               {/* Dedicated 20% reserved exclusively for number */}
               <div className="w-[22%] sm:w-[20%] flex items-center justify-center select-none pointer-events-none shrink-0 border-l border-line-card/40 pl-2">
-                <span className="text-5xl sm:text-6xl font-extrabold font-display text-ink/15">
+                <motion.span 
+                  whileInView={reduceMotion ? undefined : { scale: 1.15, textShadow: "0px 0px 20px rgba(var(--color-coral-rgb), 0.5)", color: "var(--color-coral)" }}
+                  transition={{ duration: 0.5 }}
+                  className="text-5xl sm:text-6xl font-extrabold font-display text-ink/15 transition-colors"
+                >
                   03
-                </span>
+                </motion.span>
               </div>
             </div>
           </motion.div>

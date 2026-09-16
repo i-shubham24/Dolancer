@@ -181,7 +181,6 @@ export function HeroCardStack() {
                       x: translateX,
                       y: translateY,
                       rotate: rotate,
-                      rotateY: isTop ? 0 : 180,
                       scale: scale,
                       opacity: opacity,
                       zIndex: zIndex,
@@ -195,8 +194,10 @@ export function HeroCardStack() {
                   : "border-line-card/70 bg-surface/90 hover:bg-surface"
               }`}
             >
-              {isTop && <BorderBeam />}
-              {/* Card Header: Icon + Badge + Payout */}
+                            {isTop && !reduceMotion && <BorderBeam />}
+              {/* Card Content Wrapper */}
+              <div className="relative z-20 h-full flex flex-col pointer-events-none">
+                {/* Card Header: Icon + Badge + Payout */}
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
                   <span
@@ -264,6 +265,7 @@ export function HeroCardStack() {
                   <span>{isTop ? "Claim brief" : "Bring to front"}</span>
                   <ChevronRight className="h-3.5 w-3.5" />
                 </span>
+              </div>
               </div>
             </motion.div>
           );
