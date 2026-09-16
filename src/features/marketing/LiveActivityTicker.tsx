@@ -90,13 +90,13 @@ export function LiveActivityTicker() {
             animate="animate"
             exit="exit"
             transition={{ duration: 0.3 }}
-            className="bg-white/95 backdrop-blur-sm border border-line-card rounded-2xl shadow-soft-md px-4 py-3 pointer-events-auto flex items-center gap-3"
+            className="bg-coral border border-coral-light/20 rounded-full shadow-[0_8px_24px_color-mix(in_srgb,var(--color-coral)_40%,transparent)] px-5 py-3 pointer-events-auto flex items-center gap-3"
           >
             <div className="relative flex h-3 w-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-lime-500"></span>
             </div>
-            <span className="text-sm font-medium text-ink-2">{currentMessage}</span>
+            <span className="text-sm font-bold text-inverse">{currentMessage}</span>
           </motion.div>
         )}
       </AnimatePresence>
