@@ -141,8 +141,8 @@ export const TESTIMONIALS: Testimonial[] = [];
 
 export const CONTACT = {
   email: "support@dolancer.in",
-  grievanceEmail: "grievance@assignexperts.in",
+  grievanceEmail: "grievance@dolancer.in",
   hours: "24 hours a day, 7 days a week",
-  company: "Assign Experts Private Limited",
+  company: "Dolancer",
   jurisdiction: "Punjab, India",
 } as const;

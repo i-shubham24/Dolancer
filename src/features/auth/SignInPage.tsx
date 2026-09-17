@@ -202,12 +202,15 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
         </div>
       ) : null}
 
-      <StitchCard className="relative overflow-hidden p-5 sm:p-7">
-        <div className="auth-card-art" aria-hidden="true">
+      <div className="absolute -top-16 left-24 sm:-top-20 sm:left-48 pointer-events-none" aria-hidden="true">
+        <div className="auth-card-art relative scale-90 sm:scale-100 opacity-60">
           <span className="auth-card-art-block auth-card-art-block-one" />
           <span className="auth-card-art-block auth-card-art-block-two" />
           <span className="auth-card-art-dot" />
         </div>
+      </div>
+
+      <StitchCard className="relative p-5 sm:p-7">
       {stage === "email" ? (
         <form onSubmit={handleSendCode} className="space-y-4">
           <div className="space-y-2">

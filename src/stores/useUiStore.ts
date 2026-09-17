@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { WorkBucket } from "@/types/domain";
 
-export const PALETTES = ["cobalt", "violet", "mint", "sunset"] as const;
+export const PALETTES = ["cobalt"] as const;
 export type Palette = (typeof PALETTES)[number];
 
 export const PALETTE_META: Record<
@@ -11,23 +11,8 @@ export const PALETTE_META: Record<
 > = {
   cobalt: {
     label: "Cobalt",
-    description: "Electric blue with calm teal accents",
-    swatches: ["#2563eb", "#14b8a6"],
-  },
-  violet: {
-    label: "Violet",
-    description: "Creative violet with emerald accents",
-    swatches: ["#7c3aed", "#10b981"],
-  },
-  mint: {
-    label: "Mint",
-    description: "Fresh teal with cobalt accents",
-    swatches: ["#0f9f8f", "#2563eb"],
-  },
-  sunset: {
-    label: "Rose",
-    description: "Warm pink with indigo accents",
-    swatches: ["#f472b6", "#4f46e5"],
+    description: "Dolancer signature blue",
+    swatches: ["#5A7CFF", "#14b8a6"],
   },
 };
 

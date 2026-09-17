@@ -10,6 +10,7 @@ import { WorkflowDemo } from "./WorkflowDemo";
 import { PayoutExplainer } from "./PayoutExplainer";
 import { DifferenceRail } from "./DifferenceRail";
 import { CategoryTags } from "./CategoryTags";
+import { HeroMarquee } from "./HeroMarquee";
 import { HowItWorksHeroGraphic } from "./HowItWorksHeroGraphic";
 import { CurvedSectionDivider } from "@/components/stitch/CurvedSectionDivider";
 import { FaqAccordion } from "./FaqAccordion";
@@ -40,9 +41,9 @@ export function HowItWorksPage() {
 
   return (
     <div className="fresh-page">
-      <section className="fresh-hero relative z-10 !pt-2 lg:!pt-2 !pb-16 lg:!pb-24 flex items-center !min-h-0 !overflow-visible">
+      <section className="fresh-hero relative z-10 !pt-2 lg:!pt-2 !pb-8 lg:!pb-12 flex items-center !min-h-0 !overflow-visible">
         <MicroFloaties zone="hiw-hero" />
-                <div className="fresh-container fresh-process-hero">
+        <div className="fresh-container fresh-process-hero">
           <motion.div initial={reduceMotion ? false : "hidden"} animate="show" variants={reveal}>
             <StitchBadge><Sparkles className="h-3.5 w-3.5" /> Everything, in the open</StitchBadge>
             <h1 className="mt-5 max-w-3xl">
@@ -68,6 +69,10 @@ export function HowItWorksPage() {
           </motion.div>
         </div>
       </section>
+
+      <div className="relative z-20 -mt-6 lg:-mt-10 mb-8 lg:mb-12">
+        <HeroMarquee />
+      </div>
 
       {/* Redesigned 5x Creative Interactive Four Moments Section */}
       <section className="bg-surface-2 py-14 lg:py-28 relative">

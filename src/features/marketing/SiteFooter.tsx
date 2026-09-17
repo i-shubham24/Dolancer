@@ -138,8 +138,7 @@ export function SiteFooter() {
           </div>
         </div>
 
-        {/* Soft Organic Divider */}
-        <div className="mt-12 sm:mt-16 h-px w-full bg-gradient-to-r from-transparent via-slate-800/90 to-transparent" />
+        {/* Soft Organic Divider Removed */}
 
         {/* Giant Watermark Typography matching reference screenshot */}
         <div className="pt-6 sm:pt-10 pb-4 select-none pointer-events-none text-left px-4 sm:px-8 relative z-0">

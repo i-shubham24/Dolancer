@@ -47,19 +47,13 @@
       /* Pre-paint canvas: never flash blank white while the bundle loads.
          This boot stage mirrors the React loader exactly (144px logo, dots,
          corner blobs, bob rhythm) so the handoff is invisible. */
-      html { background: color-mix(in srgb, #2563eb 90%, white); }
-      html[data-palette="violet"] { background: color-mix(in srgb, #7c3aed 90%, white); }
-      html[data-palette="mint"] { background: color-mix(in srgb, #0f766e 90%, white); }
-      html[data-palette="sunset"] { background: color-mix(in srgb, #f472b6 90%, white); }
+      html { background: color-mix(in srgb, #5A7CFF 85%, white); }
       #boot-splash {
         position: fixed; inset: 0; z-index: 9998;
         display: flex; flex-direction: column; align-items: center; justify-content: center;
         gap: 20px; overflow: hidden;
-        background: color-mix(in srgb, #2563eb 90%, white);
+        background: color-mix(in srgb, #5A7CFF 85%, white);
       }
-      #boot-splash[data-boot-palette="violet"] { background: color-mix(in srgb, #7c3aed 90%, white); }
-      #boot-splash[data-boot-palette="mint"] { background: color-mix(in srgb, #0f766e 90%, white); }
-      #boot-splash[data-boot-palette="sunset"] { background: color-mix(in srgb, #f472b6 90%, white); }
       #boot-splash .boot-logo {
         width: 144px; height: 144px; border-radius: 28px; overflow: hidden;
         box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
@@ -92,18 +86,6 @@
         border-radius: 58% 42% 37% 63% / 52% 58% 42% 48%;
       }
     </style>
-    <script>
-      // Sync the saved palette before first paint so the boot splash and the
-      // React loader open in the right theme colour (no blue flash).
-      try {
-        var raw = localStorage.getItem("dolancer.ui");
-        var palette = raw ? JSON.parse(raw).state?.palette : undefined;
-        if (palette === "cobalt" || palette === "violet" || palette === "mint" || palette === "sunset") {
-          document.documentElement.dataset.palette = palette;
-          window.__BOOT_PALETTE = palette;
-        }
-      } catch (e) { /* default palette */ }
-    </script>
   </head>
   <body>
     <div id="root"></div>
@@ -117,13 +99,6 @@
       <div class="boot-dots" aria-hidden="true"><span></span><span></span><span></span></div>
     </div>
     <noscript><style>#boot-splash { display: none; }</style></noscript>
-    <script>
-      try {
-        if (window.__BOOT_PALETTE) {
-          document.getElementById("boot-splash")?.setAttribute("data-boot-palette", window.__BOOT_PALETTE);
-        }
-      } catch (e) { /* default colour */ }
-    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

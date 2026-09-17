@@ -31,7 +31,7 @@ function readRole(session: Session | null): string | null {
     const json = JSON.parse(
       atob(payload.replace(/-/g, "+").replace(/_/g, "/")),
     ) as Record<string, unknown>;
-    const role = json["assignx_role"];
+    const role = json["dolancer_role"];
     return typeof role === "string" ? role : null;
   } catch {
     return null;

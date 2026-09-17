@@ -24,7 +24,6 @@ import { isDemo } from "@/lib/demo-data";
 import { useAuth } from "@/providers/AuthProvider";
 import { signOut } from "@/features/auth/api";
 import { useProfile } from "@/features/dashboard/queries";
-import { PaletteSwitcher } from "@/components/PaletteSwitcher";
 import { Logo } from "@/components/ui/Logo";
 
 const NAV = [
@@ -130,14 +129,7 @@ function SidebarContent({ onNavigate, collapsed, setCollapsed }: { onNavigate?: 
           </button>
         )}
       </div>
-      
-      {!collapsed && (
-        <div className="mb-5 px-1">
-          <PaletteSwitcher />
-        </div>
-      )}
-
-      <nav className="space-y-1 px-1" aria-label="Main">
+      {/* Removed PaletteSwitcher */}      <nav className="space-y-1 px-1" aria-label="Main">
         {NAV.map((item) => (
           <NavItem key={item.to} {...item} onNavigate={onNavigate} collapsed={collapsed} />
         ))}
@@ -225,7 +217,6 @@ export function AppShell() {
           {isDemo() ? <DemoBadge /> : null}
         </Link>
         <div className="flex items-center gap-2 shrink-0">
-          <PaletteSwitcher />
           <button
             type="button"
             onClick={() => setMobileOpen((open) => !open)}

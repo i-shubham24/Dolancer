@@ -1,7 +1,7 @@
 /*
  * Dolancer design tokens.
  *
- * Ported from the sibling AssignX client app (nitin612/assign-X, src/styles/tokens.css)
+ * Ported from the sibling Dolancer client app (nitin612/Dolancer, src/styles/tokens.css)
  * so the two surfaces read as one system. Surfaces use quiet semantic borders,
  * rounded corners, and diffused shadows so the visual language stays calm and
  * palette-aware.
@@ -151,9 +151,8 @@
   --color-neutral-dot: var(--dl-neutral-dot);
 }
 
-:root,
-:root[data-palette="cobalt"] {
-  --dl-canvas: color-mix(in srgb, var(--dl-primary) 18%, #ffffff);
+:root {
+  --dl-canvas: color-mix(in srgb, var(--dl-primary) 10%, #ffffff);
   --dl-surface: color-mix(in srgb, var(--dl-primary) 8%, #ffffff);
   --dl-surface-2: color-mix(in srgb, var(--dl-primary) 24%, #ffffff);
   --dl-subtle: color-mix(in srgb, var(--dl-primary) 30%, #ffffff);
@@ -164,21 +163,21 @@
   --dl-ink-muted: #475569;
   --dl-ink-3: #64748b;
   --dl-inverse: #ffffff;
-  --dl-primary: #2563eb;
-  --dl-primary-hover: #1d4ed8;
-  --dl-primary-light: #dbeafe;
+  --dl-primary: #5A7CFF;
+  --dl-primary-hover: #4766E6;
+  --dl-primary-light: #dde4ff;
   --dl-secondary: #0d9488;
   --dl-secondary-hover: #0f766e;
   --dl-secondary-light: #ccfbf1;
   --dl-accent: #f97316;
   --dl-accent-hover: #ea580c;
   --dl-accent-light: #ffedd5;
-  --dl-purple: #6366f1;
-  --dl-purple-hover: #4f46e5;
-  --dl-purple-light: #e0e7ff;
-  --dl-line: #cbd5e1;
-  --dl-line-subtle: #e2e8f0;
-  --dl-line-card: #d8e2ee;
+  --dl-purple: #5A7CFF;
+  --dl-purple-hover: #4766E6;
+  --dl-purple-light: #e8edff;
+  --dl-line: #c5d0e8;
+  --dl-line-subtle: #dfe5f2;
+  --dl-line-card: #d4deef;
   --dl-success-bg: #ecfdf5;
   --dl-success-ink: #047857;
   --dl-success-dot: #10b981;
@@ -188,174 +187,18 @@
   --dl-danger-bg: #fff1f2;
   --dl-danger-ink: #be123c;
   --dl-danger-dot: #f43f5e;
-  --dl-info-bg: #eff6ff;
-  --dl-info-ink: #1d4ed8;
-  --dl-info-dot: #2563eb;
+  --dl-info-bg: #edf1ff;
+  --dl-info-ink: #4766E6;
+  --dl-info-dot: #5A7CFF;
   --dl-neutral-bg: #eef2f7;
   --dl-neutral-ink: #334155;
   --dl-neutral-dot: #64748b;
   --dl-card-pink: #fda4af;
-  --dl-card-lilac: #c4b5fd;
+  --dl-card-lilac: #a8b8ff;
   --dl-card-yellow: #fde047;
   --dl-card-mint: #6ee7b7;
-  --dl-graphic: #6366f1;
-  --dl-graphic-soft: #ede9fe;
-  --dl-gradient-a: #ddd6fe;
+  --dl-graphic: #5A7CFF;
+  --dl-graphic-soft: #e8edff;
+  --dl-gradient-a: #c8d4ff;
   --dl-gradient-b: #a7f3d0;
-}
-
-:root[data-palette="violet"] {
-  --dl-canvas: color-mix(in srgb, var(--dl-primary) 18%, #ffffff);
-  --dl-surface: color-mix(in srgb, var(--dl-primary) 8%, #ffffff);
-  --dl-surface-2: color-mix(in srgb, var(--dl-primary) 24%, #ffffff);
-  --dl-subtle: color-mix(in srgb, var(--dl-primary) 30%, #ffffff);
-  --dl-muted: color-mix(in srgb, var(--dl-primary) 24%, #ffffff);
-  --dl-hover: color-mix(in srgb, var(--dl-primary) 10%, #ffffff);
-  --dl-ink: #0f0a1e;
-  --dl-ink-2: #241838;
-  --dl-ink-muted: #52456c;
-  --dl-ink-3: #72658e;
-  --dl-inverse: #ffffff;
-  --dl-primary: #7c3aed;
-  --dl-primary-hover: #6d28d9;
-  --dl-primary-light: #ede9fe;
-  --dl-secondary: #059669;
-  --dl-secondary-hover: #047857;
-  --dl-secondary-light: #d1fae5;
-  --dl-accent: #f97316;
-  --dl-accent-hover: #ea580c;
-  --dl-accent-light: #ffedd5;
-  --dl-purple: #8b5cf6;
-  --dl-purple-hover: #7c3aed;
-  --dl-purple-light: #f5f3ff;
-  --dl-line: #d4caeb;
-  --dl-line-subtle: #e6def5;
-  --dl-line-card: #dccee8;
-  --dl-success-bg: #ecfdf5;
-  --dl-success-ink: #047857;
-  --dl-success-dot: #10b981;
-  --dl-warning-bg: #fffbeb;
-  --dl-warning-ink: #b45309;
-  --dl-warning-dot: #f59e0b;
-  --dl-danger-bg: #fff1f2;
-  --dl-danger-ink: #be123c;
-  --dl-danger-dot: #f43f5e;
-  --dl-info-bg: #f5f3ff;
-  --dl-info-ink: #6d28d9;
-  --dl-info-dot: #7c3aed;
-  --dl-neutral-bg: #ede9f7;
-  --dl-neutral-ink: #3b2d56;
-  --dl-neutral-dot: #6e5e8e;
-  --dl-card-pink: #fda4af;
-  --dl-card-lilac: #c4b5fd;
-  --dl-card-yellow: #fde047;
-  --dl-card-mint: #6ee7b7;
-  --dl-graphic: #8b5cf6;
-  --dl-graphic-soft: #eee9ff;
-  --dl-gradient-a: #dfd3ff;
-  --dl-gradient-b: #c5f1e8;
-}
-
-:root[data-palette="mint"] {
-  --dl-canvas: color-mix(in srgb, var(--dl-primary) 18%, #ffffff);
-  --dl-surface: color-mix(in srgb, var(--dl-primary) 8%, #ffffff);
-  --dl-surface-2: color-mix(in srgb, var(--dl-primary) 24%, #ffffff);
-  --dl-subtle: color-mix(in srgb, var(--dl-primary) 30%, #ffffff);
-  --dl-muted: color-mix(in srgb, var(--dl-primary) 24%, #ffffff);
-  --dl-hover: color-mix(in srgb, var(--dl-primary) 10%, #ffffff);
-  --dl-ink: #071714;
-  --dl-ink-2: #16302b;
-  --dl-ink-muted: #3a5953;
-  --dl-ink-3: #597a74;
-  --dl-inverse: #ffffff;
-  --dl-primary: #0f766e;
-  --dl-primary-hover: #115e59;
-  --dl-primary-light: #ccfbf1;
-  --dl-secondary: #2563eb;
-  --dl-secondary-hover: #1d4ed8;
-  --dl-secondary-light: #dbeafe;
-  --dl-accent: #f97316;
-  --dl-accent-hover: #ea580c;
-  --dl-accent-light: #ffedd5;
-  --dl-purple: #6366f1;
-  --dl-purple-hover: #4f46e5;
-  --dl-purple-light: #eef2ff;
-  --dl-line: #c5ded7;
-  --dl-line-subtle: #daf0eb;
-  --dl-line-card: #cfe5e0;
-  --dl-success-bg: #ecfdf5;
-  --dl-success-ink: #047857;
-  --dl-success-dot: #10b981;
-  --dl-warning-bg: #fffbeb;
-  --dl-warning-ink: #b45309;
-  --dl-warning-dot: #f59e0b;
-  --dl-danger-bg: #fff1f2;
-  --dl-danger-ink: #be123c;
-  --dl-danger-dot: #f43f5e;
-  --dl-info-bg: #eff6ff;
-  --dl-info-ink: #1d4ed8;
-  --dl-info-dot: #2563eb;
-  --dl-neutral-bg: #e2edea;
-  --dl-neutral-ink: #2a4742;
-  --dl-neutral-dot: #567872;
-  --dl-card-pink: #fda4af;
-  --dl-card-lilac: #c4b5fd;
-  --dl-card-yellow: #fde047;
-  --dl-card-mint: #6ee7b7;
-  --dl-graphic: #0f766e;
-  --dl-graphic-soft: #ccfbf1;
-  --dl-gradient-a: #d4e1ff;
-  --dl-gradient-b: #99f6e4;
-}
-
-:root[data-palette="sunset"] {
-  --dl-canvas: color-mix(in srgb, var(--dl-primary) 18%, #ffffff);
-  --dl-surface: color-mix(in srgb, var(--dl-primary) 8%, #ffffff);
-  --dl-surface-2: color-mix(in srgb, var(--dl-primary) 24%, #ffffff);
-  --dl-subtle: color-mix(in srgb, var(--dl-primary) 30%, #ffffff);
-  --dl-muted: color-mix(in srgb, var(--dl-primary) 24%, #ffffff);
-  --dl-hover: color-mix(in srgb, var(--dl-primary) 10%, #ffffff);
-  --dl-ink: #1c0e0a;
-  --dl-ink-2: #3d1f17;
-  --dl-ink-muted: #6b463c;
-  --dl-ink-3: #8e685e;
-  --dl-inverse: #ffffff;
-  --dl-primary: #f472b6;
-  --dl-primary-hover: #ec4899;
-  --dl-primary-light: #fce7f3;
-  --dl-secondary: #4f46e5;
-  --dl-secondary-hover: #4338ca;
-  --dl-secondary-light: #e0e7ff;
-  --dl-accent: #f97316;
-  --dl-accent-hover: #ea580c;
-  --dl-accent-light: #ffedd5;
-  --dl-purple: #9333ea;
-  --dl-purple-hover: #7e22ce;
-  --dl-purple-light: #faf5ff;
-  --dl-line: #ded0c9;
-  --dl-line-subtle: #eddcd6;
-  --dl-line-card: #e4d4cc;
-  --dl-success-bg: #ecfdf5;
-  --dl-success-ink: #047857;
-  --dl-success-dot: #10b981;
-  --dl-warning-bg: #fffbeb;
-  --dl-warning-ink: #b45309;
-  --dl-warning-dot: #f59e0b;
-  --dl-danger-bg: #fff1f2;
-  --dl-danger-ink: #be123c;
-  --dl-danger-dot: #f43f5e;
-  --dl-info-bg: #eef2ff;
-  --dl-info-ink: #4338ca;
-  --dl-info-dot: #4f46e5;
-  --dl-neutral-bg: #f2e3de;
-  --dl-neutral-ink: #472d25;
-  --dl-neutral-dot: #7b5950;
-  --dl-card-pink: #fda4af;
-  --dl-card-lilac: #c4b5fd;
-  --dl-card-yellow: #fde047;
-  --dl-card-mint: #6ee7b7;
-  --dl-graphic: #f472b6;
-  --dl-graphic-soft: #fce7f3;
-  --dl-gradient-a: #fbcfe8;
-  --dl-gradient-b: #ffd6e0;
 }

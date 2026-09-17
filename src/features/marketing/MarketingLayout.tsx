@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/ui/Logo";
 import { useMagneticHover } from "@/hooks/useMagneticHover";
 import { SiteFooter } from "./SiteFooter";
-import { PaletteSwitcher } from "@/components/PaletteSwitcher";
 import { ScrollRevealController } from "@/components/common/ScrollEnhancements";
 
 const NAV = [
@@ -42,7 +41,8 @@ export function MarketingLayout() {
   const magneticRef = useMagneticHover<HTMLButtonElement>(0.2, 20);
 
   return (
-    <div className="fresh-site flex min-h-dvh flex-col bg-canvas relative bg-[radial-gradient(color-mix(in_srgb,var(--color-ink)_16%,transparent)_1px,transparent_1px)] [background-size:24px_24px]">
+    <div className="fresh-site flex min-h-dvh flex-col bg-canvas relative">
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(color-mix(in_srgb,var(--color-ink)_16%,transparent)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:linear-gradient(to_bottom,transparent_0px,transparent_120px,black_160px)]" aria-hidden="true" />
       <ScrollToTop />
       <a
         href="#main"
@@ -63,7 +63,7 @@ export function MarketingLayout() {
                 className={({ isActive }) =>
                   cn(
                     "flex h-10 items-center justify-center whitespace-nowrap rounded-lg px-3 text-sm font-bold transition-colors",
-                    isActive ? "bg-inverse/20 text-inverse" : "text-inverse/70 hover:bg-inverse/10 hover:text-inverse"
+                    isActive ? "bg-inverse/20 text-inverse" : "text-inverse/95 hover:bg-inverse/10 hover:text-inverse"
                   )
                 }
               >
@@ -73,7 +73,6 @@ export function MarketingLayout() {
           </nav>
 
           <div className="ml-auto hidden items-center gap-2 md:flex">
-            <PaletteSwitcher />
             {session ? (
               <Button asChild size="sm">
                 <Link to="/dashboard">
@@ -126,7 +125,6 @@ export function MarketingLayout() {
               ))}
             </nav>
             <div className="mt-4 flex flex-col gap-2">
-              <PaletteSwitcher />
               {session ? (
                 <Button asChild onClick={() => setOpen(false)}>
                   <Link to="/dashboard">Go to dashboard</Link>

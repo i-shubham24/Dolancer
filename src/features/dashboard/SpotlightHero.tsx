@@ -76,13 +76,13 @@ export function SpotlightHero({
           <div           className="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/15 px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.08em] text-white backdrop-blur-sm">
             Fixed pay <ArrowUpRight className="h-3 w-3" aria-hidden="true" /> No bidding
           </div>
-          <h2 className="mt-4 text-3xl font-extrabold leading-[1.02] tracking-[-0.035em] sm:text-4xl text-white">
+          <h2 className="mt-4 text-3xl font-extrabold leading-[1.02] tracking-[-0.035em] sm:text-4xl text-white drop-shadow-sm">
             {daypart}, {name}.
             <span className="mt-1 block text-white/95">
               {focus ? "Your next deadline is waiting." : freeSlots > 0 ? "Room to take something new." : "Finish strong, then accept again."}
             </span>
           </h2>
-          <p className="mt-3 max-w-md text-sm leading-relaxed text-white/90">
+          <p className="mt-3 max-w-md text-sm font-medium leading-relaxed text-white drop-shadow-sm">
             {unlocked
               ? "Accept your assigned offer, add your working link, submit for supervisor review. Pay stays fixed from the start."
               : "View your assignments. Finish verification to unlock offers and payouts."}
@@ -187,11 +187,11 @@ export function SpotlightHero({
       </div>
 
       {/* Bottom marquee, static copy only */}
-      <div className="overflow-hidden border-t border-white/15 bg-white/[0.03] py-2" aria-hidden="true">
-        <div className="flex w-max animate-none gap-8 whitespace-nowrap font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-white/75 [animation:dolancer-marquee_28s_linear_infinite]">
+      <div className="overflow-hidden border-t border-white/15 bg-black/10 py-2.5 backdrop-blur-sm" aria-hidden="true">
+        <div className="flex w-max animate-none gap-8 whitespace-nowrap font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-white/90 [animation:dolancer-marquee_28s_linear_infinite]">
           {[0, 1].map((copy) => (
             <span key={copy} className="flex gap-8">
-              <span>Assigned offers</span><span className="text-[var(--dl-accent)]">Fixed payout</span><span>Supervisor review</span><span className="text-[var(--dl-primary)]">Working link first</span><span>3 slot cap</span><span className="text-[var(--dl-secondary)]">No client contact</span>
+              <span>Assigned offers</span><span className="text-[var(--dl-accent)]">Fixed payout</span><span className="text-white/70">Supervisor review</span><span className="text-white">Working link first</span><span className="text-white/70">3 slot cap</span><span className="text-white">No client contact</span>
             </span>
           ))}
         </div>
