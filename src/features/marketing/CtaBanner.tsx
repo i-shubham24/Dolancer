@@ -1,66 +1,97 @@
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, ShieldCheck, Zap, Clock, Sparkles } from "lucide-react";
-import { StitchBadge, StitchButton } from "@/components/stitch/StitchPrimitives";
-import { useMagneticHover } from "@/hooks/useMagneticHover";
+import { ArrowRight, ShieldCheck, Zap, Clock } from "lucide-react";
+import { StitchButton } from "@/components/stitch/StitchPrimitives";
 
 export function CtaBanner() {
   const reduceMotion = useReducedMotion();
-  const magneticRef = useMagneticHover<HTMLButtonElement>();
 
   return (
-    <section className="fresh-section pt-20 pb-10">
-      <div className="fresh-container">
+    <section className="relative overflow-hidden bg-[#fafbfe] py-24 sm:py-32">
+      {/* Vahan-style Dot Pattern at Top Right */}
+      <div 
+        className="absolute right-[5%] top-12 w-64 h-64 opacity-30 pointer-events-none"
+        style={{
+          backgroundImage: 'radial-gradient(#94a3b8 2.5px, transparent 2.5px)',
+          backgroundSize: '20px 20px'
+        }}
+      />
+
+      <div className="fresh-container relative z-10 px-4 sm:px-6">
         <motion.div
-          initial={reduceMotion ? false : { opacity: 0, scale: 0.98 }}
-          whileInView={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 30 }}
+          whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-          className="fresh-final-card mx-auto max-w-5xl rounded-[2.5rem] p-8 sm:p-14"
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-12 max-w-[1200px] mx-auto"
         >
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
-            <div className="text-center lg:text-left min-w-0 flex-1">
-              <StitchBadge tone="neutral">
-                <Sparkles className="h-3.5 w-3.5 text-primary" />
-                Fair Pay for Real Expertise
-              </StitchBadge>
+          {/* Left Content */}
+          <div className="w-full lg:w-[45%] text-center lg:text-left flex-shrink-0 pt-4">
+            <h2 className="text-[2.75rem] leading-[1.1] sm:text-5xl lg:text-6xl font-extrabold text-[#1e293b] tracking-tight font-display">
+              Ready to turn skill into <br className="hidden lg:block" /> reliable earnings?
+            </h2>
+            <p className="mt-6 text-lg text-slate-600 font-medium leading-relaxed max-w-lg mx-auto lg:mx-0">
+              Your expertise is in high demand. Create an account, get verified in minutes, and accept assigned offers with fixed upfront rates.
+            </p>
+          </div>
 
-              <h2 className="mt-4 text-3xl sm:text-5xl font-extrabold tracking-[-0.04em] text-ink leading-[1.08] font-display">
-                Ready to turn skill into{" "}
-                <span className="fresh-highlight fresh-underline fresh-underline-mint">reliable earnings?</span>
-              </h2>
-
-              <p className="mt-4 max-w-xl text-base sm:text-lg text-ink-2 font-medium">
-                Your expertise is in high demand. Create an account, get verified in minutes, and accept assigned offers with fixed upfront rates.
-              </p>
-
-              <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs sm:text-sm font-bold text-ink-2">
-                <span className="flex items-center gap-2">
-                  <Zap className="h-4 w-4 text-primary" /> Set up in minutes
-                </span>
-                <span className="flex items-center gap-2">
-                  <Clock className="h-4 w-4 text-secondary" /> Direct payout
-                </span>
-                <span className="flex items-center gap-2">
-                  <ShieldCheck className="h-4 w-4 text-success-dot" /> Payout protected
-                </span>
+          {/* Right Side: Graphic Art & Floating Card */}
+          <div className="w-full lg:w-[55%] relative flex justify-center lg:justify-end min-h-[460px]">
+            
+            {/* The Graphics (Yellow circle + Blue lines) */}
+            <div className="absolute left-[10%] lg:left-[5%] top-[55%] -translate-y-1/2 pointer-events-none select-none z-0">
+              {/* Yellow Circle */}
+              <div className="absolute -left-12 top-0 w-[240px] h-[240px] bg-[#f5b82e] rounded-full mix-blend-multiply" />
+              
+              {/* Blue Diagonal Lines */}
+              <div className="absolute -left-8 -top-24 flex gap-5 -rotate-[40deg]">
+                <div className="w-2.5 h-[280px] bg-[#2563eb] rounded-full" />
+                <div className="w-2.5 h-[280px] bg-[#2563eb] rounded-full" />
+                <div className="w-2.5 h-[280px] bg-[#2563eb] rounded-full" />
               </div>
             </div>
 
-            {/* Buttons stacked vertically */}
-            <div className="flex flex-col justify-center gap-3 w-full sm:w-auto min-w-[200px] shrink-0">
-              <StitchButton asChild variant="primary" ref={magneticRef}
-                className="!w-full !mt-0 px-6 sm:px-7 py-3.5 sm:py-4 text-sm sm:text-base justify-center whitespace-nowrap shadow-soft-sm relative overflow-hidden group">
-                <Link to="/sign-up" className="inline-flex items-center justify-center w-full">
-                  Start Earning
-                  <ArrowRight className="h-4 w-4 ml-1.5" />
-                </Link>
-              </StitchButton>
-              <StitchButton asChild variant="outline" className="!w-full !mt-0 px-5 sm:px-6 py-3.5 sm:py-4 text-sm sm:text-base justify-center whitespace-nowrap bg-surface/95 hover:bg-surface border border-line-card text-ink shadow-soft-xs">
-                <Link to="/contact" className="inline-flex items-center justify-center w-full">
-                  Ask a question
-                </Link>
-              </StitchButton>
+            {/* The Floating White Card */}
+            <div className="relative z-10 bg-white rounded-[1.5rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] p-8 sm:p-10 w-full max-w-[480px] border border-slate-100 self-center">
+              
+              <div className="space-y-6">
+                <div className="flex items-center gap-4">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center">
+                    <Zap className="h-5 w-5 text-blue-600" />
+                  </div>
+                  <span className="font-bold text-slate-800 text-lg">Set up in minutes</span>
+                </div>
+                
+                <div className="flex items-center gap-4">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center">
+                    <Clock className="h-5 w-5 text-blue-600" />
+                  </div>
+                  <span className="font-bold text-slate-800 text-lg">Direct payout</span>
+                </div>
+                
+                <div className="flex items-center gap-4">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center">
+                    <ShieldCheck className="h-5 w-5 text-emerald-600" />
+                  </div>
+                  <span className="font-bold text-slate-800 text-lg">Payout protected</span>
+                </div>
+              </div>
+              
+              <div className="mt-12 space-y-4">
+                <StitchButton asChild className="w-full !bg-[#f5b82e] hover:!bg-[#e0a21d] text-slate-900 border-transparent !py-4 rounded-xl font-extrabold text-base shadow-md transition-transform active:scale-95">
+                  <Link to="/sign-up" className="flex items-center justify-center">
+                    Start Earning
+                    <ArrowRight className="h-5 w-5 ml-2" />
+                  </Link>
+                </StitchButton>
+                
+                <StitchButton asChild variant="outline" className="w-full !py-4 rounded-xl font-bold border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors">
+                  <Link to="/contact" className="flex items-center justify-center">
+                    Ask a question
+                  </Link>
+                </StitchButton>
+              </div>
+
             </div>
           </div>
         </motion.div>

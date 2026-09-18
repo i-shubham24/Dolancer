@@ -59,7 +59,7 @@ export function NetworkNumbers() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="fresh-section -mt-4 pt-6 pb-20 relative numbers-wash">
+    <section className="fresh-section pb-20 relative numbers-wash">
       {/* Quiet ornaments over the wash - the gradient carries the colour. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
         <div className="absolute right-[9%] top-[8%] hidden h-36 w-36 rounded-full border-2 border-dashed border-[var(--dl-card-pink)] opacity-30 md:block" />
