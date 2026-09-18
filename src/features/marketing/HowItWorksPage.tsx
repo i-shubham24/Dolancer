@@ -40,37 +40,50 @@ export function HowItWorksPage() {
   };
 
   return (
-    <div className="fresh-page">
-      <section className="fresh-hero relative z-10 !pt-2 lg:!pt-2 !pb-8 lg:!pb-12 flex items-center !min-h-0 !overflow-visible">
+    <div className="fresh-page !overflow-visible -mt-[120px]">
+      <section className="relative z-10 pt-[90px] pb-12 lg:pt-[110px] lg:pb-24 flex items-center bg-[#050914] overflow-hidden">
+        {/* Dynamic Light Background Orbs matching Home Hero */}
+        <div className="absolute inset-0 pointer-events-none z-0">
+          <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/20 blur-[120px] mix-blend-screen" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[50%] rounded-full bg-cyan-500/10 blur-[100px] mix-blend-screen" />
+          <div className="absolute inset-0 opacity-[0.15]" style={{ backgroundImage: "radial-gradient(#ffffff 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
+        </div>
+        
         <MicroFloaties zone="hiw-hero" />
-        <div className="fresh-container fresh-process-hero">
+        
+        <div className="fresh-container fresh-process-hero relative z-10">
           <motion.div initial={reduceMotion ? false : "hidden"} animate="show" variants={reveal}>
-            <StitchBadge><Sparkles className="h-3.5 w-3.5" /> Everything, in the open</StitchBadge>
-            <h1 className="mt-5 max-w-3xl">
+            <StitchBadge tone="light"><Sparkles className="h-3.5 w-3.5" /> Everything, in the open</StitchBadge>
+            <h1 className="mt-5 max-w-3xl text-white text-[3.5rem] leading-[1.05] sm:text-[4.5rem] lg:text-[5.5rem] font-extrabold tracking-tight font-display">
               The whole thing,
               <br />
-              <span className="fresh-highlight fresh-underline fresh-underline-mint">start to paid.</span>
+              <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-primary pb-2">
+                start to paid.
+                <svg className="absolute -bottom-1 left-0 w-full h-4 text-cyan-400 -z-10" viewBox="0 0 100 10" preserveAspectRatio="none">
+                  <path d="M 2 8 L 98 4" stroke="currentColor" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
             </h1>
-            <p className="mt-6 max-w-xl">
+            <p className="mt-6 max-w-xl text-lg sm:text-xl text-slate-300 font-medium leading-relaxed">
               No part of this is hidden until after you sign up. Read it all, then decide.
             </p>
-            <div className="fresh-process-proof">
-              <span><Check /> Pay is visible before you accept an offer.</span>
-              <span><ShieldCheck /> A supervisor carries the client side.</span>
+            <div className="fresh-process-proof mt-8 flex flex-wrap gap-6 text-sm font-medium text-slate-400">
+              <span className="flex items-center gap-1.5"><Check className="h-4 w-4 text-cyan-400" /> Pay is visible before you accept an offer.</span>
+              <span className="flex items-center gap-1.5"><ShieldCheck className="h-4 w-4 text-cyan-400" /> A supervisor carries the client side.</span>
             </div>
           </motion.div>
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, y: 18, rotate: 2 }}
             animate={reduceMotion ? undefined : { opacity: 1, y: 0, rotate: 0 }}
             transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full lg:pr-10 xl:pr-16"
+            className="relative w-full lg:pr-10 xl:pr-16 lg:scale-110 lg:origin-right"
           >
             <HowItWorksHeroGraphic />
           </motion.div>
         </div>
       </section>
 
-      <div className="relative z-20 -mt-6 lg:-mt-10 mb-8 lg:mb-12">
+      <div className="relative z-20 pt-2 pb-6 bg-canvas">
         <HeroMarquee />
       </div>
 

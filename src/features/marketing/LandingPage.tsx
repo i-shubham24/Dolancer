@@ -1,148 +1,35 @@
-import { useRef } from "react";
-import { Link } from "react-router-dom";
-import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, Briefcase, Sparkles, CheckCircle2 } from "lucide-react";
-import {
-  StitchBadge,
-  StitchButton,
-  StitchSection,
-} from "@/components/stitch/StitchPrimitives";
-import { HeroCardStack } from "./HeroCardStack";
 import { HowItWorksSteps } from "./HowItWorksSteps";
-import { AnimatedMarquee } from "./AnimatedMarquee";
 import { FeaturesGrid } from "./FeaturesGrid";
+import { PayoutExplainer } from "./PayoutExplainer";
 import { TestimonialsSection } from "./TestimonialsSection";
 import { CtaBanner } from "./CtaBanner";
-import { PayoutExplainer } from "./PayoutExplainer";
 import { CurvedSectionDivider } from "@/components/stitch/CurvedSectionDivider";
 import { BackdropLetter } from "./BackdropLetter";
 import { MicroFloaties } from "./MicroFloaties";
-import VariableProximity from "@/components/react-bits/VariableProximity";
 import { CurvedLoop } from "./CurvedLoop";
 import { HeroMarquee } from "./HeroMarquee";
 import { NetworkNumbers } from "./NetworkNumbers";
-
+import { DisciplineOfferCards } from "./DisciplineOfferCards";
+import { HeroSpectacular } from "./HeroSpectacular";
 
 export function LandingPage() {
-  const reduceMotion = useReducedMotion();
-  const heroRef = useRef<HTMLElement>(null);
-  const reveal = {
-    hidden: { opacity: 0, y: 18 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] as const } },
-  };
-
   return (
-    <div className="fresh-page">
+    <div className="fresh-page !overflow-visible -mt-[120px]">
       {/* Redesigned Hero Section aligning with HowItWorks / About theme */}
-      <section ref={heroRef} className="fresh-hero relative overflow-clip">
-        {/* Swarm one - vivid coral→blue - chasing the cursor across the hero.
-            Literal brand hexes (not palette vars) so the active palette's
-            remapped tokens can't muddy them into gray. z-20 floats the swarm
-            ABOVE the hero content; pointer-events-none keeps every click
-            landing on the real buttons underneath. */}
-        
-        <MicroFloaties zone="hero" />
-                        <div className="fresh-container fresh-hero-grid relative z-10 items-center pt-0 pb-4 lg:pb-6">
-          {/* Left Hero Copy */}
-          <motion.div
-            initial={reduceMotion ? false : "hidden"}
-            animate="show"
-            variants={reveal}
-            className="fresh-hero-copy"
-          >
-            <StitchBadge tone="brand">
-              <Sparkles className="h-3.5 w-3.5 text-primary" />
-              India's Premier Freelance Intelligence Network
-            </StitchBadge>
-
-            <h1 className="mt-5 max-w-2xl font-display !text-4xl sm:!text-6xl lg:!text-7xl !font-extrabold !leading-[1.04] tracking-[-0.045em] text-ink">
-              <VariableProximity
-                label="Turn your expertise into"
-                fromFontVariationSettings="'wght' 640"
-                toFontVariationSettings="'wght' 800"
-                containerRef={heroRef}
-                radius={160}
-                falloff="gaussian"
-              />
-              <br />
-              <span className="fresh-highlight fresh-underline fresh-underline-mint">
-                <VariableProximity
-                  label="reliable earnings."
-                  fromFontVariationSettings="'wght' 640"
-                  toFontVariationSettings="'wght' 800"
-                  containerRef={heroRef}
-                  radius={160}
-                  falloff="gaussian"
-                />
-              </span>
-            </h1>
-
-            <p className="mt-6 max-w-xl text-base sm:text-lg text-ink-2 font-medium leading-relaxed">
-              Receive carefully scoped project offers that match your verified disciplines. Work with a supervisor, deliver through a protected workspace, and get paid after the approval gate clears.
-            </p>
-
-            <div className="fresh-actions">
-              <StitchButton asChild variant="primary" className="px-8 py-4 text-base">
-                <Link to="/sign-up">
-                  <Sparkles className="h-4 w-4" />
-                  Join the verified doer network
-                  <ArrowRight className="h-4 w-4 ml-1" />
-                </Link>
-              </StitchButton>
-
-              <StitchButton asChild variant="outline" className="px-7 py-4 text-base">
-                <Link to="/how-it-works">
-                  <Briefcase className="h-4 w-4 mr-1 text-ink-2" />
-                  See how supervision works
-                </Link>
-              </StitchButton>
-            </div>
-
-            <div className="fresh-trust-row">
-              <span>
-                <CheckCircle2 className="h-4 w-4 text-primary" />
-                Pay agreed upfront
-              </span>
-              <span>
-                <CheckCircle2 className="h-4 w-4 text-secondary" />
-                Supervisor reviewed
-              </span>
-              <span>
-                <CheckCircle2 className="h-4 w-4 text-success-dot" />
-                Approval-based payout
-              </span>
-            </div>
-          </motion.div>
-
-          {/* Right Hero Visual Stack - nudged up to sit level with the copy */}
-          <motion.div
-            initial={reduceMotion ? false : { opacity: 0, y: 20, scale: 0.96 }}
-            animate={reduceMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-            className="relative lg:-mt-6"
-          >
-            <HeroCardStack />
-          </motion.div>
-        </div>
-      </section>
+      <HeroSpectacular />
 
       {/* Straight auto-running ribbon flush below the hero */}
       <HeroMarquee />
 
-      {/* 3 Steps: How Dolancers Earn - D */}
+      {/* Disciplines - D */}
       <div className="relative overflow-clip">
-        <BackdropLetter letter="D" position="left" offsetY="10%" />
-        <MicroFloaties zone="how" />
-        <HowItWorksSteps />
+        <BackdropLetter letter="D" position="left" offsetY="15%" />
+        <DisciplineOfferCards />
       </div>
 
-      {/* Curved discipline ribbon bridging the steps and the live-brief marquee.
-          The band has no fixed height - the SVG's aspect ratio sizes it, and
-          the arc is fully contained in its own viewBox so nothing bleeds into
-          the neighbouring sections. */}
-      <div className="relative overflow-clip" aria-hidden="true">
-          <CurvedLoop
-          marqueeText="Writing & Content ✦ Design ✦ Creative & Media ✦ IT & Software ✦ AI Agents & Automations ✦ Marketing ✦ Research & Business ✦ Something Else ✦ "
+      <div className="relative overflow-clip mt-8 md:mt-12" aria-hidden="true">
+        <CurvedLoop
+          marqueeText="CONTENT ✦ DESIGN ✦ CREATIVE & MEDIA ✦ IT & SOFTWARE ✦ AI AGENTS & AUTOMATIONS ✦ MARKETING ✦ RESEARCH & BUSINESS ✦ SOMETHING ELSE ✦ "
           speed={1.6}
           curveAmount={-170}
           direction="right"
@@ -150,34 +37,30 @@ export function LandingPage() {
         />
       </div>
 
-      {/* Animated Disciplines Marquee - O (uniform canvas bed so the wave
-          below lands on one continuous background with breathing room) */}
-      <div className="relative overflow-clip bg-canvas pb-8">
+      {/* 3 Steps: How Dolancers Earn - O */}
+      <div className="relative overflow-clip">
         <BackdropLetter letter="O" position="right" offsetY="16%" />
-        <AnimatedMarquee />
+        <MicroFloaties zone="how" />
+        <HowItWorksSteps />
       </div>
 
       {/* Why Dolancers Love It / 8 Benefits - L (dark section, light ink) */}
       <div className="relative overflow-clip">
         <BackdropLetter letter="L" position="left" offsetY="20%" tone="light" />
         <MicroFloaties zone="features" />
-        {/* Swarm two - vivid lime→purple - floating over the benefits grid. */}
-        
         <FeaturesGrid />
       </div>
 
-      {/* Follow-every-payout - A (fused with the dark benefits above: no
-          separation, no top wave; the wave sits at this section's bottom
-          border, opening into the light numbers below) */}
-      <StitchSection className="fresh-section py-20 bg-[#0b0f19] relative overflow-clip">
+      {/* Follow-every-payout - A */}
+      <div className="fresh-section py-20 bg-[#0b0f19] relative overflow-clip">
         <BackdropLetter letter="A" position="right" offsetY="12%" tone="light" />
         <MicroFloaties zone="payout" />
-
         <div className="fresh-container">
-        <PayoutExplainer />
+          <PayoutExplainer />
         </div>
-        <CurvedSectionDivider variant="wave" position="bottom" fillColor="fill-[var(--color-surface)]" showBorderLine={false} showAccentGlow={false} />
-      </StitchSection>
+        <CurvedSectionDivider variant="wave" position="bottom" fillColor="fill-[var(--color-canvas)]" showBorderLine={false} showAccentGlow={false} />
+      </div>
+      
 
       {/* Live Network Numbers - N (light wash below the dark pair) */}
       <div className="relative overflow-clip">

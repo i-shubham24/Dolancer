@@ -680,8 +680,8 @@
     overflow: hidden;
     padding: 1.25rem 0 2.25rem;
     background:
-      radial-gradient(circle at 82% 18%, color-mix(in srgb, var(--color-highlight) 20%, transparent), transparent 24rem),
-      linear-gradient(180deg, color-mix(in srgb, var(--color-highlight-light) 78%, transparent), transparent);
+      radial-gradient(circle at 82% 18%, color-mix(in srgb, var(--color-primary) 12%, transparent), transparent 24rem),
+      linear-gradient(180deg, color-mix(in srgb, var(--color-primary) 8%, transparent), transparent);
   }
 
   .fresh-editorial-hero {
@@ -946,9 +946,9 @@
     position: absolute;
     inset: -88px 0 0.35rem;
     border-radius: 0 0 2.5rem 2.5rem;
-    border-bottom: 1px solid color-mix(in srgb, var(--color-highlight) 15%, var(--dl-line-card));
+    border-bottom: 1px solid color-mix(in srgb, var(--color-primary) 15%, var(--dl-line-card));
     background: color-mix(in srgb, var(--color-surface-2) 88%, transparent);
-    box-shadow: 0 24px 70px color-mix(in srgb, var(--color-highlight) 12%, transparent);
+    box-shadow: 0 24px 70px color-mix(in srgb, var(--color-primary) 8%, transparent);
     /* backdrop-filter: blur(16px); removed to let body dots stay crisp */
     content: "";
   }
@@ -1914,4 +1914,9 @@
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Custom Cursor */
+.custom-cursor-active, .custom-cursor-active * {
+  cursor: none !important;
 }

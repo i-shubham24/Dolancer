@@ -50,7 +50,7 @@ export function PayoutExplainer() {
   return (
     <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
       <div>
-        <span className="inline-flex items-center rounded-full bg-white px-3 py-1 text-2xs font-extrabold uppercase tracking-[0.08em] text-ink">
+        <span className="block text-sm font-extrabold uppercase tracking-widest text-cyan-400">
           Approval to payout
         </span>
         <h2 id="payout" className="mt-4 text-4xl font-extrabold tracking-[-0.04em] text-white">

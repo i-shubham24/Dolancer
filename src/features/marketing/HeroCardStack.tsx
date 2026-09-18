@@ -7,7 +7,7 @@ import {
   Clock,
   Zap,
   Palette,
-  Globe,
+  Code2,
   PenTool,
   CheckCircle2,
   Sparkles,
@@ -42,7 +42,7 @@ const CARDS: BriefCardData[] = [
     tag: "High Demand",
     tagType: "featured",
     icon: Palette,
-    iconBg: "bg-primary-light",
+    iconBg: "bg-primary/10",
     iconColor: "text-primary",
     criteria: ["Vector files included", "Pre-funded", "Supervisor review"],
   },
@@ -55,23 +55,23 @@ const CARDS: BriefCardData[] = [
     deadline: "48 hrs left",
     tag: "Verified Brief",
     tagType: "verified",
-    icon: Globe,
-    iconBg: "bg-secondary-light",
-    iconColor: "text-secondary",
-    criteria: ["Responsive mobile layout", "Pay locked", "Direct release"],
+    icon: Code2,
+    iconBg: "bg-primary/10",
+    iconColor: "text-primary",
+    criteria: ["No client meetings", "Fixed scope", "Staging server provided"],
   },
   {
     id: "card-3",
-    title: "Sales Copy & Product Listings",
+    title: "Article & Blog Content",
     discipline: "Writing & Content",
-    subdiscipline: "Sales Copy, Funnels & Product Listings",
-    payout: "₹2,500",
+    subdiscipline: "Blog Posts & Copywriting",
+    payout: "₹1,500",
     deadline: "24 hrs left",
-    tag: "Urgent Brief",
-    tagType: "urgent",
+    tag: "Quick Turnaround",
+    tagType: "verified",
     icon: PenTool,
-    iconBg: "bg-success-bg",
-    iconColor: "text-success-ink",
+    iconBg: "bg-primary/10",
+    iconColor: "text-primary",
     criteria: ["Benefit bullet points", "SEO keyword targets", "100% upfront pay"],
   },
 ];
@@ -144,7 +144,7 @@ export function HeroCardStack() {
         onClick={handleNext}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.96 }}
-        className="absolute top-1 right-2 sm:top-2 sm:right-4 z-30 flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary-light px-3 py-1 text-xs font-bold text-primary shadow-soft-sm hover:bg-primary hover:text-inverse transition-colors"
+        className="absolute top-1 right-2 sm:top-2 sm:right-4 z-30 flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-bold text-primary shadow-soft-sm hover:bg-primary hover:text-inverse transition-colors"
       >
         <MousePointerClick className="h-3.5 w-3.5" />
         <span>Flip brief ({activeIndex + 1}/{CARDS.length})</span>
@@ -204,13 +204,7 @@ export function HeroCardStack() {
                   </span>
                   <div>
                     <span
-                      className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide border ${
-                        card.tagType === "urgent"
-                          ? "border-warning-dot/40 bg-warning-bg text-warning-ink"
-                          : card.tagType === "featured"
-                          ? "border-primary/30 bg-primary-light text-primary"
-                          : "border-success-ink/30 bg-success-bg text-success-ink"
-                      }`}
+                      className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide border border-primary/30 bg-primary/10 text-primary`}
                     >
                       {card.tagType === "urgent" && <Zap className="h-2.5 w-2.5 fill-current" />}
                       {card.tagType === "featured" && <Sparkles className="h-2.5 w-2.5" />}
@@ -245,7 +239,7 @@ export function HeroCardStack() {
                     key={item}
                     className="inline-flex items-center gap-1 rounded-md bg-subtle px-2 py-0.5 text-[11px] font-bold text-ink-2"
                   >
-                    <CheckCircle2 className="h-3 w-3 text-success-dot" />
+                    <CheckCircle2 className="h-3 w-3 text-primary" />
                     {item}
                   </span>
                 ))}

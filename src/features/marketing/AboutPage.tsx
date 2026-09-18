@@ -37,12 +37,28 @@ export function AboutPage() {
   ];
 
   return (
-    <div className="fresh-page">
-      {/* Redesigned High-Craft Editorial & Interactive Hero */}
-      <section className="relative pb-10 pt-2">
+    <div className="fresh-page !overflow-visible -mt-[120px]">
+      {/* Redesigned High-Craft Editorial & Interactive Hero (Dark Theme) */}
+      <section className="relative pt-[90px] lg:pt-[110px] pb-10 lg:pb-16 bg-[#050914] overflow-hidden">
+        {/* Dark Dotted pattern overlay */}
+        <div className="absolute inset-0 z-0 opacity-[0.15]" style={{ backgroundImage: "radial-gradient(#ffffff 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
+        
+        {/* Dynamic Light Background Orbs */}
+        <div className="absolute inset-0 pointer-events-none z-0">
+          <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[60%] rounded-full bg-cyan-400/10 blur-[100px] mix-blend-screen" />
+          <div className="absolute bottom-[-20%] left-[10%] w-[60%] h-[50%] rounded-full bg-blue-600/15 blur-[120px] mix-blend-screen" />
+        </div>
+        
         <MicroFloaties zone="about-hero" />
-        <div className="fresh-container">
+        <div className="fresh-container relative z-10">
           <AboutHeroInteractive />
+        </div>
+        
+        {/* Hanging bottom curve to cleanly transition to the next section's background (bg-surface) */}
+        <div className="absolute -bottom-px left-0 w-full overflow-hidden leading-none z-20 pointer-events-none">
+          <svg className="relative block w-full h-[40px] lg:h-[70px]" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,0 Q600,120 1200,0 L1200,120 L0,120 Z" className="fill-surface" />
+          </svg>
         </div>
       </section>
 

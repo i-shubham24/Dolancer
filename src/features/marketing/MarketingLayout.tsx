@@ -52,7 +52,7 @@ export function MarketingLayout() {
       </a>
 
       <header className="fresh-header sticky top-0 z-30">
-        <div className="fresh-nav-shell mx-auto flex w-full max-w-[1320px] items-center gap-6 pl-5 pr-5 py-2.5 lg:pl-6 lg:pr-7 lg:py-3">
+        <div className="fresh-nav-shell mx-auto flex w-full max-w-[1320px] items-center gap-6 pl-5 pr-5 py-2.5 lg:pl-6 lg:pr-7 lg:py-3 bg-primary !backdrop-blur-none shadow-md">
           <Wordmark />
 
           <nav className="ml-8 lg:ml-12 hidden md:flex items-center gap-1.5" aria-label="Main">
@@ -74,7 +74,7 @@ export function MarketingLayout() {
 
           <div className="ml-auto hidden items-center gap-2 md:flex">
             {session ? (
-              <Button asChild size="sm">
+              <Button asChild size="sm" className="bg-white text-primary hover:bg-white/90 shadow-sm border border-transparent rounded-full px-5">
                 <Link to="/dashboard">
                   Go to dashboard
                   <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
@@ -126,7 +126,7 @@ export function MarketingLayout() {
             </nav>
             <div className="mt-4 flex flex-col gap-2">
               {session ? (
-                <Button asChild onClick={() => setOpen(false)}>
+                <Button asChild onClick={() => setOpen(false)} className="bg-primary text-white border-none shadow-sm h-11 text-base">
                   <Link to="/dashboard">Go to dashboard</Link>
                 </Button>
               ) : (

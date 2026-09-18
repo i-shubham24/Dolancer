@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Search, CheckCircle2, Wallet, ArrowRight, ShieldCheck, Check, Sparkles } from "lucide-react";
 import { StitchBadge } from "@/components/stitch/StitchPrimitives";
+import { BorderBeam } from "@/components/ui/BorderBeam";
 
 export function HowItWorksSteps() {
   const reduceMotion = useReducedMotion();
@@ -16,7 +17,7 @@ export function HowItWorksSteps() {
 
 
   return (
-    <section id="how-it-works" className="fresh-section py-20 overflow-hidden">
+    <section id="how-it-works" className="fresh-section pt-4 pb-20 overflow-hidden">
       <div ref={containerRef} className="fresh-container relative">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16 sm:mb-20">
@@ -71,7 +72,7 @@ export function HowItWorksSteps() {
             {/* Copy side */}
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-secondary-light text-secondary border border-line-card/40">
+                <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary border border-line-card/40">
                   <Search className="h-5 w-5" />
                 </span>
                 <div>
@@ -98,6 +99,7 @@ export function HowItWorksSteps() {
 
             {/* Visual Card 01 - Text at most 80%, dedicated 20% for number */}
             <div className="relative rounded-3xl border border-line-card bg-surface p-6 sm:p-7 shadow-soft-sm overflow-hidden flex items-center justify-between min-h-[250px]">
+              <BorderBeam className="opacity-70" />
               {/* Text content restricted to at most 80% */}
               <div className="w-[78%] sm:w-[80%] max-w-[80%] space-y-3.5 relative z-10 pr-3 sm:pr-5">
                 <div className="pb-3 border-b border-line-card/60">
@@ -126,7 +128,7 @@ export function HowItWorksSteps() {
                     Website Design & Responsive Setup
                   </p>
                   <div className="mt-2 flex items-center gap-2">
-                      <span className="inline-flex items-center gap-1 rounded-full bg-success-bg px-2.5 py-0.5 text-[11px] font-extrabold text-success-ink">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-0.5 text-[11px] font-extrabold text-primary">
                       <Check className="h-3 w-3" /> Ready to review
                     </span>
                     <span className="text-xs text-ink-muted font-medium">Verified milestone</span>
@@ -157,6 +159,7 @@ export function HowItWorksSteps() {
           >
             {/* Visual Card 02 - Text at most 80%, dedicated 20% for number */}
             <div className="order-2 lg:order-1 relative rounded-3xl border border-line-card bg-surface p-6 sm:p-7 shadow-soft-sm overflow-hidden flex items-center justify-between min-h-[250px]">
+              <BorderBeam className="opacity-70" />
               {/* Text content restricted to at most 80% */}
               <div className="w-[78%] sm:w-[80%] max-w-[80%] space-y-3.5 relative z-10 pr-3 sm:pr-5">
                 <div className="flex items-center justify-between pb-3 border-b border-line-card/60">
@@ -180,7 +183,7 @@ export function HowItWorksSteps() {
                 </div>
 
                 <div className="pt-1.5 text-xs text-ink-2 font-medium flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-success-dot shrink-0" />
+                  <span className="h-2 w-2 rounded-full bg-primary shrink-0" />
                   <span className="truncate">"Deliverables & guidelines verified. Forwarding for final release."</span>
                 </div>
               </div>
@@ -244,7 +247,7 @@ export function HowItWorksSteps() {
                   <span className="text-xs font-extrabold uppercase tracking-widest text-ink-muted font-display block">
                     STEP 03
                   </span>
-                  <span className="text-[11px] font-bold text-success-ink">Settlement</span>
+                  <span className="text-[11px] font-bold text-primary">Settlement</span>
                 </div>
               </div>
 
@@ -255,7 +258,7 @@ export function HowItWorksSteps() {
                 Once the approval gate clears, the payout follows the configured release process to your registered payout account. No invoicing and no chasing.
               </p>
               <div className="pt-2">
-                <div className="inline-flex items-center gap-2 text-sm font-bold text-success-ink hover:underline">
+                <div className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:underline">
                   <span>Payout fixed upfront</span>
                   <ArrowRight className="h-4 w-4" />
                 </div>
@@ -264,14 +267,15 @@ export function HowItWorksSteps() {
 
             {/* Visual Card 03 - Text at most 80%, dedicated 20% for number */}
             <div className="relative rounded-3xl border border-line-card bg-surface p-6 sm:p-7 shadow-soft-sm overflow-hidden flex items-center justify-between min-h-[250px]">
+              <BorderBeam className="opacity-70" />
               {/* Text content restricted to at most 80% */}
               <div className="w-[78%] sm:w-[80%] max-w-[80%] relative z-10 pr-3 sm:pr-5">
                 <div className="flex items-center gap-2.5 mb-2">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-success-bg text-success-ink shrink-0">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary shrink-0">
                     <Check className="h-4.5 w-4.5" />
                   </div>
                   <div>
-                    <span className="text-[11px] font-extrabold uppercase tracking-wider text-success-ink block leading-none">
+                    <span className="text-[11px] font-extrabold uppercase tracking-wider text-primary block leading-none">
                       Payout Released
                     </span>
                     <span className="text-xs font-medium text-ink-muted">
@@ -310,3 +314,4 @@ export function HowItWorksSteps() {
     </section>
   );
 }
+

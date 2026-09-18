@@ -22,26 +22,25 @@ export function BorderBeam({
           background: conic-gradient(from var(--beam-angle), transparent 80%, var(--color-primary, #ff7b54), var(--color-secondary, #3b82f6), transparent);
           animation: border-beam-spin ${duration}s linear infinite;
         }
+        .border-beam-mask {
+          mask: 
+            linear-gradient(#fff 0 0) content-box, 
+            linear-gradient(#fff 0 0);
+          mask-composite: exclude;
+          -webkit-mask: 
+            linear-gradient(#fff 0 0) content-box, 
+            linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+        }
       `}</style>
       
-      {/* The rotating gradient layer */}
-      <div
-        className="border-beam-bg absolute top-1/2 left-1/2 z-0 aspect-square w-[200%] -translate-x-1/2 -translate-y-1/2"
-      />
-      
-      {/* The inner cutout background to hide the center. 
-          Using var(--color-surface) since that's what the card uses. 
-          If inheriting is tricky, we just hardcode the surface color. */}
-      <div 
-        className="absolute z-10 rounded-[inherit]"
-        style={{
-            background: 'var(--color-surface)',
-            top: `${beamSize}px`,
-            left: `${beamSize}px`,
-            right: `${beamSize}px`,
-            bottom: `${beamSize}px`,
-        }}
-      />
+      {/* The masking is applied to a full-size wrapper so the border is precise */}
+      <div className="absolute inset-0 z-0 rounded-[inherit] border-beam-mask" style={{ padding: `${beamSize}px` }}>
+        {/* The rotating gradient layer which is oversized to cover corners during rotation */}
+        <div
+          className="border-beam-bg absolute top-1/2 left-1/2 aspect-square w-[200%] -translate-x-1/2 -translate-y-1/2"
+        />
+      </div>
     </div>
   );
 }
