@@ -28,9 +28,6 @@ export function HowItWorksSteps() {
           <h2 className="mt-4 text-3xl sm:text-5xl font-extrabold text-ink tracking-[-0.04em]">
             How Dolancers <span className="fresh-highlight fresh-underline fresh-underline-pink">earn.</span>
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-ink-2 font-medium">
-            Three clear work steps after setup, from an assigned offer to an approval-based payout. No bidding wars, no unpaid invoices.
-          </p>
         </div>
 
         

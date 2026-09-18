@@ -1,11 +1,11 @@
 import { motion, useReducedMotion } from "framer-motion";
+import { Logo } from "@/components/ui/Logo";
 import {
   Calendar,
   Wallet,
   Clock,
   ShieldCheck,
-  Sparkles,
-  Network
+  Sparkles
 } from "lucide-react";
 import { StitchBadge } from "@/components/stitch/StitchPrimitives";
 import { CurvedSectionDivider } from "@/components/stitch/CurvedSectionDivider";
@@ -162,8 +162,7 @@ export function FeaturesGrid() {
             
             {/* Inner Core */}
             <div className="absolute inset-6 rounded-full bg-gradient-to-br from-[#0A0D1A] to-blue-900 border-2 border-primary/50 shadow-[0_0_30px_rgba(90,124,255,0.4)] flex items-center justify-center flex-col">
-              <Network className="h-8 w-8 text-cyan-400 mb-1" />
-              <span className="text-white font-extrabold tracking-widest text-[10px] sm:text-xs uppercase">Dolancer</span>
+              <Logo size="lg" className="opacity-90 ml-[-2px] mb-0.5" />
             </div>
           </motion.div>
 

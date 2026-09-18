@@ -1,17 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams, Link, useLocation } from "react-router-dom";
-import { ArrowLeft, Check, Mail, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowLeft, Check, Mail } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
 import { Turnstile, turnstileConfigured } from "@/components/Turnstile";
-import { StitchBadge, StitchCard } from "@/components/stitch/StitchPrimitives";
+import { StitchCard } from "@/components/stitch/StitchPrimitives";
 import { isDemo } from "@/lib/demo-data";
 import { safeNext } from "@/lib/safe-next";
 import { toUserError } from "@/lib/user-error";
 import { emailSchema, otpCodeSchema } from "@/lib/validations";
 import { sendEmailOtp, verifyEmailOtp, signInWithGoogle, signInDemo } from "./api";
-import VariableProximity from "@/components/react-bits/VariableProximity";
 
 type Stage = "email" | "code";
 
@@ -144,7 +143,7 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
       <div className="pointer-events-none absolute -left-16 top-2 h-28 w-28 rounded-full bg-primary-light blur-2xl sm:-left-28 sm:-top-8" aria-hidden="true" />
       <div className="pointer-events-none absolute -right-12 bottom-16 h-36 w-36 rounded-full bg-primary-light blur-3xl" aria-hidden="true" />
       <motion.div initial={rise} animate={{ opacity: 1, y: 0 }} transition={spring} className="relative">
-        <div className="mb-6 flex items-center justify-between">
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           <Link 
             to="/" 
             className="inline-flex items-center gap-2 rounded-full px-3 py-2 -ml-3 text-sm font-bold text-ink-2 transition-colors hover:bg-surface hover:text-ink"
@@ -153,30 +152,12 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             Back to main site
           </Link>
-          <StitchBadge tone="neutral"><ShieldCheck className="h-3.5 w-3.5 text-success-ink" /> Secure access</StitchBadge>
+          <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight text-ink">
+            {isSignUp ? "Create your account" : "Welcome back"}
+          </h1>
         </div>
         <div className="mb-7 max-w-lg">
-          <p className="mb-3 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-primary">
-            <Sparkles className="h-4 w-4" aria-hidden="true" /> The better way to do work
-          </p>
-          <h1 className="text-3xl font-extrabold leading-[1.05] tracking-[-0.045em] sm:text-4xl lg:text-5xl">
-          {isSignUp ? (
-            <>
-              Get paid for what
-              <br />
-              you are already
-              <br />
-              <span className="relative inline-block text-primary z-0"><span className="absolute -z-10 inset-x-0 bottom-1 h-3 -rotate-1 rounded-full bg-accent-light" aria-hidden="true" /><VariableProximity label="good at." fromFontVariationSettings="'wght' 700" toFontVariationSettings="'wght' 800" containerRef={titleRef} radius={130} falloff="gaussian" /></span>
-            </>
-          ) : (
-            <>
-              Welcome
-              <br />
-              <span className="relative inline-block text-primary z-0"><span className="absolute -z-10 inset-x-0 bottom-1 h-3 -rotate-1 rounded-full bg-primary-light" aria-hidden="true" /><VariableProximity label="back." fromFontVariationSettings="'wght' 700" toFontVariationSettings="'wght' 800" containerRef={titleRef} radius={130} falloff="gaussian" /></span>
-            </>
-          )}
-          </h1>
-          <p className="mt-4 max-w-md text-md leading-relaxed text-ink-2">
+          <p className="max-w-md text-sm sm:text-base leading-relaxed text-ink-2">
           {isSignUp
             ? "Join in minutes. Projects come to you, and the pay is agreed upfront."
             : "Sign in to review assigned offers, track your work and see your earnings."}

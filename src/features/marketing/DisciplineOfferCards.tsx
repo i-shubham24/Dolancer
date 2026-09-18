@@ -51,9 +51,6 @@ export function DisciplineOfferCards() {
               </svg>
             </span>
           </h2>
-          <p className="mt-8 text-ink-muted font-medium text-lg max-w-2xl mx-auto">
-            Select your verified disciplines and receive scoped briefs matched precisely to your strengths. You only work on what you do best.
-          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
