@@ -7,7 +7,7 @@ export function CtaBanner() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="relative overflow-hidden bg-[#fafbfe] py-24 sm:py-32">
+    <section className="relative overflow-hidden bg-[#fafbfe] pt-20 pb-14 sm:pt-28 sm:pb-20">
       {/* Vahan-style Dot Pattern at Top Right */}
       <div 
         className="absolute right-[5%] top-12 w-64 h-64 opacity-30 pointer-events-none"

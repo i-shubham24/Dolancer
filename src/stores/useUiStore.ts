@@ -12,7 +12,7 @@ export const PALETTE_META: Record<
   cobalt: {
     label: "Cobalt",
     description: "Dolancer signature blue",
-    swatches: ["#5A7CFF", "#14b8a6"],
+    swatches: ["#0a65c0", "#14b8a6"],
   },
 };
 

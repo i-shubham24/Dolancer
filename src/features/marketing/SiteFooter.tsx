@@ -1,158 +1,233 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Mail } from "lucide-react";
+import { 
+  Mail, 
+  ShieldCheck, 
+  Lock, 
+  Headphones, 
+  Copy, 
+  Check, 
+  ArrowUpRight,
+  Sparkles
+} from "lucide-react";
+import { Logo } from "@/components/ui/Logo";
+import { CurvedSectionDivider } from "@/components/stitch/CurvedSectionDivider";
 import { CONTACT } from "./content";
-import { cn } from "@/lib/cn";
-
-const MOSAIC: { col: number; row: number; solid: boolean }[] = [
-  { col: 2, row: 0, solid: true },
-  { col: 5, row: 0, solid: false },
-  { col: 9, row: 0, solid: true },
-  { col: 14, row: 0, solid: false },
-  { col: 18, row: 0, solid: true },
-  { col: 23, row: 0, solid: false },
-  { col: 1, row: 1, solid: false },
-  { col: 4, row: 1, solid: true },
-  { col: 7, row: 1, solid: true },
-  { col: 11, row: 1, solid: false },
-  { col: 13, row: 1, solid: true },
-  { col: 17, row: 1, solid: true },
-  { col: 20, row: 1, solid: false },
-  { col: 22, row: 1, solid: true },
-  { col: 25, row: 1, solid: false },
-];
-
-function Mosaic() {
-  return (
-    <div aria-hidden="true" className="relative h-[72px] overflow-hidden -mb-px">
-      {MOSAIC.map((tile) => (
-        <span
-          key={`${tile.col}-${tile.row}`}
-          className={cn(
-            "absolute h-9 w-9 rounded-[3px]",
-            tile.solid ? "bg-[#0b0f19]" : "bg-[#0b0f19]/25"
-          )}
-          style={{
-            left: `${tile.col * 4}%`,
-            bottom: tile.row === 0 ? 36 : 0,
-          }}
-        />
-      ))}
-      <span className="absolute inset-x-0 bottom-0 h-9 bg-[#0b0f19]" />
-    </div>
-  );
-}
 
 export function SiteFooter() {
   const currentYear = new Date().getFullYear();
+  const [copiedEmail, setCopiedEmail] = useState(false);
+
+  const handleCopyEmail = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(CONTACT.email);
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2000);
+  };
 
   return (
-    <footer className="relative text-slate-300">
-      <Mosaic />
-      {/* Main Dark Footer Content */}
-      <div className="bg-[#0b0f19] relative overflow-hidden">
-        {/* Ambient Top Glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[160px] bg-gradient-to-b from-secondary/15 via-highlight/10 to-transparent blur-3xl pointer-events-none" />
+    <footer className="relative bg-[#070b14] text-slate-300 overflow-hidden font-sans pt-16 sm:pt-20 lg:pt-24 pb-8">
+      {/* Wavy Top Border directly touching the white section above */}
+      <CurvedSectionDivider 
+        variant="wave" 
+        position="top" 
+        fillColor="fill-white" 
+        showBorderLine={false} 
+        showAccentGlow={false} 
+      />
 
-        <div className="mx-auto max-w-7xl px-6 pt-10 pb-8 sm:px-8 sm:pt-14 sm:pb-10 relative z-10">
-        {/* Top 3-Column Area */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 sm:gap-8">
-          {/* Column 1: Brand & Email (Left) */}
-          <div className="md:col-span-6 lg:col-span-6 space-y-4">
-            <Link to="/" className="inline-flex items-center gap-2.5 group">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-secondary text-white shadow-soft-xs font-bold text-base">
-                D
-              </span>
-              <span className="text-xl font-bold tracking-tight text-white font-display">
-                Dolancer<span className="text-[#f97316]">.</span>
-              </span>
-            </Link>
+      {/* Subtle Ambient Glow */}
+      <div 
+        className="absolute top-10 left-1/2 -translate-x-1/2 w-[800px] h-[160px] bg-[radial-gradient(ellipse_60%_40%_at_50%_0%,rgba(10,101,192,0.15),transparent_75%)] pointer-events-none" 
+        aria-hidden="true" 
+      />
 
-            <p className="text-sm text-slate-300 leading-snug">
-              Skilled work, briefed properly,
-              <br />
-              <span className="text-[#f97316] font-semibold">paid reliably.</span>
-            </p>
-
-            <div>
-              <a
-                href={`mailto:${CONTACT.email}`}
-                className="mt-2 inline-flex items-center gap-2 rounded-full border border-slate-700/80 bg-slate-900/40 px-3.5 py-1.5 text-xs font-semibold text-slate-200 hover:border-slate-500 hover:text-white transition-colors"
-              >
-                <Mail className="h-3.5 w-3.5 text-slate-400" />
-                <span>{CONTACT.email}</span>
-              </a>
+      <div className="relative mx-auto max-w-7xl px-6 pt-6 sm:px-8 sm:pt-8 z-10">
+        
+        {/* Creative 3-Pillar Micro Highlight Bar */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10 pb-8 border-b border-white/5">
+          <div className="flex items-center gap-3 p-3.5 rounded-xl bg-white/[0.02] border border-white/5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-500/10 text-[#0a65c0]">
+              <ShieldCheck className="h-4 w-4" />
+            </div>
+            <div className="leading-tight">
+              <p className="text-xs font-bold text-white">Anonymized Briefs</p>
+              <p className="text-[11px] text-slate-400">Worker identities kept confidential</p>
             </div>
           </div>
 
-          {/* Column 2: PRODUCT */}
-          <div className="md:col-span-3 lg:col-span-3">
-            <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4 font-display">
-              PRODUCT
+          <div className="flex items-center gap-3 p-3.5 rounded-xl bg-white/[0.02] border border-white/5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-400">
+              <Lock className="h-4 w-4" />
+            </div>
+            <div className="leading-tight">
+              <p className="text-xs font-bold text-white">Pre-Funded Escrow</p>
+              <p className="text-[11px] text-slate-400">Upfront pay released on approval</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 p-3.5 rounded-xl bg-white/[0.02] border border-white/5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-500/10 text-amber-400">
+              <Headphones className="h-4 w-4" />
+            </div>
+            <div className="leading-tight">
+              <p className="text-xs font-bold text-white">Supervisor Support</p>
+              <p className="text-[11px] text-slate-400">24/7 dedicated brief coordination</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Footer Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-10 pb-10">
+          
+          {/* Brand & Contact (5 cols) */}
+          <div className="md:col-span-5 space-y-4">
+            <Link to="/" className="inline-flex items-center gap-2 group">
+              <Logo size="sm" />
+              <span className="text-xl font-bold tracking-tight text-white font-display">
+                Dolancer<span className="text-[#0a65c0]">.</span>
+              </span>
+            </Link>
+
+            <p className="text-sm text-slate-400 leading-relaxed max-w-sm">
+              Skilled work, briefed properly, <span className="text-white font-semibold">paid reliably.</span> Receive supervisor-routed opportunities with fixed upfront rates.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-2 pt-1">
+              <a
+                href={`mailto:${CONTACT.email}`}
+                className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-slate-200 hover:border-[#0a65c0]/60 hover:bg-[#0a65c0]/10 hover:text-white transition-all"
+              >
+                <Mail className="h-3.5 w-3.5 text-[#0a65c0]" />
+                <span>{CONTACT.email}</span>
+              </a>
+
+              <button
+                type="button"
+                onClick={handleCopyEmail}
+                className="inline-flex items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs font-semibold text-slate-300 hover:bg-white/10 hover:text-white transition-colors"
+                title="Copy email to clipboard"
+              >
+                {copiedEmail ? (
+                  <>
+                    <Check className="h-3 w-3 text-emerald-400" />
+                    <span className="text-emerald-400 text-[11px]">Copied</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="h-3 w-3 text-slate-400" />
+                    <span className="text-[11px]">Copy</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Product Column (2 cols) */}
+          <div className="md:col-span-2">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200 mb-3.5 font-display">
+              Product
             </h4>
-            <ul className="space-y-2.5 text-sm font-medium text-slate-300">
+            <ul className="space-y-2 text-sm text-slate-400 font-medium">
               <li>
-                <Link to="/how-it-works" className="hover:text-white transition-colors">
+                <Link to="/how-it-works" className="hover:text-white hover:translate-x-0.5 inline-flex items-center gap-1 transition-all">
                   How it works
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="hover:text-white transition-colors">
-                  About
+                <Link to="/about" className="hover:text-white hover:translate-x-0.5 inline-flex items-center gap-1 transition-all">
+                  About us
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="hover:text-white transition-colors">
-                  Contact
+                <Link to="/sign-up" className="hover:text-white hover:translate-x-0.5 inline-flex items-center gap-1.5 transition-all text-[#0a65c0] hover:text-blue-300">
+                  <span>Start earning</span>
+                  <span className="text-[9px] bg-[#0a65c0]/20 text-blue-300 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">Free</span>
                 </Link>
               </li>
               <li>
-                <Link to="/sign-up" className="hover:text-white transition-colors">
-                  Start earning
+                <Link to="/sign-in" className="hover:text-white hover:translate-x-0.5 inline-flex items-center gap-1 transition-all">
+                  Sign in
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Column 3: LEGAL */}
-          <div className="md:col-span-3 lg:col-span-3">
-            <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4 font-display">
-              LEGAL
+          {/* Legal Column (2 cols) */}
+          <div className="md:col-span-2">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200 mb-3.5 font-display">
+              Legal & Trust
             </h4>
-            <ul className="space-y-2.5 text-sm font-medium text-slate-300">
+            <ul className="space-y-2 text-sm text-slate-400 font-medium">
               <li>
-                <Link to="/legal/terms" className="hover:text-white transition-colors">
+                <Link to="/legal/terms" className="hover:text-white hover:translate-x-0.5 inline-flex items-center gap-1 transition-all">
                   Terms of service
                 </Link>
               </li>
               <li>
-                <Link to="/legal/privacy" className="hover:text-white transition-colors">
+                <Link to="/legal/privacy" className="hover:text-white hover:translate-x-0.5 inline-flex items-center gap-1 transition-all">
                   Privacy policy
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="hover:text-white transition-colors">
-                  Grievances
+                <Link to="/contact" className="hover:text-white hover:translate-x-0.5 inline-flex items-center gap-1.5 transition-all">
+                  <span>Grievances</span>
+                  <span className="text-[9px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">24/7</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/legal/terms" className="hover:text-white hover:translate-x-0.5 inline-flex items-center gap-1 transition-all">
+                  Prohibited work
                 </Link>
               </li>
             </ul>
           </div>
+
+          {/* Creative Guarantee Card (3 cols) */}
+          <div className="md:col-span-3">
+            <div className="rounded-xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-transparent p-4 relative overflow-hidden">
+              <div className="flex items-center gap-2 mb-2">
+                <Sparkles className="h-4 w-4 text-[#0a65c0]" />
+                <span className="text-xs font-bold text-white">Escrow Guarantee</span>
+              </div>
+              <p className="text-xs text-slate-400 leading-relaxed mb-3">
+                All agreed compensation is held in verified escrow before work begins. No bidding, no disputes.
+              </p>
+              <Link 
+                to="/how-it-works"
+                className="inline-flex items-center gap-1 text-xs font-semibold text-[#0a65c0] hover:text-blue-300 transition-colors"
+              >
+                <span>Learn about approval gates</span>
+                <ArrowUpRight className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+          </div>
+
         </div>
 
-        {/* Soft Organic Divider Removed */}
+        {/* Bottom Sub-Footer Bar */}
+        <div className="pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-medium">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-1 sm:gap-4 text-center sm:text-left">
+            <p>© {currentYear} {CONTACT.company}. All rights reserved.</p>
+            <span className="hidden sm:inline text-slate-800">|</span>
+            <p>Operated in {CONTACT.jurisdiction}. Support {CONTACT.hours}.</p>
+          </div>
 
-        {/* Giant Watermark Typography matching reference screenshot */}
-        <div className="pt-6 sm:pt-10 pb-4 select-none pointer-events-none text-left px-4 sm:px-8 relative z-0">
-          <span className="text-[12.5vw] sm:text-[90px] md:text-[120px] lg:text-[140px] font-extrabold tracking-tight text-[#141d30] leading-tight block font-display">
-            Dolancer
-          </span>
+          <div className="flex items-center gap-4 text-slate-400">
+            <Link to="/legal/terms" className="hover:text-slate-200 transition-colors">
+              Terms
+            </Link>
+            <span className="text-slate-800">·</span>
+            <Link to="/legal/privacy" className="hover:text-slate-200 transition-colors">
+              Privacy
+            </Link>
+            <span className="text-slate-800">·</span>
+            <Link to="/contact" className="hover:text-slate-200 transition-colors">
+              Support
+            </Link>
+          </div>
         </div>
 
-        {/* Bottom Row */}
-        <div className="pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 text-xs text-slate-500 font-medium">
-          <p>Operated by {CONTACT.company}, {CONTACT.jurisdiction}.</p>
-          <p>© {currentYear} {CONTACT.company}. Support {CONTACT.hours}.</p>
-        </div>
-      </div>
       </div>
     </footer>
   );

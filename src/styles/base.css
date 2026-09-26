@@ -278,39 +278,37 @@
   }
 
   .fresh-header {
-    border-bottom: 0;
-    background: transparent;
-    backdrop-filter: none;
-    padding: 0.75rem 0;
+    border-bottom: 1px solid #f1f5f9;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    padding: 0;
   }
 
   .fresh-main {
-    margin-top: -88px;
-    padding-top: 88px;
+    margin-top: 0;
+    padding-top: 0;
   }
 
   .fresh-header .fresh-nav-shell {
-    min-height: 64px;
-    border: 1px solid color-mix(in srgb, #ffffff 28%, transparent);
-    border-radius: 999px;
-    background: var(--color-primary);
-    box-shadow: 0 14px 34px color-mix(in srgb, var(--color-primary) 35%, transparent);
-    color: var(--color-inverse);
+    min-height: 68px;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    color: var(--color-ink);
   }
 
   @media (min-width: 900px) {
     .fresh-header .fresh-nav-shell {
-      width: max-content !important;
-      max-width: calc(100% - 2rem) !important;
+      width: 100% !important;
+      max-width: 1320px !important;
     }
   }
-
-
 
   .fresh-header .text-xl {
     font-size: 1.25rem;
     letter-spacing: -0.05em;
-    color: var(--color-inverse);
+    color: var(--color-ink);
   }
 
   .palette-tray-button {
@@ -325,14 +323,14 @@
 
   .fresh-header nav a {
     border-radius: 999px;
-    color: color-mix(in srgb, var(--color-inverse) 85%, transparent);
-    font-weight: 600;
+    color: #475569;
+    font-weight: 500;
   }
 
   .fresh-header nav a:hover,
   .fresh-header nav a[aria-current="page"] {
-    background: color-mix(in srgb, var(--color-inverse) 12%, transparent);
-    color: var(--color-inverse);
+    background: transparent;
+    color: #0a65c0;
   }
 
   .fresh-header .border,
@@ -410,17 +408,17 @@
 
   @media (max-width: 767px) {
     .fresh-header {
-      padding: 0.5rem 0;
+      padding: 0;
     }
 
     .fresh-main {
-      margin-top: -74px;
-      padding-top: 74px;
+      margin-top: 0;
+      padding-top: 0;
     }
 
     .fresh-header .fresh-nav-shell {
       min-height: 58px;
-      border-radius: 1.5rem;
+      border-radius: 0;
     }
   }
 
@@ -1005,10 +1003,10 @@
   .fresh-underline::after {
     position: absolute;
     right: 0.04em;
-    bottom: 0.02em;
+    bottom: 0.03em;
     left: 0.02em;
     z-index: -1;
-    height: 0.22em;
+    height: 0.165em;
     border-radius: 999px 1rem 999px 0.7rem;
     background: var(--dl-card-lilac);
     content: "";

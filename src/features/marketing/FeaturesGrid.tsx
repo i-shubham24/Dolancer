@@ -1,195 +1,173 @@
-import { motion, useReducedMotion } from "framer-motion";
-import { Logo } from "@/components/ui/Logo";
 import {
   Calendar,
   Wallet,
   Clock,
   ShieldCheck,
-  Sparkles
+  Sparkles,
+  CheckCircle2
 } from "lucide-react";
 import { StitchBadge } from "@/components/stitch/StitchPrimitives";
 import { CurvedSectionDivider } from "@/components/stitch/CurvedSectionDivider";
 
-interface Feature {
+interface StackingFeature {
+  number: string;
   icon: React.ComponentType<{ className?: string }>;
   title: string;
+  tagline: string;
   body: string;
   color: string;
-  bg: string;
+  accentBg: string;
+  cardBg: string;
+  chips: string[];
+  metricLabel: string;
+  metricValue: string;
 }
 
-const LEFT_FEATURES: Feature[] = [
+const STACKING_FEATURES: StackingFeature[] = [
   {
+    number: "01",
     icon: Wallet,
     title: "Agreed Upfront Pay",
-    body: "Compensation is pre-funded upfront before you accept. No public marketplace, no surprise discounts.",
+    tagline: "100% Pre-funded into Escrow",
+    body: "Compensation is agreed and locked before you begin work. No bidding wars, no price cuts, and no negotiating after delivery.",
     color: "text-cyan-400",
-    bg: "bg-cyan-500/20",
+    accentBg: "bg-cyan-500/10 border-cyan-500/30",
+    cardBg: "bg-[#0b1329]",
+    chips: ["Fixed upfront price", "Pre-funded escrow", "Zero bidding wars"],
+    metricLabel: "Escrow Protection",
+    metricValue: "100% Guaranteed",
   },
   {
+    number: "02",
     icon: ShieldCheck,
     title: "Supervisor Shield",
-    body: "Supervisors review drafts and handle all client coordination on your behalf.",
-    color: "text-blue-400",
-    bg: "bg-blue-500/20",
+    tagline: "Your Identity & Delivery Protected",
+    body: "Deliver work under verified discipline tags. Supervisors review your drafts, protect your scope, and manage all client conversations.",
+    color: "text-emerald-400",
+    accentBg: "bg-emerald-500/10 border-emerald-500/30",
+    cardBg: "bg-[#091824]",
+    chips: ["Anonymized briefs", "Dedicated coordinator", "No direct client contact"],
+    metricLabel: "Dispute Rate",
+    metricValue: "0.0% Historic",
   },
-];
-
-const RIGHT_FEATURES: Feature[] = [
   {
+    number: "03",
     icon: Clock,
     title: "Payouts After Approval",
-    body: "Direct bank transfer via UPI or NEFT after supervisor sign-off. Zero invoice chasing.",
-    color: "text-indigo-400",
-    bg: "bg-indigo-500/20",
+    tagline: "Direct UPI & NEFT Transfers",
+    body: "Once your supervisor clears quality review and the approval gate is met, funds release automatically to your registered bank account.",
+    color: "text-purple-400",
+    accentBg: "bg-purple-500/10 border-purple-500/30",
+    cardBg: "bg-[#11112b]",
+    chips: ["Direct to bank", "Automatic release", "Zero invoice chasing"],
+    metricLabel: "Release Window",
+    metricValue: "Within 48h",
   },
   {
+    number: "04",
     icon: Calendar,
-    title: "Clear Timelines",
-    body: "Every brief has a strict deadline for both your delivery and the supervisor's review.",
-    color: "text-purple-400",
-    bg: "bg-purple-500/20",
+    title: "Clear Timelines & Scope",
+    tagline: "Defined Milestones, No Creep",
+    body: "Every brief has clear acceptance criteria and strict turnaround windows for both your delivery and the supervisor's feedback.",
+    color: "text-blue-400",
+    accentBg: "bg-blue-500/10 border-blue-500/30",
+    cardBg: "bg-[#0c162f]",
+    chips: ["Explicit acceptance criteria", "Strict review turnaround", "Guaranteed milestone scope"],
+    metricLabel: "Milestone Clarity",
+    metricValue: "Pre-Scored",
   },
 ];
 
 export function FeaturesGrid() {
-  const reduceMotion = useReducedMotion();
-
   return (
-    <section className="relative bg-[#050914] py-24 md:py-32 overflow-hidden">
-      {/* Top curved divider matching the canvas color above it */}
-      <CurvedSectionDivider variant="wave" position="top" fillColor="fill-[var(--color-canvas)]" />
+    <section className="relative bg-[#050914] pt-24 pb-32 overflow-hidden">
+      {/* Top curved divider directly matching the white background of the section above */}
+      <CurvedSectionDivider variant="wave" position="top" fillColor="fill-white" showBorderLine={false} showAccentGlow={false} />
 
       {/* Decorative ambient lights */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 blur-[100px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-blue-600/10 blur-[130px] rounded-full pointer-events-none" />
 
-      <div className="fresh-container relative z-10 px-4 md:px-8 max-w-[1320px]">
+      <div className="fresh-container relative z-10 px-4 md:px-8 max-w-[1240px]">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16 md:mb-24">
+        <div className="text-center max-w-2xl mx-auto mb-16 md:mb-20">
           <StitchBadge tone="light">
-            <Sparkles className="h-3.5 w-3.5 text-accent" />
+            <Sparkles className="h-3.5 w-3.5 text-cyan-400" />
             Why Choose Dolancer
           </StitchBadge>
-          <h2 className="mt-4 text-3xl sm:text-4xl font-extrabold text-white tracking-[-0.035em]">
-            Built for specialists who value <span className="text-white fresh-underline fresh-underline-mint">clarity & respect.</span>
+          <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight font-display">
+            Built for specialists who value{" "}
+            <span className="text-white fresh-underline fresh-underline-mint">
+              clarity & respect.
+            </span>
           </h2>
-          <p className="mt-3 text-base text-slate-300 font-medium">
-            Everything is designed to protect your focus and ensure fair, reliable earnings.
+          <p className="mt-3.5 text-base sm:text-lg text-slate-300 font-medium leading-relaxed">
+            Everything is engineered to shield your focus, eliminate client friction, and guarantee fair, transparent compensation.
           </p>
         </div>
 
-        {/* Network Diagram Layout (Flex-based to prevent overlap) */}
-        <div className="relative flex flex-col md:flex-row items-center justify-between gap-6 lg:gap-10 w-full max-w-[1200px] mx-auto">
-          
-          {/* Connecting SVG Lines (Desktop Only) */}
-          <svg className="absolute inset-0 w-full h-full pointer-events-none hidden md:block" style={{ zIndex: 0 }}>
-            {/* Top Left Line */}
-            <motion.path 
-              initial={{ pathLength: 0 }}
-              whileInView={{ pathLength: 1 }}
-              transition={{ duration: 1.5, delay: 0.2 }}
-              d="M 25% 25% C 35% 25%, 40% 50%, 50% 50%" stroke="url(#line-grad-1)" strokeWidth="2" fill="none" strokeDasharray="4 4" 
-            />
-            {/* Bottom Left Line */}
-            <motion.path 
-               initial={{ pathLength: 0 }}
-               whileInView={{ pathLength: 1 }}
-               transition={{ duration: 1.5, delay: 0.4 }}
-              d="M 25% 75% C 35% 75%, 40% 50%, 50% 50%" stroke="url(#line-grad-1)" strokeWidth="2" fill="none" strokeDasharray="4 4" 
-            />
-            {/* Top Right Line */}
-            <motion.path 
-               initial={{ pathLength: 0 }}
-               whileInView={{ pathLength: 1 }}
-               transition={{ duration: 1.5, delay: 0.3 }}
-              d="M 75% 25% C 65% 25%, 60% 50%, 50% 50%" stroke="url(#line-grad-2)" strokeWidth="2" fill="none" strokeDasharray="4 4" 
-            />
-            {/* Bottom Right Line */}
-            <motion.path 
-               initial={{ pathLength: 0 }}
-               whileInView={{ pathLength: 1 }}
-               transition={{ duration: 1.5, delay: 0.5 }}
-              d="M 75% 75% C 65% 75%, 60% 50%, 50% 50%" stroke="url(#line-grad-2)" strokeWidth="2" fill="none" strokeDasharray="4 4" 
-            />
-            <defs>
-              <linearGradient id="line-grad-1" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.8" />
-                <stop offset="100%" stopColor="#5A7CFF" stopOpacity="0.2" />
-              </linearGradient>
-              <linearGradient id="line-grad-2" x1="100%" y1="0%" x2="0%" y2="0%">
-                <stop offset="0%" stopColor="#818cf8" stopOpacity="0.8" />
-                <stop offset="100%" stopColor="#5A7CFF" stopOpacity="0.2" />
-              </linearGradient>
-            </defs>
-          </svg>
+        {/* Stacking Cards Experience */}
+        <div className="flex flex-col gap-8 max-w-3xl mx-auto pb-12">
+          {STACKING_FEATURES.map((feat, idx) => {
+            const Icon = feat.icon;
 
-          {/* Left Column Cards */}
-          <div className="flex flex-col gap-8 w-full md:w-1/3 z-10 relative">
-            {LEFT_FEATURES.map((feat, i) => (
-              <motion.div 
+            return (
+              <div
                 key={feat.title}
-                initial={reduceMotion ? false : { x: -30, opacity: 0 }}
-                whileInView={reduceMotion ? undefined : { x: 0, opacity: 1 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ delay: 0.2 + (i * 0.2) }}
-                className="relative bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6 shadow-2xl hover:border-white/20 transition-colors"
+                className={`sticky rounded-3xl border border-white/10 p-7 sm:p-10 shadow-2xl backdrop-blur-2xl transition-all duration-300 ${feat.cardBg}`}
+                style={{
+                  top: `calc(100px + ${idx * 24}px)`,
+                }}
               >
-                <div className="flex items-center gap-4 mb-4 border-b border-white/10 pb-4 relative z-10">
-                  <div className={`p-2.5 rounded-xl ${feat.bg}`}>
-                    <feat.icon className={`h-5 w-5 ${feat.color}`} />
+                <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
+                  {/* Left Column: Number, Title, Body */}
+                  <div className="space-y-4 flex-1">
+                    <div className="flex items-center gap-3">
+                      <span className={`text-xs font-black tracking-widest uppercase px-2.5 py-1 rounded-full border ${feat.accentBg} ${feat.color}`}>
+                        Pillar {feat.number}
+                      </span>
+                      <span className="text-xs font-semibold text-slate-400">
+                        {feat.tagline}
+                      </span>
+                    </div>
+
+                    <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-display flex items-center gap-3">
+                      <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${feat.accentBg} ${feat.color}`}>
+                        <Icon className="h-5 w-5" />
+                      </span>
+                      {feat.title}
+                    </h3>
+
+                    <p className="text-base sm:text-lg text-slate-200 font-medium leading-relaxed max-w-xl">
+                      {feat.body}
+                    </p>
+
+                    {/* Chips */}
+                    <div className="pt-2 flex flex-wrap gap-2">
+                      {feat.chips.map((chip) => (
+                        <span
+                          key={chip}
+                          className="inline-flex items-center gap-1.5 rounded-lg bg-white/5 border border-white/10 px-3 py-1 text-xs font-semibold text-slate-300"
+                        >
+                          <CheckCircle2 className={`h-3.5 w-3.5 ${feat.color}`} />
+                          {chip}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                  <h3 className="text-white font-extrabold text-sm uppercase tracking-wide leading-tight">{feat.title}</h3>
-                </div>
-                <p className="text-sm text-slate-300 font-medium leading-relaxed relative z-10">
-                  {feat.body}
-                </p>
-              </motion.div>
-            ))}
-          </div>
 
-          {/* Center Hub */}
-          <motion.div 
-            initial={{ scale: 0.5, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ type: "spring", duration: 1, bounce: 0.5 }}
-            className="shrink-0 z-20 relative w-36 h-36 md:w-48 md:h-48 my-8 md:my-0"
-          >
-            {/* Outer animated rings */}
-            <div className="absolute inset-0 rounded-full border border-primary/30 animate-[ping_3s_ease-in-out_infinite]" />
-            <div className="absolute inset-2 rounded-full border border-cyan-400/30 animate-[spin_10s_linear_infinite] border-t-transparent" />
-            <div className="absolute inset-4 rounded-full border border-indigo-400/30 animate-[spin_8s_linear_infinite_reverse] border-b-transparent" />
-            
-            {/* Inner Core */}
-            <div className="absolute inset-6 rounded-full bg-gradient-to-br from-[#0A0D1A] to-blue-900 border-2 border-primary/50 shadow-[0_0_30px_rgba(90,124,255,0.4)] flex items-center justify-center flex-col">
-              <Logo size="lg" className="opacity-90 ml-[-2px] mb-0.5" />
-            </div>
-          </motion.div>
-
-          {/* Right Column Cards */}
-          <div className="flex flex-col gap-8 w-full md:w-1/3 z-10 relative">
-            {RIGHT_FEATURES.map((feat, i) => (
-              <motion.div 
-                key={feat.title}
-                initial={reduceMotion ? false : { x: 30, opacity: 0 }}
-                whileInView={reduceMotion ? undefined : { x: 0, opacity: 1 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ delay: 0.3 + (i * 0.2) }}
-                className="relative bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6 shadow-2xl hover:border-white/20 transition-colors"
-              >
-                <div className="flex items-center gap-4 mb-4 border-b border-white/10 pb-4 relative z-10">
-                  <div className={`p-2.5 rounded-xl ${feat.bg}`}>
-                    <feat.icon className={`h-5 w-5 ${feat.color}`} />
+                  {/* Right Column: Metric Highlight Badge */}
+                  <div className="flex md:flex-col items-center md:items-end justify-between md:justify-center p-4 rounded-2xl bg-white/[0.03] border border-white/10 shrink-0 min-w-[140px] text-right">
+                    <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">
+                      {feat.metricLabel}
+                    </p>
+                    <p className={`text-xl sm:text-2xl font-black mt-1 ${feat.color} font-display`}>
+                      {feat.metricValue}
+                    </p>
                   </div>
-                  <h3 className="text-white font-extrabold text-sm uppercase tracking-wide leading-tight">{feat.title}</h3>
                 </div>
-                <p className="text-sm text-slate-300 font-medium leading-relaxed relative z-10">
-                  {feat.body}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

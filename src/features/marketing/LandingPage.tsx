@@ -1,9 +1,7 @@
 import { HowItWorksSteps } from "./HowItWorksSteps";
 import { FeaturesGrid } from "./FeaturesGrid";
-import { PayoutExplainer } from "./PayoutExplainer";
 import { TestimonialsSection } from "./TestimonialsSection";
 import { CtaBanner } from "./CtaBanner";
-import { CurvedSectionDivider } from "@/components/stitch/CurvedSectionDivider";
 import { BackdropLetter } from "./BackdropLetter";
 import { MicroFloaties } from "./MicroFloaties";
 import { CurvedLoop } from "./CurvedLoop";
@@ -14,7 +12,7 @@ import { HeroSpectacular } from "./HeroSpectacular";
 
 export function LandingPage() {
   return (
-    <div className="fresh-page !overflow-visible -mt-[120px]">
+    <div className="fresh-page !overflow-visible">
       {/* Redesigned Hero Section aligning with HowItWorks / About theme */}
       <HeroSpectacular />
 
@@ -44,21 +42,12 @@ export function LandingPage() {
         <HowItWorksSteps />
       </div>
 
-      {/* Why Dolancers Love It / 8 Benefits - L (dark section, light ink) */}
+      {/* Why Dolancers Love It / 8 Benefits - L & A (dark section, light ink) */}
       <div className="relative overflow-clip">
         <BackdropLetter letter="L" position="left" offsetY="20%" tone="light" />
+        <BackdropLetter letter="A" position="right" offsetY="70%" tone="light" />
         <MicroFloaties zone="features" />
         <FeaturesGrid />
-      </div>
-
-      {/* Follow-every-payout - A */}
-      <div className="fresh-section py-20 bg-[#0b0f19] relative overflow-clip">
-        <BackdropLetter letter="A" position="right" offsetY="12%" tone="light" />
-        <MicroFloaties zone="payout" />
-        <div className="fresh-container">
-          <PayoutExplainer />
-        </div>
-        <CurvedSectionDivider variant="wave" position="bottom" fillColor="fill-[var(--color-canvas)]" showBorderLine={false} showAccentGlow={false} />
       </div>
       
 
@@ -84,8 +73,8 @@ export function LandingPage() {
       </div>
 
       {/* R - right, just before footer to complete DOLANCER */}
-      <div className="relative -mt-10 h-44 overflow-clip md:h-56" aria-hidden="true">
-        <BackdropLetter letter="R" position="right" className="text-[10rem] md:text-[13rem]" />
+      <div className="relative -mt-8 h-32 overflow-clip md:h-40" aria-hidden="true">
+        <BackdropLetter letter="R" position="right" className="text-[13rem] md:text-[17rem]" />
         <MicroFloaties zone="prefooter" />
       </div>
     </div>

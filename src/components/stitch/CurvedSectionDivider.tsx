@@ -16,6 +16,16 @@ interface CurvedSectionDividerProps {
   className?: string;
 }
 
+function getFillStyle(fillColor: string): React.CSSProperties | undefined {
+  if (fillColor === "fill-white" || fillColor === "white" || fillColor === "#ffffff") {
+    return { fill: "#ffffff" };
+  }
+  if (fillColor.startsWith("fill-[")) {
+    return { fill: fillColor.replace("fill-[", "").replace("]", "") };
+  }
+  return undefined;
+}
+
 export function CurvedSectionDivider({
   variant = "gentle-curve",
   position = "bottom",
@@ -47,7 +57,8 @@ export function CurvedSectionDivider({
           {/* Fill shape beneath wave */}
           <path
             d="M0 48C240 16 480 72 720 44C960 16 1200 68 1440 40V84H0V48Z"
-            className={fillColor} style={fillColor.startsWith("fill-[") ? { fill: fillColor.replace("fill-[", "").replace("]", "") } : undefined}
+            className={fillColor}
+            style={getFillStyle(fillColor)}
           />
           {/* Crisp structural border replacing the straight line */}
           {showBorderLine && (
