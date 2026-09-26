@@ -72,9 +72,9 @@ export function LandingPage() {
         <CtaBanner />
       </div>
 
-      {/* R - right, just before footer to complete DOLANCER */}
-      <div className="relative -mt-8 h-32 overflow-clip md:h-40" aria-hidden="true">
-        <BackdropLetter letter="R" position="right" className="text-[13rem] md:text-[17rem]" />
+      {/* R - right, just before footer to complete DOLANCER (compact gap, zero clipping) */}
+      <div className="relative -mt-6 sm:-mt-8 h-24 sm:h-28 md:h-32 overflow-visible select-none pointer-events-none" aria-hidden="true">
+        <BackdropLetter letter="R" position="right" className="!text-[7rem] sm:!text-[8.5rem] md:!text-[10rem] !leading-none" />
         <MicroFloaties zone="prefooter" />
       </div>
     </div>
