@@ -51,8 +51,8 @@ export function SiteFooter() {
               <ShieldCheck className="h-4 w-4" />
             </div>
             <div className="leading-tight">
-              <p className="text-xs font-bold text-white">Anonymized Briefs</p>
-              <p className="text-[11px] text-slate-400">Worker identities kept confidential</p>
+              <p className="text-xs font-bold text-white">Safe & Private</p>
+              <p className="text-[11px] text-slate-400">Work without sharing your personal info</p>
             </div>
           </div>
 
@@ -61,8 +61,8 @@ export function SiteFooter() {
               <Lock className="h-4 w-4" />
             </div>
             <div className="leading-tight">
-              <p className="text-xs font-bold text-white">Pre-Funded Escrow</p>
-              <p className="text-[11px] text-slate-400">Upfront pay released on approval</p>
+              <p className="text-xs font-bold text-white">Guaranteed Pay</p>
+              <p className="text-[11px] text-slate-400">Money is safely locked before you start</p>
             </div>
           </div>
 
@@ -71,8 +71,8 @@ export function SiteFooter() {
               <Headphones className="h-4 w-4" />
             </div>
             <div className="leading-tight">
-              <p className="text-xs font-bold text-white">Supervisor Support</p>
-              <p className="text-[11px] text-slate-400">24/7 dedicated brief coordination</p>
+              <p className="text-xs font-bold text-white">Help Every Step</p>
+              <p className="text-[11px] text-slate-400">We guide you and handle client talks</p>
             </div>
           </div>
         </div>
@@ -90,7 +90,7 @@ export function SiteFooter() {
             </Link>
 
             <p className="text-sm text-slate-400 leading-relaxed max-w-sm">
-              Skilled work, briefed properly, <span className="text-white font-semibold">paid reliably.</span> Receive supervisor-routed opportunities with fixed upfront rates.
+              Get clear project offers, skip the client drama, and get <span className="text-white font-semibold">guaranteed pay</span> sent straight to your bank account.
             </p>
 
             <div className="flex flex-wrap items-center gap-2 pt-1">
@@ -126,7 +126,7 @@ export function SiteFooter() {
           {/* Product Column (2 cols) */}
           <div className="md:col-span-2">
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200 mb-3.5 font-display">
-              Product
+              Dolancer
             </h4>
             <ul className="space-y-2 text-sm text-slate-400 font-medium">
               <li>
@@ -156,12 +156,12 @@ export function SiteFooter() {
           {/* Legal Column (2 cols) */}
           <div className="md:col-span-2">
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200 mb-3.5 font-display">
-              Legal & Trust
+              Trust & Safety
             </h4>
             <ul className="space-y-2 text-sm text-slate-400 font-medium">
               <li>
                 <Link to="/legal/terms" className="hover:text-white hover:translate-x-0.5 inline-flex items-center gap-1 transition-all">
-                  Terms of service
+                  Terms & Conditions
                 </Link>
               </li>
               <li>
@@ -171,13 +171,13 @@ export function SiteFooter() {
               </li>
               <li>
                 <Link to="/contact" className="hover:text-white hover:translate-x-0.5 inline-flex items-center gap-1.5 transition-all">
-                  <span>Grievances</span>
+                  <span>Help & Support</span>
                   <span className="text-[9px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider">24/7</span>
                 </Link>
               </li>
               <li>
                 <Link to="/legal/terms" className="hover:text-white hover:translate-x-0.5 inline-flex items-center gap-1 transition-all">
-                  Prohibited work
+                  Allowed work rules
                 </Link>
               </li>
             </ul>
@@ -188,16 +188,16 @@ export function SiteFooter() {
             <div className="rounded-xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-transparent p-4 relative overflow-hidden">
               <div className="flex items-center gap-2 mb-2">
                 <Sparkles className="h-4 w-4 text-[#0a65c0]" />
-                <span className="text-xs font-bold text-white">Escrow Guarantee</span>
+                <span className="text-xs font-bold text-white">Safe Pay Promise</span>
               </div>
               <p className="text-xs text-slate-400 leading-relaxed mb-3">
-                All agreed compensation is held in verified escrow before work begins. No bidding, no disputes.
+                Your pay is locked safely before you start work. You never have to chase payments or worry about client disputes.
               </p>
               <Link 
                 to="/how-it-works"
                 className="inline-flex items-center gap-1 text-xs font-semibold text-[#0a65c0] hover:text-blue-300 transition-colors"
               >
-                <span>Learn about approval gates</span>
+                <span>See how payments work</span>
                 <ArrowUpRight className="h-3.5 w-3.5" />
               </Link>
             </div>

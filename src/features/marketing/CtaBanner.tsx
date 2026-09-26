@@ -30,8 +30,8 @@ export function CtaBanner() {
             <h2 className="text-[2.75rem] leading-[1.1] sm:text-5xl lg:text-6xl font-extrabold text-[#1e293b] tracking-tight font-display">
               Ready to turn skill into <br className="hidden lg:block" /> reliable earnings?
             </h2>
-            <p className="mt-6 text-lg text-slate-600 font-medium leading-relaxed max-w-lg mx-auto lg:mx-0">
-              Your expertise is in high demand. Create an account, get verified in minutes, and accept assigned offers with fixed upfront rates.
+            <p className="mt-5 text-base sm:text-lg text-slate-600 font-medium leading-relaxed max-w-lg mx-auto lg:mx-0">
+              Get verified in minutes and accept project offers with fixed upfront rates.
             </p>
           </div>
 

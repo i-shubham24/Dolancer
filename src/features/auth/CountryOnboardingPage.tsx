@@ -98,11 +98,6 @@ export function CountryOnboardingPage() {
       </div>
 
       <StitchCard className="relative overflow-hidden p-5 sm:p-7">
-        <div className="auth-card-art" aria-hidden="true">
-          <span className="auth-card-art-block auth-card-art-block-one" />
-          <span className="auth-card-art-block auth-card-art-block-two" />
-          <span className="auth-card-art-dot" />
-        </div>
         <form onSubmit={handleSubmit} className="space-y-5">
           {error ? (
             <div

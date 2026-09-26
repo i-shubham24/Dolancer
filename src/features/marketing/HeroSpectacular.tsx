@@ -14,7 +14,7 @@ const ENGINEERS: HeroEngineer[] = [
   {
     id: 1,
     name: "Guy Hawkins",
-    designation: "Mechanical Engineer",
+    designation: "Content Writer",
     image: "/images/hero/portrait-1.png",
     bgColor: "bg-[#74b9ff]",
     size: "sm",
@@ -22,7 +22,7 @@ const ENGINEERS: HeroEngineer[] = [
   {
     id: 2,
     name: "Cameron Williamson",
-    designation: "Computer Engineer",
+    designation: "Web Developer",
     image: "/images/hero/portrait-2.png",
     bgColor: "bg-[#ffcc80]",
     size: "md",
@@ -30,7 +30,7 @@ const ENGINEERS: HeroEngineer[] = [
   {
     id: 3,
     name: "Bessie Cooper",
-    designation: "Computer Engineer",
+    designation: "Graphic Designer",
     image: "/images/hero/portrait-3.png",
     bgColor: "bg-[#80cbc4]",
     size: "lg",
@@ -38,7 +38,7 @@ const ENGINEERS: HeroEngineer[] = [
   {
     id: 4,
     name: "Esther Howard",
-    designation: "Computer Engineer",
+    designation: "UI/UX Designer",
     image: "/images/hero/portrait-4.png",
     bgColor: "bg-[#f8bbd0]",
     size: "md",
@@ -46,7 +46,7 @@ const ENGINEERS: HeroEngineer[] = [
   {
     id: 5,
     name: "Robert Fox",
-    designation: "Mechanical Engineer",
+    designation: "Video Editor",
     image: "/images/hero/portrait-5.png",
     bgColor: "bg-[#d1c4e9]",
     size: "sm",
@@ -72,13 +72,16 @@ export function HeroSpectacular() {
         <div className="text-center max-w-3xl mx-auto">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#111827] tracking-tight font-display leading-[1.12]">
             Get paid for what you're{" "}
-            <span className="text-[#0a65c0] relative inline-block">
+            <span className="text-[#0a65c0] relative inline-block z-10">
               good at.
+              <svg className="absolute -bottom-1 left-0 w-full h-3.5 sm:h-4 text-[#22d3ee] -z-10" viewBox="0 0 100 10" preserveAspectRatio="none">
+                <path d="M 2 8 L 98 4" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </span>
           </h1>
 
-          <p className="mt-2 text-sm sm:text-base text-slate-600 font-medium max-w-xl mx-auto leading-relaxed">
-            Skip the bidding wars. Join our verified doer network to find scoped work, collaborate with a supervisor, and earn according to clear upfront terms.
+          <p className="mt-2 text-sm sm:text-base text-slate-600 font-medium max-w-lg mx-auto leading-relaxed">
+            Skip bidding wars. Work on clear projects with supervisor guidance and guaranteed upfront pay.
           </p>
 
           {/* Action Buttons from Old Hero */}

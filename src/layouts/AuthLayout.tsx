@@ -1,24 +1,55 @@
 import { Outlet } from "react-router-dom";
 import { ShieldCheck } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 /**
- * Split auth screen. The right panel is decorative and hidden on small viewports,
- * so the form always gets the full width when it matters.
- *
- * The panel is a deep single-hue brand block: dotted texture, watermark
- * initial, outline ring and glass stat chips. One colour family only, no
- * rainbow shapes, never flat.
+ * Split auth screen with double sliding window entrance animation:
+ * Both panels start centered in the viewport with the right brand showcase
+ * on top (in front). After a brief pause, they slide apart to their respective
+ * sides like a double sliding window parting.
  */
 export function AuthLayout() {
-  // Deep brand block on every palette: dotted texture, watermark initial,
-  // outline ring and glass stat chips. White copy throughout.
-  return (
-    <div className="grid min-h-dvh lg:h-dvh lg:overflow-hidden lg:grid-cols-2">
-      <div className="auth-form-column flex min-w-0 items-center justify-center px-5 py-6 sm:px-10 lg:min-h-0 lg:overflow-y-auto lg:py-4">
-        <Outlet />
-      </div>
+  const [isDesktop, setIsDesktop] = useState(() => 
+    typeof window !== "undefined" && window.innerWidth >= 1024
+  );
+  const reduceMotion = useReducedMotion();
 
-      <div className="relative hidden min-w-0 overflow-hidden bg-primary text-inverse lg:block">
+  useEffect(() => {
+    const check = () => setIsDesktop(window.innerWidth >= 1024);
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const shouldAnimate = isDesktop && !reduceMotion;
+
+  return (
+    <div className="relative grid min-h-dvh lg:h-dvh lg:overflow-hidden lg:grid-cols-2 bg-[#fafbfe]">
+      {/* Left Form Column (starts centered underneath, then slides to the left) */}
+      <motion.div
+        initial={shouldAnimate ? { x: "50%", opacity: 0.85 } : false}
+        animate={shouldAnimate ? { x: 0, opacity: 1 } : false}
+        transition={{
+          duration: 0.85,
+          delay: 0.22,
+          ease: [0.16, 1, 0.3, 1],
+        }}
+        className="auth-form-column flex min-w-0 items-center justify-center px-5 py-6 sm:px-10 lg:min-h-0 lg:overflow-y-auto lg:py-4 z-10"
+      >
+        <Outlet />
+      </motion.div>
+
+      {/* Right Brand Showcase Column (starts centered in front, then slides to the right) */}
+      <motion.div
+        initial={shouldAnimate ? { x: "-50%" } : false}
+        animate={shouldAnimate ? { x: 0 } : false}
+        transition={{
+          duration: 0.85,
+          delay: 0.22,
+          ease: [0.16, 1, 0.3, 1],
+        }}
+        className="relative hidden min-w-0 overflow-hidden bg-primary text-inverse lg:block z-20 shadow-[-20px_0_40px_rgba(0,0,0,0.18)]"
+      >
         <div
           aria-hidden="true"
           className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.22)_1px,transparent_1px)] [background-size:22px_22px] [mask-image:linear-gradient(to_bottom,black,transparent_82%)]"
@@ -45,8 +76,7 @@ export function AuthLayout() {
           </span>
           <blockquote className="mt-5 max-w-md">
             <p className="text-3xl xl:text-4xl font-extrabold leading-[1.15] tracking-[-0.03em]">
-              No bidding wars. The pay is agreed before you start, and a
-              supervisor has your back.
+              Zero bidding. Locked upfront pay. A supervisor in your corner.
             </p>
             <footer className="mt-4 text-sm font-bold text-inverse/70">
               How work runs on Dolancer
@@ -73,7 +103,7 @@ export function AuthLayout() {
             ))}
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
