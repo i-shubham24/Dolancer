@@ -135,8 +135,8 @@ export function SiteFooter() {
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="hover:text-white hover:translate-x-0.5 inline-flex items-center gap-1 transition-all">
-                  About us
+                <Link to="/#why-dolancer" className="hover:text-white hover:translate-x-0.5 inline-flex items-center gap-1 transition-all">
+                  Why Dolancer
                 </Link>
               </li>
               <li>
@@ -206,26 +206,10 @@ export function SiteFooter() {
         </div>
 
         {/* Bottom Sub-Footer Bar */}
-        <div className="pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-medium">
-          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-1 sm:gap-4 text-center sm:text-left">
-            <p>© {currentYear} {CONTACT.company}. All rights reserved.</p>
-            <span className="hidden sm:inline text-slate-800">|</span>
-            <p>Operated in {CONTACT.jurisdiction}. Support {CONTACT.hours}.</p>
-          </div>
-
-          <div className="flex items-center gap-4 text-slate-400">
-            <Link to="/legal/terms" className="hover:text-slate-200 transition-colors">
-              Terms
-            </Link>
-            <span className="text-slate-800">·</span>
-            <Link to="/legal/privacy" className="hover:text-slate-200 transition-colors">
-              Privacy
-            </Link>
-            <span className="text-slate-800">·</span>
-            <Link to="/contact" className="hover:text-slate-200 transition-colors">
-              Support
-            </Link>
-          </div>
+        <div className="pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-center gap-1 text-xs text-slate-500 font-medium text-center">
+          <p>© {currentYear} {CONTACT.company}. All rights reserved.</p>
+          <span className="hidden sm:inline text-slate-800">|</span>
+          <p>Operated in {CONTACT.jurisdiction}. Support {CONTACT.hours}.</p>
         </div>
 
       </div>

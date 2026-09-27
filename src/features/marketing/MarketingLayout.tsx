@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, NavLink, useOutlet } from "react-router-dom";
+import { Link, NavLink, useLocation, useOutlet } from "react-router-dom";
 import { ScrollToTop } from "@/routes/ScrollToTop";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { cn } from "@/lib/cn";
@@ -12,7 +12,7 @@ import { ScrollRevealController } from "@/components/common/ScrollEnhancements";
 const NAV = [
   { to: "/", label: "Home" },
   { to: "/how-it-works", label: "How it works" },
-  { to: "/about", label: "About us" },
+  { to: "/#testimonials", label: "Reviews", hash: "#testimonials" },
   { to: "/contact", label: "Contact" },
 ];
 
@@ -32,6 +32,7 @@ export function MarketingLayout() {
   const { session, user } = useAuth();
   const isLoggedIn = Boolean(session || user);
   const currentOutlet = useOutlet();
+  const location = useLocation();
 
   return (
     <div className="fresh-site flex min-h-dvh flex-col bg-white relative">
@@ -51,20 +52,35 @@ export function MarketingLayout() {
 
           {/* Center: Nav Links */}
           <nav className="hidden md:flex items-center gap-8 mx-auto" aria-label="Main">
-            {NAV.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                className={({ isActive }) =>
-                  cn(
+            {NAV.map((item) =>
+              item.hash ? (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className={cn(
                     "text-sm font-medium transition-colors",
-                    isActive ? "text-[#0a65c0] font-bold" : "text-slate-600 hover:text-[#0a65c0]"
-                  )
-                }
-              >
-                {item.label}
-              </NavLink>
-            ))}
+                    location.hash === item.hash
+                      ? "text-[#0a65c0] font-bold"
+                      : "text-slate-600 hover:text-[#0a65c0]"
+                  )}
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  className={({ isActive }) =>
+                    cn(
+                      "text-sm font-medium transition-colors",
+                      isActive ? "text-[#0a65c0] font-bold" : "text-slate-600 hover:text-[#0a65c0]"
+                    )
+                  }
+                >
+                  {item.label}
+                </NavLink>
+              )
+            )}
           </nav>
 
           {/* Right: Auth buttons matching reference pills */}
@@ -110,21 +126,37 @@ export function MarketingLayout() {
         {open && (
           <div className="border-t border-slate-100 bg-white px-6 py-5 md:hidden shadow-lg">
             <nav className="space-y-2" aria-label="Mobile Main">
-              {NAV.map((item) => (
-                <NavLink
-                  key={item.to}
-                  to={item.to}
-                  onClick={() => setOpen(false)}
-                  className={({ isActive }) =>
-                    cn(
+              {NAV.map((item) =>
+                item.hash ? (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    onClick={() => setOpen(false)}
+                    className={cn(
                       "block rounded-lg px-3 py-2 text-base font-semibold",
-                      isActive ? "bg-blue-50 text-[#0a65c0]" : "text-slate-700 hover:bg-slate-50"
-                    )
-                  }
-                >
-                  {item.label}
-                </NavLink>
-              ))}
+                      location.hash === item.hash
+                        ? "bg-blue-50 text-[#0a65c0]"
+                        : "text-slate-700 hover:bg-slate-50"
+                    )}
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <NavLink
+                    key={item.to}
+                    to={item.to}
+                    onClick={() => setOpen(false)}
+                    className={({ isActive }) =>
+                      cn(
+                        "block rounded-lg px-3 py-2 text-base font-semibold",
+                        isActive ? "bg-blue-50 text-[#0a65c0]" : "text-slate-700 hover:bg-slate-50"
+                      )
+                    }
+                  >
+                    {item.label}
+                  </NavLink>
+                )
+              )}
             </nav>
             <div className="mt-5 flex flex-col gap-2.5 pt-4 border-t border-slate-100">
               {isLoggedIn ? (

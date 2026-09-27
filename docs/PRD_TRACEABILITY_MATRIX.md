@@ -3,7 +3,7 @@
 ## Route Map
 - `/` - LandingPage (MarketingLayout, public)
 - `/how-it-works` - HowItWorksPage (MarketingLayout, public)
-- `/about` - AboutPage (MarketingLayout, public)
+- `/about` - redirects to `/#why-dolancer` on Home (About merged into LandingPage)
 - `/contact` - ContactPage (MarketingLayout, public)
 - `/legal/:kind` - LegalPage (MarketingLayout, public)
 - `/sign-in` - SignInPage (AuthLayout, public)

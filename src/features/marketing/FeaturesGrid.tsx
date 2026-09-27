@@ -1,4 +1,3 @@
-import { useState, useEffect, useRef } from "react";
 import {
   Calendar,
   Wallet,
@@ -101,36 +100,8 @@ const STACKING_FEATURES: StackingFeature[] = [
 ];
 
 export function FeaturesGrid() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // Find which card is on screen (sticky threshold sweet spot)
-      const triggerY = window.innerHeight * 0.44;
-      let current = 0;
-
-      cardRefs.current.forEach((el, i) => {
-        if (!el) return;
-        const rect = el.getBoundingClientRect();
-        if (rect.top <= triggerY) {
-          current = i;
-        }
-      });
-
-      setActiveIndex(current);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const currentActive = hoverIndex !== null ? hoverIndex : activeIndex;
-
   return (
-    <section className="relative bg-[#050914] pt-24 sm:pt-28 lg:pt-32 pb-28 sm:pb-32 overflow-hidden">
+    <section className="relative bg-[#050914] pt-16 sm:pt-20 pb-20 sm:pb-24 overflow-x-clip">
       {/* Top curved divider directly matching the white background of the section above */}
       <CurvedSectionDivider variant="wave" position="top" fillColor="fill-white" showBorderLine={false} showAccentGlow={false} />
 
@@ -139,42 +110,42 @@ export function FeaturesGrid() {
 
       <div className="fresh-container relative z-10 px-4 md:px-8 max-w-[1240px]">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-4 sm:mb-5">
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
           <StitchBadge tone="light">
             <Sparkles className="h-3.5 w-3.5 text-cyan-400" />
             Why Choose Dolancer
           </StitchBadge>
-          <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight font-display">
+          <h2 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight font-display">
             Built for specialists who value{" "}
             <span className="text-white fresh-underline fresh-underline-mint">
               clarity & respect.
             </span>
           </h2>
-          <p className="mt-6 sm:mt-7 text-base sm:text-lg text-slate-300 font-medium leading-relaxed">
-            Built to protect your time, keep client stress away, and ensure you always get paid on time.
-          </p>
         </div>
 
         {/* Stacking Cards Experience */}
-        <div className="flex flex-col gap-6 max-w-3xl mx-auto pb-12">
+        <div className="flex flex-col gap-4 max-w-3xl mx-auto pb-8">
           {STACKING_FEATURES.map((feat, idx) => {
             const Icon = feat.icon;
-            const isActive = currentActive === idx;
+            // Every pillar stays lit. The deck still stacks on scroll, but no
+            // card ever fades: glow, border and text are always at full strength.
+            const isActive = true;
 
             return (
               <div
                 key={feat.title}
-                ref={(el) => { cardRefs.current[idx] = el; }}
-                onMouseEnter={() => setHoverIndex(idx)}
-                onMouseLeave={() => setHoverIndex(null)}
                 className={cn(
-                  "sticky rounded-3xl p-7 sm:p-10 backdrop-blur-2xl transition-all duration-500 relative overflow-hidden",
+                  // NOTE: no `relative` here. tailwind-merge treats position
+                  // utilities as conflicting and keeps the last one, so `relative`
+                  // would silently drop `sticky` and kill the stacking deck.
+                  // `sticky` already creates the positioning context the glow needs.
+                  "sticky rounded-3xl p-6 sm:p-8 backdrop-blur-2xl transition-all duration-500 overflow-hidden",
                   isActive
                     ? `opacity-100 scale-100 border ${feat.borderActive} ${feat.cardBgActive}`
                     : `opacity-35 scale-[0.985] border border-white/10 ${feat.cardBgInactive} hover:opacity-80`
                 )}
                 style={{
-                  top: `calc(84px + ${idx * 20}px)`,
+                  top: `calc(84px + ${idx * 14}px)`,
                 }}
               >
                 {/* Automated Colorful Spotlight Glow Effect within the card */}

@@ -137,13 +137,13 @@ export function TestimonialsSection() {
   );
 
   return (
-    <section id="testimonials" className="fresh-section py-20 overflow-hidden relative">
+    <section id="testimonials" className="fresh-section pt-12 pb-20 overflow-hidden relative">
       {/* Subtle radial ambient background light */}
       <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[800px] rounded-full bg-primary/5 blur-3xl" aria-hidden="true" />
 
       <div className="fresh-container relative z-10">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-10">
+        <div className="text-center max-w-2xl mx-auto mb-12">
           <StitchBadge tone="neutral">
             <Sparkles className="h-3.5 w-3.5 text-primary" />
             Verified Specialist Outcomes
@@ -152,7 +152,7 @@ export function TestimonialsSection() {
             Real Dolancers. <span className="fresh-highlight fresh-underline fresh-underline-pink">Real earnings.</span>
           </h2>
           <p className="mt-3 text-base text-ink-2 font-medium">
-            Hear from verified researchers, postgrads, and technical specialists across India turning expertise into reliable monthly income.
+            Verified specialists across India earning reliable monthly income.
           </p>
 
           {/* Interactive filter pills and animation toggle */}

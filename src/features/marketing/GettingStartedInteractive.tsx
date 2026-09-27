@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles,
@@ -110,6 +110,26 @@ export function GettingStartedInteractive() {
     return () => clearInterval(timer);
   }, [isPlaying]);
 
+  // The hero gates link here with #moment-N. Preselect that tab on arrival.
+  const location = useLocation();
+  useEffect(() => {
+    const match = /^#moment-([1-4])$/.exec(location.hash);
+    if (match) {
+      setActiveStep(Number(match[1]));
+      setIsPlaying(false);
+    }
+  }, [location.hash]);
+
+  // Cold-load cover: the router scroller can fire before this lazy page has
+  // mounted, so bring the tabs into view once when we land with a gate hash.
+  useEffect(() => {
+    if (!/^#moment-[1-4]$/.test(window.location.hash)) return;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    document
+      .getElementById("moments-tabs")
+      ?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+  }, []);
+
   const toggleSkill = (id: string) => {
     setSelectedSkills((prev) =>
       prev.includes(id) ? (prev.length > 1 ? prev.filter((s) => s !== id) : prev) : [...prev, id]
@@ -163,19 +183,20 @@ export function GettingStartedInteractive() {
       </div>
 
       {/* Step Selector Tabs (The 4 Clear Moments) */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
+      <div id="moments-tabs" className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-8 scroll-mt-24">
         {MOMENTS.map((m) => {
           const isActive = m.id === activeStep;
           return (
             <button
               key={m.id}
+              id={`moment-${m.id}`}
               type="button"
               onClick={() => {
                 setActiveStep(m.id);
                 setIsPlaying(false);
               }}
               className={cn(
-                "relative text-left p-4 rounded-2xl border transition-all duration-300 select-none group",
+                "relative text-left p-4 rounded-2xl border transition-all duration-300 select-none group scroll-mt-28",
                 isActive
                   ? "bg-surface border-primary shadow-soft-md ring-2 ring-primary/20"
                   : "bg-surface/60 border-line-card hover:bg-surface hover:border-line-card/80 shadow-soft-xs"

@@ -378,7 +378,10 @@
   }
 
   .fresh-page {
-    overflow: hidden;
+    /* Clip horizontally only. A full overflow lock would turn this into a
+       scroll container and break position: sticky descendants (dark pillar
+       deck). Vertical painting stays visible; zones clip themselves. */
+    overflow-x: clip;
     background: transparent;
   }
 

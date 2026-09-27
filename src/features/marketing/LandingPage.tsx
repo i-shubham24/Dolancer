@@ -1,3 +1,4 @@
+import { ArrowUp } from "lucide-react";
 import { HowItWorksSteps } from "./HowItWorksSteps";
 import { FeaturesGrid } from "./FeaturesGrid";
 import { TestimonialsSection } from "./TestimonialsSection";
@@ -9,6 +10,7 @@ import { HeroMarquee } from "./HeroMarquee";
 import { NetworkNumbers } from "./NetworkNumbers";
 import { DisciplineOfferCards } from "./DisciplineOfferCards";
 import { HeroSpectacular } from "./HeroSpectacular";
+import { WhyDolancer } from "./WhyDolancer";
 
 export function LandingPage() {
   return (
@@ -37,15 +39,16 @@ export function LandingPage() {
 
       {/* 3 Steps: How Dolancers Earn - O */}
       <div className="relative overflow-clip">
-        <BackdropLetter letter="O" position="right" offsetY="16%" />
+        <BackdropLetter letter="O" position="right" offsetY="23%" />
         <MicroFloaties zone="how" />
         <HowItWorksSteps />
+        <WhyDolancer />
+        <BackdropLetter letter="L" position="left" offsetY="82%" />
       </div>
 
       {/* Why Dolancers Love It / 8 Benefits - L & A (dark section, light ink) */}
       <div className="relative overflow-clip">
-        <BackdropLetter letter="L" position="left" offsetY="20%" tone="light" />
-        <BackdropLetter letter="A" position="right" offsetY="70%" tone="light" />
+        <BackdropLetter letter="A" position="right" offsetY="66%" tone="light" />
         <MicroFloaties zone="features" />
         <FeaturesGrid />
       </div>
@@ -76,6 +79,21 @@ export function LandingPage() {
       <div className="relative -mt-6 sm:-mt-8 h-24 sm:h-28 md:h-32 overflow-visible select-none pointer-events-none" aria-hidden="true">
         <BackdropLetter letter="R" position="right" className="!text-[7rem] sm:!text-[8.5rem] md:!text-[10rem] !leading-none" />
         <MicroFloaties zone="prefooter" />
+      </div>
+
+      {/* Back to top: in-flow on Home only, never fixed, never in the footer */}
+      <div className="flex justify-center pb-10">
+        <button
+          type="button"
+          onClick={() => {
+            const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+          }}
+          className="inline-flex items-center gap-2 rounded-full border border-line-card bg-surface px-5 py-2.5 text-sm font-bold text-ink-2 shadow-soft-sm transition-colors hover:border-primary/40 hover:text-ink"
+        >
+          <ArrowUp className="h-4 w-4 text-primary" aria-hidden="true" />
+          Back to top
+        </button>
       </div>
     </div>
   );

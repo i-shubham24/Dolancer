@@ -19,9 +19,6 @@ import { SkeletonCard } from "@/components/brutal/Skeleton";
 const HowItWorksPage = lazy(() =>
   import("@/features/marketing/HowItWorksPage").then((m) => ({ default: m.HowItWorksPage })),
 );
-const AboutPage = lazy(() =>
-  import("@/features/marketing/AboutPage").then((m) => ({ default: m.AboutPage })),
-);
 const ContactPage = lazy(() =>
   import("@/features/marketing/ContactPage").then((m) => ({ default: m.ContactPage })),
 );
@@ -113,7 +110,8 @@ export const router = createBrowserRouter([
     children: [
       { path: "/", element: <LandingPage /> },
       { path: "/how-it-works", element: page(<HowItWorksPage />) },
-      { path: "/about", element: page(<AboutPage />) },
+      // The About page was merged into the home page. Old links land on that section.
+      { path: "/about", element: <Navigate to={{ pathname: "/", hash: "#why-dolancer" }} replace /> },
       { path: "/contact", element: page(<ContactPage />) },
       { path: "/legal", element: <Navigate to="/legal/terms" replace /> },
       { path: "/legal/:kind", element: page(<LegalPage />) },

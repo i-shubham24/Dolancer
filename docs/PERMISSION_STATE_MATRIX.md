@@ -49,7 +49,7 @@ Note: The doer never sees `draft`, `submitted`, `quoted` statuses. These are int
 |-------|----------------|-----------------|---------------|------------|-------|
 | `/` | Yes | Yes | Yes | Yes | Yes |
 | `/how-it-works` | Yes | Yes | Yes | Yes | Yes |
-| `/about` | Yes | Yes | Yes | Yes | Yes |
+| `/about` | Redirect to `/#why-dolancer` | Redirect to `/#why-dolancer` | Redirect to `/#why-dolancer` | Redirect to `/#why-dolancer` | Redirect to `/#why-dolancer` |
 | `/contact` | Yes | Yes | Yes | Yes | Yes |
 | `/legal/:kind` | Yes | Yes | Yes | Yes | Yes |
 | `/sign-in` | Yes | Redirect to `/dashboard` | Redirect to `/dashboard` | N/A | N/A |
