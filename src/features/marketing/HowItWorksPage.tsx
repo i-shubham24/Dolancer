@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Check, ShieldCheck, Sparkles } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { StitchBadge, StitchSection } from "@/components/stitch/StitchPrimitives";
 import { GettingStartedInteractive } from "./GettingStartedInteractive";
 import { MicroFloaties } from "./MicroFloaties";
-import { InteractiveBentoPillars } from "./InteractiveBentoPillars";
 import { WorkflowDemo } from "./WorkflowDemo";
 import { PayoutExplainer } from "./PayoutExplainer";
 import { DifferenceRail } from "./DifferenceRail";
@@ -12,7 +10,6 @@ import { CategoryTags } from "./CategoryTags";
 import { HeroMarquee } from "./HeroMarquee";
 import { CurvedSectionDivider } from "@/components/stitch/CurvedSectionDivider";
 import { FaqAccordion } from "./FaqAccordion";
-import { MagneticButton } from "@/components/motion/MagneticButton";
 
 function Section({
   children,
@@ -118,7 +115,7 @@ export function HowItWorksPage() {
       </div>
 
       {/* Redesigned 5x Creative Interactive Four Moments Section */}
-      <section className="bg-surface-2 py-14 lg:py-28 relative">
+      <section className="bg-canvas py-14 lg:py-28 relative">
         <div className="fresh-container">
           <GettingStartedInteractive />
         </div>
@@ -129,13 +126,6 @@ export function HowItWorksPage() {
         {/* Real Product Walkthrough - what a project actually looks like, first */}
         <div><WorkflowDemo /></div>
       </Section>
-
-      {/* Trio pillars - dark, footer-symmetric */}
-      <section className="fresh-section bg-[#0b0f19] !py-20 relative overflow-clip">
-        <div className="fresh-container">
-          <InteractiveBentoPillars dark />
-        </div>
-      </section>
 
       <section aria-labelledby="payout" className="fresh-section bg-[#0b0f19] py-20 relative overflow-hidden">
         <MicroFloaties zone="payout" />
@@ -169,37 +159,6 @@ export function HowItWorksPage() {
           <FaqAccordion />
         </div>
       </section>
-
-      <Section labelledBy="cta">
-        <MicroFloaties zone="cta" />
-        <div className="fresh-final-card mx-auto max-w-4xl">
-          <div className="fresh-final-content flex flex-wrap items-center justify-between gap-8">
-            <div className="min-w-0 flex-1">
-              <StitchBadge>That is all of it</StitchBadge>
-              <h2
-                id="cta"
-                className="mt-4 max-w-md text-3xl font-extrabold leading-[1.1] tracking-[-0.04em]"
-              >
-                Start earning on your terms.
-              </h2>
-            </div>
-
-            <div className="fresh-cta-actions flex shrink-0 flex-col gap-2.5">
-              <MagneticButton>
-                <Button asChild size="lg" className="w-full">
-                  <Link to="/sign-up">
-                    Create your account
-                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                  </Link>
-                </Button>
-              </MagneticButton>
-              <Button asChild variant="outline">
-                <Link to="/contact">Ask a question first</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </Section>
     </div>
   );
 }

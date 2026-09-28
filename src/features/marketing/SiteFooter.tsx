@@ -19,10 +19,12 @@ export function SiteFooter() {
   const location = useLocation();
   // The wave's flat top edge is invisible only when its fill matches the
   // section above. Most marketing pages end on white; /contact ends on the
-  // light canvas wash, which needs a canvas fill to join without a seam.
+  // light canvas wash and /how-it-works on the surface-2 FAQ blue.
   const pageFill = location.pathname.startsWith("/contact")
     ? "fill-[var(--color-canvas)]"
-    : "fill-white";
+    : location.pathname.startsWith("/how-it-works")
+      ? "fill-[var(--color-surface-2)]"
+      : "fill-white";
   const [copiedEmail, setCopiedEmail] = useState(false);
 
   const handleCopyEmail = (e: React.MouseEvent) => {
