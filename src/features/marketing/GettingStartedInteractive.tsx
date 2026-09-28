@@ -148,10 +148,10 @@ export function GettingStartedInteractive() {
       {/* Header & Subtitle */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
         <div>
-          <div className="inline-flex items-center gap-2 rounded-full bg-primary-light px-3 py-1 text-xs font-bold text-primary border border-primary/20">
+          <span className="inline-flex items-center gap-2 text-xs font-bold text-primary">
             <Sparkles className="h-3.5 w-3.5" />
             The route is simple
-          </div>
+          </span>
           <h2 id="steps" className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-extrabold font-display tracking-tight text-ink">
             Getting started in four clear moments
           </h2>
