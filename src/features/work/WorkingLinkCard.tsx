@@ -18,14 +18,14 @@ export function WorkingLinkCard({
     <div
       className={cn(
         "relative overflow-hidden rounded-2xl border border-line-card p-4 shadow-soft-md",
-        hasLink ? "bg-surface" : "bg-gradient-to-br from-warning-bg via-surface to-accent-light",
+        hasLink ? "bg-surface" : "bg-gradient-to-br from-warning-bg via-surface to-[color-mix(in_srgb,var(--dl-card-yellow)_30%,white)]",
       )}
     >
       <div className="flex items-center gap-2">
         <span
           className={cn(
             "flex h-8 w-8 items-center justify-center rounded-full border border-line-card",
-            hasLink ? "bg-success-bg text-success-ink" : "bg-accent-light text-warning-ink",
+            hasLink ? "bg-success-bg text-success-ink" : "bg-[color-mix(in_srgb,var(--dl-card-yellow)_30%,white)] text-warning-ink",
           )}
         >
           {hasLink ? (

@@ -152,7 +152,7 @@ export function LessonPage() {
                     className={cn(
                       "flex cursor-pointer items-center gap-2.5 rounded-lg border px-3 py-2.5 text-sm font-semibold transition-colors",
                       checked
-                        ? "border-primary bg-accent shadow-soft-sm"
+                        ? "border-primary bg-[var(--dl-card-yellow)] shadow-soft-sm"
                         : "border-line-card bg-surface hover:border-primary/40",
                     )}
                   >

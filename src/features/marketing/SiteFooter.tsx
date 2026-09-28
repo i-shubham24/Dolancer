@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { 
   Mail, 
   ShieldCheck, 
@@ -16,6 +16,13 @@ import { CONTACT } from "./content";
 
 export function SiteFooter() {
   const currentYear = new Date().getFullYear();
+  const location = useLocation();
+  // The wave's flat top edge is invisible only when its fill matches the
+  // section above. Most marketing pages end on white; /contact ends on the
+  // light canvas wash, which needs a canvas fill to join without a seam.
+  const pageFill = location.pathname.startsWith("/contact")
+    ? "fill-[var(--color-canvas)]"
+    : "fill-white";
   const [copiedEmail, setCopiedEmail] = useState(false);
 
   const handleCopyEmail = (e: React.MouseEvent) => {
@@ -27,11 +34,11 @@ export function SiteFooter() {
 
   return (
     <footer className="relative bg-[#070b14] text-slate-300 overflow-hidden font-sans pt-16 sm:pt-20 lg:pt-24 pb-8">
-      {/* Wavy Top Border directly touching the white section above */}
+      {/* Wavy top border, fill matched to the section above so the join has no straight seam */}
       <CurvedSectionDivider 
         variant="wave" 
         position="top" 
-        fillColor="fill-white" 
+        fillColor={pageFill} 
         showBorderLine={false} 
         showAccentGlow={false} 
       />

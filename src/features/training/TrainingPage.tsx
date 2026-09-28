@@ -31,7 +31,7 @@ export function TrainingPage() {
             <span className="text-xs font-extrabold uppercase tracking-[0.05em] text-ink-muted">
               Progress
             </span>
-            <span className="rounded-full border border-line-card bg-accent px-2.5 py-0.5 text-2xs font-extrabold">
+            <span className="rounded-full border border-line-card bg-[var(--dl-card-yellow)] px-2.5 py-0.5 text-2xs font-extrabold">
               {done} of {items.length}
             </span>
           </div>
@@ -44,7 +44,7 @@ export function TrainingPage() {
             aria-label="Training progress"
           >
             <div
-              className="h-full rounded-full bg-accent transition-[width] duration-500 ease-spring"
+              className="h-full rounded-full bg-[var(--dl-card-yellow)] transition-[width] duration-500 ease-spring"
               style={{ width: `${pct}%` }}
             />
           </div>
@@ -85,7 +85,7 @@ export function TrainingPage() {
                 <span
                   className={cn(
                     "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-line-card text-sm font-extrabold",
-                    lesson.completed ? "bg-success-bg text-success-ink" : "bg-accent",
+                    lesson.completed ? "bg-success-bg text-success-ink" : "bg-[var(--dl-card-yellow)]",
                   )}
                 >
                   {lesson.completed ? (

@@ -69,8 +69,8 @@ export function ClaimDrawer({
               </div>
 
               <div className="min-h-0 flex-1 space-y-5 overflow-y-auto px-6 py-5">
-                <div className="relative overflow-hidden rounded-2xl border border-line-card bg-gradient-to-br from-accent-light via-surface to-secondary-light p-5 shadow-soft-md">
-                  <span className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-accent/40 blur-2xl" aria-hidden="true" />
+                <div className="relative overflow-hidden rounded-2xl border border-line-card bg-gradient-to-br from-[color-mix(in_srgb,var(--dl-card-yellow)_30%,white)] via-surface to-secondary-light p-5 shadow-soft-md">
+                  <span className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-[var(--dl-card-yellow)]/40 blur-2xl" aria-hidden="true" />
                   <div className="text-xs font-extrabold uppercase tracking-[0.05em] text-ink/65">Your agreed payout</div>
                   <div className="relative mt-1.5 break-words text-4xl font-extrabold leading-none tracking-[-0.045em] tabular-nums sm:text-5xl">
                     {formatPaise(offer.payoutPaise)}
@@ -108,9 +108,9 @@ export function ClaimDrawer({
                 <div className="rounded-xl border border-line-card bg-surface-2 p-4">
                   <h3 className="text-xs font-extrabold uppercase tracking-[0.05em] text-ink-muted">What happens after acceptance</h3>
                   <ol className="mt-2.5 list-none space-y-2 text-xs leading-relaxed text-ink-2">
-                    <li className="flex gap-2"><span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-line-card bg-accent text-[10px] font-extrabold text-ink" aria-hidden="true">1</span> Your supervisor confirms the project and working workspace.</li>
-                    <li className="flex gap-2"><span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-line-card bg-accent text-[10px] font-extrabold text-ink" aria-hidden="true">2</span> You work to the stated scope and deadline and keep questions in the supervisor thread.</li>
-                    <li className="flex gap-2"><span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-line-card bg-accent text-[10px] font-extrabold text-ink" aria-hidden="true">3</span> Your supervisor reviews delivery before the client approval and payout gates.</li>
+                    <li className="flex gap-2"><span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-line-card bg-[var(--dl-card-yellow)] text-[10px] font-extrabold text-ink" aria-hidden="true">1</span> Your supervisor confirms the project and working workspace.</li>
+                    <li className="flex gap-2"><span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-line-card bg-[var(--dl-card-yellow)] text-[10px] font-extrabold text-ink" aria-hidden="true">2</span> You work to the stated scope and deadline and keep questions in the supervisor thread.</li>
+                    <li className="flex gap-2"><span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-line-card bg-[var(--dl-card-yellow)] text-[10px] font-extrabold text-ink" aria-hidden="true">3</span> Your supervisor reviews delivery before the client approval and payout gates.</li>
                   </ol>
                 </div>
               </div>

@@ -55,7 +55,7 @@ export function CapacityRail({
           <span
             className={cn(
               "rounded-full border border-line-card px-2.5 py-0.5 text-2xs font-extrabold",
-              atCap ? "bg-warning-bg text-warning-ink" : "bg-[var(--dl-accent)]",
+              atCap ? "bg-warning-bg text-warning-ink" : "bg-[var(--dl-card-yellow)]",
             )}
           >
             {activeCount} of {MAX_ACTIVE_PROJECTS}
@@ -68,7 +68,7 @@ export function CapacityRail({
               key={index}
               className={cn(
                 "h-2.5 flex-1 rounded-full border border-line-card transition-colors",
-                index < activeCount ? (atCap ? "bg-[var(--dl-primary)]" : "bg-[var(--dl-accent)]") : "bg-surface",
+                index < activeCount ? (atCap ? "bg-[var(--dl-primary)]" : "bg-[var(--dl-card-yellow)]") : "bg-surface",
               )}
             />
           ))}
@@ -104,7 +104,7 @@ export function CapacityRail({
                   <span
                     className={cn(
                       "flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-line-card",
-                      step.done ? "bg-success-bg text-success-ink" : "bg-[var(--dl-accent)]",
+                      step.done ? "bg-success-bg text-success-ink" : "bg-[var(--dl-card-yellow)]",
                     )}
                   >
                     {step.done ? (

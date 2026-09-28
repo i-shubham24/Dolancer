@@ -161,7 +161,7 @@ export function CommandMenu() {
                     <span
                       className={cn(
                         "flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-line-card",
-                        index === active ? "bg-accent" : "bg-surface-2",
+                        index === active ? "bg-[var(--dl-card-yellow)]" : "bg-surface-2",
                       )}
                     >
                       <action.icon className="h-4 w-4" aria-hidden="true" />

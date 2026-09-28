@@ -679,12 +679,21 @@
       var(--color-canvas);
   }
 
-  .fresh-contact-hero {
-    min-height: 410px;
+  .fresh-contact-page .fresh-contact-hero {
+    min-height: 0;
     padding-top: 6.5rem;
-    padding-bottom: 3.5rem;
-    background:
-      linear-gradient(135deg, color-mix(in srgb, var(--dl-card-lilac) 58%, var(--color-canvas)), var(--color-canvas) 68%);
+    padding-bottom: 1.5rem;
+    background: transparent;
+    /* Let the right-side concentric rings render whole past the hero edge.
+       The editorial isolation keeps them behind the form/aside cards. */
+    overflow: visible;
+  }
+
+  /* One continuous surface: kill the hero card (rounded bottom, border, shadow)
+     so hero + form read as a single component on the page background. */
+  .fresh-contact-page .fresh-hero::before {
+    content: none;
+    display: none;
   }
 
   .fresh-contact-hero::after {
@@ -699,7 +708,7 @@
     position: relative;
     margin-top: 0;
     z-index: 2;
-    padding-top: 2rem;
+    padding-top: 3rem;
   }
 
   .fresh-contact-hero-grid {
@@ -1273,15 +1282,21 @@
       padding-bottom: 4rem;
     }
 
-    .fresh-contact-content {
+    .fresh-contact-page .fresh-contact-content {
       margin-top: 0;
-      padding-top: 1rem;
+      padding-top: 2rem;
     }
 
-    .fresh-contact-hero {
+    .fresh-contact-page .fresh-contact-hero {
       min-height: 0;
       padding-top: 5rem;
-      padding-bottom: 2rem;
+      padding-bottom: 1rem;
+      background: transparent;
+    }
+
+    .fresh-contact-page .fresh-hero::before {
+      content: none;
+      display: none;
     }
 
     .fresh-contact-hero-grid {

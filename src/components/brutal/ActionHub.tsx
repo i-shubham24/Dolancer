@@ -11,9 +11,9 @@ interface ActionHubProps {
 }
 
 export function ActionHub({ title, description, actionLabel, onAction, tone = "primary" }: ActionHubProps) {
-  const bg = tone === "primary" ? "bg-accent/10" : tone === "warning" ? "bg-warning-bg" : "bg-danger-bg";
-  const border = tone === "primary" ? "border-accent/30" : tone === "warning" ? "border-warning-ink/30" : "border-danger-ink/30";
-  const iconColor = tone === "primary" ? "text-accent" : tone === "warning" ? "text-warning-ink" : "text-danger-ink";
+  const bg = tone === "primary" ? "bg-[var(--dl-card-yellow)]/15" : tone === "warning" ? "bg-warning-bg" : "bg-danger-bg";
+  const border = tone === "primary" ? "border-[var(--dl-card-yellow)]/40" : tone === "warning" ? "border-warning-ink/30" : "border-danger-ink/30";
+  const iconColor = tone === "primary" ? "text-ink" : tone === "warning" ? "text-warning-ink" : "text-danger-ink";
 
   return (
     <motion.div 
@@ -22,7 +22,7 @@ export function ActionHub({ title, description, actionLabel, onAction, tone = "p
       className={`relative overflow-hidden rounded-2xl border ${border} ${bg} p-5 shadow-soft-sm`}
     >
       <div className="flex items-start gap-4">
-        <div className={`mt-0.5 rounded-full p-1.5 ${tone === "primary" ? "bg-accent/20" : "bg-white/20"}`}>
+        <div className={`mt-0.5 rounded-full p-1.5 ${tone === "primary" ? "bg-[var(--dl-card-yellow)]/30" : "bg-white/20"}`}>
           <AlertCircle className={`h-5 w-5 ${iconColor}`} />
         </div>
         <div className="flex-1">

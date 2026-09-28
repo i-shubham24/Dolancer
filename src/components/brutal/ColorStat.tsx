@@ -12,7 +12,7 @@ import { cn } from "@/lib/cn";
  */
 
 const TONES = {
-  accent: "bg-accent text-ink",
+  accent: "bg-[var(--dl-card-yellow)] text-ink",
   primary: "bg-primary text-ink",
   secondary: "bg-secondary text-inverse",
   highlight: "bg-highlight text-inverse",

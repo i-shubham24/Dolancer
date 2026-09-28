@@ -54,8 +54,8 @@ export function SpotlightHero({
           {today} <span className="mx-2 text-white/55">/</span> Doer mode
         </p>
         <div className="flex items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-accent/60 bg-accent/10 px-2.5 py-1 text-[11px] font-extrabold text-accent">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" aria-hidden="true" />
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--dl-card-yellow)]/60 bg-[var(--dl-card-yellow)]/10 px-2.5 py-1 text-[11px] font-extrabold text-[var(--dl-card-yellow)]">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--dl-card-yellow)]" aria-hidden="true" />
             {poolCount} assigned offers
           </span>
           <span
@@ -161,7 +161,7 @@ export function SpotlightHero({
               </p>
               <Link
                 to={unlocked ? "/pool" : "/verification"}
-                className="mt-4 inline-flex items-center gap-2 rounded-lg border border-line-card bg-accent px-4 py-2.5 text-sm font-extrabold text-ink shadow-soft-sm transition-all hover:-translate-y-px"
+                className="mt-4 inline-flex items-center gap-2 rounded-lg border border-line-card bg-[var(--dl-card-yellow)] px-4 py-2.5 text-sm font-extrabold text-ink shadow-soft-sm transition-all hover:-translate-y-px"
               >
                 {unlocked ? "View assigned offers" : "Get verified"} <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
@@ -175,7 +175,7 @@ export function SpotlightHero({
                 key={i}
                 className={cn(
                   "h-2 flex-1 rounded-full border border-white/30",
-                  i < activeCount ? (atCap ? "bg-primary" : "bg-accent") : "bg-white/10",
+                  i < activeCount ? (atCap ? "bg-primary" : "bg-[var(--dl-card-yellow)]") : "bg-white/10",
                 )}
               />
             ))}
@@ -191,7 +191,7 @@ export function SpotlightHero({
         <div className="flex w-max animate-none gap-8 whitespace-nowrap font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-white/90 [animation:dolancer-marquee_28s_linear_infinite]">
           {[0, 1].map((copy) => (
             <span key={copy} className="flex gap-8">
-              <span>Assigned offers</span><span className="text-[var(--dl-accent)]">Fixed payout</span><span className="text-white/70">Supervisor review</span><span className="text-white">Working link first</span><span className="text-white/70">3 slot cap</span><span className="text-white">No client contact</span>
+              <span>Assigned offers</span><span className="text-[var(--dl-card-yellow)]">Fixed payout</span><span className="text-white/70">Supervisor review</span><span className="text-white">Working link first</span><span className="text-white/70">3 slot cap</span><span className="text-white">No client contact</span>
             </span>
           ))}
         </div>

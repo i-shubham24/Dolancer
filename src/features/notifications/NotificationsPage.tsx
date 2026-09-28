@@ -148,13 +148,13 @@ export function NotificationsPage() {
                 hoverable={Boolean(item.deepLink)}
                 className={cn(
                   "flex items-center gap-3.5",
-                  !item.readAt && "border bg-accent-light",
+                  !item.readAt && "border bg-[color-mix(in_srgb,var(--dl-card-yellow)_25%,white)]",
                 )}
               >
                 <span
                   className={cn(
                     "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-line-card",
-                    item.readAt ? "bg-subtle text-ink-muted" : "bg-accent",
+                    item.readAt ? "bg-subtle text-ink-muted" : "bg-[var(--dl-card-yellow)]",
                   )}
                 >
                   <Bell className="h-4 w-4" aria-hidden="true" />

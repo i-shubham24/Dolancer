@@ -80,7 +80,7 @@ export function ReadinessCard({ gate }: { gate: DoerGateState }) {
   const pct = Math.round((gate.stepsDone / gate.totalSteps) * 100);
 
   return (
-    <Card className="relative overflow-hidden border-[var(--dl-purple)]/20 bg-gradient-to-br from-[var(--dl-purple-light)] via-surface to-[var(--dl-accent-light)] shadow-soft-lg">
+    <Card className="relative overflow-hidden border-[var(--dl-purple)]/20 bg-gradient-to-br from-[var(--dl-purple-light)] via-surface to-[color-mix(in_srgb,var(--dl-card-yellow)_30%,white)] shadow-soft-lg">
       <div className="pointer-events-none absolute -right-10 -top-16 h-40 w-40 rounded-full bg-[var(--dl-purple)]/10 blur-3xl" />
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>

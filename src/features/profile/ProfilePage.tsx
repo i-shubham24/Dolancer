@@ -142,7 +142,7 @@ export function ProfilePage() {
       </header>
 
       {needsApplication ? (
-        <Card className="border bg-accent-light">
+        <Card className="border bg-[color-mix(in_srgb,var(--dl-card-yellow)_25%,white)]">
           <h2 className="text-lg font-extrabold tracking-[-0.025em]">Apply to join</h2>
           <p className="mt-1 text-sm text-ink-2">
             Tell us what you do and where you are strongest. A couple of sentences is plenty.
@@ -192,7 +192,7 @@ export function ProfilePage() {
               Rating
             </div>
             <div className="mt-1 flex items-center gap-1.5">
-              <Star className="h-5 w-5 fill-accent text-ink" aria-hidden="true" />
+              <Star className="h-5 w-5 fill-[var(--dl-card-yellow)] text-ink" aria-hidden="true" />
               <span className="text-2xl font-extrabold tracking-[-0.03em]">
                 {rating.isLoading ? (
                   <Skeleton className="inline-block h-6 w-10 align-middle" />

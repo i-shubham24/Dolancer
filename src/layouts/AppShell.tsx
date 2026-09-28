@@ -93,7 +93,7 @@ function DemoBadge() {
   return (
     <span
       title="Sample data. Changes last until you reload."
-      className="rounded-full border border-line-card bg-accent px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide"
+      className="rounded-full border border-line-card bg-[var(--dl-card-yellow)] px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide"
     >
       Demo
     </span>
@@ -156,7 +156,7 @@ function SidebarContent({ onNavigate, collapsed, setCollapsed }: { onNavigate?: 
             className="flex items-center gap-2.5 overflow-hidden"
             aria-label="Open your profile"
           >
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-extrabold text-ink shadow-soft-sm">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--dl-card-yellow)] text-sm font-extrabold text-ink shadow-soft-sm">
               {initial}
             </span>
             {!collapsed && (
@@ -204,7 +204,7 @@ export function AppShell() {
       <CommandMenu />
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:border focus:border-line-card focus:bg-accent focus:px-4 focus:py-2 focus:text-sm focus:font-extrabold"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:border focus:border-line-card focus:bg-[var(--dl-card-yellow)] focus:px-4 focus:py-2 focus:text-sm focus:font-extrabold"
       >
         Skip to content
       </a>

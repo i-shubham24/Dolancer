@@ -76,7 +76,7 @@ export function PoolCard({
           ) : null}
         </div>
 
-        <div className="relative shrink-0 rounded-2xl bg-accent-light/70 px-3.5 py-2.5 text-right ring-1 ring-accent/30">
+        <div className="relative shrink-0 rounded-2xl bg-[color-mix(in_srgb,var(--dl-card-yellow)_30%,white)] px-3.5 py-2.5 text-right ring-1 ring-[var(--dl-card-yellow)]/40">
           <div className="text-2xs font-bold uppercase tracking-[0.05em] text-ink-muted">
             You earn
           </div>

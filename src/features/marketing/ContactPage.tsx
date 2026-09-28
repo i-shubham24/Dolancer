@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { Mail, Clock, Scale, LifeBuoy } from "lucide-react";
-import { StitchBadge, StitchCard, StitchSection } from "@/components/stitch/StitchPrimitives";
+import { StitchBadge, StitchCard } from "@/components/stitch/StitchPrimitives";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/providers/AuthProvider";
 import { CONTACT } from "./content";
@@ -21,7 +21,7 @@ export function ContactPage() {
 
   return (
     <div className="fresh-page fresh-contact-page">
-      <StitchSection className="fresh-hero fresh-editorial-hero fresh-contact-hero">
+      <section className="relative fresh-hero fresh-editorial-hero fresh-contact-hero">
         <MicroFloaties zone="contact-hero" />
       <div className="fresh-container fresh-contact-hero-grid">
         <div className="relative z-10">
@@ -52,7 +52,7 @@ export function ContactPage() {
           <span className="fresh-contact-scene-dot fresh-contact-scene-dot-two" />
         </motion.div>
       </div>
-      </StitchSection>
+      </section>
 
       <div className="fresh-container fresh-contact-content relative grid gap-6 pb-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:pb-24">
         <MicroFloaties zone="contact-form" />
@@ -122,18 +122,6 @@ export function ContactPage() {
           </StitchCard>
         </div>
       </div>
-
-      <p className="fresh-container mt-10 pb-10 text-xs leading-relaxed text-ink-muted">
-        Dolancer is operated by {CONTACT.company}, {CONTACT.jurisdiction}. See our{" "}
-        <Link to="/legal/terms" className="underline underline-offset-2 hover:text-ink">
-          terms
-        </Link>{" "}
-        and{" "}
-        <Link to="/legal/privacy" className="underline underline-offset-2 hover:text-ink">
-          privacy policy
-        </Link>
-        .
-      </p>
     </div>
   );
 }

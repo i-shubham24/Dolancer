@@ -37,7 +37,7 @@ export function RouteLineLoader({ label = "Loading route..." }: { label?: string
     { icon: ShieldCheck, color: "text-secondary", bg: "bg-secondary-light" },
     { icon: User, color: "text-ink", bg: "bg-subtle" },
     { icon: CheckCircle2, color: "text-success-ink", bg: "bg-success-bg" },
-    { icon: Wallet, color: "text-accent", bg: "bg-accent-light" },
+    { icon: Wallet, color: "text-ink", bg: "bg-[color-mix(in_srgb,var(--dl-card-yellow)_30%,white)]" },
   ];
 
   return (

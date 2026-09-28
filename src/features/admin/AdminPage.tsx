@@ -75,7 +75,7 @@ export function AdminPage() {
           as their backend views land.
         </p>
         {isDemo() ? (
-          <p className="mt-3 inline-block rounded-full border border-line-card bg-accent px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wide">
+          <p className="mt-3 inline-block rounded-full border border-line-card bg-[var(--dl-card-yellow)] px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wide">
             Sample data
           </p>
         ) : null}

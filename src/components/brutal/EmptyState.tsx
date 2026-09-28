@@ -31,7 +31,7 @@ export function EmptyState({
       )}
     >
       {icon ? (
-        <span className="flex h-14 w-14 items-center justify-center rounded-2xl border border-line-card bg-accent-light shadow-soft-sm">
+        <span className="flex h-14 w-14 items-center justify-center rounded-2xl border border-line-card bg-[color-mix(in_srgb,var(--dl-card-yellow)_25%,white)] shadow-soft-sm">
           {icon}
         </span>
       ) : null}

@@ -42,7 +42,7 @@ export function HowItWorksPage() {
     <div className="fresh-page !overflow-visible">
       {/* Light hero matching Home. The four gates are navigation: each one
           jumps to its moment below and preselects that tab. */}
-      <section className="relative overflow-hidden bg-white pt-[90px] pb-12 lg:pt-[110px] lg:pb-16">
+      <section className="relative overflow-hidden bg-white pt-10 pb-12 lg:pt-14 lg:pb-16">
         <div
           className="absolute inset-0 pointer-events-none opacity-30"
           style={{
@@ -111,7 +111,9 @@ export function HowItWorksPage() {
         </div>
       </section>
 
-      <div className="relative z-20 pt-2 pb-6 bg-canvas">
+      {/* One continuous light bg above the marquee (matches the white hero);
+          the surface-2 blue below starts right at the marquee's lower border. */}
+      <div className="relative z-20 bg-white pt-2">
         <HeroMarquee />
       </div>
 
