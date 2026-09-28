@@ -115,19 +115,26 @@ export function HowItWorksPage() {
       </div>
 
       {/* Redesigned 5x Creative Interactive Four Moments Section */}
-      <section className="bg-canvas py-14 lg:py-28 relative">
+      <section className="bg-canvas py-14 lg:py-20 relative">
         <div className="fresh-container">
           <GettingStartedInteractive />
         </div>
-        <CurvedSectionDivider variant="wave" position="bottom" fillColor="fill-[var(--color-canvas)]" />
       </section>
 
-      <Section labelledBy="walkthrough" className="fresh-workflow !pt-20 !pb-12 lg:!pb-16">
+      <Section labelledBy="walkthrough" className="fresh-workflow !pt-14 !pb-12 lg:!pb-16">
         {/* Real Product Walkthrough - what a project actually looks like, first */}
         <div><WorkflowDemo /></div>
       </Section>
 
-      <section aria-labelledby="payout" className="fresh-section bg-[#0b0f19] py-20 relative overflow-hidden">
+      <section aria-labelledby="payout" className="fresh-section bg-[#0b0f19] pb-20 pt-24 lg:pb-20 lg:pt-28 relative overflow-hidden">
+        {/* Wavy top edge melting from the light walkthrough above into the dark */}
+        <CurvedSectionDivider
+          variant="wave"
+          position="top"
+          fillColor="fill-[var(--color-canvas)]"
+          showBorderLine={false}
+          showAccentGlow={false}
+        />
         <MicroFloaties zone="payout" />
         <div className="fresh-container relative z-20">
           <PayoutExplainer />
