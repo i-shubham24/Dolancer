@@ -16,8 +16,11 @@
     color: var(--color-ink);
     font-family: var(--font-sans);
     font-size: var(--text-base);
-    line-height: 1.6;
+    line-height: 1.5;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
     min-width: 0;
     overflow-x: clip;
   }
@@ -38,31 +41,53 @@
   h4,
   h5,
   h6 {
-    font-weight: 800;
-    line-height: 1.18;
-    letter-spacing: -0.03em;
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
   }
 
   h1 {
-    font-size: var(--text-4xl);
+    font-size: var(--text-3xl);
+    font-weight: 750;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
   }
+  @media (min-width: 640px) {
+    h1 {
+      font-size: var(--text-4xl);
+    }
+  }
+
   h2 {
     font-size: var(--text-2xl);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
   }
+
   h3 {
     font-size: var(--text-xl);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.35;
   }
+
   h4 {
     font-size: var(--text-lg);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
   }
 
   ::selection {
-    background: var(--color-primary);
-    color: var(--color-ink);
+    background: #0a65c0;
+    color: #ffffff;
   }
 
   *:focus-visible {
-    outline: 2px solid var(--color-ink);
+    outline: 2px solid #0a65c0;
     outline-offset: 2px;
   }
 
@@ -71,7 +96,7 @@
     height: 6px;
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(17, 17, 17, 0.2);
+    background: rgba(15, 23, 42, 0.15);
     border-radius: 9999px;
   }
 }

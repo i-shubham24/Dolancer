@@ -20,7 +20,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/cn";
 import { preloadRoute } from "@/lib/preload";
 import { CommandMenu } from "@/components/CommandMenu";
-import { isDemo } from "@/lib/demo-data";
 import { useAuth } from "@/providers/AuthProvider";
 import { signOut } from "@/features/auth/api";
 import { useProfile } from "@/features/dashboard/queries";
@@ -88,18 +87,6 @@ function NavItem({
   );
 }
 
-/** Marks the sample-data build, so nobody mistakes it for a live account. */
-function DemoBadge() {
-  return (
-    <span
-      title="Sample data. Changes last until you reload."
-      className="rounded-full border border-line-card bg-[var(--dl-card-yellow)] px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide"
-    >
-      Demo
-    </span>
-  );
-}
-
 function SidebarContent({ onNavigate, collapsed, setCollapsed }: { onNavigate?: () => void; collapsed?: boolean; setCollapsed?: (v: boolean) => void }) {
   const { user } = useAuth();
   const profile = useProfile();
@@ -117,7 +104,6 @@ function SidebarContent({ onNavigate, collapsed, setCollapsed }: { onNavigate?: 
               Dolancer<span className="text-primary">.</span>
             </span>
           )}
-          {!collapsed && isDemo() ? <DemoBadge /> : null}
         </Link>
         {setCollapsed && (
           <button
@@ -156,7 +142,7 @@ function SidebarContent({ onNavigate, collapsed, setCollapsed }: { onNavigate?: 
             className="flex items-center gap-2.5 overflow-hidden"
             aria-label="Open your profile"
           >
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--dl-card-yellow)] text-sm font-extrabold text-ink shadow-soft-sm">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#0A65C0] to-[#08488E] text-sm font-extrabold text-white shadow-soft-sm">
               {initial}
             </span>
             {!collapsed && (
@@ -199,78 +185,86 @@ export function AppShell() {
   };
 
   return (
-    <div className="app-shell min-h-dvh bg-canvas bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,color-mix(in_srgb,var(--dl-purple)_12%,transparent),transparent_50%),radial-gradient(circle_at_95%_25%,color-mix(in_srgb,var(--dl-card-mint)_25%,transparent),transparent_30%),radial-gradient(circle_at_5%_75%,color-mix(in_srgb,var(--dl-card-pink)_20%,transparent),transparent_35%)]">
+    <div className="app-shell flex min-h-dvh w-full bg-[#F8FAFC]">
       <ScrollToTop />
       <CommandMenu />
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:border focus:border-line-card focus:bg-[var(--dl-card-yellow)] focus:px-4 focus:py-2 focus:text-sm focus:font-extrabold"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:border focus:border-line-card focus:bg-[#0A65C0] focus:text-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold"
       >
         Skip to content
       </a>
 
-      {/* Mobile bar */}
-      <div className="sticky top-0 z-30 flex items-center justify-between border-b border-line-card/80 bg-surface/90 px-4 py-3 shadow-soft-sm backdrop-blur-xl lg:hidden">
-        <Link to="/dashboard" className="flex items-center gap-2 min-w-0">
-          <Logo size="sm" />
-          <span className="text-lg font-extrabold tracking-[-0.04em] hidden sm:block truncate">Dolancer</span>
-          {isDemo() ? <DemoBadge /> : null}
-        </Link>
-        <div className="flex items-center gap-2 shrink-0">
-          <button
-            type="button"
-            onClick={() => setMobileOpen((open) => !open)}
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
-            aria-expanded={mobileOpen}
-            className="flex h-11 w-11 items-center justify-center rounded-2xl border border-line-card bg-surface/90 shadow-soft-sm"
-          >
-            {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-          </button>
-        </div>
-      </div>
+      {/* Desktop Docked Sidebar: pinned directly to the left screen edge */}
+      <aside
+        className={cn(
+          "sticky top-0 hidden h-dvh shrink-0 overflow-y-auto border-r border-line-card/80 bg-surface px-4 py-5 lg:block transition-[width] duration-300 ease-in-out z-30 scrollbar-hide",
+          collapsed ? "w-[76px]" : "w-64"
+        )}
+      >
+        <SidebarContent collapsed={collapsed} setCollapsed={toggleCollapsed} />
+      </aside>
 
-      <AnimatePresence>
-        {mobileOpen ? (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 lg:hidden"
-          >
+      {/* Main Content Column: spans 100% of remaining viewport width */}
+      <div className="flex min-w-0 flex-1 flex-col">
+        {/* Mobile bar */}
+        <div className="sticky top-0 z-30 flex items-center justify-between border-b border-line-card/80 bg-surface/90 px-4 py-3 shadow-soft-sm backdrop-blur-xl lg:hidden">
+          <Link to="/dashboard" className="flex items-center gap-2 min-w-0">
+            <Logo size="sm" />
+            <span className="text-lg font-bold tracking-tight hidden sm:block truncate">Dolancer</span>
+          </Link>
+          <div className="flex items-center gap-2 shrink-0">
             <button
               type="button"
-              aria-label="Close menu"
-              className="absolute inset-0 w-full h-full bg-ink/30 cursor-default"
-              onClick={() => setMobileOpen(false)}
-            />
-            <motion.div 
-              initial={{ x: "-100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "-100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              drag="x"
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={0.1}
-              onDragEnd={(_e, { offset, velocity }) => {
-                if (offset.x < -50 || velocity.x < -500) {
-                  setMobileOpen(false);
-                }
-              }}
-              className="absolute inset-y-0 left-0 w-[85%] max-w-xs overflow-y-auto overscroll-contain border-r border-line-card bg-canvas p-5 shadow-soft-lg scrollbar-hide"
+              onClick={() => setMobileOpen((open) => !open)}
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileOpen}
+              className="flex h-10 w-10 items-center justify-center rounded-xl border border-line-card bg-surface shadow-soft-xs"
             >
-              <SidebarContent onNavigate={() => setMobileOpen(false)} />
+              {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile drawer */}
+        <AnimatePresence>
+          {mobileOpen ? (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-40 lg:hidden"
+            >
+              <button
+                type="button"
+                aria-label="Close menu"
+                className="absolute inset-0 w-full h-full bg-slate-950/40 backdrop-blur-xs cursor-default"
+                onClick={() => setMobileOpen(false)}
+              />
+              <motion.div 
+                initial={{ x: "-100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "-100%" }}
+                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.1}
+                onDragEnd={(_e, { offset, velocity }) => {
+                  if (offset.x < -50 || velocity.x < -500) {
+                    setMobileOpen(false);
+                  }
+                }}
+                className="absolute inset-y-0 left-0 w-[85%] max-w-xs overflow-y-auto overscroll-contain border-r border-line-card bg-surface p-5 shadow-soft-lg scrollbar-hide"
+              >
+                <SidebarContent onNavigate={() => setMobileOpen(false)} />
+              </motion.div>
             </motion.div>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+          ) : null}
+        </AnimatePresence>
 
-      <div className="mx-auto flex w-full max-w-[1320px] gap-6 px-4 lg:px-6">
-        <aside className={cn("sticky top-0 hidden h-dvh shrink-0 overflow-y-auto py-6 lg:block transition-[width] duration-300 ease-in-out scrollbar-hide", collapsed ? "w-20" : "w-64")}>
-          <SidebarContent collapsed={collapsed} setCollapsed={toggleCollapsed} />
-        </aside>
-
-        <main id="main" className="min-w-0 flex-1 py-6 lg:my-2 lg:py-4">
+        {/* Full-width Main Outlet Area */}
+        <main id="main" className="min-w-0 flex-1 px-4 sm:px-6 lg:px-8 xl:px-10 py-6">
           <Outlet />
         </main>
       </div>

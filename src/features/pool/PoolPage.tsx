@@ -16,7 +16,6 @@ import { PoolCard } from "./PoolCard";
 import { ClaimDrawer } from "./ClaimDrawer";
 import { RouteLineLoader } from "@/components/motion/RouteLineLoader";
 import { useBoardNotify } from "./useBoardNotify";
-import { StitchOrbitalGraphic } from "@/components/stitch/StitchPrimitives";
 
 export function PoolPage() {
   const reduceMotion = useReducedMotion();
@@ -48,27 +47,22 @@ export function PoolPage() {
       <div className="pointer-events-none absolute -left-24 -top-24 -z-10 h-72 w-72 rounded-full bg-highlight-light/70 blur-3xl" aria-hidden="true" />
       <div className="pointer-events-none absolute right-0 top-40 -z-10 h-64 w-64 rounded-full bg-secondary-light/70 blur-3xl" aria-hidden="true" />
 
-      <header className="relative overflow-hidden rounded-[1.75rem] border border-line-card bg-gradient-to-br from-highlight-light/80 via-surface to-secondary-light/60 p-6 shadow-soft-md sm:p-8">
-        <StitchOrbitalGraphic className="absolute -right-10 -top-10 h-48 w-48 opacity-70" />
-        <div className="relative max-w-2xl">
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-surface/80 px-3 py-1 text-xs font-bold uppercase tracking-wider text-highlight shadow-soft-sm">
-            <span className="h-2 w-2 animate-pulse rounded-full bg-secondary" aria-hidden="true" />
-            Private offer desk
-          </div>
-          <h1 className="text-3xl font-extrabold tracking-[-0.045em] sm:text-4xl">Assigned offers</h1>
-          <p className="mt-2 max-w-xl text-md text-ink-2">
-            Review project offers routed to you by a supervisor. Each offer shows its scope, deadline and doer payout before you accept it.
+      <header className="flex flex-col gap-4 rounded-2xl border border-line-card bg-surface p-6 shadow-soft-sm sm:p-7">
+        <div className="max-w-2xl">
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Assigned offers</h1>
+          <p className="mt-1.5 text-sm text-slate-500">
+            Review project offers routed to you by a supervisor. Each offer shows its scope, deadline, and fixed doer payout before you accept it.
           </p>
         </div>
-        <div className="relative mt-5 flex flex-wrap items-center gap-2 text-xs font-semibold text-ink-2">
-          <span className="rounded-full bg-surface/80 px-3 py-1.5 shadow-soft-sm">Supervisor routed</span>
-          <span className="rounded-full bg-surface/80 px-3 py-1.5 shadow-soft-sm">No bidding</span>
-          <span className="rounded-full bg-surface/80 px-3 py-1.5 shadow-soft-sm">Identity protected</span>
+        <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-slate-600">
+          <span className="rounded-full border border-line-subtle bg-slate-50 px-3 py-1">Supervisor routed</span>
+          <span className="rounded-full border border-line-subtle bg-slate-50 px-3 py-1">No public bidding</span>
+          <span className="rounded-full border border-line-subtle bg-slate-50 px-3 py-1">Direct settlement</span>
         </div>
-        <div className="relative mt-5 flex flex-wrap items-center justify-between gap-3">
-          <div className="inline-flex items-center gap-2 text-xs font-bold text-ink-2">
-            <ClipboardCheck className="h-4 w-4 text-highlight" aria-hidden="true" />
-            Offers are private to your account
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line-subtle pt-4">
+          <div className="inline-flex items-center gap-2 text-xs font-medium text-slate-500">
+            <ClipboardCheck className="h-4 w-4 text-[#0A65C0]" aria-hidden="true" />
+            Offers are private to your verified account
           </div>
           <AvailabilityToggle />
         </div>

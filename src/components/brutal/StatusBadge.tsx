@@ -2,12 +2,12 @@ import { cn } from "@/lib/cn";
 import type { StatusTone } from "@/types/domain";
 
 const TONES: Record<StatusTone | "neutral", { wrap: string; dot: string; pulse: boolean }> = {
-  assigned: { wrap: "bg-info-bg text-info-ink", dot: "bg-info-dot", pulse: true },
-  progress: { wrap: "bg-warning-bg text-warning-ink", dot: "bg-warning-dot", pulse: true },
-  review: { wrap: "bg-highlight-light text-highlight", dot: "bg-highlight", pulse: true },
-  changes: { wrap: "bg-danger-bg text-danger-ink", dot: "bg-danger-dot", pulse: false },
-  approved: { wrap: "bg-success-bg text-success-ink", dot: "bg-success-dot", pulse: false },
-  neutral: { wrap: "bg-neutral-bg text-neutral-ink", dot: "bg-neutral-dot", pulse: false },
+  assigned: { wrap: "bg-blue-50 text-[#0A65C0] border-blue-200/80", dot: "bg-[#0A65C0]", pulse: true },
+  progress: { wrap: "bg-amber-50 text-amber-900 border-amber-200/80", dot: "bg-amber-500", pulse: true },
+  review: { wrap: "bg-indigo-50 text-indigo-900 border-indigo-200/80", dot: "bg-indigo-600", pulse: true },
+  changes: { wrap: "bg-rose-50 text-rose-900 border-rose-200/80", dot: "bg-rose-500", pulse: false },
+  approved: { wrap: "bg-emerald-50 text-emerald-900 border-emerald-200/80", dot: "bg-emerald-500", pulse: false },
+  neutral: { wrap: "bg-slate-100 text-slate-700 border-slate-200/80", dot: "bg-slate-400", pulse: false },
 };
 
 /**

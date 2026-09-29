@@ -68,22 +68,17 @@ export function EarningsPage() {
 
   return (
     <motion.div
-      className="relative space-y-7 overflow-hidden rounded-[2rem] px-1 py-1 sm:px-2"
+      className="relative space-y-7"
       initial={reduceMotion ? false : { opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
     >
-      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-highlight/10 blur-3xl" aria-hidden="true" />
-      <div className="pointer-events-none absolute -right-20 top-40 h-64 w-64 rounded-full bg-secondary/10 blur-3xl" aria-hidden="true" />
-      <header className="relative flex flex-col gap-4 rounded-3xl bg-surface/70 px-5 py-6 backdrop-blur-sm sm:px-7">
+      <header className="flex flex-col gap-2 rounded-2xl border border-line-card bg-surface p-6 shadow-soft-sm sm:p-7">
         <div>
-        <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-secondary">
-          Verified ledger · transparent settlement
-        </p>
-        <h1 className="text-3xl font-extrabold tracking-[-0.035em] sm:text-4xl">Earnings &amp; ledger</h1>
-        <p className="mt-2 max-w-xl text-md text-ink-2">
-          What you have been paid, and what was withheld getting there.
-        </p>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Earnings &amp; ledger</h1>
+          <p className="mt-1.5 text-sm text-slate-500">
+            What you have been paid, and what was withheld getting there.
+          </p>
         </div>
       </header>
 

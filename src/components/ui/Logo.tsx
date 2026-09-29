@@ -7,10 +7,10 @@ interface LogoProps {
 }
 
 const sizeClasses = {
-  sm: "h-8 w-8",
-  md: "h-9 w-9",
-  lg: "h-11 w-11",
-  xl: "h-14 w-14",
+  sm: "h-8 w-8 rounded-xl",
+  md: "h-9 w-9 rounded-xl",
+  lg: "h-10 w-10 rounded-2xl",
+  xl: "h-12 w-12 rounded-2xl",
 };
 
 export function Logo({ className, size = "md", variant = "default" }: LogoProps) {
@@ -21,12 +21,15 @@ export function Logo({ className, size = "md", variant = "default" }: LogoProps)
       viewBox="0 0 340 340"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={cn("shrink-0 object-contain", sizeClasses[size], className)}
+      className={cn("shrink-0 overflow-hidden", sizeClasses[size], className)}
       aria-label="Dolancer Logo"
     >
-      {/* Background: white for nav so it mixes seamlessly into navbar, brand blue for default */}
-      <path 
-        d="M0 0H340V340H0V0Z" 
+      {/* Background with rounded corners */}
+      <rect 
+        width="340" 
+        height="340" 
+        rx="80" 
+        ry="80" 
         fill={isNav ? "white" : "#0a65c0"} 
       />
       {/* D Symbol: brand blue for nav, white for default */}

@@ -63,14 +63,10 @@ export function WorkPage() {
 
   return (
     <motion.div className="relative space-y-7" initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }}>
-      <div className="pointer-events-none absolute -right-20 -top-24 -z-10 h-72 w-72 rounded-full bg-secondary-light/70 blur-3xl" aria-hidden="true" />
-      <header className="flex flex-wrap items-end justify-between gap-4 rounded-[1.75rem] border border-line-card bg-gradient-to-br from-secondary-light/70 via-surface to-highlight-light/60 p-6 shadow-soft-md sm:p-8">
+      <header className="flex flex-wrap items-end justify-between gap-4 rounded-2xl border border-line-card bg-surface p-6 shadow-soft-sm sm:p-7">
         <div>
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-surface/80 px-3 py-1 text-xs font-bold uppercase tracking-wider text-secondary shadow-soft-sm">
-            <span className="h-2 w-2 rounded-full bg-secondary" aria-hidden="true" /> Active pipeline
-          </div>
-          <h1 className="text-3xl font-extrabold tracking-[-0.045em] sm:text-4xl">My workbench</h1>
-          <p className="mt-2 text-md text-ink-2">
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">My workbench</h1>
+          <p className="mt-1.5 text-sm text-slate-500">
             {bucket === "active"
               ? "Everything on your plate, with whatever needs you first."
               : "Work you have finished."}
@@ -122,11 +118,11 @@ export function WorkPage() {
               <div className="sticky top-16 z-10 -mx-1 mb-3 flex items-center gap-2 bg-canvas/95 px-1 py-2 backdrop-blur lg:top-0">
                 <h2
                   id={`group-${group.label}`}
-                  className="text-sm font-extrabold uppercase tracking-[0.05em] text-ink-muted"
+                  className="text-xs font-bold uppercase tracking-[0.08em] text-slate-500"
                 >
                   {group.label}
                 </h2>
-                <span className="rounded-full border border-line-card bg-surface px-2 py-0.5 text-[10px] font-extrabold">
+                <span className="rounded-full border border-line-card bg-surface px-2 py-0.5 text-[11px] font-bold text-slate-600">
                   {group.items.length}
                 </span>
               </div>

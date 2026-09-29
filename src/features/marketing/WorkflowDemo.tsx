@@ -1,223 +1,578 @@
-import { useState } from "react";
-import { useCursorTilt } from "@/lib/useCursorTilt";
-import { Link2, Play, Send, Check, Wallet } from "lucide-react";
+import { useState, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
+import {
+  ShieldCheck,
+  RotateCcw,
+  Check,
+  Zap,
+  Lock,
+  Calendar,
+  Link2,
+  Banknote,
+  Copy,
+  UserCheck
+} from "lucide-react";
 import { cn } from "@/lib/cn";
-import { StatusBadge } from "@/components/brutal/StatusBadge";
-import { CategoryPill } from "@/components/brutal/Pill";
-import type { StatusTone } from "@/types/domain";
 
-/**
- * An interactive walk through what actually happens to a project.
- *
- * This renders the real StatusBadge and pill components in the real states, so a
- * visitor is looking at the product rather than at a drawing of it. Clicking a step
- * moves the panel; nothing here talks to the backend.
- *
- * The figures are marked as an example on the panel itself. There is deliberately
- * no per-discipline rate anywhere: pay reflects the individual brief, and
- * publishing category rates would let anyone work backwards to client pricing.
- */
-
-interface Stage {
-  id: string;
-  nav: string;
-  tone: StatusTone;
-  badge: string;
-  heading: string;
-  body: string;
-  action: { icon: typeof Play; label: string; enabled: boolean };
-  note?: string;
-  progress: number;
-}
-
-const STAGES: Stage[] = [
+const STEPS = [
   {
-    id: "offer",
-    nav: "An offer arrives",
-    tone: "assigned",
-    badge: "Ready to start",
-    heading: "The pay is on the brief before you commit",
-    body: "You see the discipline, deadline and exact payout. No bidding against anyone and no proposal to write. If the scope fits, accept the offer.",
-    action: { icon: Play, label: "Start work", enabled: true },
-    progress: 0,
+    stepNum: "01",
+    title: "An offer arrives",
+    subtitle: "Matched brief with fixed pay upfront"
   },
   {
-    id: "link",
-    nav: "You add your link",
-    tone: "changes",
-    badge: "Link needed",
-    heading: "You work wherever you already work",
-    body: "Paste the company workspace link where the work is happening so your supervisor can follow along. Until that is in, progress and submission stay locked.",
-    action: { icon: Send, label: "Submit for review", enabled: false },
-    note: "Nothing moves until your working link is in.",
-    progress: 0,
+    stepNum: "02",
+    title: "You add your link",
+    subtitle: "Paste Figma, GitHub or Drive link"
   },
   {
-    id: "progress",
-    nav: "You do the work",
-    tone: "progress",
-    badge: "In progress",
-    heading: "Your supervisor can see where things stand",
-    body: "Move the progress along as you go. Questions go to your supervisor in one thread, and you never deal with external counterparties.",
-    action: { icon: Send, label: "Submit for review", enabled: true },
-    progress: 60,
+    stepNum: "03",
+    title: "You do the work",
+    subtitle: "Milestones & supervisor support"
   },
   {
-    id: "review",
-    nav: "It gets reviewed",
-    tone: "review",
-    badge: "With your supervisor",
-    heading: "Someone checks it before final release",
-    body: "Your supervisor reviews the work and handles external conversations. If something needs changing they tell you exactly what.",
-    action: { icon: Check, label: "Waiting on review", enabled: false },
-    progress: 100,
+    stepNum: "04",
+    title: "It gets reviewed",
+    subtitle: "Supervisor QA & client clearance"
   },
   {
-    id: "paid",
-    nav: "You get paid",
-    tone: "approved",
-    badge: "Approved",
-    heading: "Approved means released",
-    body: "Once it is approved the payout is released to the account you registered. You are not invoicing anyone or chasing anyone.",
-    action: { icon: Wallet, label: "Payout released", enabled: true },
-    progress: 100,
-  },
+    stepNum: "05",
+    title: "You get paid",
+    subtitle: "Instant direct bank / UPI payout"
+  }
 ];
 
 export function WorkflowDemo() {
-  const [index, setIndex] = useState(0);
-  const tilt = useCursorTilt(3);
-  const stage = STAGES[index] ?? STAGES[0]!;
-  const ActionIcon = stage.action.icon;
+  const [currentStepIndex, setCurrentStepIndex] = useState<number>(0);
+  const [copiedLink, setCopiedLink] = useState<boolean>(false);
+  const [completedMilestones, setCompletedMilestones] = useState<number[]>([0, 1]);
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const currentStep = STEPS[currentStepIndex] ?? STEPS[0]!;
+
+  // Smooth Scroll Progress Binding
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    let nextStep = 0;
+    if (latest >= 0.80) nextStep = 4;
+    else if (latest >= 0.60) nextStep = 3;
+    else if (latest >= 0.40) nextStep = 2;
+    else if (latest >= 0.20) nextStep = 1;
+    else nextStep = 0;
+
+    if (nextStep !== currentStepIndex) {
+      setCurrentStepIndex(nextStep);
+    }
+  });
+
+  // Smooth scroll to a target step when clicked
+  const scrollToStep = (targetIndex: number) => {
+    if (!containerRef.current) {
+      setCurrentStepIndex(targetIndex);
+      return;
+    }
+    const container = containerRef.current;
+    const rect = container.getBoundingClientRect();
+    const scrollTop = window.scrollY + rect.top;
+    const scrollableDistance = container.offsetHeight - window.innerHeight;
+    
+    const stepCenterRatio = (targetIndex + 0.5) / STEPS.length;
+    const targetScrollY = scrollTop + stepCenterRatio * Math.max(0, scrollableDistance);
+
+    window.scrollTo({
+      top: targetScrollY,
+      behavior: "smooth"
+    });
+    setCurrentStepIndex(targetIndex);
+  };
+
+  const toggleMilestone = (idx: number) => {
+    setCompletedMilestones((prev) =>
+      prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
+    );
+  };
+
+  const handleCopyProjectId = () => {
+    navigator.clipboard?.writeText("DL-9482");
+    setCopiedLink(true);
+    setTimeout(() => setCopiedLink(false), 2000);
+  };
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-start">
-      <div>
-        <h2 id="walkthrough" className="text-3xl font-extrabold tracking-[-0.04em] sm:text-4xl">
-          What a project actually looks like
-        </h2>
-        <p className="mt-3 max-w-md text-md text-ink-2">
-          Click through it. This is the real interface, not a mockup of one.
-        </p>
+    <div ref={containerRef} className="relative h-[360vh] w-full">
+      {/* Sticky higher up with stable layout */}
+      <div className="sticky top-6 md:top-8 z-10 w-full min-h-[calc(100vh-3rem)] flex flex-col justify-center py-2 sm:py-4">
+        
+        {/* Section Header */}
+        <div className="pb-4 border-b border-line-card/80">
+          <h2 id="walkthrough" className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#0A1A44] font-display">
+            What a project <span className="bg-gradient-to-r from-primary via-blue-600 to-indigo-600 bg-clip-text text-transparent">actually looks like</span>
+          </h2>
+          <p className="mt-1.5 text-xs sm:text-sm text-ink-2 font-medium">
+            Scroll to follow a project from assigned offer to instant bank payout.
+          </p>
+        </div>
 
-        <ol className="mt-8 space-y-2" role="tablist" aria-label="Project stages">
-          {STAGES.map((entry, entryIndex) => {
-            const active = entryIndex === index;
-            return (
-              <li key={entry.id}>
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={active}
-                  aria-controls="workflow-panel"
-                  onClick={() => setIndex(entryIndex)}
-                  className={cn(
-                    "flex w-full items-center gap-3 rounded-2xl border px-4 py-3 text-left",
-                    "transition-all duration-[180ms] ease-spring",
-                    active
-                      ? "border-primary/20 bg-surface shadow-soft-md"
-                      : "border-transparent bg-transparent hover:border-line-card hover:bg-surface/80",
-                  )}
-                >
-                  <span
+        {/* Main 2-Column Layout */}
+        <div className="mt-5 grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+          
+          {/* Left Column: 5 Clean Steps */}
+          <div className="lg:col-span-4 flex flex-col justify-between gap-2" role="tablist" aria-label="Project lifecycle steps">
+            <div className="flex flex-col gap-2">
+              {STEPS.map((step, idx) => {
+                const isActive = idx === currentStepIndex;
+                const isPassed = idx < currentStepIndex;
+
+                return (
+                  <button
+                    key={step.stepNum}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    onClick={() => scrollToStep(idx)}
                     className={cn(
-                      "flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-sm font-extrabold",
-                      active
-                        ? "border-primary/20 bg-primary-light text-primary"
-                        : "border-line-card bg-subtle text-ink-2",
+                      "group relative flex items-center gap-3 rounded-2xl p-3 sm:p-3.5 text-left transition-all duration-200 cursor-pointer border",
+                      isActive
+                        ? "bg-white border-primary/40 shadow-md ring-2 ring-primary/10"
+                        : "bg-surface/60 border-line-card/60 hover:bg-white hover:border-line-card"
                     )}
                   >
-                    {entryIndex + 1}
-                  </span>
-                  <span className="text-md font-extrabold tracking-[-0.02em]">{entry.nav}</span>
-                </button>
-              </li>
-            );
-          })}
-        </ol>
-      </div>
+                    {/* Active Left Indicator Bar */}
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeStepIndicator"
+                        className="absolute left-0 top-3 bottom-3 w-1.5 rounded-r-full bg-primary"
+                        transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                      />
+                    )}
 
-      {/* The live panel. Same components the app uses. */}
-      <div
-        id="workflow-panel"
-        role="tabpanel"
-        aria-live="polite"
-        ref={tilt.ref}
-        onPointerMove={tilt.onPointerMove}
-        onPointerLeave={tilt.onPointerLeave}
-        className="cursor-tilt rounded-[2rem] border border-line-card bg-surface p-6 shadow-soft-lg"
-      >
-        <div className="flex flex-wrap items-center gap-2">
-          <CategoryPill>Writing and content</CategoryPill>
-          <StatusBadge tone={stage.tone} label={stage.badge} />
+                    {/* Step Number Circle */}
+                    <div
+                      className={cn(
+                        "flex h-7 w-7 shrink-0 items-center justify-center rounded-xl text-xs font-black transition-all",
+                        isActive
+                          ? "bg-primary text-white shadow-xs"
+                          : isPassed
+                          ? "bg-emerald-100 text-emerald-700 border border-emerald-300"
+                          : "bg-surface-2 text-ink-muted border border-line-card group-hover:text-ink"
+                      )}
+                    >
+                      {isPassed ? <Check className="h-3.5 w-3.5 stroke-[3]" /> : step.stepNum}
+                    </div>
+
+                    {/* Text */}
+                    <div className="flex-1 min-w-0">
+                      <h3 className={cn("text-xs sm:text-sm font-extrabold tracking-tight", isActive ? "text-primary" : "text-[#0A1A44]")}>
+                        {step.title}
+                      </h3>
+                      <p className="text-[11px] text-ink-muted font-medium truncate">
+                        {step.subtitle}
+                      </p>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Simple Bottom Protected Note */}
+            <div className="rounded-xl border border-line-card bg-surface-2/60 p-2.5 flex items-center gap-2.5">
+              <ShieldCheck className="h-4 w-4 text-blue-600 shrink-0" />
+              <p className="text-[11px] text-ink-2 font-medium">
+                Supervisor protects your scope & guarantees payout.
+              </p>
+            </div>
+          </div>
+
+          {/* Right Column: Live Specialist Workbench (Consistent Fixed Height) */}
+          <div className="lg:col-span-8">
+            <div className="rounded-2xl sm:rounded-3xl border border-line-card bg-white shadow-xl shadow-slate-200/50 overflow-hidden flex flex-col h-full">
+              
+              {/* Window Header */}
+              <div className="bg-[#0A1A44] px-4 py-2.5 sm:px-5 flex items-center justify-between text-white border-b border-white/10 shrink-0">
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-1.5">
+                    <span className="h-2.5 w-2.5 rounded-full bg-red-400/80 inline-block"></span>
+                    <span className="h-2.5 w-2.5 rounded-full bg-amber-400/80 inline-block"></span>
+                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80 inline-block"></span>
+                  </div>
+                  
+                  <div className="h-3.5 w-px bg-white/20 mx-0.5" />
+                  
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] font-mono font-bold text-cyan-300 bg-white/10 px-2 py-0.5 rounded border border-white/10 flex items-center gap-1.5">
+                      <span>#DL-9482</span>
+                      <button
+                        type="button"
+                        onClick={handleCopyProjectId}
+                        className="text-white/60 hover:text-white transition-colors cursor-pointer"
+                        title="Copy ID"
+                      >
+                        {copiedLink ? <Check className="h-3 w-3 text-emerald-400" /> : <Copy className="h-3 w-3" />}
+                      </button>
+                    </span>
+                    <span className="text-xs text-white/70 font-medium hidden sm:inline">
+                      UI/UX Design
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-1.5 bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 px-2.5 py-0.5 rounded-full text-[11px] font-bold">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>Supervisor Online</span>
+                </div>
+              </div>
+
+              {/* Window Content Body with Unified Fixed Height */}
+              <div className="p-5 sm:p-6 flex flex-col justify-between h-[390px] overflow-hidden">
+                
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentStepIndex}
+                    initial={{ opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    transition={{ duration: 0.15, ease: "easeOut" }}
+                    className="flex-1 flex flex-col justify-between"
+                  >
+                    
+                    {/* STEP 1: AN OFFER ARRIVES */}
+                    {currentStepIndex === 0 && (
+                      <div className="flex flex-col justify-between h-full">
+                        {/* Top Header */}
+                        <div className="flex items-center justify-between bg-blue-50 border border-blue-200/80 rounded-xl px-3.5 py-2 text-xs text-blue-900 font-bold">
+                          <span className="flex items-center gap-1.5">
+                            <Zap className="h-3.5 w-3.5 text-blue-600 fill-blue-600" />
+                            Direct Assigned Offer • No Proposal Needed
+                          </span>
+                          <span className="text-blue-700 font-mono text-[11px] bg-blue-100 px-2 py-0.5 rounded">
+                            Fixed Budget
+                          </span>
+                        </div>
+
+                        {/* Middle Content */}
+                        <div className="rounded-2xl border border-line-card bg-surface-2/60 p-3.5 my-auto">
+                          <div className="flex items-center justify-between gap-3 pb-2.5 border-b border-line-card/60">
+                            <div>
+                              <span className="text-[10px] font-extrabold uppercase tracking-wider text-primary">
+                                Project Brief
+                              </span>
+                              <h4 className="text-base font-extrabold text-[#0A1A44]">
+                                Fintech Mobile App UI & Design System
+                              </h4>
+                            </div>
+                            <div className="text-right">
+                              <span className="text-2xs uppercase text-ink-muted font-bold block">Payout</span>
+                              <span className="text-2xl font-black text-emerald-600 font-mono">₹18,500</span>
+                            </div>
+                          </div>
+
+                          <div className="mt-2.5 space-y-1.5 text-xs">
+                            <div className="flex items-center gap-2 text-ink">
+                              <Check className="h-3.5 w-3.5 text-primary shrink-0" />
+                              <span>8 interactive mobile screens in Figma</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-ink">
+                              <Check className="h-3.5 w-3.5 text-primary shrink-0" />
+                              <span>Design tokens (Typography, Colors & Spacing)</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-ink">
+                              <Calendar className="h-3.5 w-3.5 text-amber-500 shrink-0" />
+                              <span>Delivery Deadline: 4 Days</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Bottom Note */}
+                        <div className="rounded-xl bg-amber-50 border border-amber-200/80 p-2.5 text-xs flex items-center gap-2.5">
+                          <div className="h-6 w-6 rounded-full bg-amber-200 text-amber-900 font-bold flex items-center justify-center text-[10px] shrink-0">
+                            AM
+                          </div>
+                          <p className="text-amber-800 text-[11px] leading-tight">
+                            <span className="font-bold text-amber-900">Supervisor: </span>
+                            Client scope is validated and payout is pre-funded in pool.
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* STEP 2: YOU ADD YOUR LINK */}
+                    {currentStepIndex === 1 && (
+                      <div className="flex flex-col justify-between h-full">
+                        {/* Top Header */}
+                        <div>
+                          <span className="text-[10px] font-extrabold uppercase tracking-wider text-primary">
+                            Step 2: Workspace
+                          </span>
+                          <h4 className="text-base font-extrabold text-[#0A1A44]">
+                            Connect your working file
+                          </h4>
+                        </div>
+
+                        {/* Middle Content */}
+                        <div className="rounded-2xl border border-line-card bg-surface-2/60 p-3.5 my-auto space-y-2.5">
+                          <div className="flex items-center rounded-xl border-2 border-primary/40 bg-white p-2 shadow-xs">
+                            <Link2 className="h-4 w-4 text-primary ml-1 shrink-0" />
+                            <span className="w-full bg-transparent px-2.5 text-xs font-mono text-ink">
+                              https://figma.com/file/dl-9482/fintech-app-system
+                            </span>
+                            <span className="rounded-lg bg-emerald-50 text-emerald-700 px-2 py-0.5 text-[10px] font-bold border border-emerald-200 shrink-0">
+                              ✓ Connected
+                            </span>
+                          </div>
+
+                          <div className="flex items-center gap-2 text-2xs text-ink-muted font-medium">
+                            <span>Compatible tools:</span>
+                            <span className="rounded bg-white px-2 py-0.5 border border-line-card text-ink">Figma</span>
+                            <span className="rounded bg-white px-2 py-0.5 border border-line-card text-ink">GitHub</span>
+                            <span className="rounded bg-white px-2 py-0.5 border border-line-card text-ink">Notion</span>
+                            <span className="rounded bg-white px-2 py-0.5 border border-line-card text-ink">Drive</span>
+                          </div>
+                        </div>
+
+                        {/* Bottom Note */}
+                        <div className="grid grid-cols-2 gap-2.5">
+                          <div className="rounded-xl border border-line-card bg-white p-2.5 flex items-center gap-2">
+                            <Lock className="h-3.5 w-3.5 text-blue-600 shrink-0" />
+                            <span className="text-[11px] text-ink font-medium">Private Identity Protected</span>
+                          </div>
+                          <div className="rounded-xl border border-line-card bg-white p-2.5 flex items-center gap-2">
+                            <UserCheck className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                            <span className="text-[11px] text-ink font-medium">Supervisor Sync Ready</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* STEP 3: YOU DO THE WORK */}
+                    {currentStepIndex === 2 && (
+                      <div className="flex flex-col justify-between h-full">
+                        {/* Top Header */}
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <span className="text-[10px] font-extrabold uppercase tracking-wider text-primary">
+                              Step 3: Execution
+                            </span>
+                            <h4 className="text-base font-extrabold text-[#0A1A44]">
+                              Check off milestones as you build
+                            </h4>
+                          </div>
+                          <span className="rounded-full bg-primary/10 border border-primary/20 px-2.5 py-0.5 text-xs font-mono font-bold text-primary">
+                            {Math.round((completedMilestones.length / 3) * 100)}% Done
+                          </span>
+                        </div>
+
+                        {/* Middle Content */}
+                        <div className="rounded-2xl border border-line-card bg-surface-2/60 p-2.5 my-auto space-y-1.5">
+                          {[
+                            "Color Palette & Typography Tokens",
+                            "8 High-Fidelity UI Screens",
+                            "Interactive Prototype & Export Assets"
+                          ].map((milestone, idx) => {
+                            const isDone = completedMilestones.includes(idx);
+                            return (
+                              <button
+                                key={idx}
+                                type="button"
+                                onClick={() => toggleMilestone(idx)}
+                                className={cn(
+                                  "w-full flex items-center justify-between p-2 rounded-xl border text-left text-xs transition-all cursor-pointer",
+                                  isDone
+                                    ? "bg-white border-emerald-300 text-ink shadow-xs"
+                                    : "bg-white/70 border-line-card text-ink-2 hover:bg-white"
+                                )}
+                              >
+                                <div className="flex items-center gap-2">
+                                  <div
+                                    className={cn(
+                                      "h-3.5 w-3.5 rounded flex items-center justify-center border transition-colors",
+                                      isDone
+                                        ? "bg-emerald-500 border-emerald-600 text-white"
+                                        : "bg-surface-2 border-line-card text-transparent"
+                                    )}
+                                  >
+                                    <Check className="h-2.5 w-2.5 stroke-[3]" />
+                                  </div>
+                                  <span className={cn("font-medium", isDone && "line-through text-ink-muted")}>
+                                    {milestone}
+                                  </span>
+                                </div>
+                                <span className="text-[10px] font-bold text-ink-muted uppercase">
+                                  {isDone ? "Done" : "Mark done"}
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
+
+                        {/* Bottom Note */}
+                        <div className="rounded-xl border border-blue-200 bg-blue-50/80 p-2.5 text-xs flex items-center gap-2">
+                          <div className="h-5 w-5 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-[10px] shrink-0">
+                            AM
+                          </div>
+                          <p className="text-blue-900 text-[11px] leading-tight">
+                            <span className="font-bold">Aarav (Supervisor): </span>
+                            Wireframes look great! Keep 44px tap targets on checkout actions.
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* STEP 4: IT GETS REVIEWED */}
+                    {currentStepIndex === 3 && (
+                      <div className="flex flex-col justify-between h-full">
+                        {/* Top Header */}
+                        <div>
+                          <span className="text-[10px] font-extrabold uppercase tracking-wider text-primary">
+                            Step 4: Quality Gate
+                          </span>
+                          <h4 className="text-base font-extrabold text-[#0A1A44]">
+                            Supervisor QA & Client Clearance
+                          </h4>
+                        </div>
+
+                        {/* Middle Content */}
+                        <div className="rounded-2xl border border-line-card bg-surface-2/60 p-3.5 my-auto space-y-2">
+                          <div className="flex items-center gap-2.5 text-xs text-emerald-950 font-medium bg-white p-2.5 rounded-xl border border-emerald-200">
+                            <div className="h-4 w-4 rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0">
+                              <Check className="h-2.5 w-2.5 stroke-[3]" />
+                            </div>
+                            <span>Deliverables matched to locked brief scope</span>
+                          </div>
+
+                          <div className="flex items-center gap-2.5 text-xs text-emerald-950 font-medium bg-white p-2.5 rounded-xl border border-emerald-200">
+                            <div className="h-4 w-4 rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0">
+                              <Check className="h-2.5 w-2.5 stroke-[3]" />
+                            </div>
+                            <span>Supervisor handles client sign-off (Zero client friction)</span>
+                          </div>
+                        </div>
+
+                        {/* Bottom Note */}
+                        <div className="rounded-xl border border-slate-200 bg-slate-900 p-2.5 text-white flex items-center justify-between">
+                          <div>
+                            <span className="text-xs font-bold block">Supervisor Sign-Off Complete</span>
+                            <span className="text-[10px] text-white/70">Approved by Aarav Mehta</span>
+                          </div>
+                          <span className="text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 px-2 py-0.5 rounded">
+                            APPROVED
+                          </span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* STEP 5: YOU GET PAID */}
+                    {currentStepIndex === 4 && (
+                      <div className="flex flex-col justify-between h-full text-center">
+                        {/* Top Badge */}
+                        <div>
+                          <span className="text-xs font-black uppercase text-emerald-700 bg-emerald-100 border border-emerald-300 px-2.5 py-0.5 rounded-full inline-block">
+                            ⚡ Instant Bank Transfer Released
+                          </span>
+                        </div>
+
+                        {/* Middle Content */}
+                        <div className="rounded-2xl border-2 border-emerald-400/50 bg-emerald-50/40 p-3.5 my-auto">
+                          <div className="flex items-center justify-center gap-2">
+                            <Banknote className="h-5 w-5 text-emerald-600" />
+                            <span className="text-2xl sm:text-3xl font-black text-[#0A1A44] font-mono">
+                              ₹18,500.00
+                            </span>
+                          </div>
+                          <span className="text-[11px] font-bold text-emerald-700 block mt-1">
+                            Credited via UPI / IMPS • 0% Platform Cut
+                          </span>
+
+                          <div className="mt-2.5 rounded-xl border border-line-card bg-white p-2.5 text-xs space-y-1 text-left">
+                            <div className="flex justify-between text-ink-2 text-[11px]">
+                              <span>Agreed Brief Pay:</span>
+                              <span className="font-mono font-bold text-ink">₹18,500</span>
+                            </div>
+                            <div className="flex justify-between text-emerald-600 font-medium text-[11px]">
+                              <span>Dolancer Platform Fee:</span>
+                              <span className="font-mono font-bold">₹0.00 (FREE)</span>
+                            </div>
+                            <div className="pt-1 border-t border-line-card flex justify-between font-extrabold text-xs text-[#0A1A44]">
+                              <span>Net Credited to Bank:</span>
+                              <span className="font-mono text-emerald-600 font-black">₹18,500</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Bottom Action */}
+                        <div>
+                          <button
+                            type="button"
+                            onClick={() => scrollToStep(0)}
+                            className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:text-primary-hover transition-colors cursor-pointer"
+                          >
+                            <RotateCcw className="h-3 w-3" />
+                            <span>Replay walkthrough from Step 1</span>
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
+                  </motion.div>
+                </AnimatePresence>
+
+                {/* Bottom Action Footer */}
+                <div className="pt-3 border-t border-line-card flex items-center justify-between gap-3 shrink-0">
+                  <div className="text-xs text-ink-muted font-medium">
+                    <span className="font-bold text-ink">Step {currentStepIndex + 1} of 5</span>
+                    <span className="mx-1.5">•</span>
+                    <span>{currentStep.title}</span>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    {currentStepIndex > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => scrollToStep(currentStepIndex - 1)}
+                        className="rounded-xl border border-line-card bg-surface-2 px-3 py-1.5 text-xs font-bold text-ink hover:bg-surface transition-all cursor-pointer"
+                      >
+                        ← Back
+                      </button>
+                    )}
+
+                    {currentStepIndex < 4 ? (
+                      <button
+                        type="button"
+                        onClick={() => scrollToStep(currentStepIndex + 1)}
+                        className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#0A1A44] hover:bg-primary px-4 py-1.5 text-xs font-bold text-white transition-all shadow-sm active:scale-95 cursor-pointer"
+                      >
+                        <span>
+                          {currentStepIndex === 0
+                            ? "Accept Brief & Attach Link →"
+                            : currentStepIndex === 1
+                              ? "Save Link & Start Work →"
+                              : currentStepIndex === 2
+                                ? "Submit for Review →"
+                                : "Release Bank Payout →"}
+                        </span>
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => scrollToStep(0)}
+                        className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 px-4 py-1.5 text-xs font-bold text-white transition-all shadow-sm active:scale-95 cursor-pointer"
+                      >
+                        <RotateCcw className="h-3 w-3" />
+                        <span>Restart</span>
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <h3 className="mt-4 text-xl font-extrabold leading-tight tracking-[-0.03em]">
-          {stage.heading}
-        </h3>
-        <p className="mt-2 text-sm leading-relaxed text-ink-2">{stage.body}</p>
-
-        <div className="mt-5 grid grid-cols-2 gap-3 rounded-2xl border border-line-card bg-surface-2 px-4 py-3">
-          <div>
-            <div className="text-2xs font-bold uppercase tracking-[0.04em] text-ink-muted">
-              You earn
-            </div>
-            <div className="text-lg font-extrabold tracking-[-0.02em]">Set on the brief</div>
-          </div>
-          <div>
-            <div className="text-2xs font-bold uppercase tracking-[0.04em] text-ink-muted">
-              Work for
-            </div>
-            <div className="text-lg font-extrabold tracking-[-0.02em]">External Counterparty</div>
-          </div>
-        </div>
-
-        {stage.id === "link" ? (
-          <div className="mt-4 flex items-center gap-2 rounded-xl border border-line-card bg-surface-2 px-3.5 py-2.5 shadow-soft-sm">
-            <Link2 className="h-3.5 w-3.5 shrink-0 text-ink-muted" aria-hidden="true" />
-            <span className="text-sm text-ink-3">https://</span>
-            <span className="ml-0.5 inline-block h-4 w-px animate-pulse bg-ink" aria-hidden="true" />
-          </div>
-        ) : null}
-
-        {stage.progress > 0 ? (
-          <div className="mt-4">
-            <div className="mb-1.5 flex items-center justify-between text-2xs font-bold uppercase tracking-[0.04em] text-ink-muted">
-              <span>Progress</span>
-              <span>{stage.progress}%</span>
-            </div>
-            <div className="h-2.5 w-full overflow-hidden rounded-full bg-subtle">
-              <div
-                className="h-full rounded-full bg-gradient-to-r from-primary to-highlight transition-[width] duration-500 ease-spring"
-                style={{ width: `${stage.progress}%` }}
-              />
-            </div>
-          </div>
-        ) : null}
-
-        <div className="mt-5">
-          <div
-            aria-hidden="true"
-            className={cn(
-              "flex items-center justify-center gap-2 rounded-full border px-5 py-3 text-sm font-bold transition-colors",
-              stage.action.enabled
-                ? "border-primary/20 bg-primary text-inverse shadow-soft-md"
-                : "border-line-card bg-muted text-ink-3 opacity-60",
-            )}
-          >
-            <ActionIcon className="h-4 w-4" />
-            {stage.action.label}
-          </div>
-          {stage.note ? (
-            <p className="mt-2 text-[11px] font-semibold leading-snug text-warning-ink">
-              {stage.note}
-            </p>
-          ) : null}
-        </div>
-
-        <p className="mt-5 border-t border-line-subtle pt-3 text-[11px] text-ink-muted">
-          An example project. Real briefs carry their own pay and deadline.
-        </p>
       </div>
     </div>
   );

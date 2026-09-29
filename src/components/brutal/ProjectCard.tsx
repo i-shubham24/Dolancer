@@ -17,15 +17,40 @@ import { CategoryPill, ProgressPill, MicroChip } from "./Pill";
  * client identity in projects_doer to render even if we wanted to, which is the
  * point: anonymity is structural, not a formatting choice.
  */
+function parseBrief(brief?: string | null, category?: string) {
+  if (!brief || !brief.trim()) {
+    return { title: `${category || "Assigned"} task`, description: "" };
+  }
+  const trimmed = brief.trim();
+  const firstNewline = trimmed.indexOf("\n");
+  if (firstNewline > 0) {
+    return {
+      title: trimmed.slice(0, firstNewline).trim(),
+      description: trimmed.slice(firstNewline + 1).trim(),
+    };
+  }
+  if (trimmed.length > 55) {
+    const periodIdx = trimmed.indexOf(".");
+    if (periodIdx > 20 && periodIdx < 75) {
+      return {
+        title: trimmed.slice(0, periodIdx).trim(),
+        description: trimmed.slice(periodIdx + 1).trim(),
+      };
+    }
+  }
+  return { title: trimmed, description: "" };
+}
+
 export function ProjectCard({ project, className }: { project: DoerProject; className?: string }) {
   const status = statusDisplay(project.status, project.workingDocUrl);
   const progress = Math.max(0, Math.min(100, project.progressPct));
+  const parsed = parseBrief(project.brief, project.category);
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -4, transition: { duration: 0.22, ease: [0.16, 1, 0.3, 1] } }}
+      whileHover={{ y: -3, transition: { duration: 0.2, ease: [0.16, 1, 0.3, 1] } }}
       whileTap={{ scale: 0.985 }}
       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       className="h-full"
@@ -35,10 +60,10 @@ export function ProjectCard({ project, className }: { project: DoerProject; clas
         onMouseEnter={preloadWorkbench}
         onFocus={preloadWorkbench}
         className={cn(
-          "group flex h-full flex-col gap-[13px] rounded-3xl border border-line-card bg-surface px-[22px] pb-[22px] pt-5",
-          "shadow-soft-md transition-[box-shadow,border-color] duration-[220ms] ease-spring",
-          "hover:border-secondary/40 hover:shadow-soft-lg",
-          "focus-visible:border-secondary/40 focus-visible:shadow-soft-lg",
+          "group flex h-full flex-col gap-3 rounded-2xl border border-line-card bg-surface p-5",
+          "shadow-soft-sm transition-all duration-200 ease-spring",
+          "hover:border-blue-300/80 hover:shadow-soft-lg",
+          "focus-visible:border-blue-500 focus-visible:shadow-soft-lg",
           className,
         )}
       >
@@ -48,20 +73,27 @@ export function ProjectCard({ project, className }: { project: DoerProject; clas
           {progress > 0 ? <ProgressPill>{progress}%</ProgressPill> : null}
         </div>
 
-        <h3 className="line-clamp-3 break-words text-lg font-extrabold leading-[1.3] tracking-[-0.025em] transition-colors group-hover:text-primary">
-          {project.brief?.trim() || `${project.category} task`}
-        </h3>
+        <div className="space-y-1">
+          <h3 className="line-clamp-2 text-base font-semibold leading-snug tracking-[-0.015em] text-slate-900 transition-colors group-hover:text-[#0A65C0]">
+            {parsed.title}
+          </h3>
+          {parsed.description ? (
+            <p className="line-clamp-2 text-xs font-normal leading-relaxed text-slate-500">
+              {parsed.description}
+            </p>
+          ) : null}
+        </div>
 
-        <div className="grid grid-cols-1 gap-3 rounded-xl border border-line-card bg-subtle px-3 py-[9px] min-[380px]:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 rounded-xl border border-line-subtle bg-slate-50/80 px-3.5 py-2.5 min-[380px]:grid-cols-2">
           <div className="min-w-0">
-            <div className="text-2xs font-bold uppercase tracking-[0.04em] text-ink-muted">Payout</div>
-            <div className="break-words text-md font-extrabold tracking-[-0.02em]">
+            <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-slate-500">Payout</div>
+            <div className="break-words text-sm font-bold tracking-tight text-slate-900 tabular-nums">
               {formatPaise(project.payoutPaise)}
             </div>
           </div>
           <div className="min-w-0">
-            <div className="text-2xs font-bold uppercase tracking-[0.04em] text-ink-muted">Due</div>
-            <div className="text-md font-extrabold tracking-[-0.02em]">
+            <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-slate-500">Due</div>
+            <div className="text-sm font-bold tracking-tight text-slate-900">
               {relativeDeadline(project.deliveryAt)}
             </div>
           </div>
@@ -69,7 +101,7 @@ export function ProjectCard({ project, className }: { project: DoerProject; clas
 
         {progress > 0 ? (
           <div
-            className="h-2 w-full overflow-hidden rounded-full bg-subtle"
+            className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100"
             role="progressbar"
             aria-valuenow={progress}
             aria-valuemin={0}
@@ -77,7 +109,7 @@ export function ProjectCard({ project, className }: { project: DoerProject; clas
             aria-label="Work progress"
           >
             <div
-              className="h-full rounded-full bg-gradient-to-r from-secondary to-highlight transition-[width] duration-300"
+              className="h-full rounded-full bg-gradient-to-r from-[#0A65C0] to-cyan-500 transition-[width] duration-300"
               style={{ width: `${progress}%` }}
             />
           </div>

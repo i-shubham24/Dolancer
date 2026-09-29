@@ -1,17 +1,12 @@
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Flame, Layers, Timer } from "lucide-react";
+import { ArrowRight, Clock, CheckCircle2 } from "lucide-react";
 import { formatPaise } from "@/lib/paise";
 import { relativeDeadline } from "@/lib/datetime";
 import { MAX_ACTIVE_PROJECTS } from "@/lib/constants";
 import type { DoerProject } from "@/types/domain";
 import { cn } from "@/lib/cn";
 
-/**
- * SpotlightHero is pure presentation over data the dashboard already loads.
- * It invents no money figure, renames no status, and links only to existing
- * routes. Safe to keep when the backend lands.
- */
 export function SpotlightHero({
   name,
   activeCount,
@@ -39,161 +34,130 @@ export function SpotlightHero({
   return (
     <motion.section
       aria-label="Today spotlight"
-      className="relative overflow-hidden rounded-[28px] border border-highlight/20 bg-gradient-to-br from-[var(--dl-purple)] via-[var(--dl-primary)] to-[var(--dl-secondary)] text-inverse shadow-soft-lg"
-      initial={reduceMotion ? false : { opacity: 0, scale: 0.985 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5, delay: 0.08 }}
+      className="relative overflow-hidden rounded-2xl border border-blue-200/90 bg-gradient-to-br from-[#D6E8FA] via-[#E0EFFD] to-[#CFE3F8] p-5 sm:p-6 shadow-soft-xs"
+      initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.35 }}
     >
-      <div className="pointer-events-none absolute -right-24 -top-28 h-72 w-72 rounded-full bg-white/15 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-32 left-1/3 h-64 w-64 rounded-full bg-primary/20 blur-3xl" />
-      <style>{`@keyframes dolancer-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }`}</style>
+      <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr] lg:items-center">
+        {/* Left column: Overview & Actions */}
+        <div className="flex flex-col justify-between">
+          <div>
+            <div className="flex items-center gap-2 text-xs font-medium text-slate-500">
+              <span>{today}</span>
+              <span className="text-slate-300">•</span>
+              <span className="inline-flex items-center gap-1 rounded-md bg-blue-100/70 px-2 py-0.5 font-semibold text-[#0A65C0]">
+                {poolCount} {poolCount === 1 ? "offer" : "offers"} ready
+              </span>
+            </div>
 
-      {/* Top meta row */}
-      <div className="relative flex flex-wrap items-center justify-between gap-2 border-b border-white/15 px-5 py-3">
-        <p className="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-white/85">
-          {today} <span className="mx-2 text-white/55">/</span> Doer mode
-        </p>
-        <div className="flex items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--dl-card-yellow)]/60 bg-[var(--dl-card-yellow)]/10 px-2.5 py-1 text-[11px] font-extrabold text-[var(--dl-card-yellow)]">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--dl-card-yellow)]" aria-hidden="true" />
-            {poolCount} assigned offers
-          </span>
-          <span
-            className={cn(
-              "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-extrabold",
-              atCap ? "border-primary/70 bg-primary/15 text-primary" : "border-white/35 bg-white/10 text-white",
-            )}
-          >
-            <Flame className="h-3 w-3" aria-hidden="true" />
-            {activeCount} of {MAX_ACTIVE_PROJECTS} slots used
-          </span>
-        </div>
-      </div>
+            <h2 className="mt-2 text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
+              {daypart}, {name}.
+            </h2>
 
-      <div className="relative grid gap-6 p-5 sm:p-7 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
-        {/* Left: greeting + actions */}
-        <div className="min-w-0">
-          <div           className="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/15 px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.08em] text-white backdrop-blur-sm">
-            Fixed pay <ArrowUpRight className="h-3 w-3" aria-hidden="true" /> No bidding
+            <p className="mt-1.5 max-w-lg text-sm text-slate-600 leading-relaxed">
+              {focus
+                ? "You have active work in progress. Review deliverables and submit your working link before the deadline."
+                : freeSlots > 0
+                ? "You have capacity to accept new assignments. Browse available offers in your pool."
+                : "All work slots are currently in use. Complete active tasks to unlock more."}
+            </p>
           </div>
-          <h2 className="mt-4 text-3xl font-extrabold leading-[1.02] tracking-[-0.035em] sm:text-4xl text-white drop-shadow-sm">
-            {daypart}, {name}.
-            <span className="mt-1 block text-white/95">
-              {focus ? "Your next deadline is waiting." : freeSlots > 0 ? "Room to take something new." : "Finish strong, then accept again."}
-            </span>
-          </h2>
-          <p className="mt-3 max-w-md text-sm font-medium leading-relaxed text-white drop-shadow-sm">
-            {unlocked
-              ? "Accept your assigned offer, add your working link, submit for supervisor review. Pay stays fixed from the start."
-              : "View your assignments. Finish verification to unlock offers and payouts."}
-          </p>
 
-          <div className="mt-5 flex flex-wrap gap-2.5">
+          <div className="mt-5 flex flex-wrap items-center gap-2.5">
             <Link
               to="/pool"
-              className="inline-flex min-h-[44px] items-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-extrabold text-[var(--dl-primary)] shadow-soft-md transition-all duration-150 hover:bg-hover"
+              className="inline-flex min-h-[38px] items-center gap-1.5 rounded-xl bg-[#0A65C0] px-4 py-2 text-sm font-semibold text-white shadow-soft-xs transition-colors hover:bg-[#0854A0]"
             >
               View assigned offers
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
             <Link
               to="/work"
-              className="inline-flex min-h-[44px] items-center gap-2 rounded-xl border border-white/25 bg-white/10 px-4 py-3 text-sm font-extrabold text-inverse transition-all duration-150 hover:bg-white/20"
+              className="inline-flex min-h-[38px] items-center gap-1.5 rounded-xl border border-blue-200/80 bg-white/90 px-4 py-2 text-sm font-medium text-slate-700 shadow-soft-2xs transition-colors hover:bg-white hover:text-slate-900"
             >
               My work
             </Link>
             <Link
               to="/training"
-              className="inline-flex min-h-[44px] items-center gap-2 rounded-xl border border-white/25 bg-white/10 px-4 py-3 text-sm font-extrabold text-inverse transition-all duration-150 hover:bg-white/20"
+              className="inline-flex min-h-[38px] items-center gap-1.5 rounded-xl border border-blue-200/80 bg-white/90 px-4 py-2 text-sm font-medium text-slate-700 shadow-soft-2xs transition-colors hover:bg-white hover:text-slate-900"
             >
               Training
             </Link>
           </div>
         </div>
 
-        {/* Right: focus card, derived from real active work only */}
-        <div className="min-w-0">
+        {/* Right column: Next task card or Status summary */}
+        <div>
           {focus ? (
             <Link
               to={`/work/${focus.id}`}
-              className="group block rounded-2xl border border-white/60 bg-surface/95 p-5 text-ink shadow-soft-lg transition-all duration-150 hover:-translate-y-1"
+              className="group block rounded-xl border border-blue-100 bg-white p-4 shadow-soft-xs transition-all duration-150 hover:border-blue-300 hover:shadow-soft-sm"
             >
-              <div className="flex items-center justify-between gap-3">
-                <span className="inline-flex items-center gap-1.5 text-[11px] font-extrabold uppercase tracking-[0.08em] text-ink-muted">
-                  <Timer className="h-3.5 w-3.5" aria-hidden="true" />
-                  Up next
+              <div className="flex items-center justify-between gap-2">
+                <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                  <Clock className="h-3.5 w-3.5 text-[#0A65C0]" aria-hidden="true" />
+                  Upcoming Deadline
                 </span>
-                <span className="rounded-full border border-[var(--dl-secondary)]/20 bg-[var(--dl-secondary-light)] px-2 py-0.5 text-[11px] font-extrabold text-[var(--dl-ink)]">
+                <span className="rounded-md border border-amber-200/80 bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-800">
                   {relativeDeadline(focus.deliveryAt)}
                 </span>
               </div>
-              <p className="mt-3 truncate text-lg font-extrabold tracking-[-0.02em]">
-                {focus.brief?.trim() || `${focus.category} task`}
+
+              <p className="mt-2 font-medium text-sm text-slate-900 line-clamp-2 leading-snug">
+                {focus.brief?.split("\n")[0]?.trim() || `${focus.category} task`}
               </p>
-              <div className="mt-2 flex min-w-0 flex-wrap items-end justify-between gap-3">
-                <div className="min-w-0">
-                  <div className="text-[11px] font-bold uppercase tracking-[0.08em] text-ink-muted">Payout before tax</div>
-                  <div className="break-words text-3xl font-extrabold tracking-[-0.03em]">{formatPaise(focus.payoutPaise)}</div>
+
+              <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-3">
+                <div>
+                  <span className="block text-[11px] font-medium text-slate-500 uppercase tracking-wider">Fixed Payout</span>
+                  <span className="text-lg font-bold text-slate-900 tabular-nums">
+                    {formatPaise(focus.payoutPaise)}
+                  </span>
                 </div>
-                <span className="inline-flex min-h-[44px] items-center gap-1 rounded-xl bg-[var(--dl-primary)] px-3 py-2 text-xs font-extrabold text-inverse transition-transform group-hover:translate-x-0.5">
-                  Open <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                <span className="inline-flex items-center gap-1 text-xs font-semibold text-[#0A65C0] group-hover:translate-x-0.5 transition-transform">
+                  Continue task <ArrowRight className="h-3.5 w-3.5" />
                 </span>
-              </div>
-              <div
-                className="mt-4 h-2 overflow-hidden rounded-full border border-line-card bg-surface-2"
-                role="progressbar"
-                aria-valuenow={focus.progressPct}
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-label="Task progress"
-              >
-                <div className="h-full rounded-full bg-primary" style={{ width: `${Math.min(100, Math.max(0, focus.progressPct))}%` }} />
               </div>
             </Link>
           ) : (
-            <div className="rounded-xl border border-dashed border-white/25 bg-white/[0.04] p-5">
-              <div className="flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.08em] text-white/85">
-                <Layers className="h-3.5 w-3.5" aria-hidden="true" />
-                No active work
+            <div className="rounded-xl border border-blue-100 bg-white p-4 shadow-soft-xs">
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 uppercase tracking-wider">
+                <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                All caught up
               </div>
-              <p className="mt-3 text-lg font-extrabold leading-snug">
-                Nothing on your plate. Offers are routed manually by your supervisor.
+              <p className="mt-1.5 text-sm text-slate-600">
+                You have no active deadlines right now. Ready for more assignments?
               </p>
               <Link
                 to={unlocked ? "/pool" : "/verification"}
-                className="mt-4 inline-flex items-center gap-2 rounded-lg border border-line-card bg-[var(--dl-card-yellow)] px-4 py-2.5 text-sm font-extrabold text-ink shadow-soft-sm transition-all hover:-translate-y-px"
+                className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-[#0A65C0] hover:underline"
               >
-                {unlocked ? "View assigned offers" : "Get verified"} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                {unlocked ? "Browse available offers" : "Complete verification"} →
               </Link>
             </div>
           )}
 
-          {/* Slot meter, mirrors CapacityRail without replacing it */}
-          <div className="mt-3 flex items-center gap-2" aria-hidden="true">
-            {Array.from({ length: MAX_ACTIVE_PROJECTS }, (_, i) => (
-              <div
-                key={i}
-                className={cn(
-                  "h-2 flex-1 rounded-full border border-white/30",
-                  i < activeCount ? (atCap ? "bg-primary" : "bg-[var(--dl-card-yellow)]") : "bg-white/10",
-                )}
-              />
-            ))}
-            <span className="ml-1 font-mono text-[11px] font-bold text-white/80">
-              {freeSlots} open
-            </span>
+          {/* Capacity strip */}
+          <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
+            <span>Capacity</span>
+            <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-1" aria-hidden="true">
+                {Array.from({ length: MAX_ACTIVE_PROJECTS }, (_, i) => (
+                  <div
+                    key={i}
+                    className={cn(
+                      "h-1.5 w-6 rounded-full transition-colors",
+                      i < activeCount ? (atCap ? "bg-amber-500" : "bg-[#0A65C0]") : "bg-blue-200/60",
+                    )}
+                  />
+                ))}
+              </div>
+              <span className="font-medium text-slate-700">
+                {activeCount}/{MAX_ACTIVE_PROJECTS} slots
+              </span>
+            </div>
           </div>
-        </div>
-      </div>
-
-      {/* Bottom marquee, static copy only */}
-      <div className="overflow-hidden border-t border-white/15 bg-black/10 py-2.5 backdrop-blur-sm" aria-hidden="true">
-        <div className="flex w-max animate-none gap-8 whitespace-nowrap font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-white/90 [animation:dolancer-marquee_28s_linear_infinite]">
-          {[0, 1].map((copy) => (
-            <span key={copy} className="flex gap-8">
-              <span>Assigned offers</span><span className="text-[var(--dl-card-yellow)]">Fixed payout</span><span className="text-white/70">Supervisor review</span><span className="text-white">Working link first</span><span className="text-white/70">3 slot cap</span><span className="text-white">No client contact</span>
-            </span>
-          ))}
         </div>
       </div>
     </motion.section>

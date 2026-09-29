@@ -114,6 +114,10 @@ export function HowItWorksPage() {
         <HeroMarquee />
       </div>
 
+      <Section labelledBy="differences" className="fresh-difference">
+        <DifferenceRail />
+      </Section>
+
       {/* Redesigned 5x Creative Interactive Four Moments Section */}
       <section className="bg-canvas py-14 lg:py-20 relative">
         <div className="fresh-container">
@@ -121,10 +125,12 @@ export function HowItWorksPage() {
         </div>
       </section>
 
-      <Section labelledBy="walkthrough" className="fresh-workflow !pt-14 !pb-12 lg:!pb-16">
-        {/* Real Product Walkthrough - what a project actually looks like, first */}
-        <div><WorkflowDemo /></div>
-      </Section>
+      {/* Real Product Walkthrough - what a project actually looks like, first */}
+      <section aria-labelledby="walkthrough" className="relative fresh-workflow !py-0 !overflow-visible">
+        <div className="fresh-container !overflow-visible">
+          <WorkflowDemo />
+        </div>
+      </section>
 
       <section aria-labelledby="payout" className="fresh-section bg-[#0b0f19] pb-20 pt-24 lg:pb-20 lg:pt-28 relative overflow-hidden">
         {/* Wavy top edge melting from the light walkthrough above into the dark */}
@@ -140,10 +146,6 @@ export function HowItWorksPage() {
           <PayoutExplainer />
         </div>
       </section>
-
-      <Section labelledBy="differences" className="fresh-difference">
-        <DifferenceRail />
-      </Section>
 
       <section className="relative fresh-steps fresh-section">
         <div className="fresh-container">

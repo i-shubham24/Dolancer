@@ -87,21 +87,21 @@ export function DashboardPage() {
 
   return (
     <motion.div
-      className="space-y-8"
+      className="space-y-7"
       initial={reduceMotion ? false : { opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, ease: "easeOut" }}
     >
-      <header className="flex flex-wrap items-start justify-between gap-4 rounded-2xl border border-line-card bg-surface p-5 shadow-soft-md transition-all duration-200 hover:shadow-soft-lg sm:p-6">
+      <header className="flex flex-wrap items-start justify-between gap-4 rounded-2xl border border-line-card bg-surface p-5 shadow-soft-sm transition-all duration-200 hover:shadow-soft-md sm:p-6">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-[-0.04em] text-ink sm:text-4xl">
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
             {profile.isLoading ? (
-              <span className="skeleton inline-block h-9 w-64 align-middle" />
+              <span className="skeleton inline-block h-8 w-60 align-middle rounded-lg" />
             ) : (
               <>Hey {firstName(profile.data?.full_name)}.</>
             )}
           </h1>
-          <p className="mt-2 text-md font-medium text-ink-2">
+          <p className="mt-1.5 text-sm text-slate-500">
             Here is where your work and your money stand today.
           </p>
         </div>
@@ -151,7 +151,7 @@ export function DashboardPage() {
         Three figures, and only three. Gross, tax and net are always shown as separate
         numbers rather than collapsed into one, so what was withheld is never implicit.
       */}
-      <section aria-labelledby="figures" className="rounded-2xl border border-line-card bg-surface p-4 shadow-soft-md transition-all duration-200 hover:shadow-soft-lg sm:p-5">
+      <section aria-labelledby="figures">
         <h2 id="figures" className="sr-only">
           Your figures
         </h2>
@@ -174,9 +174,9 @@ export function DashboardPage() {
               tone="secondary"
               label="Tax withheld"
               value={formatPaise(earnings.data?.taxWithheldPaise ?? 0)}
-              subtext={`Cumulative TDS and GST. Gross released ${formatPaise(
+              subtext={`Cumulative TDS & GST. Gross: ${formatPaise(
                 earnings.data?.grossPaise ?? 0,
-              )}.`}
+              )}`}
               icon={<Receipt />}
               loading={earnings.isLoading}
             />
@@ -186,10 +186,10 @@ export function DashboardPage() {
               value={`${activeCount} of ${MAX_ACTIVE_PROJECTS}`}
               subtext={
                 activeCount >= MAX_ACTIVE_PROJECTS
-                  ? "At your limit. Finish one to take on more."
+                  ? "At maximum capacity. Finish a task to accept more."
                   : `${MAX_ACTIVE_PROJECTS - activeCount} slot${
                       MAX_ACTIVE_PROJECTS - activeCount === 1 ? "" : "s"
-                    } open for new work.`
+                    } available for new work.`
               }
               icon={<Briefcase />}
               loading={projects.isLoading}
@@ -198,14 +198,14 @@ export function DashboardPage() {
         )}
       </section>
 
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px] 2xl:grid-cols-[minmax(0,1fr)_360px]">
         <div className="min-w-0 space-y-7">
           {linkNeeded > 0 ? (
-            <div className="flex flex-wrap items-center gap-3 rounded-xl border border-line-card bg-warning-bg px-4 py-3 shadow-soft-sm">
-              <span className="rounded-full border border-line-card bg-surface px-2.5 py-0.5 text-2xs font-extrabold">
+            <div className="flex flex-wrap items-center gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 shadow-soft-xs">
+              <span className="rounded-full border border-amber-300 bg-white px-2.5 py-0.5 text-xs font-bold text-amber-900">
                 {linkNeeded} waiting
               </span>
-              <p className="min-w-0 flex-1 text-sm font-bold">
+              <p className="min-w-0 flex-1 text-sm font-semibold text-amber-950">
                 {linkNeeded === 1
                   ? "One project is frozen until you add its working link."
                   : `${linkNeeded} projects are frozen until you add their working links.`}
@@ -218,7 +218,7 @@ export function DashboardPage() {
 
           <section aria-labelledby="active-work" className="space-y-4">
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <h2 id="active-work" className="text-2xl font-extrabold tracking-[-0.03em]">
+              <h2 id="active-work" className="text-xl font-bold tracking-tight text-slate-900">
                 Your work
               </h2>
               {activeCount > 0 ? (
@@ -292,63 +292,63 @@ export function DashboardPage() {
         <CapacityRail activeCount={activeCount} gate={gate.data} />
       </div>
 
-      <section aria-labelledby="assigned-offers" className="space-y-4 rounded-2xl border border-line-card bg-surface p-5 shadow-soft-md transition-all duration-200 hover:shadow-soft-lg sm:p-6">
-            <div className="flex items-center justify-between gap-4">
-              <h2 id="assigned-offers" className="text-2xl font-extrabold tracking-[-0.03em]">
-                Assigned offers
-              </h2>
-              <Button asChild variant="ghost" size="sm">
-                <Link to="/pool">
-                  View all offers
-                  <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-                </Link>
-              </Button>
-            </div>
+      <section aria-labelledby="assigned-offers" className="space-y-4 rounded-2xl border border-line-card bg-surface p-5 shadow-soft-sm transition-all duration-200 hover:shadow-soft-md sm:p-6">
+        <div className="flex items-center justify-between gap-4">
+          <h2 id="assigned-offers" className="text-xl font-bold tracking-tight text-slate-900">
+            Assigned offers
+          </h2>
+          <Button asChild variant="ghost" size="sm">
+            <Link to="/pool">
+              View all offers
+              <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+            </Link>
+          </Button>
+        </div>
 
-            {pool.isLoading ? (
-              <div className="grid gap-3">
-                <LoadingAnnounce label="Loading assigned offers" />
-                <SkeletonCard />
-              </div>
-            ) : pool.isError || !pool.data?.length ? (
-              <EmptyState
-                icon={<Layers className="h-6 w-6" aria-hidden="true" />}
-                title="Nothing matching right now"
-                description="Offers appear here when a supervisor routes a project that fits your verified disciplines and capacity."
-              />
-            ) : (
-              <div className="grid gap-3 md:grid-cols-2">
-                {pool.data.map((offer) => (
-                  <Link
-                    key={offer.id}
-                    to="/pool"
-                    onMouseEnter={() => preloadRoute("/pool")}
-                    onFocus={() => preloadRoute("/pool")}
-                  >
-                    <MotionCard
-                      hoverable
-                      className="flex h-full flex-wrap items-center gap-4 transition-colors hover:border-highlight/35"
-                    >
-                      <div className="min-w-0 flex-1 space-y-2">
-                        <CategoryPill>{offer.category}</CategoryPill>
-                        <CardTitle className="line-clamp-2" title={offer.brief?.trim() || `${offer.category} offer`}>
-                          {offer.brief?.trim() || `${offer.category} offer`}
-                        </CardTitle>
-                        <p className="text-xs text-ink-muted">{relativeDeadline(offer.deliveryAt)}</p>
-                      </div>
-                      <div className="shrink-0 text-right">
-                        <div className="text-2xs font-bold uppercase tracking-[0.05em] text-ink-muted">
-                          Payout
-                        </div>
-                        <div className="text-2xl font-extrabold tracking-[-0.03em]">
-                          {formatPaise(offer.payoutPaise)}
-                        </div>
-                      </div>
-                    </MotionCard>
-                  </Link>
-                ))}
-              </div>
-            )}
+        {pool.isLoading ? (
+          <div className="grid gap-3">
+            <LoadingAnnounce label="Loading assigned offers" />
+            <SkeletonCard />
+          </div>
+        ) : pool.isError || !pool.data?.length ? (
+          <EmptyState
+            icon={<Layers className="h-6 w-6" aria-hidden="true" />}
+            title="Nothing matching right now"
+            description="Offers appear here when a supervisor routes a project that fits your verified disciplines and capacity."
+          />
+        ) : (
+          <div className="grid gap-3 md:grid-cols-2">
+            {pool.data.map((offer) => (
+              <Link
+                key={offer.id}
+                to="/pool"
+                onMouseEnter={() => preloadRoute("/pool")}
+                onFocus={() => preloadRoute("/pool")}
+              >
+                <MotionCard
+                  hoverable
+                  className="flex h-full flex-wrap items-center gap-4 transition-colors hover:border-blue-300/80"
+                >
+                  <div className="min-w-0 flex-1 space-y-1.5">
+                    <CategoryPill>{offer.category}</CategoryPill>
+                    <CardTitle className="line-clamp-2 text-[15px] font-semibold text-slate-900" title={offer.brief?.trim() || `${offer.category} offer`}>
+                      {offer.brief?.trim() || `${offer.category} offer`}
+                    </CardTitle>
+                    <p className="text-xs text-slate-500">{relativeDeadline(offer.deliveryAt)}</p>
+                  </div>
+                  <div className="shrink-0 text-right">
+                    <div className="text-[11px] font-semibold uppercase tracking-[0.06em] text-slate-500">
+                      Payout
+                    </div>
+                    <div className="text-xl font-bold tracking-tight text-slate-900 tabular-nums">
+                      {formatPaise(offer.payoutPaise)}
+                    </div>
+                  </div>
+                </MotionCard>
+              </Link>
+            ))}
+          </div>
+        )}
       </section>
     </motion.div>
   );

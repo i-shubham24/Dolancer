@@ -6,8 +6,8 @@ export function CategoryPill({ children, className }: { children: React.ReactNod
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full border border-line-card bg-subtle px-3 py-1",
-        "text-2xs font-bold uppercase tracking-[0.04em]",
+        "inline-flex items-center rounded-full border border-line-card bg-slate-100/80 px-2.5 py-0.5",
+        "text-[11px] font-semibold uppercase tracking-[0.05em] text-slate-600",
         className,
       )}
     >
@@ -21,8 +21,8 @@ export function ProgressPill({ children, className }: { children: React.ReactNod
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full border border-transparent bg-[color-mix(in_srgb,var(--dl-card-yellow)_25%,white)] px-2.5 py-[3px]",
-        "text-[11.5px] font-bold text-ink",
+        "inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-2.5 py-0.5",
+        "text-[11px] font-bold text-[#0A65C0]",
         className,
       )}
     >
@@ -36,8 +36,8 @@ export function MicroChip({ children, className }: { children: React.ReactNode; 
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full border border-line-card bg-subtle px-2.5 py-[3px]",
-        "text-[11.5px] font-semibold text-ink-2",
+        "inline-flex items-center rounded-full border border-line-card bg-slate-50 px-2.5 py-0.5",
+        "text-[11px] font-medium text-slate-500",
         className,
       )}
     >
