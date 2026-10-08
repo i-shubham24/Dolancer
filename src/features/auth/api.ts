@@ -85,3 +85,53 @@ export async function updateProfileBasics(input: {
     .eq("id", id);
   if (error) throw new Error(error.message);
 }
+
+/**
+ * Multi-Factor Authentication (MFA / TOTP)
+ * Enrolls a new authenticator app (Google Authenticator, Authy, 1Password)
+ */
+export async function enrollMfaTotp(): Promise<{
+  id: string;
+  type: "totp";
+  totp: { qr_code: string; secret: string; uri: string };
+}> {
+  if (isDemo()) {
+    return {
+      id: "demo-mfa-factor",
+      type: "totp",
+      totp: {
+        qr_code: "data:image/svg+xml;base64,demo",
+        secret: "DEMOAUTHENTICATORSECRET123",
+        uri: "otpauth://totp/Dolancer:demo@example.com?secret=DEMOAUTHENTICATORSECRET123&issuer=Dolancer",
+      },
+    };
+  }
+  const { data, error } = await supabase.auth.mfa.enroll({ factorType: "totp" });
+  if (error) throw new Error(error.message);
+  return data as { id: string; type: "totp"; totp: { qr_code: string; secret: string; uri: string } };
+}
+
+export async function verifyMfaChallenge(factorId: string, code: string): Promise<void> {
+  if (isDemo()) return;
+  const { data: challengeData, error: challengeError } = await supabase.auth.mfa.challenge({ factorId });
+  if (challengeError) throw new Error(challengeError.message);
+  const { error: verifyError } = await supabase.auth.mfa.verify({
+    factorId,
+    challengeId: challengeData.id,
+    code,
+  });
+  if (verifyError) throw new Error(verifyError.message);
+}
+
+export async function unenrollMfa(factorId: string): Promise<void> {
+  if (isDemo()) return;
+  const { error } = await supabase.auth.mfa.unenroll({ factorId });
+  if (error) throw new Error(error.message);
+}
+
+export async function listMfaFactors(): Promise<Array<{ id: string; status: string; factor_type: string }>> {
+  if (isDemo()) return [];
+  const { data, error } = await supabase.auth.mfa.listFactors();
+  if (error) throw new Error(error.message);
+  return data.all;
+}

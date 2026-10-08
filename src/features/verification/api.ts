@@ -21,9 +21,17 @@ const EXTENSIONS_FOR_TYPE: Record<string, string[]> = {
  * .exe renamed to image/jpeg fails here instead of after Submit. Storage RLS
  * and the payout-first ordering remain the real controls.
  */
+const DANGEROUS_EXTENSIONS = /\.(exe|sh|bat|cmd|ps1|php|phtml|py|rb|pl|cgi|asp|aspx|jsp|jar|vbs|js|mjs|cjs|wasm|svg|html|htm)$/i;
+
 export function validateIdentityFile(file: File): string | null {
   if (file.size === 0) return "That file is empty.";
   if (file.size > MAX_UPLOAD_BYTES) return "Files must be under 10MB.";
+  if (file.name.includes("/") || file.name.includes("\\") || file.name.includes("..")) {
+    return "Invalid filename characters.";
+  }
+  if (DANGEROUS_EXTENSIONS.test(file.name)) {
+    return "Executable or script files are not allowed.";
+  }
   const raw = file.name.split(".").pop()?.toLowerCase() ?? "";
   const allowed = EXTENSIONS_FOR_TYPE[file.type];
   if (!allowed || !allowed.includes(raw)) return "Upload a JPG, PNG, WEBP or PDF.";

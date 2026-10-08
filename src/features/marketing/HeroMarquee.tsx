@@ -17,7 +17,7 @@ interface MarqueeItem {
 const MARQUEE_ITEMS: MarqueeItem[] = [
   {
     icon: Lock,
-    title: "100% Escrow Protected",
+    title: "100% Pre-Funded & Safe",
     tag: "Guaranteed Pay",
   },
   {

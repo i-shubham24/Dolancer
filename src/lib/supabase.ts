@@ -9,6 +9,26 @@ import { env } from "./env";
  * doer may see; the SPA only renders the result. There is no privileged path here
  * and there must never be one.
  */
+/**
+ * In-browser session-scoped storage: stores auth tokens strictly in sessionStorage
+ * rather than persistent localStorage. Tokens are automatically destroyed when
+ * the browser/tab is closed, mitigating persistent token exfiltration via XSS.
+ * Any legacy auth tokens in localStorage are actively purged on startup.
+ */
+function getSecureStorage(): Storage | undefined {
+  if (typeof window === "undefined") return undefined;
+  try {
+    window.localStorage.removeItem("dolancer.auth");
+  } catch {
+    // Ignore restricted storage contexts
+  }
+  try {
+    return window.sessionStorage;
+  } catch {
+    return undefined;
+  }
+}
+
 function createAppClient() {
   return createClient(env.supabaseUrl, env.supabasePublishableKey, {
     auth: {
@@ -16,7 +36,8 @@ function createAppClient() {
       autoRefreshToken: true,
       detectSessionInUrl: true,
       flowType: "pkce",
-      storageKey: "dolancer.auth",
+      storageKey: "dolancer.auth.session",
+      storage: getSecureStorage(),
     },
   });
 }

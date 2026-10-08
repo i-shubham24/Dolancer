@@ -48,6 +48,40 @@ export const supportTicketSchema = z.object({
 });
 
 /**
+ * Safe external URL validation to prevent SSRF and protocol smuggling.
+ * Ensures the URL is https only, max 2048 chars, and blocks local/private IP ranges.
+ */
+export const safeHttpsUrlSchema = z
+  .string()
+  .max(2048, "URL is too long (max 2048 characters).")
+  .refine((val) => {
+    const trimmed = val?.trim();
+    if (!trimmed) return true;
+    try {
+      const parsed = new URL(trimmed);
+      if (parsed.protocol !== "https:") return false;
+      const host = parsed.hostname.toLowerCase();
+      if (
+        host === "localhost" ||
+        host === "127.0.0.1" ||
+        host === "::1" ||
+        host === "0.0.0.0" ||
+        host === "169.254.169.254" ||
+        host.endsWith(".local") ||
+        host.endsWith(".internal") ||
+        /^10\./.test(host) ||
+        /^192\.168\./.test(host) ||
+        /^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(host)
+      ) {
+        return false;
+      }
+      return true;
+    } catch {
+      return false;
+    }
+  }, "Please enter a valid, public https:// URL.");
+
+/**
  * Helper to safely parse Zod schemas and throw a standard Error with the first issue message.
  * This integrates cleanly with React Query mutations.
  */

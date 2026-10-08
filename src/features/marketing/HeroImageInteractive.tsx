@@ -22,7 +22,7 @@ export function HeroImageInteractive() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
       </div>
 
-      {/* Floating Badge 1 - Escrow Protected */}
+      {/* Floating Badge 1 - Pre-Funded Pay */}
       <motion.div
         initial={reduceMotion ? false : { opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
@@ -38,7 +38,7 @@ export function HeroImageInteractive() {
             <ShieldCheck className="h-5 w-5" />
           </div>
           <div className="flex flex-col">
-            <span className="text-sm font-bold text-ink leading-tight">Escrow Protected</span>
+            <span className="text-sm font-bold text-ink leading-tight">Pre-Funded Pay</span>
             <span className="text-xs text-ink-2 font-medium">Funds held safely</span>
           </div>
         </motion.div>

@@ -80,7 +80,7 @@ export function HeroSpectacular() {
 
         {/* Curvy arc workflow */}
         <div className="relative mt-6 sm:mt-8 mx-auto max-w-[880px]">
-          {/* Desktop curvy line — hill shape */}
+          {/* Desktop curvy line: hill shape */}
           <svg
             className="hidden sm:block absolute inset-x-0 top-2 w-full h-[160px] pointer-events-none"
             viewBox="0 0 800 160"
@@ -101,7 +101,7 @@ export function HeroSpectacular() {
             <circle cx="690" cy="120" r="4" fill="#0a65c0" opacity="0.5" />
           </svg>
 
-          {/* Mobile curvy line — vertical wave */}
+          {/* Mobile curvy line: vertical wave */}
           <svg
             className="sm:hidden absolute left-1/2 -translate-x-1/2 top-0 h-full w-[60px] pointer-events-none"
             viewBox="0 0 60 600"

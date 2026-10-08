@@ -3,6 +3,7 @@ import { callBooleanRpc, type RpcResult } from "@/lib/rpc";
 import { selectColumns } from "@/lib/select";
 import { toPaise } from "@/lib/paise";
 import { bucketStatuses } from "@/lib/status";
+import { safeHttpsUrlSchema } from "@/lib/validations";
 import { demo, demoRespond, isDemo } from "@/lib/demo-data";
 import type { ProjectStatus, ProjectsDoerRow } from "@/types/database";
 import type { DoerProject, WorkBucket } from "@/types/domain";
@@ -152,19 +153,31 @@ export async function setWorkingDoc(
   projectId: string,
   url: string,
 ): Promise<RpcResult<true>> {
+  const trimmed = url.trim();
+  if (trimmed) {
+    const parseResult = safeHttpsUrlSchema.safeParse(trimmed);
+    if (!parseResult.success) {
+      return {
+        ok: false,
+        kind: "error",
+        message: parseResult.error.errors[0]?.message || "Invalid URL",
+      };
+    }
+  }
+
   if (isDemo()) {
     return demoTransition(
       projectId,
       ["paid", "in_progress", "in_review"],
       (project) => {
-        project.workingDocUrl = url.trim() || null;
+        project.workingDocUrl = trimmed || null;
       },
       REJECTED.workingDoc,
     );
   }
   return callBooleanRpc(
     "set_working_doc",
-    { p_id: projectId, p_url: url.trim() },
+    { p_id: projectId, p_url: trimmed },
     REJECTED.workingDoc,
   );
 }

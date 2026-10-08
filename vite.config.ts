@@ -15,9 +15,10 @@ export default defineConfig({
   server: {
     host: "0.0.0.0",
     port: 3000,
-    allowedHosts: true,
+    allowedHosts: ["localhost", "127.0.0.1", ".vercel.app"],
   },
   build: {
+    sourcemap: false,
     rollupOptions: {
       output: {
         // Vendor code changes far less often than app code, so splitting it keeps

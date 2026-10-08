@@ -65,7 +65,7 @@ export function HeroCreativeVisual() {
               <div className="text-right">
                 <p className="text-sm font-extrabold text-primary">₹12,500</p>
                 <p className="text-[10px] font-bold text-emerald-600 flex items-center justify-end gap-1 mt-0.5">
-                  Escrowed
+                  Pre-funded
                 </p>
               </div>
             </div>
@@ -82,7 +82,7 @@ export function HeroCreativeVisual() {
               <div className="text-right">
                 <p className="text-sm font-extrabold text-primary">₹8,000</p>
                 <p className="text-[10px] font-bold text-emerald-600 flex items-center justify-end gap-1 mt-0.5">
-                  Escrowed
+                  Pre-funded
                 </p>
               </div>
             </div>
