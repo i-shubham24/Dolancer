@@ -110,18 +110,18 @@ export function HowItWorksPage() {
         <HeroMarquee />
       </div>
 
-      <Section labelledBy="differences" className="fresh-difference">
+      <Section labelledBy="differences" className="fresh-difference !bg-[color-mix(in_srgb,var(--color-highlight-light)_20%,#ffffff)]">
         <DifferenceRail />
       </Section>
 
       {/* Real Product Walkthrough - what a project actually looks like, first */}
-      <section aria-labelledby="walkthrough" className="relative fresh-workflow !py-0 !overflow-visible">
+      <section aria-labelledby="walkthrough" className="relative fresh-workflow !py-0 !overflow-visible !bg-[color-mix(in_srgb,var(--color-canvas)_15%,#ffffff)]">
         <div className="fresh-container !overflow-visible">
           <WorkflowDemo />
         </div>
       </section>
 
-      <section className="relative fresh-steps fresh-section">
+      <section className="relative fresh-steps fresh-section !bg-[#f8fafc]">
         <div className="fresh-container">
           <h2 id="disciplines" className="fresh-section-heading-text">
             What gets offered here
@@ -134,10 +134,10 @@ export function HowItWorksPage() {
             <CategoryTags />
           </div>
         </div>
-        <CurvedSectionDivider variant="wave" position="bottom" fillColor="fill-surface-2" />
+        <CurvedSectionDivider variant="wave" position="bottom" fillColor="#eef5fb" />
       </section>
 
-      <section id="faq" className="bg-surface-2 py-16 fresh-section scroll-mt-16">
+      <section id="faq" className="bg-[#eef5fb] py-16 fresh-section scroll-mt-16">
         <div className="fresh-container">
           <FaqAccordion />
         </div>

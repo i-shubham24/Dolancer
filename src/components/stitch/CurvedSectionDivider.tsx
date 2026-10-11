@@ -17,11 +17,16 @@ interface CurvedSectionDividerProps {
 }
 
 function getFillStyle(fillColor: string): React.CSSProperties | undefined {
+  if (!fillColor) return undefined;
   if (fillColor === "fill-white" || fillColor === "white" || fillColor === "#ffffff") {
     return { fill: "#ffffff" };
   }
+  if (fillColor.startsWith("#") || fillColor.startsWith("rgb")) {
+    return { fill: fillColor };
+  }
   if (fillColor.startsWith("fill-[")) {
-    return { fill: fillColor.replace("fill-[", "").replace("]", "") };
+    const raw = fillColor.slice(6, -1).replace(/_/g, " ");
+    return { fill: raw };
   }
   return undefined;
 }
@@ -101,7 +106,8 @@ export function CurvedSectionDivider({
           {/* Fill shape beneath arch */}
           <path
             d="M0 60C420 8 1020 8 1440 60V64H0V60Z"
-            className={fillColor} style={fillColor.startsWith("fill-[") ? { fill: fillColor.replace("fill-[", "").replace("]", "") } : undefined}
+            className={fillColor}
+            style={getFillStyle(fillColor)}
           />
           {/* Crisp replacing border line */}
           {showBorderLine && (
@@ -141,7 +147,8 @@ export function CurvedSectionDivider({
           {/* Fill shape beneath gentle curve */}
           <path
             d="M0 46C380 14 1060 14 1440 46V56H0V46Z"
-            className={fillColor} style={fillColor.startsWith("fill-[") ? { fill: fillColor.replace("fill-[", "").replace("]", "") } : undefined}
+            className={fillColor}
+            style={getFillStyle(fillColor)}
           />
           {/* Crisp replacing border line */}
           {showBorderLine && (
@@ -181,7 +188,8 @@ export function CurvedSectionDivider({
           {/* Fill shape beneath organic crest */}
           <path
             d="M0 32C320 60 540 10 720 36C900 62 1120 12 1440 32V72H0V32Z"
-            className={fillColor} style={fillColor.startsWith("fill-[") ? { fill: fillColor.replace("fill-[", "").replace("]", "") } : undefined}
+            className={fillColor}
+            style={getFillStyle(fillColor)}
           />
           {/* Crisp replacing border line */}
           {showBorderLine && (
@@ -221,7 +229,8 @@ export function CurvedSectionDivider({
           {/* Fill shape beneath sculpted dip */}
           <path
             d="M0 10C420 54 1020 54 1440 10V60H0V10Z"
-            className={fillColor} style={fillColor.startsWith("fill-[") ? { fill: fillColor.replace("fill-[", "").replace("]", "") } : undefined}
+            className={fillColor}
+            style={getFillStyle(fillColor)}
           />
           {/* Crisp replacing border line */}
           {showBorderLine && (

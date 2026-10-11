@@ -12,7 +12,7 @@ export function FaqAccordion() {
         {FAQS.map((faq, index) => (
           <ScrollReveal key={index} delay={index * 0.1}>
             <details
-              className="group rounded-2xl border border-line-card bg-surface shadow-soft-xs open:bg-surface-2 hover:bg-surface-2 transition-colors duration-200"
+              className="group rounded-2xl border border-line-card bg-surface shadow-soft-xs open:bg-surface-2/20 hover:bg-surface-2/15 transition-colors duration-200"
             >
               <summary className="flex cursor-pointer items-center justify-between px-6 py-5 text-left font-bold select-none marker:content-none [&::-webkit-details-marker]:hidden">
                 <span className="text-[15px]">{faq.question}</span>

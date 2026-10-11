@@ -74,9 +74,9 @@ function Difference() {
       <style>{`@keyframes whyFill { from { transform: scaleX(0); } to { transform: scaleX(1); } }`}</style>
       <div className="text-center max-w-2xl mx-auto -translate-y-1 pb-2">
         <h2 className="text-3xl sm:text-5xl font-extrabold text-ink tracking-[-0.04em]">
-          A{" "}
+          A better{" "}
           <span className="fresh-highlight fresh-underline fresh-underline-pink">
-            better way to work
+            way to earn
           </span>
         </h2>
       </div>
@@ -107,15 +107,15 @@ function Difference() {
               className={cn(
                 "w-full text-left rounded-3xl border p-3 sm:p-4 transition-all duration-300 cursor-pointer",
                 selected
-                  ? "border-primary/30 bg-surface shadow-soft-md"
-                  : "border-line-card bg-surface/60 hover:bg-surface hover:border-line-card hover:shadow-soft-sm",
+                  ? "border-primary/25 bg-white shadow-soft-md"
+                  : "border-line-card/60 bg-white/70 hover:bg-white hover:border-line-card hover:shadow-soft-sm",
               )}
             >
               <span className="flex flex-col sm:flex-row items-stretch gap-2.5 sm:gap-3">
                 <span
                   className={cn(
                     "flex-1 rounded-2xl px-4 py-3.5 flex items-center gap-3 transition-all duration-300",
-                    selected ? "bg-subtle opacity-60" : "bg-subtle/70",
+                    selected ? "bg-subtle/15 opacity-60" : "bg-subtle/20",
                   )}
                 >
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-danger-bg">
@@ -135,8 +135,8 @@ function Difference() {
                   className={cn(
                     "flex-1 rounded-2xl px-4 py-3.5 flex items-center gap-3 transition-all duration-300",
                     selected
-                      ? "bg-primary-light border border-primary/25 shadow-soft-xs"
-                      : "bg-surface-2 border border-transparent",
+                      ? "bg-primary-light/30 border border-primary/20 shadow-soft-xs"
+                      : "bg-surface-2/15 border border-transparent",
                   )}
                 >
                   <span

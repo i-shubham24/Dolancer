@@ -27,7 +27,7 @@ export function SiteFooter() {
   const pageFill = location.pathname.startsWith("/contact")
     ? "fill-[var(--color-canvas)]"
     : location.pathname.startsWith("/how-it-works")
-      ? "fill-[var(--color-surface-2)]"
+      ? "fill-[#eef5fb]"
       : "fill-white";
   const [copiedEmail, setCopiedEmail] = useState(false);
 
