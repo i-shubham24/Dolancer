@@ -42,7 +42,7 @@ export function DisciplineOfferCards() {
       <div className="fresh-container">
         <div className="mb-16 text-center">
           <span className="block text-xs font-extrabold uppercase tracking-widest text-primary mb-4">
-            Your Expertise
+            Your skills
           </span>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#0A1A44] tracking-[-0.02em] max-w-3xl mx-auto font-display leading-[1.1]">
             Choose what you're <span className="text-[#0A1A44] relative inline-block z-10">good at.

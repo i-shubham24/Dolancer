@@ -1,5 +1,6 @@
 import { ExternalLink, Check, Clock } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { isHttpsUrl } from "@/lib/validations";
 
 /**
  * Pinned to the top of the properties rail, because it gates everything else.
@@ -46,15 +47,19 @@ export function WorkingLinkCard({
           <p className="text-[11px] leading-snug text-ink-2 mb-2">
             This is your company-owned workspace. Do not use personal accounts.
           </p>
-          <a
-            href={workingDocUrl ?? "#"}
-            target="_blank"
-            rel="noreferrer noopener"
-            className="flex items-center gap-1.5 break-all text-xs font-bold text-secondary underline decoration-2 underline-offset-2 hover:text-secondary-hover"
-          >
-            <ExternalLink className="h-3 w-3 shrink-0" aria-hidden="true" />
-            {workingDocUrl}
-          </a>
+          {isHttpsUrl(workingDocUrl) ? (
+            <a
+              href={workingDocUrl}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="flex items-center gap-1.5 break-all text-xs font-bold text-secondary underline decoration-2 underline-offset-2 hover:text-secondary-hover"
+            >
+              <ExternalLink className="h-3 w-3 shrink-0" aria-hidden="true" />
+              {workingDocUrl}
+            </a>
+          ) : (
+            <p className="break-all text-xs font-bold text-ink-2">{workingDocUrl}</p>
+          )}
         </div>
       )}
     </div>

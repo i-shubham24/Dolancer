@@ -92,3 +92,13 @@ export function validateOrThrow<T>(schema: z.ZodType<T>, data: unknown): T {
   }
   return result.data;
 }
+
+/** True only for a well-formed https URL. Checked before a stored value is rendered as a link. */
+export function isHttpsUrl(value: string | null | undefined): value is string {
+  if (!value) return false;
+  try {
+    return new URL(value.trim()).protocol === "https:";
+  } catch {
+    return false;
+  }
+}

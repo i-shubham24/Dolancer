@@ -1,6 +1,5 @@
-/* Formal executive typography: Inter with full optical sizing + JetBrains Mono */
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap");
+/* The Plus Jakarta Sans variable font is linked from index.html, so the browser
+   fetches it alongside this stylesheet instead of after it. */
 @import "tailwindcss";
 @import "./styles/theme.css";
 @import "./styles/base.css";
-

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { Search, CheckCircle2, Wallet, ArrowRight, ShieldCheck, Check, Sparkles } from "lucide-react";
+import { Search, CheckCircle2, Wallet, ArrowRight, ShieldCheck, Check } from "lucide-react";
 import { StitchBadge } from "@/components/stitch/StitchPrimitives";
 import { BorderBeam } from "@/components/ui/BorderBeam";
 
@@ -22,8 +22,7 @@ export function HowItWorksSteps() {
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16 sm:mb-20">
           <StitchBadge tone="neutral">
-            <Sparkles className="h-3.5 w-3.5 text-primary" />
-            Simple & Transparent
+            Simple and clear
           </StitchBadge>
           <h2 className="mt-4 text-3xl sm:text-5xl font-extrabold text-ink tracking-[-0.04em]">
             How Dolancers <span className="fresh-highlight fresh-underline fresh-underline-pink">earn.</span>
@@ -76,19 +75,19 @@ export function HowItWorksSteps() {
                   <span className="text-xs font-extrabold uppercase tracking-widest text-ink-muted font-display block">
                     STEP 01
                   </span>
-                    <span className="text-[11px] font-bold text-primary">Assigned offer</span>
+                    <span className="text-[11px] font-bold text-primary">The offer</span>
                 </div>
               </div>
 
               <h3 className="text-2xl sm:text-4xl font-extrabold text-ink tracking-[-0.03em] font-display">
-                Receive a project offer
+                You get an offer
               </h3>
               <p className="text-ink-2 text-base leading-relaxed font-medium">
-                A supervisor routes a specific project to you when the scope fits your verified disciplines. The offer shows the agreed payout, deadline and workspace before you accept it.
+                A supervisor sends you a project that fits your skills. You see the work, the deadline and your pay before you say yes.
               </p>
               <div className="pt-2">
                 <div className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:underline">
-                  <span>Manually routed by a supervisor</span>
+                  <span>Sent by a real supervisor</span>
                   <ArrowRight className="h-4 w-4" />
                 </div>
               </div>
@@ -110,7 +109,7 @@ export function HowItWorksSteps() {
                     Logo, Websites & Branding Suite
                   </p>
                   <p className="text-xs text-ink-muted mt-1 font-medium">
-                    Due in 2 days · Supervisor allocated
+                    Due in 2 days · Supervisor assigned
                   </p>
                 </div>
 
@@ -162,16 +161,16 @@ export function HowItWorksSteps() {
                 <div className="flex items-center justify-between pb-3 border-b border-line-card/60">
                   <div className="flex items-center gap-2">
                     <ShieldCheck className="h-5 w-5 text-primary" />
-                    <span className="text-sm font-extrabold text-ink">Supervisor Protected</span>
+                    <span className="text-sm font-extrabold text-ink">Supervisor is with you</span>
                   </div>
                   <span className="rounded-full bg-warning-bg px-2.5 py-0.5 text-[10px] font-extrabold text-warning-ink border border-warning-dot/20">
-                    Draft Under Review
+                    Draft being checked
                   </span>
                 </div>
 
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-xs font-semibold text-ink-2">
-                    <span>Quality Verification</span>
+                    <span>Quality check</span>
                     <span className="font-extrabold text-ink">95% complete</span>
                   </div>
                   <div className="h-2 w-full rounded-full bg-subtle overflow-hidden">
@@ -181,7 +180,7 @@ export function HowItWorksSteps() {
 
                 <div className="pt-1.5 text-xs text-ink-2 font-medium flex items-center gap-2">
                   <span className="h-2 w-2 rounded-full bg-primary shrink-0" />
-                  <span className="truncate">"Deliverables & guidelines verified. Forwarding for final release."</span>
+                  <span className="truncate">"Work checked. Sending it for final approval."</span>
                 </div>
               </div>
 
@@ -207,19 +206,19 @@ export function HowItWorksSteps() {
                   <span className="text-xs font-extrabold uppercase tracking-widest text-ink-muted font-display block">
                     STEP 02
                   </span>
-                  <span className="text-[11px] font-bold text-primary">Execution</span>
+                  <span className="text-[11px] font-bold text-primary">The work</span>
                 </div>
               </div>
 
               <h3 className="text-2xl sm:text-4xl font-extrabold text-ink tracking-[-0.03em] font-display">
-                Accept & Deliver
+                Say yes and do the work
               </h3>
               <p className="text-ink-2 text-base leading-relaxed font-medium">
-                Accept the offer when the scope and deadline work for you. Your supervisor reviews drafts and handles external reviews, so you do not need to identify or chase stakeholders.
+                Accept the offer when the work and the deadline suit you. Your supervisor checks your drafts and talks to the client, so you never have to.
               </p>
               <div className="pt-2">
                 <div className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:underline">
-                  <span>Zero direct client messaging hassle</span>
+                  <span>You never message the client</span>
                   <ArrowRight className="h-4 w-4" />
                 </div>
               </div>
@@ -244,19 +243,19 @@ export function HowItWorksSteps() {
                   <span className="text-xs font-extrabold uppercase tracking-widest text-ink-muted font-display block">
                     STEP 03
                   </span>
-                  <span className="text-[11px] font-bold text-primary">Settlement</span>
+                  <span className="text-[11px] font-bold text-primary">The money</span>
                 </div>
               </div>
 
               <h3 className="text-2xl sm:text-4xl font-extrabold text-ink tracking-[-0.03em] font-display">
-                Get Paid Fast
+                Get paid
               </h3>
               <p className="text-ink-2 text-base leading-relaxed font-medium">
-                Once the approval gate clears, the payout follows the configured release process to your registered payout account. No invoicing and no chasing.
+                When the work is approved, your pay is sent to your bank or UPI. No invoices. No chasing anyone.
               </p>
               <div className="pt-2">
                 <div className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:underline">
-                  <span>Payout fixed upfront</span>
+                  <span>Pay fixed from the start</span>
                   <ArrowRight className="h-4 w-4" />
                 </div>
               </div>
@@ -273,10 +272,10 @@ export function HowItWorksSteps() {
                   </div>
                   <div>
                     <span className="text-[11px] font-extrabold uppercase tracking-wider text-primary block leading-none">
-                      Payout Released
+                      Paid
                     </span>
                     <span className="text-xs font-medium text-ink-muted">
-                      Direct NEFT / UPI transfer
+                      Sent by bank transfer or UPI
                     </span>
                   </div>
                 </div>

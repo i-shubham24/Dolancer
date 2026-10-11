@@ -18,7 +18,7 @@ export const CATEGORIES: Category[] = [
   { name: "AI Agents & Automations", blurb: "Workflow automation, integrations, data processing and AI pipelines." },
   { name: "Marketing", blurb: "SEO, paid media, social, email and content strategy." },
   { name: "Research & Business", blurb: "Market research, competitor analysis, business plans and data work." },
-  { name: "Something Else", blurb: "Tell us what you need. A coordinator will categorise it internally." },
+  { name: "Something Else", blurb: "Other kinds of work come up too. Your supervisor will tell you where it fits." },
 ];
 
 export interface Step {
@@ -52,28 +52,28 @@ export interface Difference {
 
 export const DIFFERENCES: Difference[] = [
   {
-    title: "No bidding wars",
-    body: "You never undercut anyone to win work. A supervisor routes a specific project to you when it fits your verified disciplines.",
+    title: "No bidding",
+    body: "You never lower your price to win work. A supervisor sends you a project when it fits your skills.",
   },
   {
-    title: "The pay is agreed upfront",
-    body: "Every assigned offer shows exactly what you earn before you accept it. There are no surprise discounts or mid-project negotiations.",
+    title: "Pay is fixed first",
+    body: "Every offer shows what you will earn before you accept. No surprise cuts. No bargaining halfway.",
   },
   {
     title: "A supervisor has your back",
-    body: "A supervisor reviews your work before delivery and handles the client conversation. You do not need to chase or identify the client.",
+    body: "A supervisor checks your work before it goes out and talks to the client for you. You never have to chase the client.",
   },
   {
     title: "You choose what to accept",
-    body: "You can accept or decline an offer. When you accept, you commit to the stated scope and deadline and work within the active-project limit.",
+    body: "You can say yes or no to any offer. When you say yes, you agree to the work and the deadline shown. There is a limit on how many projects you can hold at once.",
   },
   {
-    title: "No chasing invoices",
-    body: "You are not billing a client. When the project clears its approval gate, the payout is released to the account you registered.",
+    title: "No invoices to chase",
+    body: "You do not bill anyone. When the project is approved, your pay is sent to the account you registered.",
   },
   {
     title: "Your share grows",
-    body: "Consistent, well-rated work can move you through the platform levels and unlock stronger opportunities over time.",
+    body: "Good, steady work moves you up the levels. Higher levels can get better offers.",
   },
 ];
 
@@ -86,47 +86,47 @@ export const FAQS: Faq[] = [
   {
     question: "When do I get paid?",
     answer:
-      "After your supervisor has cleared the delivery and the client approval gate is satisfied. If a client does not respond, the approved timeout process may release the payout later. Your earnings page itemises every payout with its own receipt.",
+      "After your supervisor has checked the work and the client has approved it. If the client does not reply, a set waiting period ends and the pay can still be released. Your earnings page lists every payout with its receipt.",
   },
   {
     question: "How much does a project pay?",
     answer:
-      "Each assigned offer states the doer payout before you accept it. There is no public rate card because the payout reflects the specific scope, deadline and level rules for that project.",
+      "Each offer shows your pay before you accept. There is no fixed rate list, because pay depends on the work, the deadline and your level.",
   },
   {
     question: "How does the money reach me?",
     answer:
-      "Payouts go to your registered payout account over UPI or NEFT once the approval gate clears. Each one lands with an itemised receipt you can check against your own records.",
+      "By UPI or bank transfer (NEFT) to the account you registered. Each payout comes with a receipt you can check.",
   },
   {
     question: "How do projects reach me?",
     answer:
-      "A supervisor manually routes specific projects to vetted doers whose verified disciplines fit the brief. There is no public work pool, bidding, proposal process or client search.",
+      "A supervisor picks doers whose skills fit the project and sends them the offer. There is no public job list, no bidding and no searching for clients.",
   },
   {
     question: "Can I work on several projects at once?",
     answer:
-      "The platform limits active projects so that delivery quality stays manageable. The current limit is shown in your dashboard and may prevent new offers while your slots are full.",
+      "Yes, up to a limit, so quality stays good. Your dashboard shows the limit. When your slots are full, you cannot take a new offer until one finishes.",
   },
   {
     question: "Do I talk to the client?",
     answer:
-      "No. You work with a supervisor, who is your point of contact. The client sees only a discipline label and does not receive your name or personal details.",
+      "No. You talk to your supervisor. The client only sees the kind of work, not your name or details.",
   },
   {
     question: "What do you need to verify me?",
     answer:
-      "Verification may require a PAN, a government photo identity document and payout details. The exact fields and retention rules are explained in the Privacy Policy before submission.",
+      "A government photo ID, a photo of you and your payout details. A PAN may be needed for tax. The Privacy Policy explains what we collect and how long we keep it.",
   },
   {
     question: "What work is not allowed?",
     answer:
-      "Dolancer does not accept coursework, essays, dissertations, exams, graded assignments, impersonation, plagiarism, fabrication, unauthorised cyber security work or other unlawful requests. Ask support if a brief is unclear.",
+      "We do not take coursework, essays, dissertations, exams or graded assignments. We also do not take impersonation, copied work, made-up data, hacking without permission or anything illegal. Ask support if a brief looks wrong.",
   },
   {
     question: "What happens if my work needs changes?",
     answer:
-      "Your supervisor explains what needs changing and you revise within the accepted brief. Work outside the original scope must be raised with the supervisor before you continue.",
+      "Your supervisor tells you what to change, and you fix it within the agreed work. Anything extra must be agreed with your supervisor first.",
   },
 ];
 
@@ -144,5 +144,5 @@ export const CONTACT = {
   grievanceEmail: "grievance@dolancer.in",
   hours: "24 hours a day, 7 days a week",
   company: "Dolancer",
-  jurisdiction: "Punjab, India",
+  jurisdiction: "India",
 } as const;

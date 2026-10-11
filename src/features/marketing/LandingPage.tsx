@@ -29,7 +29,7 @@ export function LandingPage() {
 
       <div className="relative overflow-clip mt-8 md:mt-12" aria-hidden="true">
         <CurvedLoop
-          marqueeText="CONTENT ✦ DESIGN ✦ CREATIVE & MEDIA ✦ IT & SOFTWARE ✦ AI AGENTS & AUTOMATIONS ✦ MARKETING ✦ RESEARCH & BUSINESS ✦ SOMETHING ELSE ✦ "
+          marqueeText="CONTENT • DESIGN • CREATIVE & MEDIA • IT & SOFTWARE • AI AGENTS & AUTOMATIONS • MARKETING • RESEARCH & BUSINESS • SOMETHING ELSE • "
           speed={1.6}
           curveAmount={-170}
           direction="right"

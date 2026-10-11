@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { motion, useReducedMotion } from "framer-motion";
-import { Check, Plus, Sparkles } from "lucide-react";
+import { Check, Plus, PencilRuler } from "lucide-react";
 import { Card } from "@/components/brutal/Card";
 import { Skeleton, LoadingAnnounce } from "@/components/brutal/Skeleton";
 import { EmptyState, ErrorState } from "@/components/brutal/EmptyState";
@@ -84,7 +84,7 @@ export function SkillsPage() {
         />
       ) : grouped.length === 0 ? (
         <EmptyState
-          icon={<Sparkles className="h-6 w-6" aria-hidden="true" />}
+          icon={<PencilRuler className="h-6 w-6" aria-hidden="true" />}
           title="No skills to choose from yet"
           description="The catalogue is empty. Once categories are published they will appear here."
         />

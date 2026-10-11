@@ -3,7 +3,6 @@ import {
   Wallet,
   Clock,
   ShieldCheck,
-  Sparkles,
   CheckCircle2
 } from "lucide-react";
 import { StitchBadge } from "@/components/stitch/StitchPrimitives";
@@ -32,9 +31,9 @@ const STACKING_FEATURES: StackingFeature[] = [
   {
     number: "01",
     icon: Wallet,
-    title: "Agreed Upfront Pay",
-    tagline: "100% Pre-Funded & Locked",
-    body: "Your pay is fixed and locked before you start work. No bidding wars, no price cuts, and no payment disputes after delivery.",
+    title: "Pay fixed first",
+    tagline: "You know your pay before you start",
+    body: "Your pay is fixed before you start work. No bidding, no price cuts and no arguments about money later.",
     color: "text-cyan-400",
     accentBg: "bg-cyan-500/10 border-cyan-500/30",
     cardBgActive: "bg-[#111d3d]",
@@ -42,16 +41,16 @@ const STACKING_FEATURES: StackingFeature[] = [
     glowColor: "rgba(34, 211, 238, 0.4)",
     glowAccent: "#22d3ee",
     borderActive: "border-cyan-400/50 shadow-[0_20px_50px_rgba(0,0,0,0.7),0_0_40px_rgba(34,211,238,0.22)]",
-    chips: ["Fixed upfront pay", "Safe upfront deposit", "No bidding wars"],
-    metricLabel: "Payout Safety",
-    metricValue: "100% Protected",
+    chips: ["Fixed pay", "No price cuts", "No bidding"],
+    metricLabel: "Your pay",
+    metricValue: "Fixed first",
   },
   {
     number: "02",
     icon: ShieldCheck,
-    title: "Supervisor Shield",
-    tagline: "Your Identity & Privacy Protected",
-    body: "Supervisors review your work, protect you from extra unpaid changes, and handle all client talks. Your identity stays completely private.",
+    title: "A supervisor on your side",
+    tagline: "Your name stays private",
+    body: "Your supervisor checks your work, stops extra unpaid changes and talks to the client for you. The client never learns who you are.",
     color: "text-emerald-400",
     accentBg: "bg-emerald-500/10 border-emerald-500/30",
     cardBgActive: "bg-[#0e273a]",
@@ -59,16 +58,16 @@ const STACKING_FEATURES: StackingFeature[] = [
     glowColor: "rgba(52, 211, 153, 0.4)",
     glowAccent: "#34d399",
     borderActive: "border-emerald-400/50 shadow-[0_20px_50px_rgba(0,0,0,0.7),0_0_40px_rgba(52,211,153,0.22)]",
-    chips: ["Private identity", "Dedicated guide", "No direct client talks"],
-    metricLabel: "Client Disputes",
-    metricValue: "0% Historic",
+    chips: ["Name kept private", "One guide", "No client calls"],
+    metricLabel: "Client talks",
+    metricValue: "Handled for you",
   },
   {
     number: "03",
     icon: Clock,
-    title: "Payouts After Approval",
-    tagline: "Direct Bank & UPI Transfers",
-    body: "Once your supervisor approves the delivery, money is sent straight to your bank account. No chasing invoices, no payment delays.",
+    title: "Paid after approval",
+    tagline: "Straight to your bank or UPI",
+    body: "When your work is approved, the money is sent to your bank account. No invoices and no chasing.",
     color: "text-purple-400",
     accentBg: "bg-purple-500/10 border-purple-500/30",
     cardBgActive: "bg-[#1d1b45]",
@@ -76,16 +75,16 @@ const STACKING_FEATURES: StackingFeature[] = [
     glowColor: "rgba(192, 132, 252, 0.4)",
     glowAccent: "#c084fc",
     borderActive: "border-purple-400/50 shadow-[0_20px_50px_rgba(0,0,0,0.7),0_0_40px_rgba(192,132,252,0.22)]",
-    chips: ["Straight to bank", "Automatic payment", "No invoice chasing"],
-    metricLabel: "Release Window",
+    chips: ["Straight to bank", "No invoices", "No chasing"],
+    metricLabel: "Payout time",
     metricValue: "Within 48h",
   },
   {
     number: "04",
     icon: Calendar,
-    title: "Clear Timelines & Scope",
-    tagline: "Defined Milestones, No Extra Work",
-    body: "Every project has clear requirements and set deadlines. You always know exactly what to do and when you will get feedback.",
+    title: "Clear work and deadlines",
+    tagline: "No extra work added later",
+    body: "Every project tells you what to do and when it is due. You always know the next step.",
     color: "text-blue-400",
     accentBg: "bg-blue-500/10 border-blue-500/30",
     cardBgActive: "bg-[#13244d]",
@@ -93,9 +92,9 @@ const STACKING_FEATURES: StackingFeature[] = [
     glowColor: "rgba(96, 165, 250, 0.4)",
     glowAccent: "#60a5fa",
     borderActive: "border-blue-400/50 shadow-[0_20px_50px_rgba(0,0,0,0.7),0_0_40px_rgba(96,165,250,0.22)]",
-    chips: ["Clear requirements", "Fast feedback", "No surprise changes"],
-    metricLabel: "Task Clarity",
-    metricValue: "100% Clear",
+    chips: ["Clear brief", "Quick feedback", "No surprise changes"],
+    metricLabel: "The brief",
+    metricValue: "Clear from day one",
   },
 ];
 
@@ -112,13 +111,12 @@ export function FeaturesGrid() {
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
           <StitchBadge tone="light">
-            <Sparkles className="h-3.5 w-3.5 text-cyan-400" />
             Why Choose Dolancer
           </StitchBadge>
           <h2 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight font-display">
-            Built for specialists who value{" "}
+            Made for people who want{" "}
             <span className="text-white fresh-underline fresh-underline-mint">
-              clarity & respect.
+              clear work and fair pay.
             </span>
           </h2>
         </div>

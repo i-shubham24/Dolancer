@@ -2,7 +2,7 @@ import { Logo } from "@/components/ui/Logo";
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
-import { Check, Globe2, ShieldCheck, Sparkles } from "lucide-react";
+import { Check, Globe2, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
 import { StitchBadge, StitchCard, StitchColorCard } from "@/components/stitch/StitchPrimitives";
@@ -89,7 +89,7 @@ export function CountryOnboardingPage() {
         <StitchBadge tone="neutral"><ShieldCheck className="h-3.5 w-3.5 text-success-ink" /> Your details are private</StitchBadge>
       </div>
       <div className="relative mb-7">
-        <p className="mb-3 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-primary"><Sparkles className="h-4 w-4" aria-hidden="true" /> One quick step</p>
+        <p className="mb-3 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-primary">One quick step</p>
         <h1 className="text-3xl font-extrabold tracking-[-0.045em] sm:text-4xl lg:text-5xl">Let’s make it official.</h1>
         <p className="mt-4 max-w-xl text-md leading-relaxed text-ink-2">
         Your country sets your currency, tax handling and timezone. It is set once, so pick the

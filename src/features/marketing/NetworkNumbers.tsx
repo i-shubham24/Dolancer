@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { Users, IndianRupee, TrendingUp, Clock, Sparkles } from "lucide-react";
+import { Users, IndianRupee, TrendingUp, Clock } from "lucide-react";
 import { StitchBadge } from "@/components/stitch/StitchPrimitives";
 import { AnimatedCounter } from "@/components/common/AnimatedCounter";
 import { CurvedSectionDivider } from "@/components/stitch/CurvedSectionDivider";
@@ -22,7 +22,7 @@ const STATS: NetworkStat[] = [
     end: 2400,
     suffix: "+",
     label: "Active Dolancers",
-    body: "Verified specialists earning across disciplines",
+    body: "Verified people earning with their skills",
     cardClass: "bg-[color-mix(in_srgb,var(--dl-card-lilac)_65%,var(--color-surface))]",
     tiltClass: "-rotate-[1.4deg]",
   },
@@ -32,7 +32,7 @@ const STATS: NetworkStat[] = [
     prefix: "₹",
     suffix: "Cr+",
     label: "Total Paid Out",
-    body: "Reliably transferred directly to bank accounts",
+    body: "Sent straight to bank accounts",
     cardClass: "bg-[color-mix(in_srgb,var(--dl-card-pink)_65%,var(--color-surface))]",
     tiltClass: "rotate-[1deg] translate-y-1.5",
   },
@@ -41,7 +41,7 @@ const STATS: NetworkStat[] = [
     end: 12000,
     suffix: "+",
     label: "Briefs Completed",
-    body: "Approved by supervisors without client disputes",
+    body: "Finished and approved",
     cardClass: "bg-[color-mix(in_srgb,var(--dl-card-yellow)_65%,var(--color-surface))]",
     tiltClass: "-rotate-[0.6deg] -translate-y-1",
   },
@@ -50,7 +50,7 @@ const STATS: NetworkStat[] = [
     end: 48,
     suffix: "h",
     label: "Average Release",
-    body: "From supervisor sign-off to direct payout",
+    body: "From approval to money in the bank",
     cardClass: "bg-[color-mix(in_srgb,var(--dl-card-mint)_65%,var(--color-surface))]",
     tiltClass: "rotate-[1.8deg] translate-y-1",
   },
@@ -79,7 +79,6 @@ export function NetworkNumbers() {
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12">
           <StitchBadge tone="neutral">
-            <Sparkles className="h-3.5 w-3.5 text-primary" />
             Live Network Numbers
           </StitchBadge>
           <h2 className="mt-4 text-3xl sm:text-5xl font-extrabold text-ink tracking-[-0.04em] font-display">
@@ -87,7 +86,7 @@ export function NetworkNumbers() {
             <span className="fresh-underline fresh-underline-yellow">themselves.</span>
           </h2>
           <p className="mt-4 text-base sm:text-lg text-ink-2 font-medium">
-            Real outcomes across India&apos;s academic and technical expert community.
+            Real results from Dolancers across India.
           </p>
         </div>
 

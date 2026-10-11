@@ -4,36 +4,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#f7f7f9" />
-    <meta
-      name="description"
-      content="Dolancer by AssignX: vetted specialists receive supervisor-assigned project offers, deliver with review, and get paid. No public marketplace, no client contact."
-    />
+    <!-- The title, description, canonical and preview tags below are the home page's.
+         src/routes/seo.ts rewrites them for every other page, at build time and on
+         navigation, and expects each tag to stay on one line. -->
+    <meta name="description" content="Get freelance projects sent to you by a supervisor. No bidding, pay fixed before you start, and money paid to your bank or UPI. Free to join." />
     <link rel="canonical" href="https://dolancer.vercel.app/" />
     <meta name="robots" content="index, follow" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Dolancer" />
-    <meta property="og:title" content="Dolancer. Get paid for what you are already good at." />
-    <meta
-      property="og:description"
-      content="Accept fixed-price work from supervisor-assigned offers. Fixed pay upfront, supervisor review, no public marketplace."
-    />
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:title" content="Dolancer: Freelance work in India. Fixed pay, no bidding." />
+    <meta property="og:description" content="Get freelance projects sent to you by a supervisor. No bidding, pay fixed before you start, and money paid to your bank or UPI. Free to join." />
     <meta property="og:url" content="https://dolancer.vercel.app/" />
     <meta property="og:image" content="https://dolancer.vercel.app/og-image.png" />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Dolancer. Fixed pay. Supervisor-assigned offers." />
+    <meta property="og:image:alt" content="Dolancer. Get paid for what you are already good at." />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Dolancer. Get paid for what you are already good at." />
-    <meta
-      name="twitter:description"
-      content="Fixed-price tasks, supervisor-assigned offers, supervisor review. No public marketplace, no client contact."
-    />
+    <meta name="twitter:title" content="Dolancer: Freelance work in India. Fixed pay, no bidding." />
+    <meta name="twitter:description" content="Get freelance projects sent to you by a supervisor. No bidding, pay fixed before you start, and money paid to your bank or UPI. Free to join." />
     <meta name="twitter:image" content="https://dolancer.vercel.app/og-image.png" />
-    <meta name="twitter:image:alt" content="Dolancer. Fixed pay. Supervisor-assigned offers." />
+    <meta name="twitter:image:alt" content="Dolancer. Get paid for what you are already good at." />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -41,8 +36,37 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- One variable font file covers every weight the site uses. -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&display=swap" />
 
-    <title>Dolancer. Get paid for what you are already good at.</title>
+    <title>Dolancer: Freelance work in India. Fixed pay, no bidding.</title>
+
+    <!-- Tells search engines who runs the site. Data only: it is never executed. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://dolancer.vercel.app/#organization",
+            "name": "Dolancer",
+            "url": "https://dolancer.vercel.app/",
+            "logo": "https://dolancer.vercel.app/logo.svg",
+            "email": "support@dolancer.in",
+            "areaServed": "IN",
+            "description": "A managed freelance work service. A supervisor sends you projects with fixed pay, checks your work and deals with the client."
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://dolancer.vercel.app/#website",
+            "name": "Dolancer",
+            "url": "https://dolancer.vercel.app/",
+            "inLanguage": "en-IN",
+            "publisher": { "@id": "https://dolancer.vercel.app/#organization" }
+          }
+        ]
+      }
+    </script>
     <style>
       /* Pre-paint canvas: never flash blank white while the bundle loads.
          This boot stage mirrors the React loader exactly (144px logo, dots,

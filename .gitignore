@@ -17,6 +17,7 @@ Thumbs.db
 .idea
 .agents
 .opencode
+.claude
 scratch
 *.pptx
 scripts/generate_pidilite_deck.py

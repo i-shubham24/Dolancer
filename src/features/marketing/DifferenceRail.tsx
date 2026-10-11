@@ -177,7 +177,7 @@ export function DifferenceRail() {
             Drag the cards
           </span>
           <h2 id="differences" className="mt-4 max-w-lg text-4xl sm:text-5xl font-extrabold tracking-[-0.04em] text-[#0A1A44]">
-            Why this is not another freelance site
+            How Dolancer is different
           </h2>
         </div>
 

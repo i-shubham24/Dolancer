@@ -22,23 +22,23 @@ interface Pair {
 
 const PAIRS: Pair[] = [
   {
-    bad: "Writing dozens of unpaid proposals",
-    good: "Pre-funded offers waiting for you",
+    bad: "Writing many proposals for free",
+    good: "Offers come to you",
     detail: "No bidding. Your supervisor sends each offer with the pay on it.",
   },
   {
-    bad: "Chasing invoices, late payments, haggling",
-    good: "Payouts fixed and agreed upfront",
-    detail: "The payout is fixed before you accept. It never changes.",
+    bad: "Arguing about price and late payments",
+    good: "Pay fixed before you start",
+    detail: "Your pay is fixed before you accept. It does not change.",
   },
   {
-    bad: "Absorbing client friction & scope creep",
-    good: "Dedicated supervisor manages the client",
+    bad: "Difficult clients and extra unpaid work",
+    good: "A supervisor handles the client",
     detail: "Your supervisor checks the work and talks to the client.",
   },
   {
-    bad: "Chasing unpaid invoices for 60 days",
-    good: "Instant direct bank deposit upon sign-off",
+    bad: "Waiting months to get paid",
+    good: "Paid to your bank after approval",
     detail: "Approved work is paid straight to your bank or UPI.",
   },
 ];
@@ -74,7 +74,7 @@ function Difference() {
       <style>{`@keyframes whyFill { from { transform: scaleX(0); } to { transform: scaleX(1); } }`}</style>
       <div className="text-center max-w-2xl mx-auto -translate-y-1 pb-2">
         <h2 className="text-3xl sm:text-5xl font-extrabold text-ink tracking-[-0.04em]">
-          A structurally{" "}
+          A{" "}
           <span className="fresh-highlight fresh-underline fresh-underline-pink">
             better way to work
           </span>
@@ -82,8 +82,8 @@ function Difference() {
       </div>
 
       <div className="hidden sm:grid grid-cols-2 gap-6 max-w-4xl mx-auto mt-6 mb-2 px-6">
-        <p className="text-center text-xs font-bold uppercase tracking-widest text-ink-muted">Traditional Platforms</p>
-        <p className="text-center text-xs font-bold uppercase tracking-widest text-primary">The Dolancer Way</p>
+        <p className="text-center text-xs font-bold uppercase tracking-widest text-ink-muted">Other platforms</p>
+        <p className="text-center text-xs font-bold uppercase tracking-widest text-primary">With Dolancer</p>
       </div>
 
       <div
@@ -212,20 +212,20 @@ function Difference() {
 
 const PRINCIPLES = [
   {
-    title: "You stay anonymous",
-    body: "Clients never learn your name, where you are, what you are paid, or that you work through us. They see a discipline and nothing else. This protects you as much as it protects them.",
+    title: "Your name stays private",
+    body: "The client never learns your name, where you live or what you are paid. They only see the kind of work you do. This keeps you safe, and them too.",
     bg: "bg-[#d7d9ff]",
     icon: EyeOff,
   },
   {
     title: "You are not an employee",
-    body: "You choose what to accept and when to stop. Nothing is assigned to you against your will, and pausing is a switch you control.",
+    body: "You choose which work to take and when to stop. Nobody forces work on you. You can pause any time with one switch.",
     bg: "bg-[#a7f3d0]",
     icon: SlidersHorizontal,
   },
   {
     title: "You are always paid",
-    body: "If work you delivered was sound and the client changed their mind, that is our problem to absorb, not yours. If we ever part ways, anything you have earned is still paid out.",
+    body: "If your work was good and the client changes their mind, that is our problem, not yours. If you ever leave, we still pay everything you have earned.",
     bg: "bg-[#fecdd3]",
     icon: Wallet,
   },
@@ -239,9 +239,9 @@ function Principles() {
     <div className="mt-20 sm:mt-28">
       <div className="text-center max-w-2xl mx-auto mb-12 -translate-y-1">
         <h2 className="text-3xl sm:text-5xl font-extrabold text-ink tracking-[-0.04em]">
-          Three rules we will not{" "}
+          Three promises{" "}
           <span className="fresh-highlight fresh-underline fresh-underline-pink">
-            compromise on
+            we keep
           </span>
         </h2>
       </div>

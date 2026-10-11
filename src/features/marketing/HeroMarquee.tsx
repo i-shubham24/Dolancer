@@ -1,11 +1,11 @@
 import {
   Lock,
-  Zap,
+  Ban,
   ShieldCheck,
   Banknote,
   CheckCircle2,
   EyeOff,
-  Sparkles,
+  IndianRupee,
 } from "lucide-react";
 
 interface MarqueeItem {
@@ -17,38 +17,38 @@ interface MarqueeItem {
 const MARQUEE_ITEMS: MarqueeItem[] = [
   {
     icon: Lock,
-    title: "100% Pre-Funded & Safe",
-    tag: "Guaranteed Pay",
+    title: "Pay fixed before you start",
+    tag: "No surprises",
   },
   {
-    icon: Zap,
-    title: "Zero Bidding Wars",
-    tag: "Direct Offers",
+    icon: Ban,
+    title: "No bidding",
+    tag: "Work comes to you",
   },
   {
     icon: ShieldCheck,
-    title: "Dedicated Supervisor",
-    tag: "No Client Drama",
+    title: "A supervisor helps you",
+    tag: "No client stress",
   },
   {
     icon: Banknote,
-    title: "Direct UPI & Bank Payouts",
+    title: "Paid to your bank or UPI",
     tag: "Within 48h",
   },
   {
     icon: CheckCircle2,
-    title: "Clear Project Scope",
+    title: "Clear work, clear deadline",
     tag: "No Extra Work",
   },
   {
     icon: EyeOff,
-    title: "100% Private Identity",
-    tag: "Confidential",
+    title: "Your name stays private",
+    tag: "Always",
   },
   {
-    icon: Sparkles,
-    title: "Free For Specialists",
-    tag: "₹0 Platform Fee",
+    icon: IndianRupee,
+    title: "Free to join",
+    tag: "₹0 fee",
   },
 ];
 

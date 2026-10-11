@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import type { Session, User } from "@supabase/supabase-js";
-import { supabase } from "@/lib/supabase";
 import { demoAuth, isDemo } from "@/lib/demo-data";
 
 interface AuthContextValue {
@@ -49,21 +48,36 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (isDemo()) return demoAuth.onChange(setSession);
 
     let active = true;
+    let unsubscribe: (() => void) | undefined;
 
-    supabase.auth.getSession().then(({ data }) => {
-      if (!active) return;
-      setSession(data.session);
-      setLoading(false);
-    });
+    // The Supabase client is roughly a fifth of the first-load JavaScript, and a
+    // visitor reading the public pages does not need it before first paint. So it
+    // is fetched here instead of with the entry chunk; `loading` stays true until
+    // the session lookup settles, exactly as before.
+    import("@/lib/supabase")
+      .then(({ supabase }) => {
+        if (!active) return;
 
-    const { data: subscription } = supabase.auth.onAuthStateChange((_event, next) => {
-      setSession(next);
-      setLoading(false);
-    });
+        supabase.auth.getSession().then(({ data }) => {
+          if (!active) return;
+          setSession(data.session);
+          setLoading(false);
+        });
+
+        const { data: subscription } = supabase.auth.onAuthStateChange((_event, next) => {
+          setSession(next);
+          setLoading(false);
+        });
+        unsubscribe = () => subscription.subscription.unsubscribe();
+      })
+      .catch(() => {
+        // The client did not load. Treat it as signed out rather than loading forever.
+        if (active) setLoading(false);
+      });
 
     return () => {
       active = false;
-      subscription.subscription.unsubscribe();
+      unsubscribe?.();
     };
   }, []);
 

@@ -6,7 +6,7 @@ export function FaqAccordion() {
     <div className="mx-auto w-full max-w-3xl space-y-4">
       <div className="text-center mb-10">
         <h2 className="text-3xl font-extrabold tracking-[-0.03em] sm:text-4xl">Common questions</h2>
-        <p className="mt-3 text-ink-2 font-medium">Everything you need to know about the product and billing.</p>
+        <p className="mt-3 text-ink-2 font-medium">Short answers to what people ask most.</p>
       </div>
       <div className="space-y-3">
         {FAQS.map((faq, index) => (

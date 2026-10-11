@@ -24,7 +24,7 @@ export function AuthLayout() {
   const shouldAnimate = isDesktop && !reduceMotion;
 
   return (
-    <div className="relative grid min-h-dvh lg:h-dvh lg:overflow-hidden lg:grid-cols-2 bg-[#fafbfe]">
+    <div className="relative grid min-h-dvh overflow-x-clip lg:h-dvh lg:overflow-hidden lg:grid-cols-2 bg-[#fafbfe]">
       {/* Left Form Column (starts centered underneath, then slides to the left) */}
       <motion.div
         initial={shouldAnimate ? { x: "50%", opacity: 0.85 } : false}

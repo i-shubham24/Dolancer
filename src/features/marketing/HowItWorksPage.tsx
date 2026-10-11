@@ -1,10 +1,7 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Check, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight, Check, ShieldCheck } from "lucide-react";
 import { StitchBadge, StitchSection } from "@/components/stitch/StitchPrimitives";
-import { GettingStartedInteractive } from "./GettingStartedInteractive";
-import { MicroFloaties } from "./MicroFloaties";
 import { WorkflowDemo } from "./WorkflowDemo";
-import { PayoutExplainer } from "./PayoutExplainer";
 import { DifferenceRail } from "./DifferenceRail";
 import { CategoryTags } from "./CategoryTags";
 import { HeroMarquee } from "./HeroMarquee";
@@ -28,17 +25,17 @@ function Section({
 }
 
 const GATES = [
-  { n: 1, title: "Join in 60s", sub: "Pick your core skills" },
-  { n: 2, title: "Get Verified", sub: "ID and payout setup" },
-  { n: 3, title: "Review an assigned offer", sub: "No proposal treadmill" },
-  { n: 4, title: "Deliver & Auto-Payout", sub: "Direct to your bank" },
+  { n: 1, title: "Sign up", sub: "Pick your skills", to: "/sign-up" },
+  { n: 2, title: "Get verified", sub: "ID and bank details", to: "#faq" },
+  { n: 3, title: "Get an offer", sub: "No bidding, no proposals", to: "#walkthrough" },
+  { n: 4, title: "Do the work, get paid", sub: "Straight to your bank", to: "#walkthrough" },
 ];
 
 export function HowItWorksPage() {
   return (
     <div className="fresh-page !overflow-visible">
       {/* Light hero matching Home. The four gates are navigation: each one
-          jumps to its moment below and preselects that tab. */}
+          jumps to the part of the page, or the sign-up, that covers it. */}
       <section className="relative overflow-hidden bg-white pt-10 pb-12 lg:pt-14 lg:pb-16">
         <div
           className="absolute inset-0 pointer-events-none opacity-30"
@@ -53,17 +50,16 @@ export function HowItWorksPage() {
         <div className="relative mx-auto max-w-[1240px] px-4 sm:px-6">
           <div className="text-center max-w-3xl mx-auto">
             <StitchBadge tone="neutral">
-              <Sparkles className="h-3.5 w-3.5 text-primary" />
-              Everything, in the open
+              Nothing hidden
             </StitchBadge>
             <h1 className="mt-4 text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#111827] tracking-tight font-display leading-[1.08]">
               From sign-up to payout in{" "}
               <span className="fresh-highlight fresh-underline fresh-underline-pink">
-                four gates.
+                four steps.
               </span>
             </h1>
             <p className="mt-4 text-sm sm:text-base text-slate-600 font-medium max-w-xl mx-auto leading-relaxed">
-              No part of this is hidden until after you sign up. Read it all, then decide.
+              See exactly how it works before you sign up. Read it, then decide.
             </p>
             <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
               <Link
@@ -74,23 +70,23 @@ export function HowItWorksPage() {
                 <ArrowRight className="ml-1.5 h-4 w-4" />
               </Link>
               <Link
-                to="#moment-1"
+                to="#walkthrough"
                 className="inline-flex items-center justify-center rounded-full border border-slate-300 bg-white px-5 py-2 sm:px-6 sm:py-2.5 text-xs sm:text-sm font-bold text-slate-700 hover:border-slate-400 hover:text-slate-900 transition-all shadow-sm active:scale-95"
               >
-                See the moments
+                See a project
               </Link>
             </div>
             <div className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm font-medium text-slate-500">
-              <span className="flex items-center gap-1.5"><Check className="h-4 w-4 text-primary" /> Pay is visible before you accept an offer.</span>
-              <span className="flex items-center gap-1.5"><ShieldCheck className="h-4 w-4 text-primary" /> A supervisor carries the client side.</span>
+              <span className="flex items-center gap-1.5"><Check className="h-4 w-4 text-primary" /> You see your pay before you accept.</span>
+              <span className="flex items-center gap-1.5"><ShieldCheck className="h-4 w-4 text-primary" /> A supervisor talks to the client for you.</span>
             </div>
           </div>
 
-          <ol className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-3 max-w-4xl mx-auto" aria-label="The four gates">
+          <ol className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-3 max-w-4xl mx-auto" aria-label="The four steps">
             {GATES.map((gate) => (
               <li key={gate.n}>
                 <Link
-                  to={`#moment-${gate.n}`}
+                  to={gate.to}
                   className="group flex h-full flex-col rounded-2xl border border-line-card bg-surface p-4 text-left shadow-soft-xs transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-soft-md"
                 >
                   <span className="flex items-center justify-between">
@@ -118,32 +114,10 @@ export function HowItWorksPage() {
         <DifferenceRail />
       </Section>
 
-      {/* Redesigned 5x Creative Interactive Four Moments Section */}
-      <section className="bg-canvas py-14 lg:py-20 relative">
-        <div className="fresh-container">
-          <GettingStartedInteractive />
-        </div>
-      </section>
-
       {/* Real Product Walkthrough - what a project actually looks like, first */}
       <section aria-labelledby="walkthrough" className="relative fresh-workflow !py-0 !overflow-visible">
         <div className="fresh-container !overflow-visible">
           <WorkflowDemo />
-        </div>
-      </section>
-
-      <section aria-labelledby="payout" className="fresh-section bg-[#0b0f19] pb-20 pt-24 lg:pb-20 lg:pt-28 relative overflow-hidden">
-        {/* Wavy top edge melting from the light walkthrough above into the dark */}
-        <CurvedSectionDivider
-          variant="wave"
-          position="top"
-          fillColor="fill-[var(--color-canvas)]"
-          showBorderLine={false}
-          showAccentGlow={false}
-        />
-        <MicroFloaties zone="payout" />
-        <div className="fresh-container relative z-20">
-          <PayoutExplainer />
         </div>
       </section>
 
@@ -153,8 +127,8 @@ export function HowItWorksPage() {
             What gets offered here
           </h2>
           <p className="mt-3 max-w-xl text-md text-ink-2">
-            Pick the disciplines you are genuinely strong in. Supervisors use them to route suitable
-            offers, so accuracy matters more than breadth.
+            Pick the skills you are really good at. Supervisors use them to send you the right work,
+            so it is better to be honest than to pick many.
           </p>
           <div className="mt-10 pb-16">
             <CategoryTags />
@@ -163,7 +137,7 @@ export function HowItWorksPage() {
         <CurvedSectionDivider variant="wave" position="bottom" fillColor="fill-surface-2" />
       </section>
 
-      <section className="bg-surface-2 py-16 fresh-section">
+      <section id="faq" className="bg-surface-2 py-16 fresh-section scroll-mt-16">
         <div className="fresh-container">
           <FaqAccordion />
         </div>

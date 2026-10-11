@@ -4,7 +4,6 @@ import { motion, useReducedMotion } from "framer-motion";
 import {
   Star,
   CheckCircle2,
-  Sparkles,
   Pause,
   Play,
   Award,
@@ -145,14 +144,13 @@ export function TestimonialsSection() {
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12">
           <StitchBadge tone="neutral">
-            <Sparkles className="h-3.5 w-3.5 text-primary" />
-            Verified Specialist Outcomes
+            What Dolancers say
           </StitchBadge>
           <h2 className="mt-4 text-3xl sm:text-5xl font-extrabold text-ink tracking-[-0.04em] font-display">
             Real Dolancers. <span className="fresh-highlight fresh-underline fresh-underline-pink">Real earnings.</span>
           </h2>
           <p className="mt-3 text-base text-ink-2 font-medium">
-            Verified specialists across India earning reliable monthly income.
+            People across India earning with their skills.
           </p>
 
           {/* Interactive filter pills and animation toggle */}

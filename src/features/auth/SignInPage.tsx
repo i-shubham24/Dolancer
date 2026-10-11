@@ -224,7 +224,7 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
               </label>
               <label className="flex items-start gap-3">
                 <input type="checkbox" checked={termsAccepted} onChange={(event) => setTermsAccepted(event.target.checked)} className="mt-0.5 h-4 w-4 accent-highlight" />
-                <span>I agree to the <Link to="/legal/terms" className="font-bold underline underline-offset-2">Terms of Service</Link>.</span>
+                <span>I agree to the <Link to="/legal/terms" className="font-bold underline underline-offset-2">Terms and Conditions</Link>.</span>
               </label>
               <label className="flex items-start gap-3">
                 <input type="checkbox" checked={privacyAccepted} onChange={(event) => setPrivacyAccepted(event.target.checked)} className="mt-0.5 h-4 w-4 accent-highlight" />

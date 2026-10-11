@@ -4,9 +4,9 @@ import { ArrowRight, Briefcase, ShieldCheck, Wallet } from "lucide-react";
 const STEPS = [
   {
     n: "Step 1",
-    title: "Client gives work",
+    title: "Dolancer gives work",
     desc: "Tells what to do, fixes your money first.",
-    img: "/images/hero/portrait-4.png",
+    img: "/images/hero/portrait-4.webp",
     icon: Briefcase,
     tag: "Money fixed first",
     glow: "bg-pink-300",
@@ -16,7 +16,7 @@ const STEPS = [
     n: "Step 2",
     title: "Supervisor guides you",
     desc: "Gives you the right work, checks it.",
-    img: "/images/hero/portrait-1.png",
+    img: "/images/hero/portrait-1.webp",
     icon: ShieldCheck,
     tag: "Helps you",
     active: true,
@@ -27,7 +27,7 @@ const STEPS = [
     n: "Step 3",
     title: "You earn money",
     desc: "Finish the work, money comes to bank / UPI.",
-    img: "/images/hero/portrait-2.png",
+    img: "/images/hero/portrait-2.webp",
     icon: Wallet,
     tag: "₹4,200 paid",
     glow: "bg-amber-300",
@@ -138,7 +138,9 @@ export function HeroSpectacular() {
                     <img
                       src={s.img}
                       alt={s.title}
-                      className={`relative rounded-full object-cover object-top bg-slate-100 shadow-md ${
+                      width={512}
+                      height={512}
+                      className={`relative rounded-full object-cover bg-slate-100 shadow-md ${
                         s.active
                           ? `h-32 w-32 border-4 ${s.ring}`
                           : `h-24 w-24 border-4 ${s.ring} ring-1`

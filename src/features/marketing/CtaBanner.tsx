@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, ShieldCheck, Zap, Clock } from "lucide-react";
+import { ArrowRight, ShieldCheck, Clock, Landmark } from "lucide-react";
 import { StitchButton } from "@/components/stitch/StitchPrimitives";
 
 export function CtaBanner() {
@@ -28,10 +28,10 @@ export function CtaBanner() {
           {/* Left Content */}
           <div className="w-full lg:w-[45%] text-center lg:text-left flex-shrink-0 pt-4">
             <h2 className="text-[2.75rem] leading-[1.1] sm:text-5xl lg:text-6xl font-extrabold text-[#1e293b] tracking-tight font-display">
-              Ready to turn skill into <br className="hidden lg:block" /> reliable earnings?
+              Ready to earn <br className="hidden lg:block" /> from your skills?
             </h2>
             <p className="mt-5 text-base sm:text-lg text-slate-600 font-medium leading-relaxed max-w-lg mx-auto lg:mx-0">
-              Get verified in minutes and accept project offers with fixed upfront rates.
+              Sign up, get verified and start getting offers with fixed pay.
             </p>
           </div>
 
@@ -57,23 +57,23 @@ export function CtaBanner() {
               <div className="space-y-6">
                 <div className="flex items-center gap-4">
                   <div className="flex-shrink-0 w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center">
-                    <Zap className="h-5 w-5 text-blue-600" />
+                    <Clock className="h-5 w-5 text-blue-600" />
                   </div>
                   <span className="font-bold text-slate-800 text-lg">Set up in minutes</span>
                 </div>
                 
                 <div className="flex items-center gap-4">
                   <div className="flex-shrink-0 w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center">
-                    <Clock className="h-5 w-5 text-blue-600" />
+                    <Landmark className="h-5 w-5 text-blue-600" />
                   </div>
-                  <span className="font-bold text-slate-800 text-lg">Direct payout</span>
+                  <span className="font-bold text-slate-800 text-lg">Paid to your bank</span>
                 </div>
                 
                 <div className="flex items-center gap-4">
                   <div className="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center">
                     <ShieldCheck className="h-5 w-5 text-emerald-600" />
                   </div>
-                  <span className="font-bold text-slate-800 text-lg">Payout protected</span>
+                  <span className="font-bold text-slate-800 text-lg">Pay fixed first</span>
                 </div>
               </div>
               

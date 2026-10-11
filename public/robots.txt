@@ -1,3 +1,19 @@
+# Public pages are open. The signed-in app is private and has nothing to index.
 User-agent: *
 Allow: /
+Disallow: /dashboard
+Disallow: /pool
+Disallow: /work
+Disallow: /earnings
+Disallow: /verification
+Disallow: /skills
+Disallow: /training
+Disallow: /notifications
+Disallow: /profile
+Disallow: /refer
+Disallow: /tickets
+Disallow: /admin
+Disallow: /onboarding
+Disallow: /auth
+
 Sitemap: https://dolancer.vercel.app/sitemap.xml

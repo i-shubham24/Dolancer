@@ -45,8 +45,8 @@ function assertNotPrivileged(name: string, value: string): void {
 
 /**
  * Demo mode runs the whole app on built-in sample data with no backend, so the
- * product can be shown before Supabase is connected. It is on only when
- * VITE_DEMO_MODE is exactly "true".
+ * product can be shown before Supabase is connected. It is the default: the app
+ * talks to the real backend only when VITE_DEMO_MODE is exactly "false".
  */
 const demoMode = import.meta.env.VITE_DEMO_MODE !== "false";
 

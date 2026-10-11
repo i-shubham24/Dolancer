@@ -11,7 +11,7 @@ import { cn } from "@/lib/cn";
  * a different pair.
  */
 
-type ShapeKind = "sparkle" | "plus" | "ring" | "dot" | "squiggle" | "pill";
+type ShapeKind = "plus" | "ring" | "dot" | "squiggle";
 
 interface FloatItem {
   kind: ShapeKind;
@@ -22,54 +22,34 @@ interface FloatItem {
 }
 
 const ZONES: Record<string, FloatItem[]> = {
-  hero: [
-    { kind: "sparkle", className: "left-[6%] top-[18%]", delay: "0s", duration: "6s", color: "var(--color-primary)" },
-    { kind: "ring", className: "right-[8%] bottom-[14%] hidden sm:block", delay: "1.4s", duration: "7s", color: "var(--color-primary)" },
-  ],
   how: [
     { kind: "plus", className: "right-[5%] top-[10%]", delay: "0.6s", duration: "6.5s", color: "var(--color-primary)" },
     { kind: "dot", className: "left-[4%] bottom-[12%] hidden sm:block", delay: "2s", duration: "5.5s", color: "var(--color-primary)" },
   ],
   features: [
-    { kind: "sparkle", className: "left-[3%] top-[14%]", delay: "1s", duration: "6s", color: "var(--color-primary)" },
+    { kind: "ring", className: "left-[3%] top-[14%]", delay: "1s", duration: "6s", color: "var(--color-primary)" },
     { kind: "squiggle", className: "right-[4%] bottom-[10%] hidden sm:block", delay: "2.2s", duration: "7.5s", color: "var(--color-primary)" },
   ],
   numbers: [
     { kind: "ring", className: "right-[6%] top-[12%]", delay: "0.3s", duration: "6s", color: "var(--color-primary)" },
     { kind: "plus", className: "left-[5%] bottom-[14%] hidden sm:block", delay: "1.8s", duration: "7s", color: "var(--color-primary)" },
   ],
-  payout: [
-    { kind: "sparkle", className: "left-[4%] top-[16%]", delay: "0.9s", duration: "6s", color: "var(--color-primary)" },
-    { kind: "dot", className: "right-[5%] bottom-[12%] hidden sm:block", delay: "2.4s", duration: "5.5s", color: "var(--color-primary)" },
-  ],
   testimonials: [
-    { kind: "sparkle", className: "right-[5%] top-[10%]", delay: "0.4s", duration: "6.5s", color: "var(--color-primary)" },
+    { kind: "plus", className: "right-[5%] top-[10%]", delay: "0.4s", duration: "6.5s", color: "var(--color-primary)" },
     { kind: "ring", className: "left-[4%] bottom-[16%] hidden sm:block", delay: "1.6s", duration: "7s", color: "var(--color-primary)" },
   ],
   cta: [
     { kind: "plus", className: "left-[6%] top-[20%]", delay: "1.2s", duration: "6s", color: "var(--color-primary)" },
-    { kind: "sparkle", className: "right-[6%] bottom-[18%] hidden sm:block", delay: "0.2s", duration: "5.5s", color: "var(--color-primary)" },
+    { kind: "squiggle", className: "right-[6%] bottom-[18%] hidden sm:block", delay: "0.2s", duration: "5.5s", color: "var(--color-primary)" },
   ],
   prefooter: [
     { kind: "dot", className: "right-[10%] top-[30%]", delay: "0.8s", duration: "6s", color: "var(--color-primary)" },
     { kind: "squiggle", className: "left-[8%] bottom-[20%] hidden sm:block", delay: "2s", duration: "7s", color: "var(--color-primary)" },
   ],
 
-  // Nav pages - same grammar, one accent pair per zone.
-  "hiw-hero": [
-    { kind: "ring", className: "left-[5%] top-[16%]", delay: "0.5s", duration: "6.5s", color: "var(--color-primary)" },
-    { kind: "sparkle", className: "right-[7%] bottom-[16%] hidden sm:block", delay: "1.8s", duration: "7s", color: "var(--color-primary)" },
-  ],
-  "about-hero": [
-    { kind: "plus", className: "left-[5%] top-[14%]", delay: "0.2s", duration: "6s", color: "var(--color-primary)" },
-    { kind: "dot", className: "right-[6%] bottom-[18%] hidden sm:block", delay: "1.6s", duration: "6.5s", color: "var(--color-highlight)" },
-  ],
-  "about-principles": [
-    { kind: "squiggle", className: "left-[4%] top-[10%]", delay: "0.9s", duration: "7s", color: "var(--color-secondary)" },
-    { kind: "ring", className: "right-[5%] bottom-[12%] hidden sm:block", delay: "2.1s", duration: "6s", color: "var(--color-primary)" },
-  ],
+  // Contact page - same grammar, one accent pair per zone.
   "contact-hero": [
-    { kind: "sparkle", className: "left-[6%] bottom-[16%]", delay: "0.4s", duration: "6s", color: "var(--color-highlight)" },
+    { kind: "ring", className: "left-[6%] bottom-[16%]", delay: "0.4s", duration: "6s", color: "var(--color-highlight)" },
     { kind: "plus", className: "right-[6%] top-[16%] hidden sm:block", delay: "1.5s", duration: "6.5s", color: "var(--color-secondary)" },
   ],
   "contact-form": [
@@ -80,12 +60,6 @@ const ZONES: Record<string, FloatItem[]> = {
 
 function Shape({ kind, color }: { kind: ShapeKind; color: string }) {
   switch (kind) {
-    case "sparkle":
-      return (
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-          <path d="M9 0c.7 4.5 2.5 6.3 7 7-4.5.7-6.3 2.5-7 7-.7-4.5-2.5-6.3-7-7 4.5-.7 6.3-2.5 7-7Z" fill={color} opacity="0.75" />
-        </svg>
-      );
     case "plus":
       return (
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
@@ -105,15 +79,6 @@ function Shape({ kind, color }: { kind: ShapeKind; color: string }) {
         <svg width="34" height="12" viewBox="0 0 34 12" fill="none" aria-hidden="true">
           <path d="M2 8c4-7 7 4 11-1s7 5 11 1 5-2 8-1" stroke={color} strokeWidth="2.2" strokeLinecap="round" opacity="0.6" />
         </svg>
-      );
-    case "pill":
-      return (
-        <span
-          aria-hidden="true"
-          className="inline-flex items-center gap-1 rounded-full border border-line-card bg-surface/90 px-2.5 py-1 text-[10px] font-extrabold text-ink shadow-soft-xs"
-        >
-          <span className="h-1.5 w-1.5 rounded-full" style={{ background: color }} />✓ paid
-        </span>
       );
   }
 }
