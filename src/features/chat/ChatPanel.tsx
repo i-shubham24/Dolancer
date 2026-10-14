@@ -9,10 +9,10 @@ import { fetchThreadId } from "./api";
 import { Conversation } from "./Conversation";
 
 /** The supervisor's name plate at the top of a task's chat. */
-export function SupervisorHeader() {
+export function SupervisorHeader({ category }: { category?: string } = {}) {
   return (
     <div className="flex items-center gap-3 border-b border-line-subtle px-4 py-3.5">
-      <SupervisorAvatar size="sm" />
+      <SupervisorAvatar category={category} size="sm" />
       <div className="min-w-0">
         <h2 className="text-[15px] font-extrabold tracking-[-0.02em]">Your supervisor</h2>
         <p className="text-[11.5px] font-semibold text-ink-muted">You never talk to the client</p>
@@ -30,10 +30,12 @@ export function SupervisorHeader() {
  */
 export function ChatPanel({
   projectId,
+  category,
   fill = false,
   className,
 }: {
   projectId: string;
+  category?: string;
   /** Fill the parent's height, with the messages scrolling inside. */
   fill?: boolean;
   className?: string;
@@ -72,7 +74,7 @@ export function ChatPanel({
     <Conversation
       key={thread.data}
       threadId={thread.data}
-      header={<SupervisorHeader />}
+      header={<SupervisorHeader category={category} />}
       label="Chat with your supervisor"
       fill={fill}
       className={className}

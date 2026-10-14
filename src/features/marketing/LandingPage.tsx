@@ -46,9 +46,9 @@ export function LandingPage() {
         <BackdropLetter letter="L" position="left" offsetY="82%" />
       </div>
 
-      {/* Why Dolancers Love It / 8 Benefits - L & A (dark section, light ink) */}
+      {/* Why Dolancers Love It / 4 Key Pillars - A */}
       <div className="relative overflow-clip">
-        <BackdropLetter letter="A" position="right" offsetY="66%" tone="light" />
+        <BackdropLetter letter="A" position="right" offsetY="66%" />
         <MicroFloaties zone="features" />
         <FeaturesGrid />
       </div>

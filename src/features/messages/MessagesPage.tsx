@@ -4,7 +4,6 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { AlertTriangle, ArrowLeft, ArrowRight, Briefcase, Inbox, MessagesSquare, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CARD } from "@/components/app/card-styles";
-import { CategoryTile } from "@/components/app/ui";
 import { SupervisorAvatar } from "@/components/app/SupervisorAvatar";
 import { cn } from "@/lib/cn";
 import { isActiveStatus, statusDisplay } from "@/lib/status";
@@ -37,21 +36,30 @@ function shortAgo(iso: string): string {
   return formatDayShort(new Date(iso));
 }
 
-/** Every chat is with a supervisor; the corner badge says what it is about. */
+/** Every chat displays the colorful category logo (WC, MA, etc.) so projects are distinguished at a glance. */
 function Avatar({ thread, unread, size = "md" }: { thread: InboxThread; unread?: boolean; size?: "md" | "sm" }) {
+  if (thread.kind === "invite") {
+    const box = size === "sm" ? "h-9 w-9" : "h-12 w-12";
+    return (
+      <span
+        className={cn(
+          "relative inline-flex shrink-0 rounded-full p-[2px]",
+          unread ? "bg-gradient-to-tr from-primary to-secondary" : "bg-transparent",
+        )}
+        aria-hidden="true"
+      >
+        <span className={cn("flex items-center justify-center rounded-full bg-emerald-500 text-white ring-2 ring-white shadow-xs", box)}>
+          <Inbox className={size === "sm" ? "h-4 w-4" : "h-5 w-5"} />
+        </span>
+      </span>
+    );
+  }
+
   return (
     <SupervisorAvatar
+      category={thread.category}
       size={size}
       ring={unread}
-      badge={
-        thread.kind === "invite" ? (
-          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-success-dot text-white ring-2 ring-white">
-            <Inbox className="h-3 w-3" />
-          </span>
-        ) : (
-          <CategoryTile category={thread.category} className="h-5 w-5 rounded-full text-[7.5px] ring-2 ring-white" />
-        )
-      }
     />
   );
 }

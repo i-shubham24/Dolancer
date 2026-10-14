@@ -61,11 +61,11 @@ export function NetworkNumbers() {
 
   return (
     <section className="fresh-section pb-20 relative numbers-wash pt-16 sm:pt-20 lg:pt-24 overflow-hidden">
-      {/* Top curved divider connecting directly to dark FeaturesGrid above */}
+      {/* Top curved divider connecting directly to FeaturesGrid light background above */}
       <CurvedSectionDivider
         variant="wave"
         position="top"
-        fillColor="fill-[#050914]"
+        fillColor="fill-[#f0f5fc]"
         showBorderLine={false}
         showAccentGlow={false}
       />

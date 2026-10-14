@@ -140,10 +140,19 @@ const TILE_TONES = [
 ];
 
 /** Two letters and a soft colour for a category, the same every time. */
-export function CategoryTile({ category, className }: { category: string; className?: string }) {
+export function CategoryTile({
+  category,
+  letters: propLetters,
+  className,
+}: {
+  category: string;
+  letters?: string;
+  className?: string;
+}) {
   const words = category.split(/[^A-Za-z]+/).filter(Boolean);
   const letters =
-    words.length >= 2 ? `${words[0]![0]}${words[1]![0]}` : (words[0] ?? "Task").slice(0, 2);
+    propLetters ??
+    (words.length >= 2 ? `${words[0]![0]}${words[1]![0]}` : (words[0] ?? "Task").slice(0, 2));
   let hash = 0;
   for (const char of category) hash = (hash * 31 + char.charCodeAt(0)) >>> 0;
   return (

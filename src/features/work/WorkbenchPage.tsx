@@ -275,7 +275,7 @@ export function WorkbenchPage() {
 
         {/* Fixed on the right while the details scroll. */}
         <div className={cn("lg:sticky lg:top-6 lg:h-[calc(100dvh-3rem)]", tab === "details" && "hidden lg:block")}>
-          <ChatPanel projectId={data.id} fill className="h-[72dvh] lg:h-full" />
+          <ChatPanel projectId={data.id} category={data.category} fill className="h-[72dvh] lg:h-full" />
         </div>
       </div>
 

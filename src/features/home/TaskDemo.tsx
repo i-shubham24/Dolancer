@@ -79,7 +79,7 @@ function ChatScene() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 + index * 1.1, duration: 0.35 }}
         >
-          {bubble.mine ? null : <SupervisorAvatar size="sm" className="scale-90" />}
+          {bubble.mine ? null : <SupervisorAvatar category="Writing & Content" size="sm" className="scale-90" />}
           <span
             className={cn(
               "max-w-[78%] rounded-2xl px-3 py-2 text-[12.5px] font-medium leading-snug",
