@@ -1,91 +1,72 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowRight, Clock } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { formatPaise } from "@/lib/paise";
-import { SUPERVISOR_LABEL } from "@/lib/constants";
-import { CategoryPill, MicroChip } from "@/components/brutal/Pill";
-import { DeadlineBadge } from "@/components/brutal/DeadlineBadge";
+import { deadlineUrgency, relativeDeadline } from "@/lib/datetime";
+import { taskTitle } from "@/lib/task-title";
+import { CARD, cardMotion } from "@/components/app/card-styles";
+import { CategoryTile } from "@/components/app/ui";
 import type { PoolOffer } from "@/types/domain";
 
+const URGENCY_TAG = {
+  overdue: "bg-danger-bg text-danger-ink",
+  urgent: "bg-danger-bg text-danger-ink",
+  soon: "bg-warning-bg text-warning-ink",
+  comfortable: "bg-info-bg text-info-ink",
+  none: "bg-neutral-bg text-neutral-ink",
+} as const;
+
 /**
- * An assigned offer card.
+ * An assigned offer as a simple card: what it is, when it is due, what it pays.
  *
- * Payout is the largest thing on the card, because it is the fixed, pre-disclosed
- * number the whole model rests on: no bidding, no negotiation, agreed before you
- * start. It is labelled "before tax" because the PRD requires the exact gross in
- * INR pre-TDS, and the per-project withholding is not knowable until release.
- *
- * What is deliberately NOT here: proposal counts, client names, client ratings,
- * client spend, "payment verified", or how many others are looking. A public
- * marketplace card is mostly client-trust signalling, and we can show none of it,
- * so the card leans entirely on platform-owned facts instead.
+ * Payout is the largest figure, because it is the fixed, pre-disclosed number the
+ * whole model rests on. What is deliberately not here: proposal counts, client
+ * names, ratings or spend. The doer never sees the client, so the card leans on
+ * platform facts alone.
  */
-export function PoolCard({
-  offer,
-  onOpen,
-  selected = false,
-  hideAccessories = false,
-}: {
-  offer: PoolOffer;
-  onOpen: () => void;
-  selected?: boolean;
-  /**
-   * When the detail drawer is open, accessories move into it rather than being
-   * shown twice.
-   */
-  hideAccessories?: boolean;
-}) {
+export function PoolCard({ offer, onOpen }: { offer: PoolOffer; onOpen: () => void }) {
+  const reduceMotion = useReducedMotion();
+  const urgency = deadlineUrgency(offer.deliveryAt);
+
   return (
-    <motion.button
-      type="button"
-      onClick={onOpen}
-      aria-label={`Review assigned ${offer.category} offer, ${formatPaise(offer.payoutPaise)}`}
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -4, transition: { duration: 0.2, ease: [0.16, 1, 0.3, 1] } }}
-      whileTap={{ scale: 0.985 }}
-      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-      className={cn(
-        "group relative w-full overflow-hidden rounded-[1.5rem] border border-line-card bg-surface p-5 text-left",
-        "transition-colors duration-[220ms] ease-spring hover:border-highlight/35",
-        selected
-          ? "border-highlight/40 shadow-soft-lg"
-          : "shadow-soft-md hover:shadow-soft-lg",
-      )}
-    >
-      <span className="pointer-events-none absolute -right-16 -top-20 h-48 w-48 rounded-full bg-highlight-light/70 blur-3xl transition-transform duration-500 group-hover:scale-125" aria-hidden="true" />
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div className="min-w-0 flex-1 space-y-2.5">
-          <div className="flex flex-wrap items-center gap-2">
-            <CategoryPill>{offer.category}</CategoryPill>
-            {!hideAccessories ? <DeadlineBadge deadline={offer.deliveryAt} /> : null}
-          </div>
-
-          <h3 className="relative text-lg font-extrabold leading-[1.3] tracking-[-0.025em] transition-colors group-hover:text-highlight">
-            {offer.brief?.trim().split("\n")[0] || `${offer.category} task`}
-          </h3>
-
-          {!hideAccessories && offer.brief ? (
-            <p className="line-clamp-2 text-sm leading-relaxed text-ink-2">{offer.brief}</p>
-          ) : null}
-
-          {!hideAccessories ? (
-            <div className="flex flex-wrap items-center gap-2 pt-0.5">
-              <MicroChip>{SUPERVISOR_LABEL}</MicroChip>
-              <MicroChip>Assigned offer</MicroChip>
-            </div>
-          ) : null}
+    <motion.div variants={cardMotion} whileHover={reduceMotion ? undefined : { y: -4 }} className="min-w-0">
+      <button
+        type="button"
+        onClick={onOpen}
+        aria-label={`${taskTitle(offer)}, ${formatPaise(offer.payoutPaise)} before tax. View offer`}
+        className={cn(
+          CARD,
+          "group h-full w-full gap-4 text-left transition-shadow hover:shadow-[0_18px_36px_-18px_rgba(15,23,42,0.3)]",
+          "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+        )}
+      >
+        <div className="flex items-center justify-between gap-3">
+          <span className="flex min-w-0 items-center gap-2.5">
+            <CategoryTile category={offer.category} className="h-9 w-9 rounded-lg text-[11px]" />
+            <span className="truncate text-xs font-bold text-ink-muted">{offer.category}</span>
+          </span>
+          <span className={cn("inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold", URGENCY_TAG[urgency])}>
+            <Clock className="h-3 w-3" aria-hidden="true" />
+            {relativeDeadline(offer.deliveryAt)}
+          </span>
         </div>
 
-        <div className="relative shrink-0 rounded-2xl bg-[color-mix(in_srgb,var(--dl-card-yellow)_30%,white)] px-3.5 py-2.5 text-right ring-1 ring-[var(--dl-card-yellow)]/40">
-          <div className="text-2xs font-bold uppercase tracking-[0.05em] text-ink-muted">
-            You earn
+        <h3 className="line-clamp-2 text-[16px] font-extrabold leading-snug tracking-[-0.02em] transition-colors group-hover:text-primary">
+          {taskTitle(offer)}
+        </h3>
+
+        <div className="mt-auto flex items-end justify-between gap-3 border-t border-line-subtle pt-3.5">
+          <div>
+            <p className="text-[11px] font-bold text-ink-muted">You earn</p>
+            <p className="text-[24px] font-extrabold leading-none tracking-[-0.03em] tabular-nums">{formatPaise(offer.payoutPaise)}</p>
+            <p className="mt-0.5 text-[10.5px] font-semibold text-ink-3">before tax</p>
           </div>
-          <div className="text-3xl font-extrabold leading-none tracking-[-0.04em]">
-            {formatPaise(offer.payoutPaise)}
-          </div>
-          <div className="mt-1 text-[11px] font-semibold text-ink-muted">before tax</div>
+          <span className="inline-flex h-10 items-center gap-1.5 rounded-full bg-panel px-4 text-[13px] font-bold text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+            View
+            <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+          </span>
         </div>
-      </div>
-    </motion.button>
+      </button>
+    </motion.div>
   );
 }

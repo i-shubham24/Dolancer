@@ -11,7 +11,7 @@ import { MAX_ACTIVE_PROJECTS } from "@/lib/constants";
 import { StatusBadge } from "@/components/brutal/StatusBadge";
 import { Button } from "@/components/ui/button";
 import type { DoerProject } from "@/types/domain";
-import { CategoryTile, MoreLink, Panel, PanelHeader, Segments } from "./ui";
+import { CategoryTile, MoreLink, Panel, PanelHeader, Segments } from "@/components/app/ui";
 
 type Filter = "all" | "to-start" | "in-progress" | "review";
 

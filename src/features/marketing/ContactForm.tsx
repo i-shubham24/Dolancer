@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { Send, Mail, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input, Textarea, Label } from "@/components/ui/input";
+import { Select } from "@/components/ui/Select";
 import { useAuth } from "@/providers/AuthProvider";
 import { toUserError } from "@/lib/user-error";
 import { openTicket, TICKET_CATEGORIES } from "@/features/tickets/api";
@@ -118,18 +119,13 @@ export function ContactForm() {
 
         <div className="space-y-2">
           <Label htmlFor="contact-category">What is it about?</Label>
-          <select
+          <Select
             id="contact-category"
             value={category}
-            onChange={(event) => setCategory(event.target.value)}
-            className="w-full rounded-xl border border-line-card bg-surface px-4 py-[11px] text-sm font-medium shadow-soft-sm outline-none transition-all focus:border-highlight focus:ring-4 focus:ring-highlight/15"
-          >
-            {TICKET_CATEGORIES.map((option) => (
-              <option key={option.id} value={option.id}>
-                {option.label}
-              </option>
-            ))}
-          </select>
+            onChange={setCategory}
+            options={TICKET_CATEGORIES.map((option) => ({ value: option.id, label: option.label }))}
+            className="h-auto w-full justify-between rounded-xl border border-line-card bg-surface px-4 py-[11px] text-sm font-medium shadow-soft-sm"
+          />
         </div>
 
         <div className="space-y-2">

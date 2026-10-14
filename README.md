@@ -69,7 +69,7 @@ src/
   providers/    AuthProvider (session + JWT role), AppProviders
   routes/       route table, ProtectedRoute
   layouts/      AppShell (sidebar + content), AuthLayout
-  components/   ui/ (shadcn primitives), brutal/ (the maximalist system)
+  components/   ui/ (shadcn primitives), app/ (the signed-in card kit), brutal/ (older pieces)
   features/     one folder per surface: api.ts, queries.ts, components, page
 ```
 
@@ -77,11 +77,11 @@ src/
 plus the optimistic availability toggle. Zustand never becomes a second source of truth
 about the platform.
 
-**Design system.** Ported from the sibling AssignX client app so the two read as one
-product. Three moves define it: a 2px near-black border, a hard offset shadow, and a
-translate that lifts on hover and presses in on active. `ColorStat` is the loud component
-and `Card` the workhorse; keep secondary figures quiet, because if every figure is loud
-none of them are.
+**Design system.** Signed-in pages share the kit in `components/app`: `PageHeader`, then
+white cards (`Panel`, `StatTile`, `CardGrid`) on the tinted panel that ease in one after
+another. A page gets at most one filled blue hero card; keep every other figure quiet,
+because if every figure is loud none of them are. Use `Select` and `DatePicker`, never the
+browser's own dropdown or date picker.
 
 ## Working with the backend
 
@@ -93,7 +93,9 @@ schema disagree, **the schema wins**. Three consequences worth knowing up front:
 - **The doer sets their own working link** via `set_working_doc`, which is doer-scoped.
   The UI then holds back progress updates and submission until it exists.
 - **The 3-project cap does not exist in the database.** It is a UI guardrail only. The
-  claim RPC is directly callable, so it stops the button, not the claim.
+  claim RPC is directly callable, so it stops the button, not the claim. On the third
+  task the app sets `profiles.available` to false, and back to true when a slot frees,
+  if it was the app that turned it off (`useAvailabilityAutopilot`).
 
 ### Gotchas that will bite you
 

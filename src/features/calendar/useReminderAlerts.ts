@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
-import { toast } from "sonner";
 import { useReminders } from "@/stores/useReminderStore";
+import { usePopupStore } from "@/stores/usePopupStore";
 
 const CHECK_EVERY_MS = 30_000;
 /** A reminder missed by more than this is marked seen quietly instead of popping up. */
@@ -27,7 +27,13 @@ export function useReminderAlerts() {
       if (due.length === 0) return;
       for (const reminder of due) {
         if (now - new Date(reminder.at).getTime() > STALE_AFTER_MS) continue;
-        toast(`Reminder: ${reminder.title}`, { duration: 12_000 });
+        usePopupStore.getState().push({
+          id: `reminder-${reminder.id}`,
+          kind: "reminder",
+          title: reminder.title,
+          body: "Your reminder",
+          href: reminder.projectId ? `/work/${reminder.projectId}` : "/calendar",
+        });
       }
       latest.current.markAlerted(due.map((reminder) => reminder.id));
     }

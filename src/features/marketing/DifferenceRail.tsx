@@ -14,14 +14,14 @@ import {
 import { cn } from "@/lib/cn";
 import { DIFFERENCES } from "./content";
 
-// Define a distinct vibrant theme for each card's top section
+// One calm look for every card, in the site's blue, so the rail reads as one set.
 const CARD_THEMES = [
-  { bg: "bg-gradient-to-br from-blue-400 to-blue-600", shadow: "shadow-blue-500/20", icon: Ban },
-  { bg: "bg-gradient-to-br from-purple-400 to-purple-600", shadow: "shadow-purple-500/20", icon: IndianRupee },
-  { bg: "bg-gradient-to-br from-emerald-400 to-emerald-600", shadow: "shadow-emerald-500/20", icon: ShieldCheck },
-  { bg: "bg-gradient-to-br from-amber-400 to-orange-500", shadow: "shadow-orange-500/20", icon: MousePointerClick },
-  { bg: "bg-gradient-to-br from-cyan-400 to-blue-500", shadow: "shadow-cyan-500/20", icon: Banknote },
-  { bg: "bg-gradient-to-br from-indigo-400 to-violet-600", shadow: "shadow-indigo-500/20", icon: BarChart3 },
+  { bg: "bg-gradient-to-br from-[#eef5fd] to-[#d9e8f8]", icon: Ban },
+  { bg: "bg-gradient-to-br from-[#eef5fd] to-[#d9e8f8]", icon: IndianRupee },
+  { bg: "bg-gradient-to-br from-[#eef5fd] to-[#d9e8f8]", icon: ShieldCheck },
+  { bg: "bg-gradient-to-br from-[#eef5fd] to-[#d9e8f8]", icon: MousePointerClick },
+  { bg: "bg-gradient-to-br from-[#eef5fd] to-[#d9e8f8]", icon: Banknote },
+  { bg: "bg-gradient-to-br from-[#eef5fd] to-[#d9e8f8]", icon: BarChart3 },
 ];
 
 /**
@@ -32,13 +32,13 @@ function DifferenceGraphic({ index }: { index: number }) {
   if (index === 0) {
     // No bidding wars
     return (
-      <div className="relative w-28 h-28 bg-white rounded-2xl shadow-xl flex flex-col items-center justify-center p-3 gap-2">
+      <div className="relative w-28 h-28 bg-white rounded-2xl shadow-[0_14px_30px_-12px_rgba(10,101,192,0.35)] flex flex-col items-center justify-center p-3 gap-2">
         <div className="w-16 h-4 bg-line-card rounded-full" />
-        <div className="w-12 h-3 bg-red-100 rounded-full flex items-center justify-center">
-           <div className="w-6 h-1 bg-red-300 rounded-full" />
+        <div className="w-12 h-3 bg-[#e8f1fa] rounded-full flex items-center justify-center">
+           <div className="w-6 h-1 bg-[#9cc3ea] rounded-full" />
         </div>
         <div className="absolute inset-0 bg-white/40 backdrop-blur-[1px] rounded-2xl flex items-center justify-center">
-           <Ban className="h-10 w-10 text-red-500 drop-shadow-md" />
+           <Ban className="h-10 w-10 text-[#0a65c0] drop-shadow-md" />
         </div>
       </div>
     );
@@ -46,12 +46,12 @@ function DifferenceGraphic({ index }: { index: number }) {
   if (index === 1) {
     // Pay agreed upfront
     return (
-      <div className="relative w-28 h-28 bg-white rounded-2xl shadow-xl flex flex-col items-center justify-center p-4 gap-3">
+      <div className="relative w-28 h-28 bg-white rounded-2xl shadow-[0_14px_30px_-12px_rgba(10,101,192,0.35)] flex flex-col items-center justify-center p-4 gap-3">
         <div className="w-full flex justify-between items-center">
-           <div className="w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center">
-             <IndianRupee className="h-3 w-3 text-emerald-600" />
+           <div className="w-6 h-6 rounded-full bg-[#e8f1fa] flex items-center justify-center">
+             <IndianRupee className="h-3 w-3 text-[#0a65c0]" />
            </div>
-           <div className="w-10 h-3 bg-emerald-50 rounded-full" />
+           <div className="w-10 h-3 bg-[#eef5fd] rounded-full" />
         </div>
         <div className="w-full h-8 bg-surface-2 rounded-lg border border-line-card flex items-center justify-center">
            <span className="text-xs font-extrabold text-ink">₹ 15,000</span>
@@ -62,7 +62,7 @@ function DifferenceGraphic({ index }: { index: number }) {
   if (index === 2) {
     // Supervisor has your back
     return (
-      <div className="relative w-28 h-28 bg-white rounded-2xl shadow-xl flex flex-col items-center p-3 gap-2">
+      <div className="relative w-28 h-28 bg-white rounded-2xl shadow-[0_14px_30px_-12px_rgba(10,101,192,0.35)] flex flex-col items-center p-3 gap-2">
         <div className="flex gap-2 w-full mt-1">
           <div className="w-6 h-6 rounded-full bg-blue-100 shrink-0" />
           <div className="space-y-1.5 w-full mt-1">
@@ -71,7 +71,7 @@ function DifferenceGraphic({ index }: { index: number }) {
           </div>
         </div>
         <div className="mt-auto w-full flex justify-end">
-          <div className="w-6 h-6 rounded-full bg-emerald-500 shadow-md flex items-center justify-center -mr-2">
+          <div className="w-6 h-6 rounded-full bg-[#0a65c0] shadow-md flex items-center justify-center -mr-2">
              <Check className="h-3 w-3 text-white" />
           </div>
         </div>
@@ -81,8 +81,8 @@ function DifferenceGraphic({ index }: { index: number }) {
   if (index === 3) {
     // Choose what to accept
     return (
-      <div className="relative w-28 h-28 bg-white rounded-2xl shadow-xl flex flex-col items-center justify-center p-3 gap-2">
-        <div className="w-full h-10 bg-emerald-500 rounded-lg shadow-sm shadow-emerald-500/20 flex items-center justify-center gap-1.5">
+      <div className="relative w-28 h-28 bg-white rounded-2xl shadow-[0_14px_30px_-12px_rgba(10,101,192,0.35)] flex flex-col items-center justify-center p-3 gap-2">
+        <div className="w-full h-10 bg-[#0a65c0] rounded-lg shadow-sm shadow-[#0a65c0]/20 flex items-center justify-center gap-1.5">
            <Check className="h-4 w-4 text-white" />
            <div className="w-6 h-2 bg-white/40 rounded-full" />
         </div>
@@ -96,20 +96,20 @@ function DifferenceGraphic({ index }: { index: number }) {
   if (index === 4) {
     // No chasing invoices
     return (
-      <div className="relative w-28 h-28 bg-white rounded-2xl shadow-xl flex flex-col items-center justify-center p-4">
+      <div className="relative w-28 h-28 bg-white rounded-2xl shadow-[0_14px_30px_-12px_rgba(10,101,192,0.35)] flex flex-col items-center justify-center p-4">
         <div className="w-12 h-16 border-2 border-line-card rounded-lg flex flex-col gap-1.5 p-2 absolute -top-4 -right-2 rotate-12 bg-white shadow-sm">
            <div className="w-full h-1 bg-line-card rounded-full" />
            <div className="w-2/3 h-1 bg-line-card rounded-full" />
-           <div className="mt-auto w-full h-3 border-2 border-red-400 rounded text-[6px] text-red-500 font-bold flex items-center justify-center -rotate-12">PAID</div>
+           <div className="mt-auto w-full h-3 border-2 border-[#0a65c0] rounded text-[6px] text-[#0a65c0] font-bold flex items-center justify-center -rotate-12">PAID</div>
         </div>
-        <Banknote className="h-10 w-10 text-emerald-500 mt-4 drop-shadow-md z-10" />
+        <Banknote className="h-10 w-10 text-[#0a65c0] mt-4 drop-shadow-md z-10" />
       </div>
     );
   }
   
   // Your share grows
   return (
-    <div className="relative w-28 h-28 bg-white rounded-2xl shadow-xl flex items-end justify-center p-4 gap-2">
+    <div className="relative w-28 h-28 bg-white rounded-2xl shadow-[0_14px_30px_-12px_rgba(10,101,192,0.35)] flex items-end justify-center p-4 gap-2">
       <div className="w-4 h-8 bg-blue-100 rounded-sm" />
       <div className="w-4 h-12 bg-blue-300 rounded-sm" />
       <div className="w-4 h-16 bg-blue-500 rounded-sm shadow-md" />
@@ -242,7 +242,7 @@ export function DifferenceRail() {
                 
                 {/* SVG Curve at the bottom of the colored header */}
                 <svg
-                  className="absolute bottom-0 left-0 w-full h-8 text-white translate-y-[1px]"
+                  className="absolute bottom-0 left-0 w-full h-8 text-white translate-y-[1px]" aria-hidden="true"
                   viewBox="0 0 1440 120"
                   fill="currentColor"
                   preserveAspectRatio="none"
@@ -253,8 +253,8 @@ export function DifferenceRail() {
 
               {/* Bottom White Half */}
               <div className="flex-1 p-6 pt-4 flex flex-col bg-white">
-                <div className="w-10 h-10 rounded-full bg-surface-2 border border-line-card flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                   <Icon className="h-4 w-4 text-ink" />
+                <div className="w-10 h-10 rounded-full bg-[#e8f1fa] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                   <Icon className="h-4 w-4 text-[#0a65c0]" />
                 </div>
                 <h3 className="text-xl font-extrabold leading-tight text-[#0A1A44] mb-2">
                   {item.title}
@@ -262,9 +262,6 @@ export function DifferenceRail() {
                 <p className="text-sm leading-relaxed text-ink-muted">
                   {item.body}
                 </p>
-                <div className="mt-auto pt-4 flex items-center text-xs font-bold text-primary group-hover:text-primary-hover transition-colors">
-                  Learn more <ArrowRight className="h-3 w-3 ml-1" />
-                </div>
               </div>
             </article>
           );

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { toast } from "sonner";
-import { ArrowRight, BellPlus, Play, X } from "lucide-react";
+import { ArrowRight, Play, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/brutal/StatusBadge";
 import { formatPaise } from "@/lib/paise";
@@ -13,8 +13,8 @@ import { preloadWorkbench } from "@/lib/preload";
 import { useWorkTimer } from "@/stores/useTimerStore";
 import type { DoerProject } from "@/types/domain";
 import { formatDayShort, formatTime } from "@/features/calendar/dates";
-import { CategoryTile } from "./ui";
-import { Gauge } from "./Gauge";
+import { CategoryTile } from "@/components/app/ui";
+import { Gauge } from "@/components/app/Gauge";
 
 /** The brief without its headline, which is already the drawer's title. */
 function briefBody(brief: string | null): string {
@@ -31,12 +31,10 @@ export function TaskPeek({
   project,
   open,
   onOpenChange,
-  onRemind,
 }: {
   project: DoerProject | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onRemind: (projectId: string) => void;
 }) {
   const reduceMotion = useReducedMotion();
   const timer = useWorkTimer();
@@ -75,10 +73,6 @@ export function TaskPeek({
                       description: taskTitle(project),
                     });
                   }}
-                  onRemind={() => {
-                    onOpenChange(false);
-                    onRemind(project.id);
-                  }}
                 />
               </motion.aside>
             </Dialog.Content>
@@ -93,12 +87,10 @@ function PeekBody({
   project,
   timerBusy,
   onTime,
-  onRemind,
 }: {
   project: DoerProject;
   timerBusy: boolean;
   onTime: () => void;
-  onRemind: () => void;
 }) {
   const status = statusDisplay(project.status, project.workingDocUrl);
   const review = project.status === "in_review" || project.status === "delivered";
@@ -176,21 +168,15 @@ function PeekBody({
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
         </Button>
-        <div className="grid grid-cols-2 gap-2.5">
-          <Button variant="outline" onClick={onRemind}>
-            <BellPlus className="h-4 w-4" aria-hidden="true" />
-            Remind me
-          </Button>
-          <Button
-            variant="outline"
-            onClick={onTime}
-            disabled={timerBusy}
-            title={timerBusy ? "Stop the timer on your other task first" : undefined}
-          >
-            <Play className="h-4 w-4" aria-hidden="true" />
-            Time it
-          </Button>
-        </div>
+        <Button
+          variant="outline"
+          onClick={onTime}
+          disabled={timerBusy}
+          title={timerBusy ? "Stop the timer on your other task first" : undefined}
+        >
+          <Play className="h-4 w-4" aria-hidden="true" />
+          Time it
+        </Button>
       </motion.div>
     </>
   );

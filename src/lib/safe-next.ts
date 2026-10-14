@@ -8,11 +8,13 @@
  * raw value through here first.
  */
 export function safeNext(raw: string | null | undefined): string {
-  if (!raw) return "/dashboard";
+  // /start sends a doer to Home until setup is finished, then to the dashboard.
+  const fallback = "/start";
+  if (!raw) return fallback;
   const value = raw.trim();
-  if (!value.startsWith("/")) return "/dashboard";
-  if (value.startsWith("//")) return "/dashboard";
-  if (/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(value)) return "/dashboard";
-  if (value.includes("\\") || value.includes("\n") || value.includes("\r")) return "/dashboard";
+  if (!value.startsWith("/")) return fallback;
+  if (value.startsWith("//")) return fallback;
+  if (/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(value)) return fallback;
+  if (value.includes("\\") || value.includes("\n") || value.includes("\r")) return fallback;
   return value;
 }

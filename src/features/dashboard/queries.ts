@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { qk } from "@/lib/query-keys";
 import { useAuth } from "@/providers/AuthProvider";
+import { MAX_ACTIVE_PROJECTS } from "@/lib/constants";
 import { useAvailabilityStore, isAtCap } from "@/stores/useAvailabilityStore";
+import { usePopupStore } from "@/stores/usePopupStore";
 import {
   fetchActiveProjects,
   fetchEarningsSummary,
@@ -40,10 +42,9 @@ export function usePoolPreview() {
  * Availability, the concurrency cap, and the link between them.
  *
  * Query owns the server truth; the Zustand store holds the optimistic value so the
- * toggle responds instantly. When the doer reaches the cap we flip availability to
- * unavailable, which is a real effect rather than a cosmetic one: doer_pool
- * requires profiles.available, so the board genuinely empties. The doer sees this
- * as "At capacity" rather than "Paused", because the system set it, not them.
+ * toggle responds instantly. Reaching the cap flips availability off (see
+ * useAvailabilityAutopilot), which is a real effect rather than a cosmetic one:
+ * doer_pool requires profiles.available, so the board genuinely empties.
  *
  * The cap itself is only a UI guardrail. claim_project_as_doer has no such
  * predicate and is directly callable, so this stops the button, not the claim.
@@ -84,15 +85,6 @@ export function useAvailability() {
 
   const atCap = isAtCap(activeCount);
 
-  // Auto-flip to unavailable on reaching the cap. Guarded on the server value so this
-  // fires once rather than on every render, and never fights a manual toggle.
-  useEffect(() => {
-    if (!atCap) return;
-    if (serverAvailable !== true) return;
-    if (mutation.isPending) return;
-    mutation.mutate(false);
-  }, [atCap, serverAvailable, mutation]);
-
   return {
     available,
     activeCount,
@@ -102,7 +94,80 @@ export function useAvailability() {
     setAvailable: (next: boolean) => {
       // At the cap the doer cannot mark themselves Available; the cap is the reason.
       if (next && atCap) return;
+      // A choice the doer makes by hand always wins over the automatic one.
+      writeAutoOff(false);
       mutation.mutate(next);
     },
   };
+}
+
+const AUTO_OFF_KEY = "dolancer.availability.autoOff";
+
+function readAutoOff(): boolean {
+  try {
+    return localStorage.getItem(AUTO_OFF_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function writeAutoOff(on: boolean): void {
+  try {
+    if (on) localStorage.setItem(AUTO_OFF_KEY, "1");
+    else localStorage.removeItem(AUTO_OFF_KEY);
+  } catch {
+    // Storage blocked: the switch still flips, it just will not flip back by itself.
+  }
+}
+
+/**
+ * Turns availability off when the third task lands, and back on when a slot frees
+ * up, but only if it was this that turned it off. A doer who switched off by hand
+ * stays off. Mounted once, in the app shell, so two toggles on screen never race.
+ */
+export function useAvailabilityAutopilot() {
+  const queryClient = useQueryClient();
+  const profile = useProfile();
+  const projects = useActiveProjects();
+  const push = usePopupStore((state) => state.push);
+  const busy = useRef(false);
+
+  const serverAvailable = profile.data?.available;
+  const count = projects.data?.length;
+
+  useEffect(() => {
+    if (serverAvailable === undefined || count === undefined || busy.current) return;
+    const full = isAtCap(count);
+    let next: boolean | null = null;
+    if (full && serverAvailable) next = false;
+    else if (!full && !serverAvailable && readAutoOff()) next = true;
+    else if (!full && serverAvailable) writeAutoOff(false);
+    if (next === null) return;
+
+    busy.current = true;
+    useAvailabilityStore.getState().setAvailable(next);
+    writeAutoOff(!next);
+    setAvailability(next)
+      .then(() => {
+        push(
+          next
+            ? { kind: "availability", title: "You are available again", body: "A slot is free, so new offers can reach you.", href: "/pool" }
+            : {
+                kind: "availability",
+                title: "Set to Not available",
+                body: `You have ${MAX_ACTIVE_PROJECTS} tasks. It turns back on when one is done.`,
+                href: "/work",
+              },
+        );
+      })
+      .catch(() => {
+        useAvailabilityStore.getState().setAvailable(!next);
+        writeAutoOff(false);
+      })
+      .finally(() => {
+        busy.current = false;
+        void queryClient.invalidateQueries({ queryKey: qk.profile() });
+        void queryClient.invalidateQueries({ queryKey: qk.pool.all() });
+      });
+  }, [serverAvailable, count, push, queryClient]);
 }

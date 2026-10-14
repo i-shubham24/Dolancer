@@ -14,10 +14,11 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
         <Toaster
           position="bottom-right"
           toastOptions={{
+            // Same soft white card as the app's pop-ups, so confirmations look of a piece.
             style: {
-              border: "2px solid #111111",
-              borderRadius: "10px",
-              boxShadow: "3px 3px 0px #111111",
+              border: "1px solid rgba(9, 14, 26, 0.06)",
+              borderRadius: "16px",
+              boxShadow: "0 18px 44px -14px rgba(11, 31, 58, 0.35)",
               fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
               fontWeight: 600,
             },

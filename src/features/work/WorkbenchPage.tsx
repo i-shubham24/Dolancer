@@ -1,43 +1,60 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useQueryClient } from "@tanstack/react-query";
-import { ArrowLeft, AlertTriangle, RotateCcw } from "lucide-react";
-import { Card } from "@/components/brutal/Card";
-import { CategoryPill } from "@/components/brutal/Pill";
-import { StatusBadge } from "@/components/brutal/StatusBadge";
-import { DeadlineBadge } from "@/components/brutal/DeadlineBadge";
+import { toast } from "sonner";
+import { AlertTriangle, CalendarClock, ChevronDown, Copy, FileSearch, IndianRupee, MessagesSquare, ListChecks, RotateCcw } from "lucide-react";
 import { Skeleton, LoadingAnnounce } from "@/components/brutal/Skeleton";
-import { LifecycleRail } from "@/components/ui/LifecycleRail";
-import { SupervisorCard } from "@/components/brutal/SupervisorCard";
-import { EmptyState, ErrorState } from "@/components/brutal/EmptyState";
+import { StatusBadge } from "@/components/brutal/StatusBadge";
 import { Button } from "@/components/ui/button";
+import { CARD, cardMotion } from "@/components/app/card-styles";
+import { CardGrid, EmptyPanel, PageHeader } from "@/components/app/page";
+import { CategoryTile, Segments } from "@/components/app/ui";
+import { Timeline } from "@/components/app/Timeline";
+import { cn } from "@/lib/cn";
 import { formatPaise } from "@/lib/paise";
-import { formatDateTime } from "@/lib/datetime";
-import { statusDisplay } from "@/lib/status";
-import { SUPERVISOR_LABEL } from "@/lib/constants";
+import { deadlineUrgency, relativeDeadline } from "@/lib/datetime";
+import { statusDisplay, timelineStep } from "@/lib/status";
+import { taskTitle } from "@/lib/task-title";
 import { qk } from "@/lib/query-keys";
 import { useProjectChanges } from "@/lib/realtime";
+import { formatDayShort, formatTime } from "@/features/calendar/dates";
 import { ChatPanel } from "@/features/chat/ChatPanel";
 import { useProject } from "./queries";
 import { WorkingLinkCard } from "./WorkingLinkCard";
-import { LifecycleActions } from "./LifecycleActions";
+import { ProgressCard, SubmitCard } from "./LifecycleActions";
+
+const URGENCY_TEXT = {
+  overdue: "text-danger-ink",
+  urgent: "text-danger-ink",
+  soon: "text-warning-ink",
+  comfortable: "text-ink-muted",
+  none: "text-ink-muted",
+} as const;
+
+/** The brief without its headline, which is already the page title. */
+function briefBody(brief: string | null): string {
+  const lines = brief?.trim().split("\n") ?? [];
+  return lines.slice(1).join("\n").trim();
+}
 
 /**
- * The workbench.
+ * The task page.
  *
- * Content on the left, a properties rail on the right, with the working link pinned
- * to the top of the rail because it gates everything below it. The rail is visually
- * part of the page rather than a walled-off panel.
+ * Everything needed to do the work sits on the left: pay and deadline, the
+ * timeline, the company workspace, progress, the checks before submitting, and
+ * the brief. The supervisor chat is fixed on the right so it stays in reach while
+ * scrolling. On a phone the two halves become tabs.
  *
- * The counterparty is rendered as SUPERVISOR_LABEL throughout. projects_doer carries no
- * client identity, so there is nothing else available to render even by accident.
+ * The counterparty is the supervisor throughout. projects_doer carries no client
+ * identity, so there is nothing else available to render even by accident.
  */
 export function WorkbenchPage() {
-  const reduceMotion = useReducedMotion();
   const { id = "" } = useParams();
   const project = useProject(id);
   const queryClient = useQueryClient();
+  const [tab, setTab] = useState<"details" | "chat">("details");
+  const [briefOpen, setBriefOpen] = useState(false);
 
   // The project broadcast is content free: it carries only the id, so a change
   // means "refetch", never "here is the new value". A supervisor bouncing the work
@@ -50,33 +67,39 @@ export function WorkbenchPage() {
 
   if (project.isLoading) {
     return (
-      <motion.div className="relative space-y-7" initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }}>
-        <div className="pointer-events-none absolute -left-24 top-16 -z-10 h-72 w-72 rounded-full bg-highlight-light/70 blur-3xl" aria-hidden="true" />
-        <LoadingAnnounce label="Loading this project" />
-        <Skeleton className="h-8 w-40" />
-        <Skeleton className="h-12 w-3/4" />
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
-          <Skeleton className="h-64 w-full rounded-xl" />
-          <Skeleton className="h-64 w-full rounded-xl" />
+      <div className="space-y-4">
+        <LoadingAnnounce label="Loading this task" />
+        <Skeleton className="h-4 w-24" />
+        <Skeleton className="h-9 w-2/3" />
+        <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_380px]">
+          <Skeleton className="h-96 w-full rounded-[20px]" />
+          <Skeleton className="h-96 w-full rounded-[20px]" />
         </div>
-      </motion.div>
+      </div>
     );
   }
 
   if (project.isError) {
     return (
-      <ErrorState
-        description="This project did not load."
-        onRetry={() => void project.refetch()}
+      <EmptyPanel
+        tone="danger"
+        icon={<AlertTriangle />}
+        title="This task did not load"
+        action={
+          <Button variant="outline" onClick={() => void project.refetch()}>
+            Try again
+          </Button>
+        }
       />
     );
   }
 
   if (!project.data) {
     return (
-      <EmptyState
-        title="Project not found"
-        description="This project either does not exist or is not assigned to you."
+      <EmptyPanel
+        icon={<FileSearch />}
+        title="Task not found"
+        body="It does not exist, or it is not assigned to you."
         action={
           <Button asChild>
             <Link to="/work">Back to my work</Link>
@@ -88,131 +111,184 @@ export function WorkbenchPage() {
 
   const data = project.data;
   const status = statusDisplay(data.status, data.workingDocUrl);
+  const due = data.deliveryAt ? new Date(data.deliveryAt) : null;
+  const urgency = deadlineUrgency(data.deliveryAt);
+  const body = briefBody(data.brief);
+  const paragraphs = body.split(/\n{2,}/).filter((part) => part.trim());
+  const changes = data.lastBounceReason || (data.revisionCount > 0 ? data.revisionReason : null);
+
+  async function copyId() {
+    try {
+      await navigator.clipboard.writeText(data.id);
+      toast.success("Task ID copied");
+    } catch {
+      toast.error("Could not copy. Select it and copy by hand.");
+    }
+  }
 
   return (
-    <motion.div className="relative space-y-7" initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }}>
-      <Link
-        to="/work"
-        className="-my-2 inline-flex items-center gap-1.5 py-2 text-sm font-bold text-ink-2 hover:text-ink"
-      >
-        <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
-        My work
-      </Link>
+    <div>
+      <PageHeader
+        back={{ to: "/work", label: "My work" }}
+        title={taskTitle(data)}
+        sub={
+          <span className="mt-1.5 flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center gap-2 text-xs font-bold text-ink-muted">
+              <CategoryTile category={data.category} className="h-6 w-6 rounded-md text-[9.5px]" />
+              {data.category}
+            </span>
+            <StatusBadge tone={status.tone} label={status.label} />
+          </span>
+        }
+      />
 
-      <header className="relative overflow-hidden rounded-[1.75rem] border border-line-card bg-gradient-to-br from-highlight-light/70 via-surface to-secondary-light/60 p-6 shadow-soft-md sm:p-8">
-        <div className="relative space-y-3">
-        <div className="flex flex-wrap items-center gap-2">
-          <CategoryPill>{data.category}</CategoryPill>
-          <StatusBadge tone={status.tone} label={status.label} />
-          <DeadlineBadge deadline={data.deliveryAt} />
-        </div>
-        <h1 className="break-words text-3xl font-extrabold leading-tight tracking-[-0.035em]">
-          {data.brief?.trim().split("\n")[0] || `${data.category} task`}
-        </h1>
-        <div className="mt-8 rounded-xl bg-surface/75 px-4 py-2 shadow-soft-sm backdrop-blur-md max-w-2xl">
-          <LifecycleRail 
-            currentStep={
-              data.status === "claimed" ? "assigned" :
-              data.status === "in_progress" ? "in_progress" :
-              data.status === "in_review" ? "in_review" :
-              data.status === "approved" || data.status === "paid" ? "approved" : "assigned"
-            } 
-          />
-        </div>
-        </div>
-      </header>
+      {/* On a phone the page splits into two tabs; side by side from large screens. */}
+      <Segments
+        label="Task view"
+        value={tab}
+        onChange={setTab}
+        className="mb-4 w-full lg:hidden [&>button]:flex-1"
+        options={[
+          { id: "details", label: "Details" },
+          { id: "chat", label: "Chat" },
+        ]}
+      />
 
-      {/* Rework notice sits above everything: it is the reason the work reopened. */}
-      {data.lastBounceReason ? (
-        <Card className="border bg-danger-bg">
-          <div className="flex items-start gap-2.5">
-            <RotateCcw className="mt-0.5 h-4 w-4 shrink-0 text-danger-ink" aria-hidden="true" />
-            <div>
-              <h2 className="text-sm font-extrabold text-danger-ink">Changes requested</h2>
-              <p className="mt-1 whitespace-pre-wrap text-sm leading-relaxed text-danger-ink/85">
-                {data.lastBounceReason}
-              </p>
-            </div>
-          </div>
-        </Card>
-      ) : null}
-
-      {data.qcBounceCount >= 2 ? (
-        <div className="flex items-start gap-2.5 rounded-xl border border-line-card bg-warning-bg px-4 py-3 shadow-soft-sm">
-          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-warning-ink" aria-hidden="true" />
-          <p className="text-xs font-semibold leading-snug text-warning-ink">
-            This work has come back {data.qcBounceCount} times. Talk to your supervisor before
-            resubmitting so the next round lands.
-          </p>
-        </div>
-      ) : null}
-
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
-        <div className="min-w-0 space-y-5">
-          <Card className="rounded-3xl border border-line-card shadow-soft-md">
-            <h2 className="text-xs font-extrabold uppercase tracking-[0.05em] text-ink-muted">
-              The brief
-            </h2>
-            <div className="mt-3 whitespace-pre-wrap text-sm leading-relaxed">
-              {data.brief?.trim() || "Your supervisor will share the detail here."}
-            </div>
-          </Card>
-
-          {data.revisionCount > 0 && data.revisionReason ? (
-            <Card className="rounded-3xl border border-line-card shadow-soft-md">
-              <h2 className="text-xs font-extrabold uppercase tracking-[0.05em] text-ink-muted">
-                Revision requested ({data.revisionCount})
+      <div className="grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(340px,400px)]">
+        <CardGrid className={cn("min-w-0", tab === "chat" && "hidden lg:grid")}>
+          {changes ? (
+            <motion.section variants={cardMotion} className={cn(CARD, "gap-2 bg-danger-bg ring-danger-dot/20")}>
+              <h2 className="flex items-center gap-2 text-[15px] font-extrabold text-danger-ink">
+                <RotateCcw className="h-4 w-4" aria-hidden="true" />
+                Changes asked for{data.revisionCount > 1 ? ` (${data.revisionCount} times)` : ""}
               </h2>
-              <p className="mt-2 whitespace-pre-wrap text-sm leading-relaxed text-ink-2">
-                {data.revisionReason}
-              </p>
-            </Card>
+              <p className="whitespace-pre-wrap text-sm leading-relaxed text-danger-ink/90">{changes}</p>
+              {data.qcBounceCount >= 2 ? (
+                <p className="text-xs font-bold text-danger-ink">
+                  This has come back {data.qcBounceCount} times. Talk to your supervisor before sending it again.
+                </p>
+              ) : null}
+            </motion.section>
           ) : null}
 
-          <ChatPanel projectId={data.id} />
+          {/* The three facts a doer checks first. */}
+          <motion.section variants={cardMotion} className={cn(CARD, "grid grid-cols-1 gap-3 min-[460px]:grid-cols-3")} aria-label="Key facts">
+            <div className="flex items-center gap-3 rounded-2xl bg-panel/60 p-3">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-success-bg text-success-ink" aria-hidden="true">
+                <IndianRupee className="h-[18px] w-[18px]" />
+              </span>
+              <div className="min-w-0">
+                <p className="text-[11px] font-bold text-ink-muted">You earn</p>
+                <p className="text-lg font-extrabold leading-tight tracking-[-0.02em] tabular-nums">{formatPaise(data.payoutPaise)}</p>
+                <p className="text-[10.5px] font-semibold text-ink-3">before tax</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 rounded-2xl bg-panel/60 p-3">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-info-bg text-primary" aria-hidden="true">
+                <CalendarClock className="h-[18px] w-[18px]" />
+              </span>
+              <div className="min-w-0">
+                <p className="text-[11px] font-bold text-ink-muted">Due</p>
+                <p className="truncate text-[15px] font-extrabold leading-tight">{due ? formatDayShort(due) : "Not set"}</p>
+                <p className={cn("text-[10.5px] font-bold", URGENCY_TEXT[urgency])}>
+                  {due ? `${formatTime(due)}, ${relativeDeadline(data.deliveryAt).toLowerCase()}` : "Ask your supervisor"}
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => void copyId()}
+              className="group flex items-center gap-3 rounded-2xl bg-panel/60 p-3 text-left transition-colors hover:bg-panel focus-visible:outline-2 focus-visible:outline-primary"
+              aria-label={`Copy task ID ${data.id.slice(0, 8)}`}
+            >
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-light text-violet" aria-hidden="true">
+                <Copy className="h-[18px] w-[18px]" />
+              </span>
+              <div className="min-w-0">
+                <p className="text-[11px] font-bold text-ink-muted">Task ID</p>
+                <p className="font-mono text-[15px] font-extrabold leading-tight">{data.id.slice(0, 8)}</p>
+                <p className="text-[10.5px] font-semibold text-ink-3 group-hover:text-primary">Tap to copy</p>
+              </div>
+            </button>
+          </motion.section>
+
+          <motion.section variants={cardMotion} className={cn(CARD, "gap-4")} aria-labelledby="timeline-title">
+            <h2 id="timeline-title" className="text-[15px] font-extrabold tracking-[-0.02em]">
+              Timeline
+            </h2>
+            {data.status === "cancelled" ? (
+              <p className="rounded-xl bg-neutral-bg px-3 py-2.5 text-sm font-bold text-neutral-ink">This task was cancelled.</p>
+            ) : (
+              <Timeline current={timelineStep(data.status)} />
+            )}
+          </motion.section>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <WorkingLinkCard workingDocUrl={data.workingDocUrl} />
+            <ProgressCard key={`${data.id}-${data.progressPct}`} project={data} />
+          </div>
+
+          <SubmitCard project={data} />
+
+          <motion.section variants={cardMotion} className={cn(CARD, "gap-3")} aria-labelledby="brief-title">
+            <h2 id="brief-title" className="flex items-center gap-2 text-[15px] font-extrabold tracking-[-0.02em]">
+              <ListChecks className="h-4 w-4 text-ink-muted" aria-hidden="true" />
+              The brief
+            </h2>
+            {paragraphs.length === 0 ? (
+              <p className="text-sm text-ink-2">Your supervisor will share the detail here.</p>
+            ) : (
+              <>
+                <p className="whitespace-pre-wrap text-sm leading-relaxed text-ink-2">{paragraphs[0]}</p>
+                <AnimatePresence initial={false}>
+                  {briefOpen && paragraphs.length > 1 ? (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.25 }}
+                      className="space-y-3 overflow-hidden"
+                    >
+                      {paragraphs.slice(1).map((part, index) => (
+                        <p key={index} className="whitespace-pre-wrap text-sm leading-relaxed text-ink-2">
+                          {part}
+                        </p>
+                      ))}
+                    </motion.div>
+                  ) : null}
+                </AnimatePresence>
+                {paragraphs.length > 1 ? (
+                  <button
+                    type="button"
+                    onClick={() => setBriefOpen((open) => !open)}
+                    aria-expanded={briefOpen}
+                    className="inline-flex items-center gap-1 self-start rounded-md text-xs font-bold text-primary focus-visible:outline-2 focus-visible:outline-primary"
+                  >
+                    {briefOpen ? "Show less" : "Read the full brief"}
+                    <ChevronDown className={cn("h-3.5 w-3.5 transition-transform", briefOpen && "rotate-180")} aria-hidden="true" />
+                  </button>
+                ) : null}
+              </>
+            )}
+          </motion.section>
+        </CardGrid>
+
+        {/* Fixed on the right while the details scroll. */}
+        <div className={cn("lg:sticky lg:top-6 lg:h-[calc(100dvh-3rem)]", tab === "details" && "hidden lg:block")}>
+          <ChatPanel projectId={data.id} fill className="h-[72dvh] lg:h-full" />
         </div>
-
-        <aside className="space-y-4" aria-label="Project details">
-          {/* Pinned first: it gates progress and submission. */}
-          <WorkingLinkCard
-            workingDocUrl={data.workingDocUrl}
-          />
-
-          <LifecycleActions project={data} />
-          
-          <SupervisorCard />
-
-          <Card>
-            <dl className="space-y-3 text-sm">
-              <div className="flex items-center justify-between gap-3">
-                <dt className="text-ink-muted">You earn</dt>
-                <dd className="text-lg font-extrabold tracking-[-0.02em]">
-                  {formatPaise(data.payoutPaise)}
-                </dd>
-              </div>
-              <div className="flex items-center justify-between gap-3 border-t border-line-subtle pt-3">
-                <dt className="text-ink-muted">Due</dt>
-                <dd className="text-right text-xs font-bold">
-                  {data.deliveryAt ? formatDateTime(data.deliveryAt) : "Not set"}
-                </dd>
-              </div>
-              <div className="flex items-center justify-between gap-3 border-t border-line-subtle pt-3">
-                <dt className="text-ink-muted">Work for</dt>
-                <dd className="text-xs font-bold">{SUPERVISOR_LABEL}</dd>
-              </div>
-              <div className="flex items-center justify-between gap-3 border-t border-line-subtle pt-3">
-                <dt className="text-ink-muted">Task ID</dt>
-                <dd className="font-mono text-xs font-bold" title={data.id}>
-                  {data.id.slice(0, 8)}
-                </dd>
-              </div>
-            </dl>
-            <p className="mt-3 border-t border-line-subtle pt-3 text-[11px] leading-snug text-ink-muted">
-              Payout is before tax. What was withheld appears on your earnings record.
-            </p>
-          </Card>
-        </aside>
       </div>
-    </motion.div>
+
+      {tab === "details" ? (
+        <button
+          type="button"
+          onClick={() => setTab("chat")}
+          className="fixed bottom-5 right-5 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-[0_12px_28px_-8px_rgba(10,101,192,0.7)] lg:hidden"
+          aria-label="Open chat with your supervisor"
+        >
+          <MessagesSquare className="h-6 w-6" aria-hidden="true" />
+        </button>
+      ) : null}
+    </div>
   );
 }

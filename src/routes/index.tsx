@@ -22,6 +22,15 @@ const AuthLayout = lazy(() =>
 const SignInPage = lazy(() =>
   import("@/features/auth/SignInPage").then((m) => ({ default: m.SignInPage })),
 );
+const HomePage = lazy(() =>
+  import("@/features/home/HomePage").then((m) => ({ default: m.HomePage })),
+);
+const GuidelinesPage = lazy(() =>
+  import("@/features/home/GuidelinesPage").then((m) => ({ default: m.GuidelinesPage })),
+);
+const StartRedirect = lazy(() =>
+  import("@/features/home/StartRedirect").then((m) => ({ default: m.StartRedirect })),
+);
 const DashboardPage = lazy(() =>
   import("@/features/dashboard/DashboardPage").then((m) => ({ default: m.DashboardPage })),
 );
@@ -53,6 +62,9 @@ const WorkPage = lazy(() =>
 );
 const WorkbenchPage = lazy(() =>
   import("@/features/work/WorkbenchPage").then((m) => ({ default: m.WorkbenchPage })),
+);
+const MessagesPage = lazy(() =>
+  import("@/features/messages/MessagesPage").then((m) => ({ default: m.MessagesPage })),
 );
 const EarningsPage = lazy(() =>
   import("@/features/earnings/EarningsPage").then((m) => ({ default: m.EarningsPage })),
@@ -157,9 +169,14 @@ export const router = createBrowserRouter([
     ),
     errorElement: <RouteError />,
     children: [
+      { path: "/start", element: page(<StartRedirect />) },
+      { path: "/home", element: page(<HomePage />) },
+      { path: "/guidelines", element: page(<GuidelinesPage />) },
       { path: "/dashboard", element: page(<DashboardPage />) },
       { path: "/work", element: page(<WorkPage />) },
       { path: "/work/:id", element: page(<WorkbenchPage />) },
+      { path: "/messages", element: page(<MessagesPage />) },
+      { path: "/messages/:threadId", element: page(<MessagesPage />) },
       { path: "/calendar", element: page(<CalendarPage />) },
       { path: "/pool", element: page(<PoolPage />) },
       { path: "/earnings", element: page(<EarningsPage />) },

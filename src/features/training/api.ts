@@ -9,6 +9,11 @@ export interface Lesson {
   title: string;
   moduleOrder: number | null;
   completed: boolean;
+  /** Null for the required modules; a work category for a free skill course. */
+  category: string | null;
+  /** Reading time, when it is known. */
+  minutes: number | null;
+  questionCount: number | null;
 }
 
 export interface LessonDetail {
@@ -17,6 +22,14 @@ export interface LessonDetail {
   body: string | null;
   moduleOrder: number | null;
   completed: boolean;
+  category: string | null;
+}
+
+/** About 180 words a minute, and never less than two. */
+export function readingMinutes(body: string | null | undefined): number | null {
+  if (!body) return null;
+  const words = body.trim().split(/\s+/).length;
+  return Math.max(2, Math.round(words / 180));
 }
 
 export interface LessonQuestion {
@@ -47,11 +60,14 @@ async function completedLessonIds(): Promise<Set<string>> {
 export async function fetchLessons(): Promise<Lesson[]> {
   if (isDemo()) {
     return demoRespond(() =>
-      demo.lessons.map(({ id, title, moduleOrder, completed }) => ({
+      demo.lessons.map(({ id, title, moduleOrder, completed, category, body, questions }) => ({
         id,
         title,
         moduleOrder,
         completed,
+        category,
+        minutes: readingMinutes(body),
+        questionCount: questions.length,
       })),
     );
   }
@@ -72,6 +88,10 @@ export async function fetchLessons(): Promise<Lesson[]> {
     title: row.title,
     moduleOrder: row.module_order,
     completed: done.has(row.id),
+    // The lessons table has no category yet, so every live lesson is a required one.
+    category: null,
+    minutes: null,
+    questionCount: null,
   }));
 }
 
@@ -80,8 +100,8 @@ export async function fetchLesson(lessonId: string): Promise<LessonDetail | null
     return demoRespond(() => {
       const lesson = demo.lessons.find((entry) => entry.id === lessonId);
       if (!lesson) return null;
-      const { id, title, body, moduleOrder, completed } = lesson;
-      return { id, title, body, moduleOrder, completed };
+      const { id, title, body, moduleOrder, completed, category } = lesson;
+      return { id, title, body, moduleOrder, completed, category };
     });
   }
 
@@ -104,6 +124,7 @@ export async function fetchLesson(lessonId: string): Promise<LessonDetail | null
     body: row.body,
     moduleOrder: row.module_order,
     completed: done.has(row.id),
+    category: null,
   };
 }
 

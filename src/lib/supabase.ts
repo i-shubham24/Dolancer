@@ -19,6 +19,13 @@ function getSecureStorage(): Storage | undefined {
   if (typeof window === "undefined") return undefined;
   try {
     window.localStorage.removeItem("dolancer.auth");
+    window.localStorage.removeItem("dolancer.auth.session");
+    for (let i = window.localStorage.length - 1; i >= 0; i--) {
+      const key = window.localStorage.key(i);
+      if (key && (key.startsWith("sb-") || key.includes("auth-token") || key.includes("dolancer.auth"))) {
+        window.localStorage.removeItem(key);
+      }
+    }
   } catch {
     // Ignore restricted storage contexts
   }

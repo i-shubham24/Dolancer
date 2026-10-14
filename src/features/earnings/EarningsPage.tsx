@@ -1,56 +1,66 @@
 import { useMemo, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import { motion, useReducedMotion } from "framer-motion";
-import { Wallet, Receipt, ReceiptText, Download } from "lucide-react";
-import { ColorStat } from "@/components/brutal/ColorStat";
-import { Card } from "@/components/brutal/Card";
+import { AlertTriangle, Download, ReceiptText } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { SkeletonCard, Skeleton, LoadingAnnounce } from "@/components/brutal/Skeleton";
-import { EmptyState, ErrorState } from "@/components/brutal/EmptyState";
+import { Select } from "@/components/ui/Select";
+import { gridMotion } from "@/components/app/card-styles";
+import { EmptyPanel, PageHeader } from "@/components/app/page";
+import { Panel, PanelHeader } from "@/components/app/ui";
 import { formatPaise } from "@/lib/paise";
 import { formatDate } from "@/lib/datetime";
-import { fyLabel, fyOptions, inFinancialYear } from "@/lib/fy";
+import { fyLabel, fyOptions, fyStartYear, inFinancialYear } from "@/lib/fy";
 import { qk } from "@/lib/query-keys";
+import { taskTitle } from "@/lib/task-title";
+import { useProjects } from "@/features/work/queries";
+import { MoneyStats } from "@/features/dashboard/StatCards";
+import { PaidChart } from "@/features/dashboard/PaidChart";
+import { MoneySplitCard } from "@/features/dashboard/FinanceCards";
 import { fetchEarningsSummary, fetchLedger } from "./api";
 
 /**
  * Earnings.
  *
- * Two headline figures, and both are real. A "Pending" or "Clearing" balance is
- * deliberately absent: ledger_doer holds only released legs and razorpay_payouts
- * is unreadable to a doer, so any such number would be fabricated. A made-up
- * figure about someone's money is worse than an omitted one, and a zero that never
- * moves reads as "you have earned nothing".
+ * Every figure is real. A "Pending" or "Clearing" balance is deliberately absent:
+ * ledger_doer holds only released legs and razorpay_payouts is unreadable to a
+ * doer, so any such number would be fabricated. A made-up figure about someone's
+ * money is worse than an omitted one.
  *
- * Gross, tax withheld and net are always shown as three separate numbers that
- * reconcile, never blended, because TDS is a statutory withholding a doer has to be
- * able to check against their own filing.
+ * Gross, tax withheld and net are always separate numbers that reconcile, never
+ * blended, because TDS is a statutory withholding a doer has to be able to check
+ * against their own filing.
  */
 export function EarningsPage() {
   const reduceMotion = useReducedMotion();
   const summary = useQuery({ queryKey: qk.earnings.summary(), queryFn: fetchEarningsSummary });
   const ledger = useQuery({ queryKey: qk.earnings.ledger(), queryFn: fetchLedger });
+  const closed = useProjects("closed");
   const [fy, setFy] = useState<string>("all");
 
-  const years = useMemo(
-    () => fyOptions((ledger.data ?? []).map((row) => row.createdAt)),
-    [ledger.data],
+  const rows = useMemo(() => ledger.data ?? [], [ledger.data]);
+  const years = useMemo(() => fyOptions(rows.map((row) => row.createdAt)), [rows]);
+  const visible = useMemo(
+    () => (fy === "all" ? rows : rows.filter((row) => inFinancialYear(row.createdAt, Number(fy)))),
+    [rows, fy],
   );
-  const visible = useMemo(() => {
-    const rows = ledger.data ?? [];
-    if (fy === "all") return rows;
-    return rows.filter((row) => inFinancialYear(row.createdAt, Number(fy)));
-  }, [ledger.data, fy]);
+  const titles = useMemo(() => {
+    const map = new Map<string, string>();
+    for (const project of closed.data ?? []) map.set(project.id, taskTitle(project));
+    return map;
+  }, [closed.data]);
+
+  const thisYear = fyStartYear(new Date());
+  const yearRows = rows.filter((row) => inFinancialYear(row.createdAt, thisYear));
 
   function exportCsv() {
     const escape = (value: string) => `"${value.replace(/"/g, '""')}"`;
     const lines = [
-      "Released,Project,Gross (INR)",
+      "Released,Task,Gross (INR)",
       ...visible.map((row) =>
         [
           escape(new Date(row.createdAt).toLocaleDateString("en-IN")),
-          escape(row.projectId),
+          escape(titles.get(row.projectId) ?? row.projectId),
           (row.amountPaise / 100).toFixed(2),
         ].join(","),
       ),
@@ -67,213 +77,110 @@ export function EarningsPage() {
   }
 
   return (
-    <motion.div
-      className="relative space-y-7 overflow-hidden rounded-[2rem] px-1 py-1 sm:px-2"
-      initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-    >
-      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-highlight/10 blur-3xl" aria-hidden="true" />
-      <div className="pointer-events-none absolute -right-20 top-40 h-64 w-64 rounded-full bg-secondary/10 blur-3xl" aria-hidden="true" />
-      <header className="relative flex flex-col gap-4 rounded-3xl bg-surface/70 px-5 py-6 backdrop-blur-sm sm:px-7">
-        <div>
-        <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-secondary">
-          Verified ledger · transparent settlement
-        </p>
-        <h1 className="text-3xl font-extrabold tracking-[-0.035em] sm:text-4xl">Earnings &amp; ledger</h1>
-        <p className="mt-2 max-w-xl text-md text-ink-2">
-          What you have been paid, and what was withheld getting there.
-        </p>
-        </div>
-      </header>
+    <div className="dash-wrap">
+      <PageHeader
+        eyebrow="Money"
+        title="Earnings"
+        sub="What you were paid, and what was withheld."
+        actions={
+          <Button variant="outline" onClick={exportCsv} disabled={visible.length === 0}>
+            <Download className="h-4 w-4" aria-hidden="true" />
+            Export CSV
+          </Button>
+        }
+      />
 
       {summary.isError ? (
-        <ErrorState
-          description="Your earnings did not load."
-          onRetry={() => void summary.refetch()}
-        />
-      ) : (
-        <div className="grid gap-4 sm:grid-cols-2">
-          <ColorStat
-            tone="accent"
-            label="Paid out to date"
-            value={formatPaise(summary.data?.netPaise ?? 0)}
-            subtext="Released to you, net of tax withheld"
-            icon={<Wallet />}
-            loading={summary.isLoading}
-          />
-          <ColorStat
-            tone="secondary"
-            label="Tax withheld"
-            value={formatPaise(summary.data?.taxWithheldPaise ?? 0)}
-            subtext="Cumulative TDS and GST, financial year to date"
-            icon={<Receipt />}
-            loading={summary.isLoading}
-          />
-        </div>
-      )}
-
-      <Card className="relative overflow-hidden bg-white/90">
-        <h2 className="text-xs font-extrabold uppercase tracking-[0.05em] text-ink-muted">
-          How that reconciles
-        </h2>
-        <dl className="mt-4 space-y-3">
-          <div className="flex items-baseline justify-between gap-4">
-            <dt className="text-sm text-ink-2">Gross released</dt>
-            <dd className="text-lg font-bold tabular-nums">
-              {summary.isLoading ? (
-                <Skeleton className="h-5 w-20" />
-              ) : (
-                formatPaise(summary.data?.grossPaise ?? 0)
-              )}
-            </dd>
-          </div>
-          <div className="flex items-baseline justify-between gap-4 border-t border-line-subtle pt-3">
-            <dt className="text-sm text-ink-2">
-              Tax withheld
-              <span className="ml-1.5 text-xs text-ink-muted">(TDS and GST)</span>
-            </dt>
-            <dd className="text-lg font-bold tabular-nums text-danger-ink">
-              {summary.isLoading ? (
-                <Skeleton className="h-5 w-20" />
-              ) : (
-                `- ${formatPaise(summary.data?.taxWithheldPaise ?? 0)}`
-              )}
-            </dd>
-          </div>
-          <div className="flex items-baseline justify-between gap-4 border-t border-line-subtle pt-3">
-            <dt className="text-md font-extrabold">You received</dt>
-            <dd className="text-2xl font-extrabold tabular-nums tracking-[-0.03em]">
-              {summary.isLoading ? (
-                <Skeleton className="h-7 w-28" />
-              ) : (
-                formatPaise(summary.data?.netPaise ?? 0)
-              )}
-            </dd>
-          </div>
-        </dl>
-        <p className="mt-4 border-t border-line-subtle pt-3 text-[11px] leading-snug text-ink-muted">
-          Tax is withheld when a payout is released, calculated on your cumulative earnings
-          across the financial year rather than per project. Rates follow the country on your
-          profile.
-        </p>
-      </Card>
-
-      <section aria-labelledby="history" className="space-y-4">
-        <div className="flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <h2 id="history" className="text-2xl font-extrabold tracking-[-0.03em]">
-              Payout history
-            </h2>
-            <p className="mt-1 text-xs text-ink-muted">
-              Totals above are all time. The list below can be narrowed by financial year.
-            </p>
-          </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <label htmlFor="fy" className="text-xs font-bold text-ink-2">
-              Financial year
-            </label>
-            <select
-              id="fy"
-              value={fy}
-              onChange={(event) => setFy(event.target.value)}
-              className="rounded-full border border-line-card bg-white px-3 py-2 text-xs font-bold shadow-soft-sm outline-none transition focus:border-secondary focus:ring-4 focus:ring-secondary/10"
-            >
-              <option value="all">All years</option>
-              {years.map((year) => (
-                <option key={year} value={String(year)}>
-                  {fyLabel(year)}
-                </option>
-              ))}
-            </select>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={exportCsv}
-              disabled={visible.length === 0}
-            >
-              <Download className="h-3.5 w-3.5" aria-hidden="true" />
-              Export CSV
+        <EmptyPanel
+          tone="danger"
+          icon={<AlertTriangle />}
+          title="Earnings did not load"
+          action={
+            <Button variant="outline" onClick={() => void summary.refetch()}>
+              Try again
             </Button>
-          </div>
-        </div>
+          }
+          className="mb-4"
+        />
+      ) : null}
 
-        {ledger.isLoading ? (
-          <div className="space-y-3">
-            <LoadingAnnounce label="Loading your payout history" />
-            <SkeletonCard />
-          </div>
-        ) : ledger.isError ? (
-          <ErrorState
-            description="Your payout history did not load."
-            onRetry={() => void ledger.refetch()}
-          />
-        ) : !ledger.data?.length ? (
-          <EmptyState
-            icon={<ReceiptText className="h-6 w-6" aria-hidden="true" />}
-            title="No payouts yet"
-            description="Once a project you delivered is approved and released, it shows up here with what you were paid."
-          />
-        ) : visible.length === 0 ? (
-          <EmptyState
-            icon={<ReceiptText className="h-6 w-6" aria-hidden="true" />}
-            title="Nothing in this year"
-            description="No payouts were released in the selected financial year. Try another year."
-            action={
-              <Button variant="outline" onClick={() => setFy("all")}>
-                Show all years
-              </Button>
+      <motion.div className="fin-grid" variants={gridMotion} initial={reduceMotion ? false : "hidden"} animate="show">
+        <MoneyStats
+          linkTo=""
+          earnings={summary.data}
+          loading={summary.isLoading}
+          error={summary.isError}
+          yearPaise={yearRows.reduce((sum, row) => sum + row.amountPaise, 0)}
+          yearCount={yearRows.length}
+          yearLabel={fyLabel(thisYear)}
+        />
+        <PaidChart rows={rows} loading={ledger.isLoading} />
+        <MoneySplitCard earnings={summary.data} loading={summary.isLoading} />
+
+        <Panel className="[grid-area:pays]" aria-labelledby="history">
+          <PanelHeader
+            id="history"
+            title="Payout history"
+            sub="Gross released for each task. Tax is worked out across the year."
+            right={
+              years.length > 0 ? (
+                <Select
+                  label="Financial year"
+                  value={fy}
+                  onChange={setFy}
+                  options={[{ value: "all", label: "All years" }, ...years.map((year) => ({ value: String(year), label: `FY ${fyLabel(year)}` }))]}
+                  className="h-9 rounded-full bg-panel px-3.5 text-xs font-bold text-ink-2 hover:bg-hover"
+                />
+              ) : null
             }
           />
-        ) : (
-          <Card className="overflow-hidden bg-white/95 p-0">
-            {/* Wide content scrolls inside its own container, never the page body. */}
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[32rem] border-collapse text-sm">
-                <caption className="sr-only">Your released payouts</caption>
-                <thead>
-                  <tr className="border-b border-line-subtle bg-subtle text-left">
-                    <th scope="col" className="px-4 py-3 text-2xs font-extrabold uppercase tracking-[0.05em]">
-                      Released
-                    </th>
-                    <th scope="col" className="px-4 py-3 text-2xs font-extrabold uppercase tracking-[0.05em]">
-                      Project
-                    </th>
-                    <th scope="col" className="px-4 py-3 text-right text-2xs font-extrabold uppercase tracking-[0.05em]">
-                      Amount
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {visible.map((row) => (
-                    <tr key={row.id} className="border-b border-line-subtle last:border-0">
-                      <td className="whitespace-nowrap px-4 py-3 font-semibold">
-                        {formatDate(row.createdAt)}
-                      </td>
-                      <td className="px-4 py-3">
-                        <Link
-                          to={`/work/${row.projectId}`}
-                          className="-my-2 inline-block py-2 font-mono text-xs font-bold text-secondary underline decoration-2 underline-offset-2 hover:text-secondary-hover"
-                        >
-                          {row.projectId.slice(0, 8)}
-                        </Link>
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-3 text-right font-extrabold tabular-nums">
-                        {formatPaise(row.amountPaise)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          {ledger.isLoading ? (
+            <div className="space-y-2">
+              <div className="skeleton h-14 w-full rounded-2xl" />
+              <div className="skeleton h-14 w-full rounded-2xl" />
             </div>
-            <p className="border-t border-line-subtle bg-surface-2 px-4 py-3 text-[11px] leading-snug text-ink-muted">
-              Amounts shown are the gross released for each project. Tax is withheld across
-              your financial year rather than per project, so the totals above are where the
-              two reconcile.
-            </p>
-          </Card>
-        )}
-      </section>
-    </motion.div>
+          ) : ledger.isError ? (
+            <div className="flex flex-col items-center gap-3 rounded-2xl bg-panel/60 p-6 text-center">
+              <p className="text-sm font-bold">Payout history did not load.</p>
+              <Button variant="outline" size="sm" onClick={() => void ledger.refetch()}>
+                Try again
+              </Button>
+            </div>
+          ) : visible.length === 0 ? (
+            <div className="flex flex-1 flex-col items-center justify-center gap-2 rounded-2xl bg-panel/60 px-4 py-8 text-center">
+              <ReceiptText className="h-5 w-5 text-ink-3" aria-hidden="true" />
+              <p className="text-xs font-semibold text-ink-muted">
+                {rows.length === 0 ? "No payouts yet. Approved tasks show up here once paid." : "Nothing paid in this year."}
+              </p>
+            </div>
+          ) : (
+            <ul className="flex flex-col gap-2">
+              {visible.map((row, index) => (
+                <motion.li
+                  key={row.id}
+                  initial={reduceMotion ? false : { opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: reduceMotion ? 0 : 0.2 + index * 0.05 }}
+                >
+                  <Link
+                    to={`/work/${row.projectId}`}
+                    className="flex items-center gap-3 rounded-2xl bg-panel/60 p-2.5 pr-3.5 transition-colors hover:bg-panel focus-visible:outline-2 focus-visible:outline-primary"
+                  >
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-success-bg text-success-ink" aria-hidden="true">
+                      <ReceiptText className="h-[18px] w-[18px]" />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-[13.5px] font-bold">{titles.get(row.projectId) ?? "A finished task"}</span>
+                      <span className="block text-xs font-semibold text-ink-muted">Released {formatDate(row.createdAt)}</span>
+                    </span>
+                    <span className="shrink-0 text-[15px] font-extrabold tabular-nums">{formatPaise(row.amountPaise)}</span>
+                  </Link>
+                </motion.li>
+              ))}
+            </ul>
+          )}
+        </Panel>
+      </motion.div>
+    </div>
   );
 }

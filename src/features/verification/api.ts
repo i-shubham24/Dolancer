@@ -2,7 +2,7 @@ import { supabase } from "@/lib/supabase";
 import { callRpc, unwrap } from "@/lib/rpc";
 import { selectColumns } from "@/lib/select";
 import { BUCKETS } from "@/lib/constants";
-import { demo, demoRespond, isDemo } from "@/lib/demo-data";
+import { demo, demoApproveKycSoon, demoRespond, isDemo } from "@/lib/demo-data";
 import type { KycRow, KycStatus } from "@/types/database";
 
 export const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
@@ -105,18 +105,35 @@ export async function setPayoutMethod(input: PayoutInput): Promise<PayoutResult>
   return data as PayoutResult;
 }
 
+export const PAN_PATTERN = /^[A-Z]{5}[0-9]{4}[A-Z]$/;
+export const IFSC_PATTERN = /^[A-Z]{4}0[A-Z0-9]{6}$/;
+
+/** Names compared the way a person would: case, dots and extra spaces ignored. */
+export function sameName(a: string, b: string): boolean {
+  const clean = (value: string) => value.toLowerCase().replace(/\./g, " ").replace(/\s+/g, " ").trim();
+  return clean(a).length > 0 && clean(a) === clean(b);
+}
+
 export async function submitKyc(input: {
+  /** A photo of the PAN card. */
   document: File;
+  /** A clear photo of the doer, for their profile. */
   selfie: File;
   payout: PayoutInput;
+  panNumber: string;
 }): Promise<KycStatus> {
-  // Nothing is uploaded or stored in the demo; the submission just goes to review.
+  // Nothing is uploaded or stored in the demo; the submission goes to review and is
+  // approved a few seconds later, so the whole journey can be walked through.
   if (isDemo()) {
     return demoRespond(() => {
       demo.kyc = "submitted";
+      demoApproveKycSoon();
       return demo.kyc;
     });
   }
+
+  // submit_kyc takes the two file references only. The PAN number is checked here and
+  // read by the reviewer from the card photo until the RPC has a parameter for it.
 
   // Payout first: it is the step most likely to be rejected by the provider, and
   // failing here before any document is stored avoids orphaned uploads.

@@ -19,8 +19,8 @@ const NAV = [
 function Wordmark({ onClick }: { onClick?: () => void }) {
   return (
     <Link to="/" onClick={onClick} className="flex items-center gap-2.5">
-      <Logo size="md" variant="nav" />
-      <span className="text-xl font-bold tracking-tight text-slate-900 font-display">
+      <Logo size="lg" variant="nav" className="sm:h-12 sm:w-12" />
+      <span className="text-[22px] font-bold tracking-tight text-slate-900 font-display sm:text-2xl">
         Dolancer<span className="text-[#0a65c0]">.</span>
       </span>
     </Link>

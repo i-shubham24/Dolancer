@@ -12,6 +12,7 @@ import type {
 } from "@/types/database";
 import type { DoerGateState, DoerProject, EarningsSummary, PoolOffer } from "@/types/domain";
 import { env } from "./env";
+import { SKILL_AREAS, skillId } from "@/features/skills/catalog";
 
 /**
  * Demo mode: the whole app on in-memory sample data, with no backend.
@@ -291,9 +292,13 @@ const taxWithheldPaise = Math.round(grossPaise / 10);
  * Open work on the board. The Copywriting brief stays hidden until a Copywriting
  * skill is picked, which is how the real board matches work to skills.
  */
+const BUYERS_GUIDE_ID = "9e3d5b18-2f6a-4c7e-b9a1-4d8c0e6f2a53";
+const EMAIL_SEQUENCE_ID = "0e5c9a2b-4d86-4f13-b7e0-9a1d6c3f8e47";
+const SEO_PAGES_ID = "1c6a8e40-7b3d-4f29-a6e5-0d2f9b4c7e81";
+
 const pool: PoolOffer[] = [
   {
-    id: "9e3d5b18-2f6a-4c7e-b9a1-4d8c0e6f2a53",
+    id: BUYERS_GUIDE_ID,
     category: "Writing & Content",
     status: "paid",
     payoutPaise: 1_200_000,
@@ -304,7 +309,7 @@ const pool: PoolOffer[] = [
       "A 3,000-word guide comparing five tools on pricing, integrations and fit for teams of 10 to 50 people. Include a summary table and a short verdict for each tool. Research notes are provided.",
   },
   {
-    id: "0e5c9a2b-4d86-4f13-b7e0-9a1d6c3f8e47",
+    id: EMAIL_SEQUENCE_ID,
     category: "Writing & Content",
     status: "paid",
     payoutPaise: 650_000,
@@ -315,7 +320,7 @@ const pool: PoolOffer[] = [
       "Five emails that take a new subscriber from sign-up to their first workout, with subject lines, preview text, and an A/B variant of the first email.",
   },
   {
-    id: "1c6a8e40-7b3d-4f29-a6e5-0d2f9b4c7e81",
+    id: SEO_PAGES_ID,
     category: "Marketing",
     status: "paid",
     payoutPaise: 750_000,
@@ -349,11 +354,12 @@ const pool: PoolOffer[] = [
   },
 ];
 
-const supervisorSays = (id: string, body: string, createdAt: string): ChatMessage => ({
+const supervisorSays = (id: string, body: string, createdAt: string, offerId?: string): ChatMessage => ({
   id,
   authorId: SUPERVISOR_ID,
   body,
   createdAt,
+  offerId: offerId ?? null,
 });
 
 const doerSays = (id: string, body: string, createdAt: string): ChatMessage => ({
@@ -363,6 +369,42 @@ const doerSays = (id: string, body: string, createdAt: string): ChatMessage => (
   createdAt,
 });
 
+/** Picked at the start, so the board has work to show. */
+const SEEDED_PICKS = new Set(["Blog writing", "Content writing", "SEO writing", "Social media copy"]);
+
+function seedSkills(): SkillOption[] {
+  return SKILL_AREAS.flatMap((area) =>
+    area.skills.map((name) => ({ id: skillId(name), name, category: area.name, selected: SEEDED_PICKS.has(name) })),
+  );
+}
+
+/** A free skill course: a short read and a two-question check. */
+function skillCourse(
+  id: string,
+  title: string,
+  category: string,
+  moduleOrder: number,
+  completed: boolean,
+  body: string,
+  quiz: [prompt: string, options: string[], answer: number][],
+): DemoLesson {
+  return {
+    id,
+    title,
+    category,
+    moduleOrder,
+    completed,
+    body,
+    questions: quiz.map(([prompt, options], index) => ({
+      id: `${id}-q${index + 1}`,
+      prompt,
+      options,
+      sortOrder: index + 1,
+    })),
+    answerKey: quiz.map(([, , answer]) => answer),
+  };
+}
+
 /* ------------------------------------------------------------------ */
 /*  State                                                              */
 /* ------------------------------------------------------------------ */
@@ -371,6 +413,22 @@ interface DemoLesson extends LessonDetail {
   questions: LessonQuestion[];
   /** The 1-based correct option for each question, in order. Only grading reads it. */
   answerKey: number[];
+}
+
+/** Someone who joined with the doer's link, and how far along they are. */
+export interface ReferralInvitee {
+  id: string;
+  name: string | null;
+  createdAt: string;
+  stage: "joined" | "verified" | "earned";
+}
+
+interface DemoInvite {
+  threadId: string;
+  offerId: string;
+  title: string;
+  category: string;
+  createdAt: string;
 }
 
 interface DemoState {
@@ -384,7 +442,9 @@ interface DemoState {
   kyc: KycStatus;
   rating: { average: number | null; count: number; level: string };
   application: DoerApplicationRow | null;
-  referrals: { code: string; invited: { id: string; createdAt: string; joined: boolean }[] };
+  referrals: { code: string; invited: ReferralInvitee[] };
+  /** Supervisors reaching out about new work, before anything is accepted. */
+  invites: DemoInvite[];
   notifications: NotificationRow[];
   /** Keyed by thread id. */
   messages: Record<string, ChatMessage[]>;
@@ -409,28 +469,12 @@ export const demo: DemoState = {
   earnings: { grossPaise, taxWithheldPaise, netPaise: grossPaise - taxWithheldPaise },
   ledger,
 
-  skills: [
-    { id: "skill-blog", name: "Blog writing", category: "Writing & Content", selected: true },
-    { id: "skill-content", name: "Content writing", category: "Writing & Content", selected: true },
-    { id: "skill-case-studies", name: "Case studies", category: "Writing & Content", selected: false },
-    { id: "skill-whitepapers", name: "Whitepapers", category: "Writing & Content", selected: false },
-    { id: "skill-seo-writing", name: "SEO writing", category: "Marketing", selected: true },
-    { id: "skill-keywords", name: "Keyword research", category: "Marketing", selected: false },
-    { id: "skill-on-page", name: "On-page SEO", category: "Marketing", selected: false },
-    { id: "skill-social-copy", name: "Social media copy", category: "Marketing", selected: true },
-    { id: "skill-calendars", name: "Content calendars", category: "Marketing", selected: false },
-    { id: "skill-ad-copy", name: "Ad copy", category: "Writing & Content", selected: false },
-    { id: "skill-email", name: "Email campaigns", category: "Writing & Content", selected: false },
-    { id: "skill-landing", name: "Landing pages", category: "Writing & Content", selected: false },
-    { id: "skill-slides", name: "Presentation design", category: "Design", selected: false },
-    { id: "skill-graphics", name: "Social graphics", category: "Design", selected: false },
-    { id: "skill-market", name: "Market research", category: "Research & Business", selected: false },
-    { id: "skill-surveys", name: "Survey analysis", category: "Research & Business", selected: false },
-  ],
+  skills: seedSkills(),
 
   lessons: [
     {
       id: "lesson-1",
+      category: null,
       title: "How work reaches you",
       moduleOrder: 1,
       completed: true,
@@ -467,6 +511,7 @@ export const demo: DemoState = {
     },
     {
       id: "lesson-2",
+      category: null,
       title: "Quality standards and delivery",
       moduleOrder: 2,
       completed: true,
@@ -502,9 +547,10 @@ export const demo: DemoState = {
     },
     {
       id: "lesson-3",
+      category: null,
       title: "Working with your supervisor",
       moduleOrder: 3,
-      completed: true,
+      completed: false,
       body:
         "Your supervisor is your only point of contact on a project. You never deal with the client directly, and the client never learns who you are.\n\n" +
         "Ask early. A short message when something in the brief is unclear saves a round of changes later.\n\n" +
@@ -530,9 +576,94 @@ export const demo: DemoState = {
       ],
       answerKey: [2, 3],
     },
+    skillCourse(
+      "course-blog",
+      "Blog posts that people finish",
+      "Writing & Content",
+      10,
+      true,
+      "Start with the reader's problem in the first two lines. If the opening could fit any post, rewrite it.\n\n" +
+        "Use headings that say something. A reader who skims only the H2s should still get the main points.\n\n" +
+        "End each section with one clear step the reader can take today. Cut any paragraph that does not move them closer to it.",
+      [
+        ["What should the first two lines do?", ["Introduce the writer", "Name the reader's problem", "List every keyword", "Thank the reader"], 2],
+        ["A reader skims only your H2 headings. What should they get?", ["Nothing, headings are decoration", "The main points of the post", "The author's name", "The word count"], 2],
+      ],
+    ),
+    skillCourse(
+      "course-email",
+      "Email sequences that get opened",
+      "Writing & Content",
+      11,
+      false,
+      "Each email in a sequence has one job. Write that job down before you write the email.\n\n" +
+        "Subject lines work best when they are short and specific. Say what is inside, not how exciting it is.\n\n" +
+        "Keep to one link per email where you can. More choices usually mean fewer clicks.",
+      [
+        ["How many jobs should one email in a sequence have?", ["One", "Three", "As many as fit", "None, it is just a reminder"], 1],
+        ["What makes a subject line work?", ["Capital letters", "Short and specific", "Lots of punctuation", "Being as long as possible"], 2],
+      ],
+    ),
+    skillCourse(
+      "course-captions",
+      "Social captions in a brand voice",
+      "Marketing",
+      12,
+      false,
+      "Read the brand's last twenty posts before you write one. Note the words they use and the ones they never use.\n\n" +
+        "Lead with the hook. On most platforms only the first line shows before the cut.\n\n" +
+        "Write two versions of any caption you are unsure about, and say which one you prefer and why.",
+      [
+        ["What should you read before writing for a brand?", ["Their recent posts", "Their annual report", "Only competitor ads", "Nothing, start fresh"], 1],
+        ["Why lead with the hook?", ["It is a legal rule", "Often only the first line shows", "It makes the caption longer", "Hashtags need it"], 2],
+      ],
+    ),
+    skillCourse(
+      "course-seo",
+      "On-page SEO in one sitting",
+      "Marketing",
+      13,
+      false,
+      "Every page needs one main keyword. Put it in the title, the first paragraph and one heading, then write for people.\n\n" +
+        "Keep titles under 60 characters and meta descriptions under 155, so search results do not cut them off.\n\n" +
+        "Link to two or three related pages on the same site, using words that say where the link goes.",
+      [
+        ["How many main keywords should one page aim for?", ["One", "Five", "Ten", "As many as possible"], 1],
+        ["Why keep meta descriptions under 155 characters?", ["Search results cut longer ones", "The page loads faster", "It hides the keyword", "Nobody reads them"], 1],
+      ],
+    ),
+    skillCourse(
+      "course-slides",
+      "Slides that read at a glance",
+      "Design",
+      14,
+      false,
+      "One idea per slide. If a slide needs two headings, it is two slides.\n\n" +
+        "Write the heading as the takeaway, not the topic. Costs fell 20% says more than Costs.\n\n" +
+        "Leave space. A slide with room around its content looks more sure of itself than one filled to the edges.",
+      [
+        ["How many ideas should one slide carry?", ["One", "Two", "Three", "As many as fit"], 1],
+        ["Which heading is better?", ["Costs", "Costs fell 20%", "Slide 4", "Update"], 2],
+      ],
+    ),
+    skillCourse(
+      "course-research",
+      "Market research in a day",
+      "Research & Business",
+      15,
+      false,
+      "Write the question the brief asks at the top of your doc. Every source you add should help answer it.\n\n" +
+        "Use at least three kinds of source: public data, company pages, and real customer voices such as reviews.\n\n" +
+        "Put a one-paragraph answer before the detail. Busy readers may stop there.",
+      [
+        ["What goes at the top of your research doc?", ["The question you need to answer", "Your sources", "A cover image", "Your name"], 1],
+        ["Where should the short answer go?", ["Before the detail", "In an appendix", "Nowhere, let them read it all", "Only in the chat"], 1],
+      ],
+    ),
   ],
 
-  kyc: "approved",
+  // Not verified, so the verification steps and the welcome checklist can be walked through.
+  kyc: "pending",
 
   // L2 needs an average of 4.7 across at least 15 ratings, so these agree.
   rating: { average: 4.8, count: 18, level: "L2" },
@@ -547,10 +678,28 @@ export const demo: DemoState = {
   referrals: {
     code: "SHUBHAM2026",
     invited: [
-      { id: "invitee-1", createdAt: daysAgo(40), joined: true },
-      { id: "invitee-2", createdAt: daysAgo(12), joined: true },
+      { id: "invitee-1", name: "Priya Sharma", createdAt: daysAgo(40), stage: "earned" },
+      { id: "invitee-2", name: "Rahul Verma", createdAt: daysAgo(12), stage: "verified" },
+      { id: "invitee-3", name: "Ananya Iyer", createdAt: daysAgo(3), stage: "joined" },
     ],
   },
+
+  invites: [
+    {
+      threadId: "invite-seo-pages",
+      offerId: SEO_PAGES_ID,
+      title: "On-page SEO pass for 20 landing pages",
+      category: "Marketing",
+      createdAt: daysAgo(0.2),
+    },
+    {
+      threadId: "invite-buyers-guide",
+      offerId: BUYERS_GUIDE_ID,
+      title: "Buyer's guide to project management tools",
+      category: "Writing & Content",
+      createdAt: daysAgo(1.1),
+    },
+  ],
 
   notifications: [
     {
@@ -647,6 +796,23 @@ export const demo: DemoState = {
         daysAgo(0.5),
       ),
     ],
+    "invite-seo-pages": [
+      supervisorSays(
+        "message-invite-seo-1",
+        "Hi Shubham, an SEO task just came in that fits your skills. Twenty landing pages, due in five days. Have a look and accept it from the card if it suits you.",
+        daysAgo(0.2),
+        SEO_PAGES_ID,
+      ),
+    ],
+    "invite-buyers-guide": [
+      supervisorSays(
+        "message-invite-guide-1",
+        "A long buyer's guide came in and I thought of your SaaS writing. Research notes are ready. Want it?",
+        daysAgo(1.1),
+        BUYERS_GUIDE_ID,
+      ),
+      doerSays("message-invite-guide-2", "Thanks! Reading the brief now, I will let you know today.", daysAgo(1)),
+    ],
     ...Object.fromEntries(
       closedProjects.map((project) => [
         demoThreadId(project.id),
@@ -736,6 +902,82 @@ export const demo: DemoState = {
 /* ------------------------------------------------------------------ */
 
 /**
+ * Something happens without the doer doing anything: the supervisor writes on the
+ * work in progress. The message lands in the thread and an alert is raised, the same
+ * two rows the server would write, so the pop-up and the chat agree.
+ */
+export function demoSimulateEvent(): void {
+  const project = demo.projects.find((item) => item.status === "in_progress") ?? demo.projects[0];
+  if (!project) return;
+  const threadId = demoThreadId(project.id);
+  const thread = demo.messages[threadId] ?? (demo.messages[threadId] = []);
+  thread.push(
+    supervisorSays(
+      demoId("message"),
+      "Quick one: please add a short summary box at the top of each post. Everything else looks good.",
+      new Date().toISOString(),
+    ),
+  );
+  demo.notifications.unshift({
+    id: demoId("note"),
+    template_type: "message_posted",
+    deep_link: `/work/${project.id}`,
+    read_at: null,
+    created_at: new Date().toISOString(),
+  });
+}
+
+/**
+ * A supervisor starts a chat about new work: the email sequence on the board. The
+ * thread, its first message and the alert land together, as the server would write
+ * them. Returns false when that offer is gone or the chat already exists.
+ */
+export function demoSimulateInvite(): boolean {
+  const offer = demo.pool.find((entry) => entry.id === EMAIL_SEQUENCE_ID);
+  const threadId = "invite-email-sequence";
+  if (!offer || demo.invites.some((invite) => invite.threadId === threadId)) return false;
+  const now = new Date().toISOString();
+  demo.invites.unshift({
+    threadId,
+    offerId: offer.id,
+    title: "Welcome email sequence for a fitness app",
+    category: offer.category,
+    createdAt: now,
+  });
+  demo.messages[threadId] = [
+    supervisorSays(
+      demoId("message"),
+      "Hi Shubham, I have a five-email welcome sequence for a fitness app. It is a good fit for your email skills. Take a look?",
+      now,
+      offer.id,
+    ),
+  ];
+  demo.notifications.unshift({
+    id: demoId("note"),
+    template_type: "work_invite",
+    deep_link: `/messages/${threadId}`,
+    read_at: null,
+    created_at: now,
+  });
+  return true;
+}
+
+/** The reviewer approves a demo verification a few seconds after it is sent. */
+export function demoApproveKycSoon(): void {
+  window.setTimeout(() => {
+    if (demo.kyc !== "submitted") return;
+    demo.kyc = "approved";
+    demo.notifications.unshift({
+      id: demoId("note"),
+      template_type: "verification_approved",
+      deep_link: "/verification",
+      read_at: null,
+      created_at: new Date().toISOString(),
+    });
+  }, 6000);
+}
+
+/**
  * The doer_pool view: nothing while the doer is unavailable, and only categories
  * they have picked a skill in. Newest first.
  */
@@ -800,7 +1042,8 @@ export function demoGradeLesson(
 export function demoGateState(): DoerGateState {
   const kycDone = demo.kyc === "approved";
   const skillsDone = demo.skills.some((skill) => skill.selected);
-  const trainingDone = demo.lessons.every((lesson) => lesson.completed);
+  // Only the required modules count; skill courses are optional extras.
+  const trainingDone = demo.lessons.filter((lesson) => !lesson.category).every((lesson) => lesson.completed);
   const steps = [true, kycDone, skillsDone, trainingDone];
 
   return {

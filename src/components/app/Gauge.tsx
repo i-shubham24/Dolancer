@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { useEffect, useId, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { CountUp } from "@/components/common/CountUp";
 
@@ -22,6 +22,11 @@ export function Gauge({
   const reduceMotion = useReducedMotion();
   const hatch = useId();
   const clamped = Math.max(0, Math.min(100, value));
+  // Only the first sweep waits for the card to land; later changes follow at once.
+  const first = useRef(true);
+  useEffect(() => {
+    first.current = false;
+  }, []);
   const arc = "M 16 92 A 74 74 0 0 1 164 92";
 
   return (
@@ -42,7 +47,7 @@ export function Gauge({
             strokeLinecap="round"
             initial={reduceMotion ? false : { pathLength: 0 }}
             animate={{ pathLength: clamped / 100 }}
-            transition={{ duration: 1.1, delay, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: first.current ? 1.1 : 0.45, delay: first.current ? delay : 0, ease: [0.16, 1, 0.3, 1] }}
           />
         ) : null}
       </svg>

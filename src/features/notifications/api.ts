@@ -21,12 +21,15 @@ const TEMPLATES: Record<string, string> = {
   revision_requested: "Changes requested",
   payout_released: "A payout was released",
   message_posted: "New message from your supervisor",
+  work_invite: "A supervisor has new work for you",
   verification_approved: "You are verified",
   verification_rejected: "Verification needs another look",
 };
 
 export interface Notification {
   id: string;
+  /** The template key, which decides the icon and colour. */
+  type: string;
   title: string;
   deepLink: string | null;
   readAt: string | null;
@@ -48,6 +51,7 @@ async function fetchNotificationRows(): Promise<NotificationRow[]> {
 export async function fetchNotifications(): Promise<Notification[]> {
   return (await fetchNotificationRows()).map((row) => ({
     id: row.id,
+    type: row.template_type,
     title: TEMPLATES[row.template_type] ?? "Something happened on your work",
     deepLink: row.deep_link,
     readAt: row.read_at,
@@ -71,7 +75,25 @@ export async function markAllRead(): Promise<void> {
   if (error) throw new Error(error.message);
 }
 
+/** Mark one alert read, when the doer opens it. RLS limits this to their own rows. */
+export async function markRead(id: string): Promise<void> {
+  if (isDemo()) {
+    return demoRespond(() => {
+      const row = demo.notifications.find((item) => item.id === id);
+      if (row) row.read_at ??= new Date().toISOString();
+    });
+  }
+
+  const { error } = await supabase
+    .from("notifications")
+    .update({ read_at: new Date().toISOString() })
+    .eq("id", id)
+    .is("read_at", null);
+  if (error) throw new Error(error.message);
+}
+
 /** The alert list, shared by the Alerts page and the bell in the app shell. */
 export function useNotifications() {
-  return useQuery({ queryKey: qk.notifications.list(), queryFn: fetchNotifications });
+  // A light poll as a backstop for the realtime channel, only while the tab is open.
+  return useQuery({ queryKey: qk.notifications.list(), queryFn: fetchNotifications, refetchInterval: 60_000 });
 }

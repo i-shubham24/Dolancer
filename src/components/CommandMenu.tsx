@@ -5,6 +5,9 @@ import {
   LayoutDashboard,
   Layers,
   Briefcase,
+  House,
+  MessageCircle,
+  ScrollText,
   CalendarDays,
   Wallet,
   Bell,
@@ -32,10 +35,13 @@ interface Action {
 }
 
 const ACTIONS: Action[] = [
-  { id: "dashboard", label: "Dashboard", hint: "Home", to: "/dashboard", icon: LayoutDashboard, keywords: "home overview start" },
+  { id: "home", label: "Home", hint: "Setup", to: "/home", icon: House, keywords: "home welcome setup steps start guidelines" },
+  { id: "dashboard", label: "Dashboard", hint: "Overview", to: "/dashboard", icon: LayoutDashboard, keywords: "overview tasks finances" },
+  { id: "guidelines", label: "Guidelines", hint: "Rules", to: "/guidelines", icon: ScrollText, keywords: "guidelines rules terms conduct" },
   { id: "pool", label: "View assigned offers", hint: "Accept work", to: "/pool", icon: Layers, keywords: "assigned offers accept tasks projects" },
   { id: "calendar", label: "Calendar", hint: "Dates", to: "/calendar", icon: CalendarDays, keywords: "calendar deadlines dates reminders schedule week month" },
   { id: "work", label: "My work", hint: "Active projects", to: "/work", icon: Briefcase, keywords: "projects active tasks progress submit" },
+  { id: "messages", label: "Messages", hint: "Chats", to: "/messages", icon: MessageCircle, keywords: "messages chat supervisor inbox new work" },
   { id: "earnings", label: "Earnings", hint: "Payouts", to: "/earnings", icon: Wallet, keywords: "money payout pay earnings" },
   { id: "alerts", label: "Alerts", hint: "Notifications", to: "/notifications", icon: Bell, keywords: "notifications alerts updates" },
   { id: "verification", label: "Verification", hint: "Get verified", to: "/verification", icon: ShieldCheck, keywords: "verify kyc documents identity payout" },

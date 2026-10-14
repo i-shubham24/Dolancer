@@ -24,12 +24,15 @@ interface UiState {
   sidebarCollapsed: boolean;
   mobileNavOpen: boolean;
   workBucket: WorkBucket;
+  /** Which half of the dashboard is showing. */
+  dashView: "tasks" | "finances";
   palette: Palette;
   /** Readiness prompts the doer has dismissed, keyed by step id. */
   dismissedPrompts: string[];
   toggleSidebar: () => void;
   setMobileNavOpen: (open: boolean) => void;
   setWorkBucket: (bucket: WorkBucket) => void;
+  setDashView: (view: "tasks" | "finances") => void;
   setPalette: (palette: Palette) => void;
   dismissPrompt: (id: string) => void;
   restorePrompts: () => void;
@@ -41,11 +44,13 @@ export const useUiStore = create<UiState>()(
       sidebarCollapsed: false,
       mobileNavOpen: false,
       workBucket: "active",
+      dashView: "tasks",
       palette: "cobalt",
       dismissedPrompts: [],
       toggleSidebar: () => set((state) => ({ sidebarCollapsed: !state.sidebarCollapsed })),
       setMobileNavOpen: (mobileNavOpen) => set({ mobileNavOpen }),
       setWorkBucket: (workBucket) => set({ workBucket }),
+      setDashView: (dashView) => set({ dashView }),
       setPalette: (palette) => set({ palette }),
       dismissPrompt: (id) =>
         set((state) =>
@@ -60,6 +65,7 @@ export const useUiStore = create<UiState>()(
       partialize: (state) => ({
         sidebarCollapsed: state.sidebarCollapsed,
         workBucket: state.workBucket,
+        dashView: state.dashView,
         palette: state.palette,
         dismissedPrompts: state.dismissedPrompts,
       }),

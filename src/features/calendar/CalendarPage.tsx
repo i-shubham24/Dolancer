@@ -5,8 +5,8 @@ import { CalendarPlus, ChevronLeft, ChevronRight, Download, Trash2 } from "lucid
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/cn";
 import { useReminders } from "@/stores/useReminderStore";
-import { Segments } from "@/features/dashboard/ui";
-import { CARD, cardMotion, gridMotion } from "@/features/dashboard/card-styles";
+import { Segments } from "@/components/app/ui";
+import { CARD, cardMotion, gridMotion } from "@/components/app/card-styles";
 import { KIND_META, useCalendarEvents, type CalendarEvent, type CalendarKind } from "./events";
 import {
   WEEKDAYS,

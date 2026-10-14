@@ -12,6 +12,7 @@ export const qk = {
   session: ["session"] as const,
 
   profile: () => ["profile"] as const,
+  mfa: () => ["mfa"] as const,
   gate: () => ["gate"] as const,
   rating: () => ["rating"] as const,
   country: () => ["country"] as const,
@@ -29,6 +30,8 @@ export const qk = {
     thread: (projectId: string) => ["work", "thread", projectId] as const,
     messages: (threadId: string) => ["work", "messages", threadId] as const,
     attachments: (threadId: string) => ["work", "attachments", threadId] as const,
+    /** Under "work" so anything that refreshes work also refreshes the inbox. */
+    inbox: () => ["work", "inbox"] as const,
   },
 
   earnings: {

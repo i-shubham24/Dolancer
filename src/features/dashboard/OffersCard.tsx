@@ -6,7 +6,7 @@ import { preloadRoute } from "@/lib/preload";
 import { taskTitle } from "@/lib/task-title";
 import type { PoolOffer } from "@/types/domain";
 import { formatDayShort } from "@/features/calendar/dates";
-import { MoreLink, Panel, PanelHeader } from "./ui";
+import { MoreLink, Panel, PanelHeader } from "@/components/app/ui";
 
 /**
  * A peek at assigned offers. Accepting stays on the offers page, behind its

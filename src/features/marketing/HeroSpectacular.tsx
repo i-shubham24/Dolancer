@@ -49,8 +49,8 @@ export function HeroSpectacular() {
       />
 
       <div className="relative mx-auto max-w-[1240px] px-4 sm:px-6 z-10">
-        <div className="text-center max-w-3xl mx-auto">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#111827] tracking-tight leading-[1.12]">
+        <div className="text-center max-w-4xl mx-auto">
+          <h1 className="text-[34px] sm:text-5xl lg:text-[64px] font-extrabold text-[#111827] tracking-[-0.03em] leading-[1.08]">
             Get paid for what you're{" "}
             <span className="text-[#0a65c0] relative inline-block">
               good at.
@@ -59,19 +59,19 @@ export function HeroSpectacular() {
               </svg>
             </span>
           </h1>
-          <p className="mt-2 text-sm sm:text-base text-slate-600 font-medium max-w-lg mx-auto">
+          <p className="mt-4 text-base sm:text-lg lg:text-xl text-slate-600 font-medium max-w-2xl mx-auto leading-relaxed">
             No fight for work. Clear tasks, a supervisor to guide you, and money fixed before you start.
           </p>
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
             <Link
               to="/sign-up"
-              className="inline-flex items-center rounded-full bg-[#0a65c0] px-6 py-2 text-xs sm:text-sm font-bold text-white hover:bg-[#0854a0] shadow-md shadow-[#0a65c0]/20"
+              className="inline-flex items-center rounded-full bg-[#0a65c0] px-8 py-3.5 text-[15px] sm:text-base font-bold text-white hover:bg-[#0854a0] shadow-lg shadow-[#0a65c0]/25 transition-colors"
             >
-              Start earning <ArrowRight className="ml-1.5 h-4 w-4" />
+              Start earning <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
             <Link
               to="/how-it-works"
-              className="inline-flex items-center rounded-full border border-slate-300 bg-white px-5 py-2 text-xs sm:text-sm font-bold text-slate-700 hover:border-slate-400"
+              className="inline-flex items-center rounded-full border border-slate-300 bg-white px-8 py-3.5 text-[15px] sm:text-base font-bold text-slate-700 hover:border-slate-400 transition-colors"
             >
               See how it works
             </Link>
@@ -79,10 +79,10 @@ export function HeroSpectacular() {
         </div>
 
         {/* Curvy arc workflow */}
-        <div className="relative mt-6 sm:mt-8 mx-auto max-w-[880px]">
+        <div className="relative mt-10 sm:mt-12 mx-auto max-w-[720px]">
           {/* Desktop curvy line: hill shape */}
           <svg
-            className="hidden sm:block absolute inset-x-0 top-2 w-full h-[160px] pointer-events-none"
+            className="hidden sm:block absolute inset-x-0 top-0 w-full h-[130px] pointer-events-none"
             viewBox="0 0 800 160"
             fill="none"
             preserveAspectRatio="none"
@@ -124,10 +124,10 @@ export function HeroSpectacular() {
               const Icon = s.icon;
               const lift =
                 i === 1
-                  ? "sm:-mt-8"
+                  ? "sm:-mt-6"
                   : i === 0
-                    ? "sm:mt-10 -translate-x-5 sm:translate-x-0"
-                    : "sm:mt-10 translate-x-5 sm:translate-x-0";
+                    ? "sm:mt-8 -translate-x-5 sm:translate-x-0"
+                    : "sm:mt-8 translate-x-5 sm:translate-x-0";
               return (
                 <li key={s.n} className={`relative text-center ${lift}`}>
                   <div className="relative inline-block">
@@ -142,24 +142,24 @@ export function HeroSpectacular() {
                       height={512}
                       className={`relative rounded-full object-cover bg-slate-100 shadow-md ${
                         s.active
-                          ? `h-32 w-32 border-4 ${s.ring}`
-                          : `h-24 w-24 border-4 ${s.ring} ring-1`
+                          ? `h-24 w-24 border-[3px] ${s.ring}`
+                          : `h-[72px] w-[72px] border-[3px] ${s.ring} ring-1`
                       }`}
                       loading="eager"
                     />
-                    <span className="absolute -bottom-1 -right-1 flex h-8 w-8 items-center justify-center rounded-full bg-[#0a65c0] text-white border-2 border-white shadow">
-                      <Icon className="h-4 w-4" />
+                    <span className="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-[#0a65c0] text-white border-2 border-white shadow">
+                      <Icon className="h-3.5 w-3.5" />
                     </span>
                   </div>
-                  <p className="mt-3 text-[11px] font-extrabold uppercase tracking-widest text-[#0a65c0]">
+                  <p className="mt-2.5 text-[10.5px] font-extrabold uppercase tracking-widest text-[#0a65c0]">
                     {s.n}
                   </p>
-                  <h3 className="text-base font-extrabold text-slate-900">{s.title}</h3>
-                  <p className="mt-0.5 text-[13px] text-slate-500 font-medium max-w-[220px] mx-auto">
+                  <h3 className="text-[15px] font-extrabold text-slate-900">{s.title}</h3>
+                  <p className="mt-0.5 text-[12.5px] text-slate-500 font-medium max-w-[200px] mx-auto">
                     {s.desc}
                   </p>
                   <span
-                    className={`mt-2 inline-block rounded-full px-3 py-1 text-[11px] font-bold ${
+                    className={`mt-2 inline-block rounded-full px-2.5 py-0.5 text-[10.5px] font-bold ${
                       s.active ? "bg-[#0a65c0] text-white" : "bg-slate-100 text-slate-700"
                     }`}
                   >

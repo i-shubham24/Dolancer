@@ -7,9 +7,9 @@ import { preloadRoute } from "@/lib/preload";
 import { MAX_ACTIVE_PROJECTS } from "@/lib/constants";
 import type { EarningsSummary } from "@/types/domain";
 import { formatDayShort } from "@/features/calendar/dates";
-import { CornerArrow } from "./ui";
-import { CARD, cardMotion } from "./card-styles";
-import { LineTexture } from "./LineTexture";
+import { CornerArrow } from "@/components/app/ui";
+import { CARD, cardMotion } from "@/components/app/card-styles";
+import { LineTexture } from "@/components/app/LineTexture";
 
 /** Whole rupees while counting, so the figure never flickers through paise. */
 const rupees = (paise: number) => formatPaise(Math.round(paise / 100) * 100);
@@ -23,7 +23,8 @@ function StatCard({
   children,
   foot,
 }: {
-  to: string;
+  /** Where the card leads. Without it the card is a plain figure. */
+  to?: string;
   label: string;
   /** A literal grid-area class, so the stylesheet build can see it. */
   area: string;
@@ -34,10 +35,8 @@ function StatCard({
   const reduceMotion = useReducedMotion();
   return (
     <motion.div variants={cardMotion} whileHover={reduceMotion ? undefined : { y: -3 }} className={cn("min-w-0", area)}>
-      <Link
+      <Shell
         to={to}
-        onMouseEnter={() => preloadRoute(to)}
-        onFocus={() => preloadRoute(to)}
         className={cn(
           CARD,
           "group h-full transition-shadow duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
@@ -49,14 +48,24 @@ function StatCard({
         {hero ? <LineTexture className="pointer-events-none absolute inset-0 -z-10 h-full w-full text-white/[0.09]" /> : null}
         <div className="flex items-start justify-between gap-3">
           <span className={cn("text-[13px] font-bold", hero ? "text-white/85" : "text-ink-2")}>{label}</span>
-          <CornerArrow inverse={hero} />
+          {to ? <CornerArrow inverse={hero} /> : null}
         </div>
         <div className="mb-1 mt-2.5 text-[26px] font-extrabold min-[420px]:text-[30px] sm:text-[34px] leading-none tracking-[-0.035em] tabular-nums">
           {children}
         </div>
         <div className={cn("text-xs font-semibold", hero ? "text-white/85" : "text-ink-muted")}>{foot}</div>
-      </Link>
+      </Shell>
     </motion.div>
+  );
+}
+
+/** A link when the card leads somewhere, a plain box when it does not. */
+function Shell({ to, className, children }: { to?: string; className: string; children: React.ReactNode }) {
+  if (!to) return <div className={className}>{children}</div>;
+  return (
+    <Link to={to} onMouseEnter={() => preloadRoute(to)} onFocus={() => preloadRoute(to)} className={className}>
+      {children}
+    </Link>
   );
 }
 
@@ -69,21 +78,16 @@ function ValueSkeleton({ inverse = false }: { inverse?: boolean }) {
   );
 }
 
-export function StatCards({
+/** The two task figures: slots in use and what is due before Sunday. */
+export function TaskStats({
   activeCount,
   activeLoading,
   dueThisWeek,
-  earnings,
-  earningsLoading,
-  earningsError,
 }: {
   activeCount: number;
   activeLoading: boolean;
   /** Deadlines from today to Sunday, soonest first. */
   dueThisWeek: Date[];
-  earnings: EarningsSummary | undefined;
-  earningsLoading: boolean;
-  earningsError: boolean;
 }) {
   const reduceMotion = useReducedMotion();
   const free = Math.max(0, MAX_ACTIVE_PROJECTS - activeCount);
@@ -150,24 +154,52 @@ export function StatCards({
       >
         {activeLoading ? <ValueSkeleton /> : <CountUp value={dueThisWeek.length} format={whole} delay={0.38} />}
       </StatCard>
+    </>
+  );
+}
 
-      <StatCard to="/earnings" label="Paid to you" area="[grid-area:k3]" foot={earningsError ? "Could not load. Open Earnings to retry." : "After tax, since you joined"}>
-        {earningsLoading ? <ValueSkeleton /> : earningsError ? "--" : <CountUp value={earnings?.netPaise ?? 0} format={rupees} delay={0.45} duration={1.3} />}
+/**
+ * The four money figures. Net, tax and gross are always separate numbers so what
+ * was withheld is never implicit, and the year figure is released money only.
+ */
+export function MoneyStats({
+  earnings,
+  loading,
+  error,
+  yearPaise,
+  yearCount,
+  yearLabel,
+  linkTo = "/earnings",
+}: {
+  /** Where each card leads; leave it out on the Earnings page itself. */
+  linkTo?: string;
+  earnings: EarningsSummary | undefined;
+  loading: boolean;
+  error: boolean;
+  /** Gross released this financial year, from the payout history. */
+  yearPaise: number;
+  yearCount: number;
+  yearLabel: string;
+}) {
+  const failed = error ? "--" : null;
+  return (
+    <>
+      <StatCard to={linkTo} label="Paid to you" area="[grid-area:f1]" hero foot={error ? "Could not load. Open Earnings to retry." : "After tax, since you joined"}>
+        {loading ? <ValueSkeleton inverse /> : failed ?? <CountUp value={earnings?.netPaise ?? 0} format={rupees} delay={0.3} duration={1.3} />}
       </StatCard>
-
+      <StatCard to={linkTo} label="Tax withheld" area="[grid-area:f2]" foot="TDS and GST, all time">
+        {loading ? <ValueSkeleton /> : failed ?? <CountUp value={earnings?.taxWithheldPaise ?? 0} format={rupees} delay={0.38} duration={1.3} />}
+      </StatCard>
+      <StatCard to={linkTo} label="Gross released" area="[grid-area:f3]" foot="Before tax, all time">
+        {loading ? <ValueSkeleton /> : failed ?? <CountUp value={earnings?.grossPaise ?? 0} format={rupees} delay={0.45} duration={1.3} />}
+      </StatCard>
       <StatCard
-        to="/earnings"
-        label="Tax withheld"
-        area="[grid-area:k4]"
-        foot={earnings ? `TDS and GST. Gross ${formatPaise(earnings.grossPaise)}` : "TDS and GST so far"}
+        to={linkTo}
+        label={`This year (${yearLabel})`}
+        area="[grid-area:f4]"
+        foot={`${yearCount} payout${yearCount === 1 ? "" : "s"}, before tax`}
       >
-        {earningsLoading ? (
-          <ValueSkeleton />
-        ) : earningsError ? (
-          "--"
-        ) : (
-          <CountUp value={earnings?.taxWithheldPaise ?? 0} format={rupees} delay={0.52} duration={1.3} />
-        )}
+        {loading ? <ValueSkeleton /> : <CountUp value={yearPaise} format={rupees} delay={0.52} duration={1.3} />}
       </StatCard>
     </>
   );

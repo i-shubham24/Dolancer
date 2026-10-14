@@ -5,7 +5,7 @@ import { cn } from "@/lib/cn";
 import { formatPaise } from "@/lib/paise";
 import { fyStartYear } from "@/lib/fy";
 import type { LedgerRow } from "@/features/earnings/api";
-import { Panel, PanelHeader, Segments } from "./ui";
+import { Panel, PanelHeader, Segments } from "@/components/app/ui";
 
 /**
  * Money released to the doer, month by month.

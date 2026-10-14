@@ -62,37 +62,37 @@ export function ContactPage() {
 
         <div className="fresh-contact-aside space-y-4">
           {session ? (
-            <StitchCard className="bg-success-bg p-6">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-surface">
+            <StitchCard className="p-6">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#0a65c0] text-white">
                 <LifeBuoy className="h-5 w-5" aria-hidden="true" />
               </span>
               <h2 className="mt-4 text-lg font-extrabold tracking-[-0.03em]">
                 Already have tickets open?
               </h2>
-              <p className="mt-2 text-sm leading-relaxed text-ink/75">
+              <p className="mt-2 text-sm leading-relaxed text-ink-2">
                 Everything you have raised, and every reply, lives in one place.
               </p>
-              <Button asChild variant="dark" className="mt-4">
+              <Button asChild className="mt-4">
                 <Link to="/tickets">Go to support</Link>
               </Button>
             </StitchCard>
           ) : (
-            <StitchCard className="bg-highlight-light p-6">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-surface">
+            <StitchCard className="p-6">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#0a65c0] text-white">
                 <Mail className="h-5 w-5" aria-hidden="true" />
               </span>
               <h2 className="mt-4 text-lg font-extrabold tracking-[-0.03em]">Or email directly</h2>
               <a
                 href={`mailto:${CONTACT.email}`}
-                className="mt-2 inline-block break-all text-sm font-bold underline decoration-2 underline-offset-2"
+                className="mt-2 inline-block break-all text-sm font-bold text-[#0a65c0] underline decoration-2 underline-offset-2"
               >
                 {CONTACT.email}
               </a>
             </StitchCard>
           )}
 
-          <StitchCard className="bg-highlight-light p-6">
-            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-highlight text-inverse">
+          <StitchCard className="p-6">
+            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#e8f1fa] text-[#0a65c0]">
               <Clock className="h-5 w-5" aria-hidden="true" />
             </span>
             <h2 className="mt-4 text-lg font-extrabold tracking-[-0.03em]">When we are around</h2>
@@ -103,8 +103,8 @@ export function ContactPage() {
             </p>
           </StitchCard>
 
-          <StitchCard className="stitch-card-pink p-6">
-            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-highlight text-inverse">
+          <StitchCard className="p-6">
+            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#e8f1fa] text-[#0a65c0]">
               <Scale className="h-5 w-5" aria-hidden="true" />
             </span>
             <h2 className="mt-4 text-lg font-extrabold tracking-[-0.03em]">Grievances</h2>
@@ -114,7 +114,7 @@ export function ContactPage() {
             </p>
             <a
               href={`mailto:${CONTACT.grievanceEmail}`}
-              className="mt-3 inline-flex items-center gap-2 break-all text-sm font-bold text-highlight underline decoration-2 underline-offset-2"
+              className="mt-3 inline-flex items-center gap-2 break-all text-sm font-bold text-[#0a65c0] underline decoration-2 underline-offset-2"
             >
               <Mail className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
               {CONTACT.grievanceEmail}

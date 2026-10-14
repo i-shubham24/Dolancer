@@ -17,7 +17,7 @@ export function HowItWorksSteps() {
 
 
   return (
-    <section id="how-it-works" className="fresh-section pt-4 pb-20 overflow-hidden">
+    <section id="how-it-works" className="fresh-section pt-4 pb-8 sm:pb-10 overflow-hidden">
       <div ref={containerRef} className="fresh-container relative">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16 sm:mb-20">

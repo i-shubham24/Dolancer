@@ -9,8 +9,8 @@ import { sessionElapsed, useWorkTimer } from "@/stores/useTimerStore";
 import type { DoerProject } from "@/types/domain";
 import { RollingDigits } from "@/components/common/RollingDigits";
 import { Select } from "@/components/ui/Select";
-import { cardMotion } from "./card-styles";
-import { LineTexture } from "./LineTexture";
+import { cardMotion } from "@/components/app/card-styles";
+import { LineTexture } from "@/components/app/LineTexture";
 
 function clock(ms: number): string {
   const total = Math.floor(ms / 1000);

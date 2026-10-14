@@ -72,3 +72,27 @@ export function workbenchGates(project: { status: ProjectStatus; workingDocUrl: 
       : "Waiting for your supervisor to set up the company workspace. You can start work once the link appears.",
   };
 }
+
+export type TimelineStep = "offer" | "accepted" | "working" | "review" | "approved";
+
+/**
+ * Where a task sits on the five-step timeline. "paid" is Ready to start, so it is
+ * the Accepted step, never Approved: the doer has said yes but not begun.
+ */
+export function timelineStep(status: ProjectStatus): TimelineStep {
+  switch (status) {
+    case "claimed":
+    case "quoted":
+    case "paid":
+      return "accepted";
+    case "in_progress":
+      return "working";
+    case "in_review":
+    case "delivered":
+      return "review";
+    case "approved":
+      return "approved";
+    default:
+      return "offer";
+  }
+}

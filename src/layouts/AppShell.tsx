@@ -2,9 +2,11 @@ import { useState } from "react";
 import { NavLink, Outlet, Link, useLocation } from "react-router-dom";
 import { ScrollToTop } from "@/routes/ScrollToTop";
 import {
+  House,
   LayoutDashboard,
   Layers,
   Briefcase,
+  MessageCircle,
   CalendarDays,
   Wallet,
   Bell,
@@ -27,18 +29,25 @@ import { CommandMenu, PALETTE_EVENT } from "@/components/CommandMenu";
 import { isDemo } from "@/lib/demo-data";
 import { useAuth } from "@/providers/AuthProvider";
 import { signOut } from "@/features/auth/api";
-import { useProfile } from "@/features/dashboard/queries";
+import { useAvailabilityAutopilot, useProfile } from "@/features/dashboard/queries";
 import { AvailabilityToggle } from "@/features/dashboard/AvailabilityToggle";
 import { useNotifications } from "@/features/notifications/api";
 import { useReminderAlerts } from "@/features/calendar/useReminderAlerts";
+import { useNotificationPopups } from "@/features/notifications/useNotificationPopups";
+import { PopupStack } from "@/features/notifications/PopupStack";
+import { usePopupStore } from "@/stores/usePopupStore";
+import { useUnreadChats } from "@/features/messages/queries";
+import { useHomeVisible } from "@/features/home/steps";
 import { Logo } from "@/components/ui/Logo";
 
 type NavEntry = { to: string; label: string; icon: typeof LayoutDashboard; isNew?: boolean };
 
 const NAV: NavEntry[] = [
+  { to: "/home", label: "Home", icon: House },
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/work", label: "My work", icon: Briefcase },
-  { to: "/calendar", label: "Calendar", icon: CalendarDays, isNew: true },
+  { to: "/messages", label: "Messages", icon: MessageCircle, isNew: true },
+  { to: "/calendar", label: "Calendar", icon: CalendarDays },
   { to: "/pool", label: "Assigned offers", icon: Layers },
   { to: "/earnings", label: "Earnings", icon: Wallet },
   { to: "/notifications", label: "Alerts", icon: Bell },
@@ -109,7 +118,7 @@ function NavItem({
           {!collapsed && badge ? (
             <span className="ml-auto rounded-full bg-primary px-1.5 py-px text-[10.5px] font-extrabold text-white">
               {badge}
-              <span className="sr-only"> unread</span>
+              <span className="sr-only">{to === "/home" ? " steps left" : " unread"}</span>
             </span>
           ) : null}
           {!collapsed && !badge && isNew ? (
@@ -150,6 +159,9 @@ function SidebarContent({
   const { user } = useAuth();
   const profile = useProfile();
   const unread = useUnreadCount();
+  const unreadChats = useUnreadChats();
+  const home = useHomeVisible();
+  const nav = home.visible ? NAV : NAV.filter((item) => item.to !== "/home");
 
   const reduceMotion = useReducedMotion();
   const name = profile.data?.full_name?.trim() || user?.email || "Your account";
@@ -188,11 +200,19 @@ function SidebarContent({
         initial={reduceMotion ? false : "hidden"}
         animate="show"
       >
-        {NAV.map((item) => (
+        {nav.map((item) => (
           <motion.div key={item.to} variants={navEntry}>
             <NavItem
               {...item}
-              badge={item.to === "/notifications" ? unread : undefined}
+              badge={
+                item.to === "/notifications"
+                  ? unread
+                  : item.to === "/messages"
+                    ? unreadChats
+                    : item.to === "/home" && !home.loading
+                      ? home.remaining
+                      : undefined
+              }
               onNavigate={onNavigate}
               collapsed={collapsed}
             />
@@ -269,7 +289,7 @@ function BellLink({ className }: { className?: string }) {
         className,
       )}
     >
-      <Bell className="h-[18px] w-[18px]" aria-hidden="true" />
+      <BellIcon />
       {unread > 0 ? (
         <span className="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-danger-dot ring-2 ring-white" aria-hidden="true" />
       ) : null}
@@ -277,8 +297,26 @@ function BellLink({ className }: { className?: string }) {
   );
 }
 
+/** The bell gives a small shake each time a pop-up arrives. */
+function BellIcon() {
+  const reduceMotion = useReducedMotion();
+  const bumps = usePopupStore((state) => state.bumps);
+  return (
+    <motion.span
+      key={bumps}
+      className="flex"
+      initial={false}
+      animate={reduceMotion || bumps === 0 ? undefined : { rotate: [0, -16, 13, -9, 6, 0] }}
+      transition={{ duration: 0.7, ease: "easeInOut" }}
+      style={{ transformOrigin: "50% 10%" }}
+    >
+      <Bell className="h-[18px] w-[18px]" aria-hidden="true" />
+    </motion.span>
+  );
+}
+
 /** Search, availability and alerts, the same on every signed-in page. */
-function TopBar() {
+function TopBar({ onAlerts }: { onAlerts: boolean }) {
   const reduceMotion = useReducedMotion();
   return (
     <motion.div
@@ -297,8 +335,9 @@ function TopBar() {
         <kbd className="ml-auto rounded-md bg-panel px-1.5 py-0.5 font-sans text-[11px] font-bold text-ink-muted">Ctrl K</kbd>
       </button>
       <div className="flex-1" />
-      <AvailabilityToggle variant="bar" />
-      <BellLink />
+      <AvailabilityToggle />
+      {/* No bell on the Alerts page itself: it would only link to where you are. */}
+      {onAlerts ? null : <BellLink />}
     </motion.div>
   );
 }
@@ -315,6 +354,9 @@ export function AppShell() {
     }
   });
   useReminderAlerts();
+  useNotificationPopups();
+  useAvailabilityAutopilot();
+  const onAlerts = location.pathname.startsWith("/notifications");
 
   const toggleCollapsed = (v: boolean) => {
     setCollapsed(v);
@@ -328,6 +370,7 @@ export function AppShell() {
   return (
     <div className="app-shell min-h-dvh overflow-x-clip bg-panel lg:bg-frame">
       <ScrollToTop />
+      <PopupStack />
       <CommandMenu />
       <a
         href="#main"
@@ -344,7 +387,7 @@ export function AppShell() {
           {isDemo() ? <DemoBadge /> : null}
         </Link>
         <div className="flex shrink-0 items-center gap-2">
-          <BellLink />
+          {onAlerts ? null : <BellLink />}
           <button
             type="button"
             onClick={() => setMobileOpen((open) => !open)}
@@ -388,7 +431,7 @@ export function AppShell() {
               className="absolute inset-y-0 left-0 w-[85%] max-w-xs overflow-y-auto overscroll-contain bg-side px-4 py-5 shadow-soft-lg scrollbar-hide"
             >
               <div className="mb-4">
-                <AvailabilityToggle variant="bar" />
+                <AvailabilityToggle />
               </div>
               <SidebarContent onNavigate={() => setMobileOpen(false)} />
             </motion.div>
@@ -407,7 +450,7 @@ export function AppShell() {
         </aside>
 
         <main id="main" className="min-w-0 flex-1 px-4 py-5 lg:min-h-[calc(100dvh-1.75rem)] lg:rounded-3xl lg:bg-panel lg:px-6 lg:py-5">
-          <TopBar />
+          <TopBar onAlerts={onAlerts} />
           {/* Each page eases in as you move between them, like the reel's screen changes. */}
           <motion.div
             key={location.pathname}

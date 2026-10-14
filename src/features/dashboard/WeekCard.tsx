@@ -5,7 +5,7 @@ import { cn } from "@/lib/cn";
 import { KIND_META, type CalendarEvent } from "@/features/calendar/events";
 import { EventRow } from "@/features/calendar/EventRow";
 import { WEEKDAYS, dayKey, formatDayShort, parseDayKey, sameDay, weekDays } from "@/features/calendar/dates";
-import { MoreLink, Panel, PanelHeader } from "./ui";
+import { MoreLink, Panel, PanelHeader } from "@/components/app/ui";
 
 const RANGE = new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "long" });
 

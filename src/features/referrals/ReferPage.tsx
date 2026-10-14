@@ -2,21 +2,36 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { motion, useReducedMotion } from "framer-motion";
-import { Copy, Check, Gift } from "lucide-react";
+import { AlertTriangle, Check, Copy, Gift, Share2, UserCheck, UserPlus, Wallet } from "lucide-react";
 import { supabase } from "@/lib/supabase";
-import { demo, demoRespond, isDemo } from "@/lib/demo-data";
+import { demo, demoRespond, isDemo, type ReferralInvitee } from "@/lib/demo-data";
 import { callRpc, unwrap } from "@/lib/rpc";
 import { selectColumns } from "@/lib/select";
 import { qk } from "@/lib/query-keys";
 import { formatDate } from "@/lib/datetime";
-import { Card } from "@/components/brutal/Card";
+import { cn } from "@/lib/cn";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/brutal/Skeleton";
-import { EmptyState, ErrorState } from "@/components/brutal/EmptyState";
+import { CARD, cardMotion } from "@/components/app/card-styles";
+import { CardGrid, EmptyPanel, PageHeader } from "@/components/app/page";
+import { Panel, PanelHeader } from "@/components/app/ui";
 
 interface ReferralState {
   code: string;
-  invited: { id: string; createdAt: string; joined: boolean }[];
+  invited: ReferralInvitee[];
+}
+
+const STAGE: Record<ReferralInvitee["stage"], { label: string; tone: string }> = {
+  joined: { label: "Joined", tone: "bg-panel text-ink-2" },
+  verified: { label: "Verified", tone: "bg-info-bg text-primary" },
+  earned: { label: "Bonus earned", tone: "bg-success-bg text-success-ink" },
+};
+
+const AVATAR_TONES = ["bg-violet-light text-violet", "bg-secondary-light text-secondary-hover", "bg-warning-bg text-warning-ink", "bg-info-bg text-info-ink"];
+
+function initials(name: string): string {
+  const words = name.trim().split(/\s+/);
+  return ((words[0]?.[0] ?? "") + (words.length > 1 ? (words[words.length - 1]?.[0] ?? "") : "")).toUpperCase();
 }
 
 /**
@@ -44,13 +59,21 @@ async function fetchReferrals(): Promise<ReferralState> {
     code: code ?? rows[0]?.invite_code ?? "",
     invited: rows
       .filter((row) => row.invitee_id !== null)
+      // The referrals table carries no name or progress yet, so live rows show as joined.
       .map((row) => ({
         id: row.invitee_id ?? row.created_at,
+        name: null,
         createdAt: row.created_at,
-        joined: true,
+        stage: "joined" as const,
       })),
   };
 }
+
+const STEPS = [
+  { icon: Share2, title: "Share your link", tone: "bg-info-bg text-primary" },
+  { icon: UserPlus, title: "They join and finish a task", tone: "bg-violet-light text-violet" },
+  { icon: Wallet, title: "You get a 5% bonus", tone: "bg-success-bg text-success-ink" },
+];
 
 export function ReferPage() {
   const reduceMotion = useReducedMotion();
@@ -59,6 +82,7 @@ export function ReferPage() {
 
   const code = referrals.data?.code ?? "";
   const link = code ? `${window.location.origin}/sign-up?ref=${encodeURIComponent(code)}` : "";
+  const invited = referrals.data?.invited ?? [];
 
   async function copy() {
     try {
@@ -72,112 +96,121 @@ export function ReferPage() {
   }
 
   return (
-    <motion.div
-      className="relative mx-auto max-w-4xl space-y-6 overflow-hidden px-1 py-1 sm:px-2"
-      initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-    >
-      <div className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full bg-highlight/10 blur-3xl" aria-hidden="true" />
-      <div className="pointer-events-none absolute -right-20 top-48 h-64 w-64 rounded-full bg-secondary/10 blur-3xl" aria-hidden="true" />
-      <header className="relative rounded-3xl bg-surface/70 px-5 py-6 backdrop-blur-sm sm:px-7">
-        <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-highlight">Network protocol · 5% bonus</p>
-        <h1 className="text-3xl font-extrabold tracking-[-0.035em] sm:text-4xl">Referrals &amp; network</h1>
-        <p className="mt-2 text-md text-ink-2">
-          Know someone good? Invite them, and you earn a bonus once they finish and get
-          approved on their first project.
-        </p>
-      </header>
+    <div className="mx-auto max-w-5xl">
+      <PageHeader eyebrow="Grow" title="Refer and earn" sub="Invite people you trust. Earn when their first task is approved." />
 
       {referrals.isLoading ? (
-        <Skeleton className="h-40 w-full rounded-2xl" />
+        <Skeleton className="h-48 w-full rounded-[20px]" />
       ) : referrals.isError ? (
-        <ErrorState
-          description="Your invite code did not load."
-          onRetry={() => void referrals.refetch()}
+        <EmptyPanel
+          tone="danger"
+          icon={<AlertTriangle />}
+          title="Your invite code did not load"
+          action={
+            <Button variant="outline" onClick={() => void referrals.refetch()}>
+              Try again
+            </Button>
+          }
         />
       ) : (
-        <>
-          <Card className="relative overflow-hidden border-transparent bg-highlight-light/60 shadow-soft-md">
-            <div className="pointer-events-none absolute -bottom-16 -right-10 h-40 w-40 rounded-full bg-highlight/15 blur-2xl" aria-hidden="true" />
-            <div className="text-xs font-extrabold uppercase tracking-[0.05em] text-ink/65">
-              Your invite code
-            </div>
-            <div className="mt-2 font-mono text-4xl font-extrabold tracking-[-0.02em]">
-              {code || "Unavailable"}
-            </div>
-            {link ? (
-              <div className="mt-4 flex flex-wrap items-center gap-2">
-                <code className="min-w-0 flex-1 truncate rounded-xl border border-line-card bg-white/80 px-3 py-2 text-xs">
-                  {link}
-                </code>
-                <Button variant="outline" size="sm" onClick={() => void copy()}>
-                  {copied ? (
-                    <Check className="h-3.5 w-3.5" aria-hidden="true" />
-                  ) : (
-                    <Copy className="h-3.5 w-3.5" aria-hidden="true" />
-                  )}
-                  {copied ? "Copied" : "Copy link"}
-                </Button>
+        <CardGrid className="lg:grid-cols-[minmax(0,1fr)_340px]">
+          <motion.section
+            variants={cardMotion}
+            className={cn(
+              CARD,
+              "overflow-hidden bg-gradient-to-br from-primary to-primary-hover text-white ring-0 shadow-[0_14px_30px_-14px_rgba(10,101,192,0.75)] lg:col-span-2",
+            )}
+            aria-labelledby="code"
+          >
+            <span className="pointer-events-none absolute -right-16 -top-20 h-64 w-64 rounded-full bg-white/10" aria-hidden="true" />
+            <span className="pointer-events-none absolute -bottom-24 right-24 h-56 w-56 rounded-full bg-white/[0.06]" aria-hidden="true" />
+            <div className="relative flex flex-wrap items-center gap-6">
+              <div className="min-w-0 flex-1">
+                <p id="code" className="text-[13px] font-bold text-white/80">Your invite code</p>
+                <p className="mt-1 break-all font-mono text-[34px] font-extrabold leading-tight tracking-[-0.01em] sm:text-[40px]">{code || "Unavailable"}</p>
+                {link ? (
+                  <div className="mt-4 flex max-w-xl flex-wrap items-center gap-2 rounded-2xl bg-white/15 p-1.5 pl-3.5 ring-1 ring-white/20">
+                    <code className="min-w-0 flex-1 truncate text-xs font-semibold text-white/90">{link}</code>
+                    <Button onClick={() => void copy()} className="shrink-0 bg-white text-primary hover:bg-white/90">
+                      {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
+                      {copied ? "Copied" : "Copy link"}
+                    </Button>
+                  </div>
+                ) : null}
               </div>
-            ) : null}
-          </Card>
+              <motion.span
+                className="hidden h-28 w-28 shrink-0 items-center justify-center rounded-[28px] bg-white/15 ring-1 ring-white/25 sm:flex"
+                initial={reduceMotion ? false : { rotate: -8, scale: 0.8, opacity: 0 }}
+                animate={{ rotate: 0, scale: 1, opacity: 1 }}
+                transition={{ type: "spring", stiffness: 220, damping: 16, delay: 0.3 }}
+                aria-hidden="true"
+              >
+                <Gift className="h-12 w-12" />
+              </motion.span>
+            </div>
+          </motion.section>
 
-          <section aria-labelledby="invited" className="space-y-3">
-            <h2 id="invited" className="text-2xl font-extrabold tracking-[-0.03em]">
-              People you invited
-            </h2>
-            <ol className="grid gap-2 sm:grid-cols-3" aria-label="How a referral pays out">
-              <li className="rounded-2xl border border-line-card bg-white/90 p-4 shadow-soft-sm">
-                <div className="text-2xl font-extrabold tracking-[-0.03em]">1</div>
-                <div className="mt-1 text-sm font-extrabold">Shared</div>
-                <div className="text-[11px] text-ink-muted">
-                  {code ? "Your link is live." : "Your link appears once loaded."}
-                </div>
-              </li>
-              <li className="rounded-2xl border border-line-card bg-white/90 p-4 shadow-soft-sm">
-                <div className="text-2xl font-extrabold tracking-[-0.03em]">
-                  {referrals.data?.invited.length ?? 0}
-                </div>
-                <div className="mt-1 text-sm font-extrabold">Joined</div>
-                <div className="text-[11px] text-ink-muted">Signed up with your code.</div>
-              </li>
-              <li className="rounded-2xl border border-dashed border-line-card bg-surface-2 p-4">
-                <div className="text-2xl font-extrabold tracking-[-0.03em]">Auto</div>
-                <div className="mt-1 text-sm font-extrabold">Bonus on approval</div>
-                <div className="text-[11px] text-ink-muted">
-                  Lands automatically when their first project is approved.
-                </div>
-              </li>
+          <Panel aria-labelledby="how">
+            <PanelHeader id="how" title="How it works" />
+            <ol className="grid gap-3 sm:grid-cols-3">
+              {STEPS.map((step, index) => (
+                <motion.li
+                  key={step.title}
+                  initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.35 + index * 0.1 }}
+                  className="relative flex flex-col gap-3 rounded-2xl bg-panel/60 p-4"
+                >
+                  <span className="flex items-center justify-between">
+                    <span className={cn("flex h-11 w-11 items-center justify-center rounded-xl", step.tone)} aria-hidden="true">
+                      <step.icon className="h-5 w-5" />
+                    </span>
+                    <span className="text-[28px] font-extrabold leading-none text-ink/10" aria-hidden="true">{index + 1}</span>
+                  </span>
+                  <span className="text-[14px] font-extrabold leading-snug tracking-[-0.01em]">{step.title}</span>
+                </motion.li>
+              ))}
             </ol>
-            {referrals.data && referrals.data.invited.length > 0 ? (
-              <ul className="space-y-2">
-                {referrals.data.invited.map((invitee) => (
-                  <li key={invitee.id}>
-                    <Card className="flex items-center justify-between gap-3 py-3">
-                      <span className="text-sm font-bold">Joined via your link</span>
-                      <span className="text-xs text-ink-muted">
-                        {formatDate(invitee.createdAt)}
-                      </span>
-                    </Card>
+            <p className="mt-3 text-[11.5px] font-medium text-ink-muted">
+              The bonus comes with your next payout and counts as earnings for tax.
+            </p>
+          </Panel>
+
+          <Panel aria-labelledby="joined">
+            <PanelHeader
+              id="joined"
+              title="People who joined"
+              right={<span className="rounded-full bg-info-bg px-3 py-1 text-xs font-extrabold tabular-nums text-primary">{invited.length}</span>}
+            />
+            {invited.length > 0 ? (
+              <ul className="flex flex-col gap-2">
+                {invited.map((invitee, index) => (
+                  <li key={invitee.id} className="flex items-center gap-3 rounded-2xl bg-panel/60 p-2.5 pr-3">
+                    <span
+                      className={cn("flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[13px] font-extrabold", AVATAR_TONES[index % AVATAR_TONES.length])}
+                      aria-hidden="true"
+                    >
+                      {invitee.name ? initials(invitee.name) : <UserCheck className="h-[18px] w-[18px]" />}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-[13.5px] font-bold">{invitee.name ?? "Invited friend"}</span>
+                      <span className="block text-xs font-semibold text-ink-muted">Joined {formatDate(invitee.createdAt)}</span>
+                    </span>
+                    <span className={cn("shrink-0 rounded-full px-2.5 py-1 text-[11px] font-extrabold", STAGE[invitee.stage].tone)}>
+                      {STAGE[invitee.stage].label}
+                    </span>
                   </li>
                 ))}
               </ul>
             ) : (
-              <EmptyState
-                icon={<Gift className="h-6 w-6" aria-hidden="true" />}
-                title="Nobody yet"
-                description="Share your link. When someone joins with it and gets their first project approved, your bonus lands in your balance."
-              />
+              <div className="flex flex-1 flex-col items-center justify-center gap-2 rounded-2xl bg-panel/60 px-4 py-8 text-center">
+                <UserPlus className="h-5 w-5 text-ink-3" aria-hidden="true" />
+                <p className="text-xs font-semibold text-ink-muted">Nobody yet. Share your link to start.</p>
+              </div>
             )}
-          </section>
-
-          <p className="text-[11px] leading-relaxed text-ink-muted">
-            The bonus is credited to your balance and is paid out with your next payout. It
-            counts toward your earnings for tax, the same as project work does.
-          </p>
-        </>
+          </Panel>
+        </CardGrid>
       )}
-    </motion.div>
+    </div>
   );
 }

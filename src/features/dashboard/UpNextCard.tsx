@@ -9,8 +9,8 @@ import { preloadWorkbench } from "@/lib/preload";
 import { Button } from "@/components/ui/button";
 import type { DoerProject } from "@/types/domain";
 import { formatDayShort, formatTime } from "@/features/calendar/dates";
-import { Panel } from "./ui";
-import { Gauge } from "./Gauge";
+import { Panel } from "@/components/app/ui";
+import { Gauge } from "@/components/app/Gauge";
 
 const URGENCY_TAG = {
   overdue: "bg-danger-bg text-danger-ink",
@@ -75,62 +75,74 @@ export function UpNextCard({
   const review = project.status === "in_review" || project.status === "delivered";
 
   return (
-    <Panel className="[grid-area:next]" aria-labelledby="up-next">
-      <span id="up-next" className="flex items-center gap-1.5 text-xs font-bold text-ink-muted">
-        <Clock className="h-3.5 w-3.5" aria-hidden="true" />
-        Up next
-      </span>
-      <h3 className="mt-2.5 line-clamp-2 text-lg font-extrabold leading-[1.25] tracking-[-0.025em]">
-        {taskTitle(project)}
-      </h3>
-      <span className={cn("mt-2.5 self-start rounded-full px-2.5 py-1 text-[11.5px] font-bold", URGENCY_TAG[urgency])}>
-        {relativeDeadline(project.deliveryAt)}
-      </span>
+    <Panel className="@container [grid-area:next]" aria-labelledby="up-next">
+      {/* Side by side when the card is wide: details on the left, the gauge on the right. */}
+      <div className="flex flex-1 flex-col gap-4 @md:grid @md:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)] @md:items-stretch @md:gap-6">
+        <div className="flex min-w-0 flex-col">
+          <span id="up-next" className="flex items-center gap-1.5 text-xs font-bold text-ink-muted">
+            <Clock className="h-3.5 w-3.5" aria-hidden="true" />
+            Up next
+          </span>
+          <h3 className="mt-2.5 line-clamp-2 text-lg font-extrabold leading-[1.25] tracking-[-0.025em] @md:text-xl">
+            {taskTitle(project)}
+          </h3>
+          <span className={cn("mt-2.5 self-start rounded-full px-2.5 py-1 text-[11.5px] font-bold", URGENCY_TAG[urgency])}>
+            {relativeDeadline(project.deliveryAt)}
+          </span>
 
-      <dl className="mt-3.5 space-y-2 text-[12.5px] font-semibold">
-        <div className="flex items-center justify-between gap-3">
-          <dt className="text-ink-2">Due</dt>
-          <dd className="text-right font-bold text-ink">{due ? `${formatDayShort(due)}, ${formatTime(due)}` : "Not set"}</dd>
-        </div>
-        <div className="flex items-center justify-between gap-3">
-          <dt className="text-ink-2">Pay for this task</dt>
-          <dd className="font-bold text-ink tabular-nums">{formatPaise(project.payoutPaise)}</dd>
-        </div>
-      </dl>
+          <dl className="mt-3.5 space-y-2 text-[12.5px] font-semibold">
+            <div className="flex items-center justify-between gap-3">
+              <dt className="text-ink-2">Due</dt>
+              <dd className="text-right font-bold text-ink">{due ? `${formatDayShort(due)}, ${formatTime(due)}` : "Not set"}</dd>
+            </div>
+            <div className="flex items-center justify-between gap-3">
+              <dt className="text-ink-2">Pay for this task</dt>
+              <dd className="font-bold text-ink tabular-nums">{formatPaise(project.payoutPaise)}</dd>
+            </div>
+          </dl>
 
-      {needsLink ? (
-        <p className="mt-3 flex items-start gap-2 rounded-xl bg-warning-bg px-3 py-2 text-xs font-bold text-warning-ink">
-          <Link2Off className="mt-px h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-          Waiting for your supervisor to add the working link.
-        </p>
-      ) : (
-        <div className="mt-4">
-          <Gauge
-            value={review ? 100 : progress}
-            tone={review ? "var(--color-highlight)" : "var(--color-primary)"}
-            label={review ? "Sent for review" : "Done so far"}
-          />
-          <div className="mt-2.5 flex items-center justify-center gap-4 text-[11px] font-semibold text-ink-muted">
-            <span className="inline-flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
-              Done
-            </span>
-            <span className="inline-flex items-center gap-1.5">
-              <span className="chart-hatch h-2 w-2 rounded-full" aria-hidden="true" />
-              Left
-            </span>
-            <span>Updated {timeAgo(project.updatedAt)}</span>
+          <div className="hidden min-h-4 flex-1 @md:block" aria-hidden="true" />
+          <Button asChild className="mt-4 hidden w-full @md:inline-flex">
+            <Link to={`/work/${project.id}`} onMouseEnter={preloadWorkbench} onFocus={preloadWorkbench}>
+              Open task
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </Button>
+        </div>
+
+        {needsLink ? (
+          <p className="flex items-start gap-2 self-start rounded-xl bg-warning-bg px-3 py-2 text-xs font-bold text-warning-ink @md:self-center">
+            <Link2Off className="mt-px h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+            Waiting for your supervisor to add the working link.
+          </p>
+        ) : (
+          <div className="flex flex-col justify-center rounded-2xl @md:bg-panel/60 @md:px-3 @md:py-5">
+            <Gauge
+              value={review ? 100 : progress}
+              tone={review ? "var(--color-highlight)" : "var(--color-primary)"}
+              label={review ? "Sent for review" : "Done so far"}
+            />
+            <div className="mt-2.5 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[11px] font-semibold text-ink-muted">
+              <span className="inline-flex items-center gap-1.5">
+                <span className="h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
+                Done
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <span className="chart-hatch h-2 w-2 rounded-full" aria-hidden="true" />
+                Left
+              </span>
+              <span>Updated {timeAgo(project.updatedAt)}</span>
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      <div className="min-h-4 flex-1" aria-hidden="true" />
-      <Button asChild className="w-full">
-        <Link to={`/work/${project.id}`} onMouseEnter={preloadWorkbench} onFocus={preloadWorkbench}>
-          Open task
-          <ArrowRight className="h-4 w-4" aria-hidden="true" />
-        </Link>
-      </Button>
+        <Button asChild className="mt-auto w-full @md:hidden">
+          <Link to={`/work/${project.id}`} onMouseEnter={preloadWorkbench} onFocus={preloadWorkbench}>
+            Open task
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
+        </Button>
+      </div>
     </Panel>
   );
 }
