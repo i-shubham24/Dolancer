@@ -5,6 +5,7 @@ import {
   LayoutDashboard,
   Layers,
   Briefcase,
+  CalendarDays,
   Wallet,
   Bell,
   ShieldCheck,
@@ -33,6 +34,7 @@ interface Action {
 const ACTIONS: Action[] = [
   { id: "dashboard", label: "Dashboard", hint: "Home", to: "/dashboard", icon: LayoutDashboard, keywords: "home overview start" },
   { id: "pool", label: "View assigned offers", hint: "Accept work", to: "/pool", icon: Layers, keywords: "assigned offers accept tasks projects" },
+  { id: "calendar", label: "Calendar", hint: "Dates", to: "/calendar", icon: CalendarDays, keywords: "calendar deadlines dates reminders schedule week month" },
   { id: "work", label: "My work", hint: "Active projects", to: "/work", icon: Briefcase, keywords: "projects active tasks progress submit" },
   { id: "earnings", label: "Earnings", hint: "Payouts", to: "/earnings", icon: Wallet, keywords: "money payout pay earnings" },
   { id: "alerts", label: "Alerts", hint: "Notifications", to: "/notifications", icon: Bell, keywords: "notifications alerts updates" },

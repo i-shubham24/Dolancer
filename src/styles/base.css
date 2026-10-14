@@ -1604,6 +1604,67 @@
     }
   }
 
+  /* The dashboard bento. Laid out by the width of the page area, not the screen,
+     so collapsing the sidebar gives the cards more room straight away. */
+  .dash-wrap {
+    container-type: inline-size;
+  }
+
+  .dash-grid {
+    display: grid;
+    gap: 0.875rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "k1 k2"
+      "k3 k4"
+      "next next"
+      "week week"
+      "work work"
+      "chart chart"
+      "timer timer"
+      "offers offers";
+  }
+
+  @container (min-width: 600px) {
+    .dash-grid {
+      gap: 1rem;
+      grid-template-areas:
+        "k1 k2"
+        "k3 k4"
+        "next week"
+        "chart chart"
+        "work work"
+        "offers timer";
+    }
+  }
+
+  @container (min-width: 780px) {
+    .dash-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-areas:
+        "k1 k2 k3 k4"
+        "next next week week"
+        "chart chart chart chart"
+        "work work work work"
+        "offers offers timer timer";
+    }
+  }
+
+  @container (min-width: 1040px) {
+    .dash-grid {
+      grid-template-areas:
+        "k1 k2 k3 k4"
+        "chart chart next week"
+        "work work offers timer";
+    }
+  }
+
+  /* An empty chart bar: a striped outline, so "nothing yet" never reads as missing. */
+  .chart-hatch {
+    background: repeating-linear-gradient(-45deg, #cdd7e4 0 2px, transparent 2px 7px);
+    box-shadow: inset 0 0 0 1.5px #cdd7e4;
+  }
+
   @keyframes status-pulse {
     0%,
     100% {

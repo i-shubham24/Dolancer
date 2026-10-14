@@ -84,7 +84,7 @@ export function TicketPage() {
     <div className="mx-auto max-w-3xl space-y-6">
       <Link
         to="/tickets"
-        className="inline-flex items-center gap-1.5 text-sm font-bold text-ink-2 hover:text-ink"
+        className="-my-2 inline-flex items-center gap-1.5 py-2 text-sm font-bold text-ink-2 hover:text-ink"
       >
         <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
         Support

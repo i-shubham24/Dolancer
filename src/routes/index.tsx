@@ -42,6 +42,9 @@ const CountryOnboardingPage = lazy(() =>
     default: m.CountryOnboardingPage,
   })),
 );
+const CalendarPage = lazy(() =>
+  import("@/features/calendar/CalendarPage").then((m) => ({ default: m.CalendarPage })),
+);
 const PoolPage = lazy(() =>
   import("@/features/pool/PoolPage").then((m) => ({ default: m.PoolPage })),
 );
@@ -157,6 +160,7 @@ export const router = createBrowserRouter([
       { path: "/dashboard", element: page(<DashboardPage />) },
       { path: "/work", element: page(<WorkPage />) },
       { path: "/work/:id", element: page(<WorkbenchPage />) },
+      { path: "/calendar", element: page(<CalendarPage />) },
       { path: "/pool", element: page(<PoolPage />) },
       { path: "/earnings", element: page(<EarningsPage />) },
       { path: "/verification", element: page(<VerificationPage />) },

@@ -10,6 +10,13 @@ const TONE = {
   "at-capacity": "bg-warning-bg",
 } as const;
 
+/** Shorter words for the top bar, where the pill sits beside other controls. */
+const BAR_LABEL = {
+  available: "Open to offers",
+  paused: "Offers paused",
+  "at-capacity": "At capacity",
+} as const;
+
 const DOT = {
   available: "bg-success-dot status-dot-pulse",
   paused: "bg-neutral-dot",
@@ -24,7 +31,14 @@ const DOT = {
  * switch is locked and labelled as such rather than showing the doer's own Paused
  * state, because the system set it, not them.
  */
-export function AvailabilityToggle({ compact = false }: { compact?: boolean }) {
+export function AvailabilityToggle({
+  compact = false,
+  variant = "card",
+}: {
+  compact?: boolean;
+  /** "bar" is the slim pill in the app's top bar; the explanation moves to a tooltip. */
+  variant?: "card" | "bar";
+}) {
   const { available, activeCount, isLoading, isSaving, setAvailable } = useAvailability();
 
   if (isLoading) {
@@ -34,6 +48,39 @@ export function AvailabilityToggle({ compact = false }: { compact?: boolean }) {
   const state = availabilityState({ activeCount, available });
   const copy = AVAILABILITY_COPY[state];
   const locked = !copy.canToggle;
+
+  if (variant === "bar") {
+    return (
+      <div
+        title={copy.detail}
+        className={cn(
+          "inline-flex h-11 items-center gap-2.5 rounded-full bg-white pl-4 pr-1.5 ring-1 ring-ink/[0.05]",
+          isSaving && "opacity-70",
+        )}
+      >
+        <span aria-hidden="true" className={cn("h-2 w-2 rounded-full", DOT[state])} />
+        <span className="text-[13px] font-bold tracking-[-0.01em]">{BAR_LABEL[state]}</span>
+        {locked ? (
+          <span className="flex h-8 w-8 items-center justify-center" aria-hidden="true">
+            <Lock className="h-3.5 w-3.5 text-ink/55" />
+          </span>
+        ) : (
+          <Switch.Root
+            checked={available}
+            onCheckedChange={setAvailable}
+            disabled={isSaving}
+            aria-label={`Open to offers: ${available ? "on" : "off"}. ${copy.detail}`}
+            className={cn(
+              "relative mr-1 h-[22px] w-[38px] rounded-full transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+              available ? "bg-success-dot" : "bg-muted",
+            )}
+          >
+            <Switch.Thumb className="block h-4 w-4 translate-x-[3px] rounded-full bg-white shadow-[0_1px_2px_rgba(0,0,0,0.2)] transition-transform data-[state=checked]:translate-x-[19px]" />
+          </Switch.Root>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className={cn("flex flex-col gap-1.5", compact ? "items-start" : "items-end")}>

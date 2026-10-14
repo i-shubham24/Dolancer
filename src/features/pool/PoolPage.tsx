@@ -70,7 +70,6 @@ export function PoolPage() {
             <ClipboardCheck className="h-4 w-4 text-highlight" aria-hidden="true" />
             Offers are private to your account
           </div>
-          <AvailabilityToggle />
         </div>
       </header>
 

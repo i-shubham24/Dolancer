@@ -14,7 +14,7 @@ const EXPLORE_LINKS = [
   { to: "/contact", label: "Contact" },
 ];
 
-const linkClass = "text-slate-300 transition-colors hover:text-white";
+const linkClass = "-my-1 inline-block py-1 text-slate-300 transition-colors hover:text-white";
 
 export function SiteFooter() {
   const currentYear = new Date().getFullYear();

@@ -93,7 +93,7 @@ export function WorkbenchPage() {
     <motion.div className="relative space-y-7" initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }}>
       <Link
         to="/work"
-        className="inline-flex items-center gap-1.5 text-sm font-bold text-ink-2 hover:text-ink"
+        className="-my-2 inline-flex items-center gap-1.5 py-2 text-sm font-bold text-ink-2 hover:text-ink"
       >
         <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
         My work

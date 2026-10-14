@@ -101,7 +101,7 @@ export function ClaimDrawer({
                 <div className="flex items-start gap-2.5 rounded-xl border border-line-card bg-surface-2 p-4">
                   <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-success-ink" aria-hidden="true" />
                   <p className="text-xs leading-relaxed text-ink-2">
-                    You work with a supervisor, who is your only point of contact. The {SUPERVISOR_LABEL.toLowerCase()} does not receive your name, contact details or other identifying information.
+                    You work with a supervisor, who is your only point of contact. The client does not receive your name, contact details or other identifying information.
                   </p>
                 </div>
 

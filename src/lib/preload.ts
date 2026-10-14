@@ -9,6 +9,7 @@
  */
 const LOADERS: Record<string, () => Promise<unknown>> = {
   "/work": () => import("@/features/work/WorkPage"),
+  "/calendar": () => import("@/features/calendar/CalendarPage"),
   "/pool": () => import("@/features/pool/PoolPage"),
   "/earnings": () => import("@/features/earnings/EarningsPage"),
   "/notifications": () => import("@/features/notifications/NotificationsPage"),

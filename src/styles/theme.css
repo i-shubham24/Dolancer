@@ -149,6 +149,17 @@
   --color-neutral-bg: var(--dl-neutral-bg);
   --color-neutral-ink: var(--dl-neutral-ink);
   --color-neutral-dot: var(--dl-neutral-dot);
+
+  /* App frame and the dashboard's extra hues. */
+  --color-frame: var(--dl-frame);
+  --color-panel: var(--dl-panel);
+  --color-side: var(--dl-side);
+  --color-navy: var(--dl-navy);
+  --color-navy-2: var(--dl-navy-2);
+  --color-violet: var(--dl-violet);
+  --color-violet-light: var(--dl-violet-light);
+  --color-bar-2: var(--dl-bar-2);
+  --color-bar-3: var(--dl-bar-3);
 }
 
 :root {
@@ -201,4 +212,15 @@
   --dl-graphic-soft: #e8edff;
   --dl-gradient-a: #c8d4ff;
   --dl-gradient-b: #a7f3d0;
+  /* The signed-in app sits in a soft frame: a darker outer wash, a lighter
+     sidebar panel and a main panel the page content sits on. */
+  --dl-frame: #dce6f2;
+  --dl-panel: var(--dl-canvas);
+  --dl-side: #f4f7fb;
+  --dl-navy: #0b1f3a;
+  --dl-navy-2: #1d3d6b;
+  --dl-violet: #6d5ce7;
+  --dl-violet-light: #efecff;
+  --dl-bar-2: #4a8fdb;
+  --dl-bar-3: #b4d0f1;
 }

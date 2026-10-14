@@ -71,7 +71,7 @@ export function DisciplineOfferCards() {
 
                 <Link 
                   to="/sign-up" 
-                  className="mt-6 flex items-center gap-1 text-primary font-extrabold text-sm hover:gap-2 transition-all w-fit"
+                  className="mt-[18px] -mb-1.5 py-1.5 flex items-center gap-1 text-primary font-extrabold text-sm hover:gap-2 transition-all w-fit"
                 >
                   View all <ChevronRight className="h-4 w-4" />
                 </Link>

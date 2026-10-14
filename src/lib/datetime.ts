@@ -115,3 +115,18 @@ export function countdownParts(
     seconds: totalSeconds % 60,
   };
 }
+
+/** Coarse time since a past moment, e.g. "just now", "3 hours ago", "yesterday". */
+export function timeAgo(iso: string | null | undefined): string {
+  const date = parse(iso);
+  if (!date) return "";
+  const minutes = Math.floor((Date.now() - date.getTime()) / 60_000);
+  if (minutes < 1) return "just now";
+  if (minutes < 60) return `${minutes} minute${minutes === 1 ? "" : "s"} ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours} hour${hours === 1 ? "" : "s"} ago`;
+  const days = Math.floor(hours / 24);
+  if (days === 1) return "yesterday";
+  if (days < 30) return `${days} days ago`;
+  return formatDate(iso);
+}

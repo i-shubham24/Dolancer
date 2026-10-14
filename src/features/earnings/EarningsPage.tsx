@@ -253,7 +253,7 @@ export function EarningsPage() {
                       <td className="px-4 py-3">
                         <Link
                           to={`/work/${row.projectId}`}
-                          className="font-mono text-xs font-bold text-secondary underline decoration-2 underline-offset-2 hover:text-secondary-hover"
+                          className="-my-2 inline-block py-2 font-mono text-xs font-bold text-secondary underline decoration-2 underline-offset-2 hover:text-secondary-hover"
                         >
                           {row.projectId.slice(0, 8)}
                         </Link>
