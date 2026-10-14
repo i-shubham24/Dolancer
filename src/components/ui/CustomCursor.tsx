@@ -26,7 +26,8 @@ export function CustomCursor() {
     let glowY = mouseY;
     let isVisible = false;
     let isHovering = false;
-    let animationFrameId: number;
+    let animationFrameId = 0;
+    let running = false;
 
     const setVisible = (visible: boolean) => {
       if (isVisible === visible) return;
@@ -57,6 +58,17 @@ export function CustomCursor() {
         glowRef.current.style.transform = `translate3d(${glowX}px, ${glowY}px, 0) translate(-50%, -50%)`;
       }
 
+      // Stop once the glow has caught up, so an idle page uses no frames at all.
+      if (Math.abs(mouseX - glowX) < 0.4 && Math.abs(mouseY - glowY) < 0.4) {
+        running = false;
+        return;
+      }
+      animationFrameId = requestAnimationFrame(updateGlow);
+    };
+
+    const kick = () => {
+      if (running) return;
+      running = true;
       animationFrameId = requestAnimationFrame(updateGlow);
     };
 
@@ -66,6 +78,7 @@ export function CustomCursor() {
       mouseY = e.clientY;
 
       if (!isVisible) setVisible(true);
+      kick();
 
       // Instant hardware-rate transform for primary cursor ball
       if (cursorRef.current) {
@@ -109,8 +122,6 @@ export function CustomCursor() {
     window.addEventListener("mouseup", handleMouseUp, { passive: true });
     document.addEventListener("mouseleave", handleMouseLeave, { passive: true });
     document.addEventListener("mouseenter", handleMouseEnter, { passive: true });
-
-    updateGlow();
 
     return () => {
       cancelAnimationFrame(animationFrameId);

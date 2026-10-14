@@ -13,7 +13,9 @@ import { CONTACT } from "./content";
  * regulated-holding word, and there are no em dashes.
  */
 
-export type LegalKind = "terms" | "privacy" | "allowed-work" | "payouts" | "grievance";
+import { LEGAL_PAGES, isLegalKind, type LegalKind } from "./legal-pages";
+
+export { LEGAL_PAGES, isLegalKind, type LegalKind };
 
 export interface LegalDocument {
   kind: LegalKind;
@@ -23,22 +25,14 @@ export interface LegalDocument {
   effectiveAt: string | null;
 }
 
-/** Order here is the order of the tabs on the legal page and the buttons in the footer. */
-export const LEGAL_PAGES: { kind: LegalKind; label: string }[] = [
-  { kind: "terms", label: "Terms and Conditions" },
-  { kind: "privacy", label: "Privacy Policy" },
-  { kind: "allowed-work", label: "Allowed Work" },
-  { kind: "payouts", label: "Payouts and Tax" },
-  { kind: "grievance", label: "Grievances" },
-];
-
-export function isLegalKind(value: string | undefined): value is LegalKind {
-  return LEGAL_PAGES.some((page) => page.kind === value);
-}
 
 // "draft" stays in the version until counsel has signed the text off.
 const VERSION = "draft-2026-10-11";
 const EFFECTIVE_AT = "2026-10-11T00:00:00.000Z";
+// The privacy policy changed on its own, to cover the new verification steps and
+// what the app now keeps in the browser.
+const PRIVACY_VERSION = "draft-2026-10-14";
+const PRIVACY_EFFECTIVE_AT = "2026-10-14T00:00:00.000Z";
 const OPERATOR = `${CONTACT.company}, ${CONTACT.jurisdiction}`;
 
 const TERMS = `# In short
@@ -193,11 +187,11 @@ Dolancer is operated by ${OPERATOR}, which decides how the personal data describ
 # 2. What we collect
 
 - Account: your email address, sign-in records and security events.
-- Profile: your full name, country, confirmation that you are 18 or older, the skills you select, your availability, ratings and level.
-- Verification: a government photo identity document (PAN card, passport, driving licence or Aadhaar), a photo of you, tax details such as your PAN where the law needs them, and your payout details (a UPI ID, or a bank account number and IFSC code).
-- Work: the offers sent to you, the projects you accept, working links, progress, submissions, files, review outcomes and your project chat with your supervisor, including attachments.
+- Profile: your full name, mobile (WhatsApp) number, country, confirmation that you are 18 or older, the skills you select, your availability, ratings and level.
+- Verification: a photo of you, a photo of your PAN card, your PAN where the law needs it, and your payout details: the account holder name, bank account number and IFSC code (or a UPI ID if you added one before). The account holder name has to match the name on your profile and PAN card, so payouts reach the person who did the work.
+- Work: the offers sent to you, messages from supervisors about new work, the projects you accept, working links, progress, submissions, files, review outcomes and your project chat with your supervisor, including attachments.
 - Money: payouts, tax withheld, referral bonuses and the ledger behind your earnings page.
-- Referrals: your invite code and which accounts joined with it.
+- Referrals: your invite code, and the people who joined with it.
 - Support: tickets and emails you send us.
 - Technical: device and browser details, IP address, and logs of errors and security events.
 
@@ -214,6 +208,8 @@ Supervisors and authorised Dolancer staff see what they need to route, review an
 A client receives the finished work and a discipline label. A client does not receive your name, contact details or verification documents through the normal workflow.
 
 Project chat is between you and your supervisor. Messages may be checked, including by automated means, for contact details and identity information, because the service depends on neither side being identified to the other.
+
+If you joined with someone's invite code, that person can see your name and how far you have got (joined, verified, or bonus earned), so they know when their referral bonus is due. They do not see anything else about you.
 
 # 5. Identity documents and payout details
 
@@ -237,7 +233,13 @@ We may also disclose information to an authority, court or professional adviser 
 
 # 7. Cookies and browser storage
 
-This site does not use advertising or analytics cookies. It stores a small amount of data in your browser to keep you signed in and to remember interface preferences such as the sidebar state. The bot check may set its own storage to do its job. Blocking browser storage will stop sign-in from working.
+This site does not use advertising or analytics cookies. It stores some data in your browser so the app works and remembers things for you:
+
+- Your sign-in session, which is cleared when you close the tab.
+- Interface preferences, such as the sidebar state and which dashboard tab you last opened.
+- Things kept on this device only: message drafts, reminders, your work timer, which chats you have read, skills you add yourself, your setup progress and a few offer settings.
+
+The items kept on this device are not sent to us, and they are removed when you sign out. The bot check may set its own storage to do its job. Blocking browser storage will stop sign-in from working.
 
 If we add analytics later, we will update this policy first and ask for consent where the law requires it.
 
@@ -448,7 +450,7 @@ You keep every remedy the law gives you. The Terms and Conditions set out the go
 
 export const LOCAL_DOCUMENTS: Record<LegalKind, LegalDocument> = {
   terms: { kind: "terms", version: VERSION, title: "Terms and Conditions", effectiveAt: EFFECTIVE_AT, content: TERMS },
-  privacy: { kind: "privacy", version: VERSION, title: "Privacy Policy", effectiveAt: EFFECTIVE_AT, content: PRIVACY },
+  privacy: { kind: "privacy", version: PRIVACY_VERSION, title: "Privacy Policy", effectiveAt: PRIVACY_EFFECTIVE_AT, content: PRIVACY },
   "allowed-work": { kind: "allowed-work", version: VERSION, title: "Allowed Work", effectiveAt: EFFECTIVE_AT, content: ALLOWED_WORK },
   payouts: { kind: "payouts", version: VERSION, title: "Payouts and Tax", effectiveAt: EFFECTIVE_AT, content: PAYOUTS },
   grievance: { kind: "grievance", version: VERSION, title: "Grievances", effectiveAt: EFFECTIVE_AT, content: GRIEVANCE },

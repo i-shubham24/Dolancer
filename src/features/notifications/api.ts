@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { internalPath } from "@/lib/safe-next";
 import { supabase } from "@/lib/supabase";
 import { demo, demoRespond, isDemo } from "@/lib/demo-data";
 import { selectColumns } from "@/lib/select";
@@ -53,7 +54,7 @@ export async function fetchNotifications(): Promise<Notification[]> {
     id: row.id,
     type: row.template_type,
     title: TEMPLATES[row.template_type] ?? "Something happened on your work",
-    deepLink: row.deep_link,
+    deepLink: internalPath(row.deep_link),
     readAt: row.read_at,
     createdAt: row.created_at,
   }));

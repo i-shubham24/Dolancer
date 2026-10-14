@@ -262,7 +262,7 @@ export function WorkbenchPage() {
                     type="button"
                     onClick={() => setBriefOpen((open) => !open)}
                     aria-expanded={briefOpen}
-                    className="inline-flex items-center gap-1 self-start rounded-md text-xs font-bold text-primary focus-visible:outline-2 focus-visible:outline-primary"
+                    className="-my-2 inline-flex items-center gap-1 self-start rounded-md py-2 text-xs font-bold text-primary focus-visible:outline-2 focus-visible:outline-primary"
                   >
                     {briefOpen ? "Show less" : "Read the full brief"}
                     <ChevronDown className={cn("h-3.5 w-3.5 transition-transform", briefOpen && "rotate-180")} aria-hidden="true" />

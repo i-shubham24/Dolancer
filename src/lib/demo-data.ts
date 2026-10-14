@@ -1,4 +1,3 @@
-import type { Session, User } from "@supabase/supabase-js";
 import type { ChatAttachment, ChatMessage } from "@/features/chat/api";
 import type { LedgerRow } from "@/features/earnings/api";
 import type { SkillOption } from "@/features/skills/api";
@@ -11,7 +10,7 @@ import type {
   ProfileRow,
 } from "@/types/database";
 import type { DoerGateState, DoerProject, EarningsSummary, PoolOffer } from "@/types/domain";
-import { env } from "./env";
+import { DEMO_USER_ID } from "./demo-auth";
 import { SKILL_AREAS, skillId } from "@/features/skills/catalog";
 
 /**
@@ -26,9 +25,9 @@ import { SKILL_AREAS, skillId } from "@/features/skills/catalog";
  * Everyone and everything here is fictional.
  */
 
-export function isDemo(): boolean {
-  return env.demoMode;
-}
+// Sign-in and the demo flag live in demo-auth, so the first page a visitor loads
+// does not carry the whole seed below. Re-exported here for the feature apis.
+export { DEMO_USER_ID, demoAuth, isDemo } from "./demo-auth";
 
 /* ------------------------------------------------------------------ */
 /*  Plumbing                                                           */
@@ -67,81 +66,7 @@ const seededAt = Date.now();
 const daysAgo = (days: number) => new Date(seededAt - days * DAY_MS).toISOString();
 const daysFromNow = (days: number) => new Date(seededAt + days * DAY_MS).toISOString();
 
-/* ------------------------------------------------------------------ */
-/*  Identity and sign-in                                               */
-/* ------------------------------------------------------------------ */
-
-export const DEMO_USER_ID = "5b1f0c3e-8a47-4d2b-9e6a-1c7d2f4a8b90";
 const SUPERVISOR_ID = "a93e7d15-2c64-4f8b-b1d0-6e5f3a9c2d71";
-
-const DEMO_USER: User = {
-  id: DEMO_USER_ID,
-  email: "shubham@example.com",
-  app_metadata: {},
-  user_metadata: { full_name: "Shubham" },
-  aud: "authenticated",
-  created_at: daysAgo(120),
-};
-
-function demoSession(): Session {
-  return {
-    access_token: "demo",
-    refresh_token: "demo",
-    token_type: "bearer",
-    expires_in: 3600,
-    expires_at: Math.floor(Date.now() / 1000) + 3600,
-    user: DEMO_USER,
-  };
-}
-
-/*
- * Any email signs in, and there is no code to enter. The flag lives in
- * sessionStorage, so a reload keeps you signed in and closing the tab signs you out.
- */
-const SIGNED_IN_KEY = "dolancer.demo.signedIn";
-const authListeners = new Set<(session: Session | null) => void>();
-
-function readSignedIn(): boolean {
-  try {
-    return sessionStorage.getItem(SIGNED_IN_KEY) === "true";
-  } catch {
-    return false;
-  }
-}
-
-function writeSignedIn(signedIn: boolean): void {
-  try {
-    if (signedIn) sessionStorage.setItem(SIGNED_IN_KEY, "true");
-    else sessionStorage.removeItem(SIGNED_IN_KEY);
-  } catch {
-    // Storage can be blocked. The session then lasts until the next reload.
-  }
-}
-
-function emitAuth(session: Session | null): void {
-  for (const listener of authListeners) listener(session);
-}
-
-export const demoAuth = {
-  getSession(): Session | null {
-    return readSignedIn() ? demoSession() : null;
-  },
-  signIn(): void {
-    writeSignedIn(true);
-    emitAuth(demoSession());
-  },
-  signOut(): void {
-    writeSignedIn(false);
-    emitAuth(null);
-  },
-  /** The demo counterpart of supabase.auth.onAuthStateChange. Returns the unsubscribe. */
-  onChange(listener: (session: Session | null) => void): () => void {
-    authListeners.add(listener);
-    return () => {
-      authListeners.delete(listener);
-    };
-  },
-};
 
 /* ------------------------------------------------------------------ */
 /*  Seed                                                               */
@@ -726,7 +651,7 @@ export const demo: DemoState = {
     {
       id: "notification-3",
       template_type: "payout_released",
-      deep_link: "/earnings",
+      deep_link: "/dashboard?view=earnings",
       read_at: daysAgo(19),
       created_at: daysAgo(20),
     },

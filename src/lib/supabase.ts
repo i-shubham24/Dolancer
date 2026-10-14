@@ -20,12 +20,11 @@ function getSecureStorage(): Storage | undefined {
   try {
     window.localStorage.removeItem("dolancer.auth");
     window.localStorage.removeItem("dolancer.auth.session");
-    for (let i = window.localStorage.length - 1; i >= 0; i--) {
-      const key = window.localStorage.key(i);
-      if (key && (key.startsWith("sb-") || key.includes("auth-token") || key.includes("dolancer.auth"))) {
-        window.localStorage.removeItem(key);
-      }
-    }
+    // Collect first: removing while stepping through the keys can skip some.
+    const stale = Object.keys(window.localStorage).filter(
+      (key) => key.startsWith("sb-") || key.includes("auth-token") || key.includes("dolancer.auth"),
+    );
+    for (const key of stale) window.localStorage.removeItem(key);
   } catch {
     // Ignore restricted storage contexts
   }

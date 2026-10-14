@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { ListChecks, Wallet } from "lucide-react";
@@ -24,7 +25,7 @@ import {
 } from "./queries";
 import { AttentionStrip } from "./AttentionStrip";
 import { MoneyStats, TaskStats } from "./StatCards";
-import { MoneySplitCard, RecentPayouts } from "./FinanceCards";
+import { MoneySplitCard, PayoutHistory } from "./FinanceCards";
 import { PaidChart } from "./PaidChart";
 import { UpNextCard } from "./UpNextCard";
 import { pickUpNext } from "./up-next";
@@ -76,7 +77,7 @@ type DashView = "tasks" | "finances";
 
 const VIEWS: { id: DashView; label: string; icon: typeof Wallet }[] = [
   { id: "tasks", label: "Tasks", icon: ListChecks },
-  { id: "finances", label: "Finances", icon: Wallet },
+  { id: "finances", label: "Earnings", icon: Wallet },
 ];
 
 /** Tasks or Finances: one half of the dashboard at a time, so neither is crowded. */
@@ -135,6 +136,19 @@ export function DashboardPage() {
   const [peekOpen, setPeekOpen] = useState(false);
   const view = useUiStore((state) => state.dashView);
   const setView = useUiStore((state) => state.setDashView);
+
+  // Links to earnings land here with ?view=earnings; open that tab, then tidy the address.
+  const [params, setParams] = useSearchParams();
+  const wanted = params.get("view");
+  useEffect(() => {
+    if (wanted !== "earnings" && wanted !== "tasks") return;
+    setView(wanted === "earnings" ? "finances" : "tasks");
+    setParams((current) => {
+      const next = new URLSearchParams(current);
+      next.delete("view");
+      return next;
+    }, { replace: true });
+  }, [wanted, setView, setParams]);
   const closed = useProjects("closed");
 
   const active = useMemo(
@@ -243,6 +257,7 @@ export function DashboardPage() {
             exit={reduceMotion ? undefined : { opacity: 0, y: 8, transition: { duration: 0.15 } }}
           >
             <MoneyStats
+              linkTo=""
               earnings={earnings.data}
               loading={earnings.isLoading}
               error={earnings.isError}
@@ -252,7 +267,13 @@ export function DashboardPage() {
             />
             <PaidChart rows={ledger.data ?? []} loading={ledger.isLoading} />
             <MoneySplitCard earnings={earnings.data} loading={earnings.isLoading} />
-            <RecentPayouts rows={ledger.data ?? []} titles={titles} loading={ledger.isLoading} />
+            <PayoutHistory
+              rows={ledger.data ?? []}
+              titles={titles}
+              loading={ledger.isLoading}
+              error={ledger.isError}
+              onRetry={() => void ledger.refetch()}
+            />
           </motion.div>
         )}
       </AnimatePresence>

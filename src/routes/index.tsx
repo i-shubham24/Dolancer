@@ -66,9 +66,6 @@ const WorkbenchPage = lazy(() =>
 const MessagesPage = lazy(() =>
   import("@/features/messages/MessagesPage").then((m) => ({ default: m.MessagesPage })),
 );
-const EarningsPage = lazy(() =>
-  import("@/features/earnings/EarningsPage").then((m) => ({ default: m.EarningsPage })),
-);
 const SkillsPage = lazy(() =>
   import("@/features/skills/SkillsPage").then((m) => ({ default: m.SkillsPage })),
 );
@@ -179,7 +176,8 @@ export const router = createBrowserRouter([
       { path: "/messages/:threadId", element: page(<MessagesPage />) },
       { path: "/calendar", element: page(<CalendarPage />) },
       { path: "/pool", element: page(<PoolPage />) },
-      { path: "/earnings", element: page(<EarningsPage />) },
+      // Earnings now lives in the dashboard's Earnings tab; old links still land there.
+      { path: "/earnings", element: <Navigate to="/dashboard?view=earnings" replace /> },
       { path: "/verification", element: page(<VerificationPage />) },
       { path: "/skills", element: page(<SkillsPage />) },
       { path: "/training", element: page(<TrainingPage />) },

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { isDemo } from "@/lib/demo-data";
+import { isDemo } from "@/lib/demo-auth";
 
 /**
  * The two setup steps the server does not record: agreeing to the guidelines, and

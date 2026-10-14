@@ -1,8 +1,12 @@
+import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { Wallet } from "lucide-react";
 import { CountUp } from "@/components/common/CountUp";
-import { MoreLink, Panel, PanelHeader } from "@/components/app/ui";
+import { Panel, PanelHeader } from "@/components/app/ui";
+import { Select } from "@/components/ui/Select";
 import { formatPaise } from "@/lib/paise";
+import { fyLabel, fyOptions, inFinancialYear } from "@/lib/fy";
 import type { LedgerRow } from "@/features/earnings/api";
 import type { EarningsSummary } from "@/types/domain";
 
@@ -107,58 +111,122 @@ export function MoneySplitCard({ earnings, loading }: { earnings: EarningsSummar
 
 const DAY = new Intl.DateTimeFormat("en-IN", { day: "numeric" });
 const MONTH = new Intl.DateTimeFormat("en-IN", { month: "short" });
+const SHOWN = 5;
 
-/** The latest released payouts, newest first, named after the task they paid for. */
-export function RecentPayouts({
+/**
+ * Every released payout, newest first, named after the task it paid for and
+ * filterable by financial year. Each row opens its task.
+ */
+export function PayoutHistory({
   rows,
   titles,
   loading,
+  error,
+  onRetry,
 }: {
   rows: LedgerRow[];
   titles: Map<string, string>;
   loading: boolean;
+  error?: boolean;
+  onRetry?: () => void;
 }) {
-  const latest = [...rows].sort((a, b) => b.createdAt.localeCompare(a.createdAt)).slice(0, 4);
+  const reduceMotion = useReducedMotion();
+  const [fy, setFy] = useState("all");
+  const [all, setAll] = useState(false);
+  const years = useMemo(() => fyOptions(rows.map((row) => row.createdAt)), [rows]);
+  const visible = useMemo(
+    () =>
+      [...rows]
+        .filter((row) => fy === "all" || inFinancialYear(row.createdAt, Number(fy)))
+        .sort((a, b) => b.createdAt.localeCompare(a.createdAt)),
+    [rows, fy],
+  );
+  const shown = all ? visible : visible.slice(0, SHOWN);
+
   return (
-    <Panel className="[grid-area:pays]" aria-labelledby="recent-payouts">
-      <PanelHeader id="recent-payouts" title="Recent payouts" sub="Released to your bank or UPI, before tax" right={<MoreLink to="/earnings">All payouts</MoreLink>} />
+    <Panel className="[grid-area:pays]" aria-labelledby="payout-history">
+      <PanelHeader
+        id="payout-history"
+        title="Payout history"
+        sub="Released to your bank, before tax"
+        right={
+          years.length > 0 ? (
+            <Select
+              label="Financial year"
+              value={fy}
+              onChange={(value) => {
+                setFy(value);
+                setAll(false);
+              }}
+              options={[{ value: "all", label: "All years" }, ...years.map((year) => ({ value: String(year), label: `FY ${fyLabel(year)}` }))]}
+              className="h-9 rounded-full bg-panel px-3.5 text-xs font-bold text-ink-2 hover:bg-hover"
+            />
+          ) : null
+        }
+      />
       {loading ? (
         <div className="space-y-2">
           <div className="skeleton h-14 w-full rounded-2xl" />
           <div className="skeleton h-14 w-full rounded-2xl" />
         </div>
-      ) : latest.length === 0 ? (
+      ) : error ? (
+        <div className="flex flex-col items-center gap-3 rounded-2xl bg-panel/60 p-6 text-center">
+          <p className="text-sm font-bold">Payouts did not load.</p>
+          {onRetry ? (
+            <button type="button" onClick={onRetry} className="text-xs font-bold text-primary">
+              Try again
+            </button>
+          ) : null}
+        </div>
+      ) : visible.length === 0 ? (
         <div className="flex flex-1 flex-col items-center justify-center gap-2 rounded-2xl bg-panel/60 px-4 py-8 text-center">
           <Wallet className="h-5 w-5 text-ink-3" aria-hidden="true" />
-          <p className="text-xs font-semibold text-ink-muted">Your first payout shows here after a task is approved.</p>
+          <p className="text-xs font-semibold text-ink-muted">
+            {rows.length === 0 ? "Your first payout shows here after a task is approved." : "Nothing paid in this year."}
+          </p>
         </div>
       ) : (
-        <ul className="flex flex-col gap-2">
-          {latest.map((row, index) => {
-            const date = new Date(row.createdAt);
-            return (
-              <motion.li
-                key={row.id}
-                initial={{ opacity: 0, x: -8 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.35, delay: 0.3 + index * 0.07 }}
-                className="flex items-center gap-3 rounded-2xl bg-panel/60 p-2.5 pr-3.5"
-              >
-                <span className="flex h-11 w-11 shrink-0 flex-col items-center justify-center rounded-xl bg-white text-center leading-none ring-1 ring-ink/[0.05]">
-                  <span className="text-[15px] font-extrabold">{DAY.format(date)}</span>
-                  <span className="mt-0.5 text-[10px] font-bold uppercase text-ink-muted">{MONTH.format(date)}</span>
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block truncate text-[13px] font-bold">{titles.get(row.projectId) ?? "A finished task"}</span>
-                  <span className="mt-0.5 inline-flex items-center gap-1 rounded-full bg-success-bg px-2 py-0.5 text-[10.5px] font-bold text-success-ink">
-                    Released
-                  </span>
-                </span>
-                <span className="shrink-0 text-[15px] font-extrabold tabular-nums">{formatPaise(row.amountPaise)}</span>
-              </motion.li>
-            );
-          })}
-        </ul>
+        <>
+          <ul className="flex flex-col gap-2">
+            {shown.map((row, index) => {
+              const date = new Date(row.createdAt);
+              return (
+                <motion.li
+                  key={row.id}
+                  initial={reduceMotion ? false : { opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.35, delay: reduceMotion ? 0 : 0.3 + Math.min(index, 6) * 0.06 }}
+                >
+                  <Link
+                    to={`/work/${row.projectId}`}
+                    className="flex items-center gap-3 rounded-2xl bg-panel/60 p-2.5 pr-3.5 transition-colors hover:bg-panel focus-visible:outline-2 focus-visible:outline-primary"
+                  >
+                    <span className="flex h-11 w-11 shrink-0 flex-col items-center justify-center rounded-xl bg-white text-center leading-none ring-1 ring-ink/[0.05]">
+                      <span className="text-[15px] font-extrabold">{DAY.format(date)}</span>
+                      <span className="mt-0.5 text-[10px] font-bold uppercase text-ink-muted">{MONTH.format(date)}</span>
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-[13px] font-bold">{titles.get(row.projectId) ?? "A finished task"}</span>
+                      <span className="mt-0.5 inline-flex items-center gap-1 rounded-full bg-success-bg px-2 py-0.5 text-[10.5px] font-bold text-success-ink">
+                        Released
+                      </span>
+                    </span>
+                    <span className="shrink-0 text-[15px] font-extrabold tabular-nums">{formatPaise(row.amountPaise)}</span>
+                  </Link>
+                </motion.li>
+              );
+            })}
+          </ul>
+          {visible.length > SHOWN ? (
+            <button
+              type="button"
+              onClick={() => setAll((value) => !value)}
+              className="mt-3 self-center rounded-full bg-panel px-4 py-2 text-xs font-bold text-ink-2 transition-colors hover:bg-hover hover:text-ink"
+            >
+              {all ? "Show fewer" : `Show all ${visible.length}`}
+            </button>
+          ) : null}
+        </>
       )}
     </Panel>
   );

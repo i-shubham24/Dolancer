@@ -169,7 +169,7 @@ export function MoneyStats({
   yearPaise,
   yearCount,
   yearLabel,
-  linkTo = "/earnings",
+  linkTo = "",
 }: {
   /** Where each card leads; leave it out on the Earnings page itself. */
   linkTo?: string;

@@ -8,13 +8,10 @@ import {
   Briefcase,
   MessageCircle,
   CalendarDays,
-  Wallet,
   Bell,
   ShieldCheck,
   GraduationCap,
   PencilRuler,
-  Gift,
-  LifeBuoy,
   Menu,
   X,
   LogOut,
@@ -49,17 +46,16 @@ const NAV: NavEntry[] = [
   { to: "/messages", label: "Messages", icon: MessageCircle, isNew: true },
   { to: "/calendar", label: "Calendar", icon: CalendarDays },
   { to: "/pool", label: "Assigned offers", icon: Layers },
-  { to: "/earnings", label: "Earnings", icon: Wallet },
-  { to: "/notifications", label: "Alerts", icon: Bell },
 ];
 
 const SECONDARY: NavEntry[] = [
   { to: "/verification", label: "Verification", icon: ShieldCheck },
   { to: "/skills", label: "Skills", icon: PencilRuler },
   { to: "/training", label: "Training", icon: GraduationCap },
-  { to: "/refer", label: "Refer", icon: Gift },
-  { to: "/tickets", label: "Support", icon: LifeBuoy },
 ];
+
+/** Pages opened from the profile, so the profile card shows as current on them. */
+const ACCOUNT_PAGES = ["/profile", "/notifications", "/refer", "/tickets"];
 
 /** Nav items slide in one after another when the shell first appears. */
 const navList: Variants = { hidden: {}, show: { transition: { staggerChildren: 0.035, delayChildren: 0.05 } } };
@@ -205,13 +201,7 @@ function SidebarContent({
             <NavItem
               {...item}
               badge={
-                item.to === "/notifications"
-                  ? unread
-                  : item.to === "/messages"
-                    ? unreadChats
-                    : item.to === "/home" && !home.loading
-                      ? home.remaining
-                      : undefined
+                item.to === "/messages" ? unreadChats : item.to === "/home" && !home.loading ? home.remaining : undefined
               }
               onNavigate={onNavigate}
               collapsed={collapsed}
@@ -240,38 +230,77 @@ function SidebarContent({
       </motion.nav>
 
       <div className="mt-auto pt-6">
-        <div className={cn("rounded-2xl bg-white p-3 shadow-[0_2px_8px_-2px_rgba(15,23,42,0.08)]", collapsed && "flex justify-center p-2")}>
-          <Link
-            to="/profile"
-            onClick={onNavigate}
-            className="flex items-center gap-2.5 overflow-hidden rounded-xl focus-visible:outline-2 focus-visible:outline-primary"
-            aria-label="Open your profile"
-          >
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--dl-card-yellow)] text-sm font-extrabold text-ink">
-              {initial}
-            </span>
-            {!collapsed ? (
-              <span className="min-w-0 flex-1 whitespace-nowrap">
-                <span className="block truncate text-sm font-extrabold tracking-[-0.01em] text-ink">{name}</span>
-                <span className="block truncate text-xs font-semibold text-ink-muted">View profile</span>
-              </span>
-            ) : null}
-          </Link>
-
-          {!collapsed ? (
-            <div className="mt-2.5 border-t border-line-subtle pt-2">
-              <button
-                type="button"
-                onClick={() => void signOut()}
-                className="flex w-full items-center gap-2 whitespace-nowrap rounded-xl px-2 py-1.5 text-xs font-bold text-ink-muted transition-colors hover:bg-danger-bg hover:text-danger-ink"
-              >
-                <LogOut className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-                Sign out
-              </button>
-            </div>
-          ) : null}
-        </div>
+        <ProfileMenu name={name} initial={initial} unread={unread} collapsed={collapsed} onNavigate={onNavigate} />
       </div>
+    </div>
+  );
+}
+
+/**
+ * The account card at the foot of the sidebar: it opens the profile, where Earnings,
+ * Alerts, Refer and Support live as shortcuts. A dot on the avatar says there are
+ * unread alerts.
+ */
+function ProfileMenu({
+  name,
+  initial,
+  unread,
+  collapsed,
+  onNavigate,
+}: {
+  name: string;
+  initial: string;
+  unread: number;
+  collapsed?: boolean;
+  onNavigate?: () => void;
+}) {
+  const { pathname } = useLocation();
+  const here = ACCOUNT_PAGES.some((to) => pathname.startsWith(to));
+
+  const avatar = (
+    <span className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--dl-card-yellow)] text-sm font-extrabold text-ink">
+      {initial}
+      {unread > 0 ? <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-danger-dot ring-2 ring-white" aria-hidden="true" /> : null}
+    </span>
+  );
+
+  return (
+    <div
+      className={cn(
+        "rounded-2xl bg-white p-3 shadow-[0_2px_8px_-2px_rgba(15,23,42,0.08)]",
+        here && "ring-2 ring-inset ring-primary/30",
+        collapsed && "flex justify-center p-2",
+      )}
+    >
+      <Link
+        to="/profile"
+        onClick={onNavigate}
+        onMouseEnter={() => preloadRoute("/profile")}
+        title={collapsed ? "Your profile" : undefined}
+        aria-label={`${name}, open your profile${unread > 0 ? `, ${unread} unread alerts` : ""}`}
+        className="flex items-center gap-2.5 overflow-hidden rounded-xl focus-visible:outline-2 focus-visible:outline-primary"
+      >
+        {avatar}
+        {!collapsed ? (
+          <span className="min-w-0 flex-1 whitespace-nowrap">
+            <span className="block truncate text-sm font-extrabold tracking-[-0.01em] text-ink">{name}</span>
+            <span className="block truncate text-xs font-semibold text-ink-muted">View profile</span>
+          </span>
+        ) : null}
+      </Link>
+
+      {!collapsed ? (
+        <div className="mt-2.5 border-t border-line-subtle pt-2">
+          <button
+            type="button"
+            onClick={() => void signOut()}
+            className="flex w-full items-center gap-2 whitespace-nowrap rounded-xl px-2 py-1.5 text-xs font-bold text-ink-muted transition-colors hover:bg-danger-bg hover:text-danger-ink"
+          >
+            <LogOut className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+            Sign out
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -428,12 +457,14 @@ export function AppShell() {
                   setMobileOpen(false);
                 }
               }}
-              className="absolute inset-y-0 left-0 w-[85%] max-w-xs overflow-y-auto overscroll-contain bg-side px-4 py-5 shadow-soft-lg scrollbar-hide"
+              className="absolute inset-y-0 left-0 flex w-[85%] max-w-xs flex-col overflow-y-auto overscroll-contain bg-side px-4 py-5 shadow-soft-lg scrollbar-hide"
             >
-              <div className="mb-4">
+              <div className="mb-4 shrink-0">
                 <AvailabilityToggle />
               </div>
-              <SidebarContent onNavigate={() => setMobileOpen(false)} />
+              <div className="flex-1">
+                <SidebarContent onNavigate={() => setMobileOpen(false)} />
+              </div>
             </motion.div>
           </motion.div>
         ) : null}

@@ -1,6 +1,8 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { purgeUserData } from "@/lib/session-purge";
 import type { Session, User } from "@supabase/supabase-js";
-import { demoAuth, isDemo } from "@/lib/demo-data";
+import { demoAuth, isDemo } from "@/lib/demo-auth";
 
 interface AuthContextValue {
   session: Session | null;
@@ -38,6 +40,8 @@ function readRole(session: Session | null): string | null {
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const queryClient = useQueryClient();
+  const lastUser = useRef<string | null>(null);
   // The demo session is local, so there is no lookup to wait for.
   const [session, setSession] = useState<Session | null>(() =>
     isDemo() ? demoAuth.getSession() : null,
@@ -80,6 +84,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       unsubscribe?.();
     };
   }, []);
+
+  // When an account signs out, or another one takes its place, drop everything the
+  // last one left behind: cached pages, and what this device kept for them. Stores in
+  // memory still hold it too, so a fresh load finishes the job.
+  useEffect(() => {
+    const id = session?.user?.id ?? null;
+    const previous = lastUser.current;
+    lastUser.current = id;
+    if (!previous || previous === id) return;
+    queryClient.clear();
+    purgeUserData();
+    window.location.replace(id ? "/start" : "/sign-in");
+  }, [session, queryClient]);
 
   const value = useMemo<AuthContextValue>(
     () => ({

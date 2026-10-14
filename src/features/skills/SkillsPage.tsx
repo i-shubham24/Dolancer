@@ -229,7 +229,7 @@ function MySkill({ name, own, onRemove }: { name: string; own?: boolean; onRemov
         type="button"
         onClick={onRemove}
         aria-label={`Remove ${name}`}
-        className="flex h-6 w-6 items-center justify-center rounded-full transition-colors hover:bg-white/80 focus-visible:outline-2 focus-visible:outline-primary"
+        className="flex h-7 w-7 items-center justify-center rounded-full transition-colors hover:bg-white/80 focus-visible:outline-2 focus-visible:outline-primary"
       >
         <X className="h-3.5 w-3.5" aria-hidden="true" />
       </button>

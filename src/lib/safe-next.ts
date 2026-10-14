@@ -18,3 +18,17 @@ export function safeNext(raw: string | null | undefined): string {
   if (value.includes("\\") || value.includes("\n") || value.includes("\r")) return fallback;
   return value;
 }
+
+/**
+ * An in-app path, or null for anything that could leave the site. Used for links
+ * that arrive from data, such as an alert's deep link, so a bad row can never turn
+ * into an off-site redirect.
+ */
+export function internalPath(raw: string | null | undefined): string | null {
+  if (!raw) return null;
+  const value = raw.trim();
+  if (!value.startsWith("/") || value.startsWith("//")) return null;
+  if (/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(value)) return null;
+  if (value.includes("\\") || value.includes("\n") || value.includes("\r")) return null;
+  return value;
+}

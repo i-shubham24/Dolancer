@@ -42,7 +42,7 @@ const ACTIONS: Action[] = [
   { id: "calendar", label: "Calendar", hint: "Dates", to: "/calendar", icon: CalendarDays, keywords: "calendar deadlines dates reminders schedule week month" },
   { id: "work", label: "My work", hint: "Active projects", to: "/work", icon: Briefcase, keywords: "projects active tasks progress submit" },
   { id: "messages", label: "Messages", hint: "Chats", to: "/messages", icon: MessageCircle, keywords: "messages chat supervisor inbox new work" },
-  { id: "earnings", label: "Earnings", hint: "Payouts", to: "/earnings", icon: Wallet, keywords: "money payout pay earnings" },
+  { id: "earnings", label: "Earnings", hint: "Payouts", to: "/dashboard?view=earnings", icon: Wallet, keywords: "money payout pay earnings" },
   { id: "alerts", label: "Alerts", hint: "Notifications", to: "/notifications", icon: Bell, keywords: "notifications alerts updates" },
   { id: "verification", label: "Verification", hint: "Get verified", to: "/verification", icon: ShieldCheck, keywords: "verify kyc documents identity payout" },
   { id: "skills", label: "Skills", hint: "Match work", to: "/skills", icon: PencilRuler, keywords: "skills match categories" },

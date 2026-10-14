@@ -74,6 +74,10 @@ export function ScrollRevealController() {
     const mark = (element: HTMLElement) => {
       if (element.dataset.scrollRevealReady === "true") return;
       element.dataset.scrollRevealReady = "true";
+      // Text already on screen shows as it is. Fading the first view in only delays
+      // the page's main heading, which is the paint visitors wait for.
+      const box = element.getBoundingClientRect();
+      if (box.top < window.innerHeight && box.bottom > 0) return;
       element.classList.add("scroll-reveal");
       if (reduceMotion) element.classList.add("is-visible");
     };
@@ -94,13 +98,15 @@ export function ScrollRevealController() {
       { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
     );
 
-    candidates.forEach((element) => observer.observe(element));
+    candidates.forEach((element) => {
+      if (element.classList.contains("scroll-reveal")) observer.observe(element);
+    });
 
     const mutationObserver = new MutationObserver(() => {
       root.querySelectorAll<HTMLElement>("h1, h2, h3, p").forEach((element) => {
         if (element.dataset.scrollRevealReady === "true") return;
         mark(element);
-        observer.observe(element);
+        if (element.classList.contains("scroll-reveal")) observer.observe(element);
       });
     });
     mutationObserver.observe(root, { childList: true, subtree: true });

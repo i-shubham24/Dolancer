@@ -14,7 +14,6 @@ const LOADERS: Record<string, () => Promise<unknown>> = {
   "/messages": () => import("@/features/messages/MessagesPage"),
   "/calendar": () => import("@/features/calendar/CalendarPage"),
   "/pool": () => import("@/features/pool/PoolPage"),
-  "/earnings": () => import("@/features/earnings/EarningsPage"),
   "/notifications": () => import("@/features/notifications/NotificationsPage"),
   "/verification": () => import("@/features/verification/VerificationPage"),
   "/skills": () => import("@/features/skills/SkillsPage"),

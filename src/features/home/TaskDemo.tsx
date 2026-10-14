@@ -242,7 +242,7 @@ export function TaskDemo({ className }: { className?: string }) {
             aria-selected={index === scene}
             aria-label={`${index + 1}. ${item.title}`}
             onClick={() => setScene(index)}
-            className="group py-2 focus-visible:outline-2 focus-visible:outline-primary"
+            className="group py-3.5 focus-visible:outline-2 focus-visible:outline-primary"
           >
             <span className="block h-1.5 overflow-hidden rounded-full bg-panel">
               {index < scene ? (

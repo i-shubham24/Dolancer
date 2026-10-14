@@ -114,7 +114,7 @@ export function ContactPage() {
             </p>
             <a
               href={`mailto:${CONTACT.grievanceEmail}`}
-              className="mt-3 inline-flex items-center gap-2 break-all text-sm font-bold text-[#0a65c0] underline decoration-2 underline-offset-2"
+              className="mt-1 inline-flex items-center gap-2 break-all py-2 text-sm font-bold text-[#0a65c0] underline decoration-2 underline-offset-2"
             >
               <Mail className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
               {CONTACT.grievanceEmail}

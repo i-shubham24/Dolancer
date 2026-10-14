@@ -11,6 +11,18 @@ import { useEffect } from "react";
  */
 const IRIS_OPEN = "circle(142% at 50% 50%)";
 const IRIS_CLOSED = "circle(0% at 50% 50%)";
+const SEEN_KEY = "dolancer.splashSeen";
+
+/** True once the splash has played in this tab, so reloads and later pages skip it. */
+function seenThisVisit(): boolean {
+  try {
+    if (sessionStorage.getItem(SEEN_KEY)) return true;
+    sessionStorage.setItem(SEEN_KEY, "1");
+  } catch {
+    // Storage blocked: play it, as before.
+  }
+  return false;
+}
 
 export function SplashLoader() {
   useEffect(() => {
@@ -24,6 +36,12 @@ export function SplashLoader() {
       finished = true;
       boot.remove();
     };
+
+    // Already played this visit: get out of the way at once.
+    if (seenThisVisit()) {
+      finish();
+      return;
+    }
 
     const timer = setTimeout(() => {
       try {
@@ -40,17 +58,17 @@ export function SplashLoader() {
           return;
         }
         const exit = boot.animate([{ clipPath: IRIS_OPEN }, { clipPath: IRIS_CLOSED }], {
-          duration: 1000,
+          duration: 750,
           easing: "cubic-bezier(0.76, 0, 0.24, 1)",
           fill: "forwards",
         });
         exit.onfinish = finish;
         // Safety net so the page is never trapped behind the splash.
-        setTimeout(finish, 1500);
+        setTimeout(finish, 1200);
       } catch {
         finish();
       }
-    }, reduceMotion ? 150 : 400);
+    }, reduceMotion ? 100 : 250);
 
     return () => clearTimeout(timer);
   }, []);

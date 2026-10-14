@@ -6,7 +6,7 @@ import { Logo } from "@/components/ui/Logo";
 import { CurvedSectionDivider } from "@/components/stitch/CurvedSectionDivider";
 import { useAuth } from "@/providers/AuthProvider";
 import { CONTACT } from "./content";
-import { LEGAL_PAGES } from "./legal-documents";
+import { LEGAL_PAGES } from "./legal-pages";
 
 const EXPLORE_LINKS = [
   { to: "/how-it-works", label: "How it works" },
@@ -73,7 +73,7 @@ export function SiteFooter() {
             <p className="mt-3 text-[15px]">Get paid for what you are already good at.</p>
 
             <div className="mt-6 flex items-center gap-1.5">
-              <a href={`mailto:${CONTACT.email}`} className="text-[15px] font-semibold text-white transition-colors hover:text-[#3b9eff]">
+              <a href={`mailto:${CONTACT.email}`} className="-my-2 inline-block py-2 text-[15px] font-semibold text-white transition-colors hover:text-[#3b9eff]">
                 {CONTACT.email}
               </a>
               <button

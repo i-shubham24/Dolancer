@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
-import { Check, ChevronRight, GraduationCap, PencilRuler, Send, ShieldCheck, Star, Shield, Smartphone, KeyRound } from "lucide-react";
+import { Bell, Check, ChevronRight, Gift, GraduationCap, LifeBuoy, PencilRuler, Send, ShieldCheck, Star, Shield, Smartphone, KeyRound, Wallet } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { demo, demoId, demoRespond, isDemo } from "@/lib/demo-data";
 import { callRowRpc, unwrap } from "@/lib/rpc";
@@ -17,6 +17,8 @@ import { cn } from "@/lib/cn";
 import { Button } from "@/components/ui/button";
 import { Input, Textarea, Label } from "@/components/ui/input";
 import { useGateState, useProfile } from "@/features/dashboard/queries";
+import { useNotifications } from "@/features/notifications/api";
+import { preloadRoute } from "@/lib/preload";
 import { toUserError } from "@/lib/user-error";
 import { enrollMfaTotp, verifyMfaChallenge, unenrollMfa, listMfaFactors, updateProfileBasics } from "@/features/auth/api";
 import { profileBasicsSchema, applicationBioSchema, validateOrThrow } from "@/lib/validations";
@@ -178,6 +180,8 @@ export function ProfilePage() {
             </div>
           </div>
         </motion.section>
+
+        <Shortcuts />
 
         {needsApplication ? (
           <motion.section variants={cardMotion} className={cn(CARD, "gap-3 lg:col-span-2")} aria-labelledby="apply">
@@ -530,5 +534,49 @@ function Stars({ value }: { value: number | null }) {
         );
       })}
     </div>
+  );
+}
+
+const SHORTCUTS = [
+  { to: "/dashboard?view=earnings", label: "Earnings", sub: "Payouts and tax", icon: Wallet, tone: "bg-success-bg text-success-ink" },
+  { to: "/notifications", label: "Alerts", sub: "Updates on your work", icon: Bell, tone: "bg-info-bg text-primary" },
+  { to: "/refer", label: "Refer and earn", sub: "Invite people you trust", icon: Gift, tone: "bg-violet-light text-violet" },
+  { to: "/tickets", label: "Support", sub: "Ask us anything", icon: LifeBuoy, tone: "bg-warning-bg text-warning-ink" },
+];
+
+/** The account pages that live under the profile rather than in the sidebar. */
+function Shortcuts() {
+  const notifications = useNotifications();
+  const unread = (notifications.data ?? []).filter((item) => !item.readAt).length;
+  return (
+    <motion.nav variants={cardMotion} aria-label="Account shortcuts" className="grid grid-cols-2 gap-3 lg:col-span-2 lg:grid-cols-4">
+      {SHORTCUTS.map((item) => (
+        <Link
+          key={item.to}
+          to={item.to}
+          onMouseEnter={() => preloadRoute(item.to)}
+          className={cn(
+            CARD,
+            "group flex-row items-center gap-3 p-3.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:p-4",
+          )}
+        >
+          <span className={cn("relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-transform group-hover:scale-105", item.tone)} aria-hidden="true">
+            <item.icon className="h-5 w-5" />
+            {item.to === "/notifications" && unread > 0 ? (
+              <span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[10.5px] font-extrabold text-white ring-2 ring-white">
+                {unread}
+              </span>
+            ) : null}
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block truncate text-[14px] font-extrabold tracking-[-0.01em]">{item.label}</span>
+            <span className="block truncate text-xs font-semibold text-ink-muted">
+              {item.to === "/notifications" && unread > 0 ? `${unread} unread` : item.sub}
+            </span>
+          </span>
+          <ChevronRight className="hidden h-4 w-4 shrink-0 text-ink-3 transition-transform group-hover:translate-x-0.5 sm:block" aria-hidden="true" />
+        </Link>
+      ))}
+    </motion.nav>
   );
 }

@@ -105,7 +105,7 @@ export function buildEvents(input: {
       title: `Paid ${formatPaise(row.amountPaise)}`,
       at,
       note: task ? `For ${task}` : "For a finished task",
-      href: "/earnings",
+      href: "/dashboard?view=earnings",
     });
   }
 
