@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   ArrowDown,
@@ -193,6 +194,31 @@ function Difference() {
           </button>
         </div>
       ) : null}
+
+      {/* Big and bold callout below VS section */}
+      <div className="mt-12 sm:mt-16 text-center max-w-3xl mx-auto px-4">
+        <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-[-0.03em] text-slate-900 leading-[1.15] font-display">
+          What are you waiting for?{" "}
+          <span className="block sm:inline text-[#0a65c0]">
+            Sign up now on Dolancer.
+          </span>
+        </h3>
+        <p className="mt-3.5 text-base sm:text-lg font-medium text-slate-600 max-w-xl mx-auto">
+          No bidding, no proposal writing, and no chasing clients. Your pay is fixed and protected from day one.
+        </p>
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+          <Link
+            to="/sign-up"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0a65c0] px-8 py-3.5 text-base font-extrabold text-white shadow-soft-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#0854a0] hover:shadow-soft-lg active:translate-y-0"
+          >
+            Sign up now
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
+        </div>
+        <p className="mt-3 text-xs font-semibold text-slate-400">
+          Free to join · Takes under 2 minutes · No subscription fees
+        </p>
+      </div>
     </div>
   );
 }

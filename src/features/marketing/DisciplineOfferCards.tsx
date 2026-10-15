@@ -45,7 +45,9 @@ export function DisciplineOfferCards() {
             Your skills
           </span>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#0A1A44] tracking-[-0.02em] max-w-3xl mx-auto font-display leading-[1.1]">
-            Choose what you're <span className="text-[#0A1A44] relative inline-block z-10">good at.
+            Choose what you want to{" "}
+            <span className="text-[#0A1A44] relative inline-block z-10">
+              get paid for.
               <svg className="absolute -bottom-1 left-0 w-full h-4 text-[#22d3ee] -z-10" viewBox="0 0 100 10" preserveAspectRatio="none">
                 <path d="M 2 8 L 98 4" stroke="currentColor" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
