@@ -43,7 +43,7 @@ export function LandingPage() {
         <MicroFloaties zone="how" />
         <HowItWorksSteps />
         <WhyDolancer />
-        <BackdropLetter letter="L" position="left" offsetY="82%" />
+        <BackdropLetter letter="L" position="left" offsetY="58%" />
       </div>
 
       {/* Why Dolancers Love It / 4 Key Pillars - A */}
