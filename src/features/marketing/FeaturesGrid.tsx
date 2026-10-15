@@ -105,7 +105,7 @@ const STACKING_FEATURES: StackingFeature[] = [
 
 export function FeaturesGrid() {
   return (
-    <section className="relative bg-[#f0f5fc] pt-16 sm:pt-20 pb-20 sm:pb-24 overflow-x-clip">
+    <section className="relative bg-[#f0f5fc] pt-16 sm:pt-20 pb-10 sm:pb-12 overflow-x-clip">
       {/* Top curved divider directly matching the white background of the section above */}
       <CurvedSectionDivider
         variant="wave"
@@ -126,14 +126,14 @@ export function FeaturesGrid() {
           </StitchBadge>
           <h2 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight font-display">
             Made for people who want{" "}
-            <span className="text-slate-900 fresh-underline fresh-underline-mint">
-              clear work and fair pay.
+            <span className="text-[#0a65c0] fresh-underline fresh-underline-mint">
+              clear work &amp; fair pay.
             </span>
           </h2>
         </div>
 
         {/* Stacking Cards Experience */}
-        <div className="flex flex-col gap-4 max-w-3xl mx-auto pb-8">
+        <div className="flex flex-col gap-4 max-w-3xl mx-auto pb-4">
           {STACKING_FEATURES.map((feat, idx) => {
             const Icon = feat.icon;
 

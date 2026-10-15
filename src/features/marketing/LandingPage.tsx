@@ -46,18 +46,13 @@ export function LandingPage() {
         <BackdropLetter letter="L" position="left" offsetY="58%" />
       </div>
 
-      {/* Why Dolancers Love It / 4 Key Pillars - A */}
-      <div className="relative overflow-clip">
-        <BackdropLetter letter="A" position="right" offsetY="66%" />
+      {/* Why Dolancers Love It & Live Network Numbers (Merged) - A & N */}
+      <div className="relative overflow-clip bg-[#f0f5fc]">
+        <BackdropLetter letter="A" position="right" offsetY="30%" />
+        <BackdropLetter letter="N" position="left" offsetY="75%" />
         <MicroFloaties zone="features" />
-        <FeaturesGrid />
-      </div>
-      
-
-      {/* Live Network Numbers - N (light wash below the dark pair) */}
-      <div className="relative overflow-clip">
-        <BackdropLetter letter="N" position="left" offsetY="20%" />
         <MicroFloaties zone="numbers" />
+        <FeaturesGrid />
         <NetworkNumbers />
       </div>
 

@@ -2,6 +2,13 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
 import "./index.css";
+import { reloadPageForNewDeploy } from "./lib/lazyWithRetry";
+
+// Auto-reload when Vite encounters a preload chunk error from a fresh deployment
+window.addEventListener("vite:preloadError", (event) => {
+  event.preventDefault();
+  reloadPageForNewDeploy();
+});
 
 // Sync the persisted palette BEFORE first paint so the loader (and every
 // palette-driven surface) renders in the right theme immediately instead of

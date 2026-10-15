@@ -1,7 +1,9 @@
+import { useEffect } from "react";
 import { Link, useRouteError } from "react-router-dom";
 import { AlertTriangle, RotateCw, LayoutDashboard } from "lucide-react";
 import { Card } from "@/components/brutal/Card";
 import { Button } from "@/components/ui/button";
+import { isChunkLoadError, reloadPageForNewDeploy } from "@/lib/lazyWithRetry";
 
 /**
  * Route-level failure screen.
@@ -12,6 +14,13 @@ import { Button } from "@/components/ui/button";
  */
 export function RouteError() {
   const error = useRouteError();
+
+  useEffect(() => {
+    if (isChunkLoadError(error)) {
+      reloadPageForNewDeploy();
+    }
+  }, [error]);
+
   if (import.meta.env.DEV && error) {
     console.warn("[dolancer] route failed:", error);
   }

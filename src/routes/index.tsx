@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import { Suspense } from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { MarketingLayout } from "@/features/marketing/MarketingLayout";
 import { LandingPage } from "@/features/marketing/LandingPage";
@@ -7,6 +7,7 @@ import { RouteError } from "./RouteError";
 import { NotFoundPage } from "./NotFoundPage";
 import { applySeo } from "./apply-seo";
 import { SkeletonCard } from "@/components/brutal/Skeleton";
+import { lazyWithRetry } from "@/lib/lazyWithRetry";
 
 /*
  * Route-level splitting. Only the public landing page stays in the entry chunk:
@@ -15,90 +16,90 @@ import { SkeletonCard } from "@/components/brutal/Skeleton";
  * on navigation, like every other page, behind a skeleton so a slow network reads
  * as loading rather than broken.
  */
-const AppShell = lazy(() => import("@/layouts/AppShell").then((m) => ({ default: m.AppShell })));
-const AuthLayout = lazy(() =>
+const AppShell = lazyWithRetry(() => import("@/layouts/AppShell").then((m) => ({ default: m.AppShell })));
+const AuthLayout = lazyWithRetry(() =>
   import("@/layouts/AuthLayout").then((m) => ({ default: m.AuthLayout })),
 );
-const SignInPage = lazy(() =>
+const SignInPage = lazyWithRetry(() =>
   import("@/features/auth/SignInPage").then((m) => ({ default: m.SignInPage })),
 );
-const HomePage = lazy(() =>
+const HomePage = lazyWithRetry(() =>
   import("@/features/home/HomePage").then((m) => ({ default: m.HomePage })),
 );
-const GuidelinesPage = lazy(() =>
+const GuidelinesPage = lazyWithRetry(() =>
   import("@/features/home/GuidelinesPage").then((m) => ({ default: m.GuidelinesPage })),
 );
-const StartRedirect = lazy(() =>
+const StartRedirect = lazyWithRetry(() =>
   import("@/features/home/StartRedirect").then((m) => ({ default: m.StartRedirect })),
 );
-const DashboardPage = lazy(() =>
+const DashboardPage = lazyWithRetry(() =>
   import("@/features/dashboard/DashboardPage").then((m) => ({ default: m.DashboardPage })),
 );
-const HowItWorksPage = lazy(() =>
+const HowItWorksPage = lazyWithRetry(() =>
   import("@/features/marketing/HowItWorksPage").then((m) => ({ default: m.HowItWorksPage })),
 );
-const ContactPage = lazy(() =>
+const ContactPage = lazyWithRetry(() =>
   import("@/features/marketing/ContactPage").then((m) => ({ default: m.ContactPage })),
 );
-const LegalPage = lazy(() =>
+const LegalPage = lazyWithRetry(() =>
   import("@/features/marketing/LegalPage").then((m) => ({ default: m.LegalPage })),
 );
-const AuthCallbackPage = lazy(() =>
+const AuthCallbackPage = lazyWithRetry(() =>
   import("@/features/auth/AuthCallbackPage").then((m) => ({ default: m.AuthCallbackPage })),
 );
-const CountryOnboardingPage = lazy(() =>
+const CountryOnboardingPage = lazyWithRetry(() =>
   import("@/features/auth/CountryOnboardingPage").then((m) => ({
     default: m.CountryOnboardingPage,
   })),
 );
-const CalendarPage = lazy(() =>
+const CalendarPage = lazyWithRetry(() =>
   import("@/features/calendar/CalendarPage").then((m) => ({ default: m.CalendarPage })),
 );
-const PoolPage = lazy(() =>
+const PoolPage = lazyWithRetry(() =>
   import("@/features/pool/PoolPage").then((m) => ({ default: m.PoolPage })),
 );
-const WorkPage = lazy(() =>
+const WorkPage = lazyWithRetry(() =>
   import("@/features/work/WorkPage").then((m) => ({ default: m.WorkPage })),
 );
-const WorkbenchPage = lazy(() =>
+const WorkbenchPage = lazyWithRetry(() =>
   import("@/features/work/WorkbenchPage").then((m) => ({ default: m.WorkbenchPage })),
 );
-const MessagesPage = lazy(() =>
+const MessagesPage = lazyWithRetry(() =>
   import("@/features/messages/MessagesPage").then((m) => ({ default: m.MessagesPage })),
 );
-const SkillsPage = lazy(() =>
+const SkillsPage = lazyWithRetry(() =>
   import("@/features/skills/SkillsPage").then((m) => ({ default: m.SkillsPage })),
 );
-const TrainingPage = lazy(() =>
+const TrainingPage = lazyWithRetry(() =>
   import("@/features/training/TrainingPage").then((m) => ({ default: m.TrainingPage })),
 );
-const LessonPage = lazy(() =>
+const LessonPage = lazyWithRetry(() =>
   import("@/features/training/LessonPage").then((m) => ({ default: m.LessonPage })),
 );
-const VerificationPage = lazy(() =>
+const VerificationPage = lazyWithRetry(() =>
   import("@/features/verification/VerificationPage").then((m) => ({
     default: m.VerificationPage,
   })),
 );
-const NotificationsPage = lazy(() =>
+const NotificationsPage = lazyWithRetry(() =>
   import("@/features/notifications/NotificationsPage").then((m) => ({
     default: m.NotificationsPage,
   })),
 );
-const ProfilePage = lazy(() =>
+const ProfilePage = lazyWithRetry(() =>
   import("@/features/profile/ProfilePage").then((m) => ({ default: m.ProfilePage })),
 );
-const ReferPage = lazy(() =>
+const ReferPage = lazyWithRetry(() =>
   import("@/features/referrals/ReferPage").then((m) => ({ default: m.ReferPage })),
 );
-const TicketsPage = lazy(() =>
+const TicketsPage = lazyWithRetry(() =>
   import("@/features/tickets/TicketsPage").then((m) => ({ default: m.TicketsPage })),
 );
-const TicketPage = lazy(() =>
+const TicketPage = lazyWithRetry(() =>
   import("@/features/tickets/TicketPage").then((m) => ({ default: m.TicketPage })),
 );
 // Hidden from navigation on purpose. Direct URL only, role-gated inside.
-const AdminPage = lazy(() =>
+const AdminPage = lazyWithRetry(() =>
   import("@/features/admin/AdminPage").then((m) => ({ default: m.AdminPage })),
 );
 
