@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 
 /**
@@ -15,8 +15,17 @@ import { useLocation } from "react-router-dom";
  */
 export function ScrollToTop() {
   const { pathname, hash } = useLocation();
+  const prevPathRef = useRef(pathname);
 
   useEffect(() => {
+    const prev = prevPathRef.current;
+    prevPathRef.current = pathname;
+
+    // Do not scroll window when switching chats/threads under /messages
+    if (prev.startsWith("/messages") && pathname.startsWith("/messages")) {
+      return;
+    }
+
     const navigation = window.performance?.getEntriesByType?.("navigation")?.[0] as
       | PerformanceNavigationTiming
       | undefined;

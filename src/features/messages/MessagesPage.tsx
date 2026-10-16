@@ -78,6 +78,7 @@ const ThreadRow = memo(function ThreadRow({
   return (
     <Link
       to={`/messages/${thread.id}`}
+      preventScrollReset
       aria-current={selected ? "true" : undefined}
       className={cn(
         "flex items-center gap-3 rounded-2xl px-2.5 py-2 transition-colors focus-visible:outline-2 focus-visible:outline-primary",
@@ -287,6 +288,7 @@ export function MessagesPage() {
         {selected ? (
           <div className="flex h-full min-h-0 flex-col">
             <Conversation
+              key={selected.id}
               threadId={selected.id}
               header={<ThreadHeader thread={selected} />}
               label={`Chat about ${selected.title}`}

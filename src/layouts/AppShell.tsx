@@ -483,8 +483,9 @@ export function AppShell() {
         <main id="main" className="min-w-0 flex-1 px-4 py-5 lg:min-h-[calc(100dvh-1.75rem)] lg:rounded-3xl lg:bg-panel lg:px-6 lg:py-5">
           <TopBar onAlerts={onAlerts} />
           {/* Each page eases in as you move between them, like the reel's screen changes. */}
+          {/* Threads under /messages share the same key so switching chats does not remount the page. */}
           <motion.div
-            key={location.pathname}
+            key={location.pathname.startsWith("/messages") ? "/messages" : location.pathname}
             initial={reduceMotion ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
