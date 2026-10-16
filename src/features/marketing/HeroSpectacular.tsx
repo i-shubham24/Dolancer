@@ -67,7 +67,7 @@ export function HeroSpectacular() {
               to="/sign-up"
               className="inline-flex items-center rounded-full bg-[#0a65c0] px-8 py-3.5 text-[15px] sm:text-base font-bold text-white hover:bg-[#0854a0] shadow-lg shadow-[#0a65c0]/25 transition-colors"
             >
-              Start earning <ArrowRight className="ml-2 h-5 w-5" />
+              Start Earning <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
             <Link
               to="/how-it-works"

@@ -66,7 +66,7 @@ export function HowItWorksPage() {
                 to="/sign-up"
                 className="inline-flex items-center justify-center rounded-full bg-[#0a65c0] px-6 py-2 sm:px-7 sm:py-2.5 text-xs sm:text-sm font-bold text-white hover:bg-[#0854a0] transition-all shadow-md shadow-[#0a65c0]/20 active:scale-95"
               >
-                <span>Start earning</span>
+                <span>Start Earning</span>
                 <ArrowRight className="ml-1.5 h-4 w-4" />
               </Link>
               <Link

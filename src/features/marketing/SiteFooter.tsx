@@ -40,7 +40,7 @@ export function SiteFooter() {
   const accountLinks = isLoggedIn
     ? [{ to: "/dashboard", label: "Dashboard" }]
     : [
-        { to: "/sign-up", label: "Start earning" },
+        { to: "/sign-up", label: "Start Earning" },
         { to: "/sign-in", label: "Log in" },
       ];
 

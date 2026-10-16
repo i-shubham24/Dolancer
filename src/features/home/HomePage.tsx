@@ -175,7 +175,7 @@ export function HomePage() {
             {allDone ? (
               <Button onClick={start} className="mt-3 w-full bg-white text-primary hover:bg-white/90">
                 <Rocket className="h-4 w-4" aria-hidden="true" />
-                Start earning
+                Start Earning
               </Button>
             ) : next ? (
               <Button asChild className="mt-3 w-full bg-white text-primary hover:bg-white/90">
@@ -227,8 +227,7 @@ export function HomePage() {
                   </span>
                 </span>
                 <Button onClick={start} disabled={!allDone} size="sm" className="sm:min-w-[84px]">
-                  Start
-                  <span className="hidden sm:inline">earning</span>
+                  Start <span className="hidden sm:inline">Earning</span>
                 </Button>
               </li>
             </ol>

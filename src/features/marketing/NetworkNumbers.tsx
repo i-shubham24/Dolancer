@@ -2,6 +2,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Users, IndianRupee, TrendingUp, Clock } from "lucide-react";
 import { StitchBadge } from "@/components/stitch/StitchPrimitives";
 import { AnimatedCounter } from "@/components/common/AnimatedCounter";
+import { CurvedSectionDivider } from "@/components/stitch/CurvedSectionDivider";
 
 interface NetworkStat {
   icon: React.ComponentType<{ className?: string }>;
@@ -59,7 +60,7 @@ export function NetworkNumbers() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section className="relative bg-[#f0f5fc] pt-6 sm:pt-10 pb-20 sm:pb-24 overflow-hidden">
+    <section className="relative bg-[#f0f5fc] pt-6 sm:pt-10 pb-24 sm:pb-28 lg:pb-32 overflow-hidden">
       {/* Quiet ornaments over the wash - the gradient carries the colour. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
         <div className="absolute right-[9%] top-[8%] hidden h-36 w-36 rounded-full border-2 border-dashed border-[var(--dl-card-pink)] opacity-30 md:block" />
@@ -118,6 +119,15 @@ export function NetworkNumbers() {
           })}
         </div>
       </div>
+
+      {/* Bottom curved divider connecting into white Testimonials section below */}
+      <CurvedSectionDivider
+        variant="wave"
+        position="bottom"
+        fillColor="fill-white"
+        showBorderLine={false}
+        showAccentGlow={false}
+      />
     </section>
   );
 }

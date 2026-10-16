@@ -278,7 +278,7 @@ function ProfileMenu({
         onMouseEnter={() => preloadRoute("/profile")}
         title={collapsed ? "Your profile" : undefined}
         aria-label={`${name}, open your profile${unread > 0 ? `, ${unread} unread alerts` : ""}`}
-        className="flex items-center gap-2.5 overflow-hidden rounded-xl focus-visible:outline-2 focus-visible:outline-primary"
+        className="flex items-center gap-2.5 rounded-xl focus-visible:outline-2 focus-visible:outline-primary"
       >
         {avatar}
         {!collapsed ? (

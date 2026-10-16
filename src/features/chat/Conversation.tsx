@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { motion } from "framer-motion";
 import { Send, Paperclip, MessagesSquare } from "lucide-react";
 import { Skeleton } from "@/components/brutal/Skeleton";
 import { CARD } from "@/components/app/card-styles";
@@ -98,9 +97,14 @@ export function Conversation({
 
   useEffect(() => {
     // Scroll the message list itself, never the page around it.
-    const list = scrollRef.current;
-    if (list) list.scrollTop = list.scrollHeight;
+    const scrollToBottom = () => {
+      const list = scrollRef.current;
+      if (list) list.scrollTop = list.scrollHeight;
+    };
+    scrollToBottom();
+    const frame = requestAnimationFrame(scrollToBottom);
     if (items.length > 0) markRead(threadId);
+    return () => cancelAnimationFrame(frame);
   }, [items.length, threadId, markRead]);
 
   const send = useMutation({
@@ -168,12 +172,7 @@ export function Conversation({
                 {showDay ? (
                   <p className="my-3 text-center text-[10.5px] font-bold uppercase tracking-[0.08em] text-ink-3">{day}</p>
                 ) : null}
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.25 }}
-                  className={cn("flex flex-col gap-2", mine ? "items-end" : "items-start")}
-                >
+                <div className={cn("flex flex-col gap-2", mine ? "items-end" : "items-start")}>
                   <div
                     className={cn(
                       "max-w-[85%] rounded-2xl px-3.5 py-2.5 @xl:max-w-[70%]",
@@ -200,7 +199,7 @@ export function Conversation({
                     </p>
                   </div>
                   {message.offerId && renderOffer ? renderOffer(message.offerId) : null}
-                </motion.div>
+                </div>
               </div>
             );
           })

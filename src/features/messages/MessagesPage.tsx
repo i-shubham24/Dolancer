@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { AlertTriangle, ArrowLeft, ArrowRight, Briefcase, Inbox, MessagesSquare, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CARD } from "@/components/app/card-styles";
@@ -64,7 +64,17 @@ function Avatar({ thread, unread, size = "md" }: { thread: InboxThread; unread?:
   );
 }
 
-function ThreadRow({ thread, unread, selected, mine }: { thread: InboxThread; unread: boolean; selected: boolean; mine: boolean }) {
+const ThreadRow = memo(function ThreadRow({
+  thread,
+  unread,
+  selected,
+  mine,
+}: {
+  thread: InboxThread;
+  unread: boolean;
+  selected: boolean;
+  mine: boolean;
+}) {
   return (
     <Link
       to={`/messages/${thread.id}`}
@@ -87,7 +97,7 @@ function ThreadRow({ thread, unread, selected, mine }: { thread: InboxThread; un
       {unread ? <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-primary" aria-label="Unread" /> : null}
     </Link>
   );
-}
+});
 
 function ThreadHeader({ thread }: { thread: InboxThread }) {
   const status = thread.status ? statusDisplay(thread.status, thread.workingDocUrl) : null;
@@ -129,7 +139,6 @@ function ThreadHeader({ thread }: { thread: InboxThread }) {
 export function MessagesPage() {
   const { threadId } = useParams();
   const navigate = useNavigate();
-  const reduceMotion = useReducedMotion();
   const { user } = useAuth();
   const inbox = useInbox();
   const since = useChatReadStore((state) => state.since);
@@ -164,10 +173,7 @@ export function MessagesPage() {
   };
 
   return (
-    <motion.div
-      initial={reduceMotion ? false : { opacity: 0, y: 14, scale: 0.99 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+    <div
       className={cn(
         CARD,
         "grid h-[calc(100dvh-6.5rem)] min-h-[480px] grid-cols-[minmax(0,1fr)] overflow-hidden p-0 md:grid-cols-[300px_minmax(0,1fr)] lg:h-[calc(100dvh-8.25rem)] xl:grid-cols-[360px_minmax(0,1fr)]",
@@ -256,17 +262,11 @@ export function MessagesPage() {
               </p>
             </div>
           ) : (
-            <motion.ul
-              key={tab}
-              initial={reduceMotion ? false : "hidden"}
-              animate="show"
-              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.04 } } }}
-              className="space-y-0.5"
-            >
+            <ul className="space-y-0.5">
               {ongoing.map((thread) => (
-                <motion.li key={thread.id} variants={{ hidden: { opacity: 0, x: -10 }, show: { opacity: 1, x: 0 } }}>
+                <li key={thread.id}>
                   <ThreadRow thread={thread} unread={unread(thread)} selected={thread.id === threadId} mine={thread.last?.authorId === user?.id} />
-                </motion.li>
+                </li>
               ))}
               {finished.length > 0 ? (
                 <li className="px-3 pb-1 pt-4 text-[10.5px] font-bold uppercase tracking-[0.1em] text-ink-3" aria-hidden="true">
@@ -274,52 +274,38 @@ export function MessagesPage() {
                 </li>
               ) : null}
               {finished.map((thread) => (
-                <motion.li key={thread.id} variants={{ hidden: { opacity: 0, x: -10 }, show: { opacity: 1, x: 0 } }}>
+                <li key={thread.id}>
                   <ThreadRow thread={thread} unread={unread(thread)} selected={thread.id === threadId} mine={thread.last?.authorId === user?.id} />
-                </motion.li>
+                </li>
               ))}
-            </motion.ul>
+            </ul>
           )}
         </div>
       </aside>
 
       <div className={cn("min-h-0 min-w-0 flex-col", selected ? "flex" : "hidden md:flex")}>
-        <AnimatePresence mode="wait" initial={false}>
-          {selected ? (
-            <motion.div
-              key={selected.id}
-              className="flex h-full min-h-0 flex-col"
-              initial={reduceMotion ? false : { opacity: 0, x: 12 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={reduceMotion ? undefined : { opacity: 0, transition: { duration: 0.1 } }}
-              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <Conversation
-                threadId={selected.id}
-                header={<ThreadHeader thread={selected} />}
-                label={`Chat about ${selected.title}`}
-                fill
-                className="h-full min-h-0 rounded-none shadow-none ring-0 hover:shadow-none"
-                emptyText={selected.kind === "invite" ? "Ask your supervisor anything about this work." : undefined}
-                renderOffer={(offerId) => <OfferBubble offerId={offerId} />}
-              />
-            </motion.div>
-          ) : (
-            <motion.div
-              key="none"
-              className="flex h-full flex-col items-center justify-center gap-3 p-8 text-center"
-              initial={reduceMotion ? false : { opacity: 0 }}
-              animate={{ opacity: 1 }}
-            >
-              <span className="flex h-16 w-16 items-center justify-center rounded-full ring-2 ring-ink/80" aria-hidden="true">
-                <MessagesSquare className="h-7 w-7" />
-              </span>
-              <p className="text-lg font-extrabold tracking-[-0.02em]">{threadId && !inbox.isLoading ? "Chat not found" : "Your messages"}</p>
-              <p className="max-w-xs text-sm text-ink-muted">Talk to your supervisors about tasks and new work.</p>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {selected ? (
+          <div className="flex h-full min-h-0 flex-col">
+            <Conversation
+              threadId={selected.id}
+              header={<ThreadHeader thread={selected} />}
+              label={`Chat about ${selected.title}`}
+              fill
+              className="h-full min-h-0 rounded-none shadow-none ring-0 hover:shadow-none"
+              emptyText={selected.kind === "invite" ? "Ask your supervisor anything about this work." : undefined}
+              renderOffer={(offerId) => <OfferBubble offerId={offerId} />}
+            />
+          </div>
+        ) : (
+          <div className="flex h-full flex-col items-center justify-center gap-3 p-8 text-center">
+            <span className="flex h-16 w-16 items-center justify-center rounded-full ring-2 ring-ink/80" aria-hidden="true">
+              <MessagesSquare className="h-7 w-7" />
+            </span>
+            <p className="text-lg font-extrabold tracking-[-0.02em]">{threadId && !inbox.isLoading ? "Chat not found" : "Your messages"}</p>
+            <p className="max-w-xs text-sm text-ink-muted">Talk to your supervisors about tasks and new work.</p>
+          </div>
+        )}
       </div>
-    </motion.div>
+    </div>
   );
 }

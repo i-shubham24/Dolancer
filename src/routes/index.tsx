@@ -173,8 +173,7 @@ export const router = createBrowserRouter([
       { path: "/dashboard", element: page(<DashboardPage />) },
       { path: "/work", element: page(<WorkPage />) },
       { path: "/work/:id", element: page(<WorkbenchPage />) },
-      { path: "/messages", element: page(<MessagesPage />) },
-      { path: "/messages/:threadId", element: page(<MessagesPage />) },
+      { path: "/messages/:threadId?", element: page(<MessagesPage />) },
       { path: "/calendar", element: page(<CalendarPage />) },
       { path: "/pool", element: page(<PoolPage />) },
       // Earnings now lives in the dashboard's Earnings tab; old links still land there.
