@@ -153,11 +153,13 @@ export function ReminderDialog({
   onOpenChange,
   projects,
   defaultProjectId = null,
+  defaultDay,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   projects: DoerProject[];
   defaultProjectId?: string | null;
+  defaultDay?: Date;
 }) {
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -200,8 +202,9 @@ export function ReminderDialog({
               </Dialog.Close>
             </div>
                 <ReminderForm
-                  key={defaultProjectId ?? "none"}
+                  key={`${defaultProjectId ?? "none"}-${defaultDay ? toDateInput(defaultDay) : "none"}`}
                   projects={projects}
+                  defaultDay={defaultDay}
                   defaultProjectId={defaultProjectId}
                   autoFocus
                   onSaved={() => onOpenChange(false)}
