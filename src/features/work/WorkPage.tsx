@@ -64,7 +64,6 @@ export function WorkPage() {
   return (
     <div>
       <PageHeader
-        eyebrow="Work"
         title="My work"
         sub={
           projects.isLoading

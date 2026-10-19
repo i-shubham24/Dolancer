@@ -5,7 +5,6 @@ import { router } from "@/routes";
 import { PALETTE_META, useUiStore } from "@/stores/useUiStore";
 import { ScrollProgress } from "@/components/common/ScrollEnhancements";
 import { SplashLoader } from "@/components/ui/SplashLoader";
-import { CustomCursor } from "@/components/ui/CustomCursor";
 
 export default function App() {
   const palette = useUiStore((state) => state.palette);
@@ -22,7 +21,6 @@ export default function App() {
     <AppProviders>
       <SplashLoader />
       <ScrollProgress />
-      <CustomCursor />
       <RouterProvider router={router} />
     </AppProviders>
   );

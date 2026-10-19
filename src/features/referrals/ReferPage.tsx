@@ -97,7 +97,7 @@ export function ReferPage() {
 
   return (
     <div className="mx-auto max-w-5xl">
-      <PageHeader eyebrow="Grow" title="Refer and earn" sub="Invite people you trust. Earn when their first task is approved." />
+      <PageHeader title="Refer and earn" sub="Invite people you trust. Earn when their first task is approved." />
 
       {referrals.isLoading ? (
         <Skeleton className="h-48 w-full rounded-[20px]" />

@@ -345,7 +345,7 @@ export function SkillsPage() {
 
   return (
     <div className="mx-auto max-w-5xl">
-      <PageHeader eyebrow="Profile" title="Skills" sub="Pick what you are good at. Offers match these." />
+      <PageHeader title="Skills" sub="Pick what you are good at. Offers match these." />
 
       {skills.isLoading ? (
         <div className="space-y-4">

@@ -59,7 +59,6 @@ export function NotificationsPage() {
   return (
     <div className="mx-auto max-w-3xl">
       <PageHeader
-        eyebrow="Updates"
         title="Alerts"
         sub={unread > 0 ? `${unread} new` : "You are all caught up."}
         actions={

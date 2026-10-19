@@ -19,6 +19,7 @@ import { qk } from "@/lib/query-keys";
 import { useProjectChanges } from "@/lib/realtime";
 import { formatDayShort, formatTime } from "@/features/calendar/dates";
 import { ChatPanel } from "@/features/chat/ChatPanel";
+import { DeadlineCounter } from "@/components/common/DeadlineCounter";
 import { useProject } from "./queries";
 import { WorkingLinkCard } from "./WorkingLinkCard";
 import { ProgressCard, SubmitCard } from "./LifecycleActions";
@@ -131,9 +132,11 @@ export function WorkbenchPage() {
               {formatPaise(data.payoutPaise)}
             </span>
             {data.deliveryAt ? (
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-panel px-2.5 py-0.5 text-xs font-bold text-ink-muted ring-1 ring-ink/[0.06]">
+              <span className="inline-flex items-center gap-2 rounded-full bg-panel px-3 py-1 text-xs font-bold text-ink-muted ring-1 ring-ink/[0.06]">
                 <CalendarDays className="h-3.5 w-3.5 text-ink-3" aria-hidden="true" />
                 <span>Due: {formatDayShort(new Date(data.deliveryAt))}, {formatTime(new Date(data.deliveryAt))}</span>
+                <span className="h-3 w-px bg-line-subtle" />
+                <DeadlineCounter deliveryAt={data.deliveryAt} showIcon={false} />
               </span>
             ) : null}
           </span>

@@ -53,8 +53,6 @@ const SECONDARY: NavEntry[] = [
   { to: "/training", label: "Training", icon: GraduationCap },
 ];
 
-/** Pages opened from the profile, so the profile card shows as current on them. */
-const ACCOUNT_PAGES = ["/profile", "/notifications", "/refer", "/tickets"];
 
 /** Nav items slide in one after another when the shell first appears. */
 const navList: Variants = { hidden: {}, show: { transition: { staggerChildren: 0.035, delayChildren: 0.05 } } };
@@ -280,9 +278,6 @@ function ProfileMenu({
   collapsed?: boolean;
   onNavigate?: () => void;
 }) {
-  const { pathname } = useLocation();
-  const here = ACCOUNT_PAGES.some((to) => pathname.startsWith(to));
-
   const avatar = (
     <span className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--dl-card-yellow)] text-sm font-extrabold text-ink">
       {initial}
@@ -293,8 +288,7 @@ function ProfileMenu({
   return (
     <div
       className={cn(
-        "rounded-2xl bg-white p-3 shadow-[0_2px_8px_-2px_rgba(15,23,42,0.08)]",
-        here && "ring-2 ring-inset ring-primary/30",
+        "rounded-2xl border border-line-subtle/70 bg-white p-3 shadow-[0_2px_8px_-2px_rgba(15,23,42,0.06)] transition-all hover:border-line-subtle",
         collapsed && "flex justify-center p-2",
       )}
     >

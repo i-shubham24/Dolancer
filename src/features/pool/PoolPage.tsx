@@ -63,7 +63,6 @@ export function PoolPage() {
   return (
     <div>
       <PageHeader
-        eyebrow="Offers"
         title="Assigned offers"
         sub={
           pool.isLoading

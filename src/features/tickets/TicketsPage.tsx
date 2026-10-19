@@ -73,7 +73,6 @@ export function TicketsPage() {
   return (
     <div className="mx-auto max-w-4xl">
       <PageHeader
-        eyebrow="Help"
         title="Support"
         sub="Payments, a task, or your account. Someone answers every ticket."
         actions={

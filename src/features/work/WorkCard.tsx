@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, Clock } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { StatusBadge } from "@/components/brutal/StatusBadge";
 import { CARD, cardMotion } from "@/components/app/card-styles";
 import { CategoryTile } from "@/components/app/ui";
 import { cn } from "@/lib/cn";
 import { formatPaise } from "@/lib/paise";
-import { deadlineUrgency, formatDate, relativeDeadline } from "@/lib/datetime";
+import { deadlineUrgency, formatDate } from "@/lib/datetime";
 import { statusDisplay } from "@/lib/status";
 import { taskTitle } from "@/lib/task-title";
 import { preloadWorkbench } from "@/lib/preload";
+import { DeadlineCounter } from "@/components/common/DeadlineCounter";
 import type { DoerProject } from "@/types/domain";
 
 const URGENCY_TEXT = {
@@ -86,11 +87,14 @@ export function WorkCard({ project }: { project: DoerProject }) {
             <Ring value={progress} tone={project.status === "approved" ? "var(--color-success-dot)" : review ? "var(--color-highlight)" : "var(--color-primary)"} />
           )}
           <div className="min-w-0 flex-1">
-            <p className="text-[11px] font-bold text-ink-muted">{closed ? "Finished" : "Due"}</p>
-            <p className={cn("flex items-center gap-1 whitespace-nowrap text-[13px] font-bold", closed ? "text-ink" : URGENCY_TEXT[urgency])}>
-              {closed ? null : <Clock className="h-3.5 w-3.5" aria-hidden="true" />}
-              {closed ? formatDate(project.updatedAt) : relativeDeadline(project.deliveryAt)}
-            </p>
+            <p className="text-[11px] font-bold text-ink-muted">{closed ? "Finished" : "Submission Deadline"}</p>
+            <div className={cn("flex items-center gap-1 whitespace-nowrap text-[13px] font-bold", closed ? "text-ink" : URGENCY_TEXT[urgency])}>
+              {closed ? (
+                formatDate(project.updatedAt)
+              ) : (
+                <DeadlineCounter deliveryAt={project.deliveryAt} />
+              )}
+            </div>
           </div>
           <div className="shrink-0 text-right">
             <p className="text-[16px] font-extrabold tabular-nums tracking-[-0.02em]">{formatPaise(project.payoutPaise)}</p>

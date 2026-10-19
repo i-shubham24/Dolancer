@@ -7,6 +7,7 @@ import { statusDisplay } from "@/lib/status";
 import { taskTitle } from "@/lib/task-title";
 import { preloadWorkbench } from "@/lib/preload";
 import { Button } from "@/components/ui/button";
+import { DeadlineCounter } from "@/components/common/DeadlineCounter";
 import type { DoerProject } from "@/types/domain";
 import { formatDayShort, formatTime } from "@/features/calendar/dates";
 import { Panel } from "@/components/app/ui";
@@ -86,13 +87,16 @@ export function UpNextCard({
           <h3 className="mt-2.5 line-clamp-2 text-lg font-extrabold leading-[1.25] tracking-[-0.025em] @md:text-xl">
             {taskTitle(project)}
           </h3>
-          <span className={cn("mt-2.5 self-start rounded-full px-2.5 py-1 text-[11.5px] font-bold", URGENCY_TAG[urgency])}>
-            {relativeDeadline(project.deliveryAt)}
-          </span>
+          <div className="mt-2.5 flex flex-wrap items-center gap-2">
+            <span className={cn("rounded-full px-2.5 py-1 text-[11.5px] font-bold", URGENCY_TAG[urgency])}>
+              {relativeDeadline(project.deliveryAt)}
+            </span>
+            <DeadlineCounter deliveryAt={project.deliveryAt} />
+          </div>
 
           <dl className="mt-3.5 space-y-2 text-[12.5px] font-semibold">
             <div className="flex items-center justify-between gap-3">
-              <dt className="text-ink-2">Due</dt>
+              <dt className="text-ink-2">Deadline</dt>
               <dd className="text-right font-bold text-ink">{due ? `${formatDayShort(due)}, ${formatTime(due)}` : "Not set"}</dd>
             </div>
             <div className="flex items-center justify-between gap-3">

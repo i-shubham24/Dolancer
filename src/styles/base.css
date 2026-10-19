@@ -2017,8 +2017,3 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-
-/* Custom Cursor */
-.custom-cursor-active, .custom-cursor-active * {
-  cursor: none !important;
-}

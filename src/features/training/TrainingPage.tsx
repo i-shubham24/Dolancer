@@ -109,7 +109,7 @@ export function TrainingPage() {
 
   return (
     <div>
-      <PageHeader eyebrow="Learn" title="Training" sub="Free short courses, picked for the work you do." />
+      <PageHeader title="Training" sub="Free short courses, picked for the work you do." />
 
       {lessons.isLoading ? (
         <div className="space-y-4">

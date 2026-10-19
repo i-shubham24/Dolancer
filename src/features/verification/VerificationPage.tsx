@@ -373,7 +373,7 @@ export function VerificationPage() {
 
   return (
     <div className="mx-auto max-w-3xl">
-      <PageHeader eyebrow="Account" title="Verification" sub="Four short steps. Your details stay private." />
+      <PageHeader title="Verification" sub="Four short steps. Your details stay private." />
 
       <CardGrid>
         {status.isLoading || profile.isLoading ? (

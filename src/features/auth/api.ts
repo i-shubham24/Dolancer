@@ -1,3 +1,4 @@
+import QRCode from "qrcode";
 import { supabase } from "@/lib/supabase";
 import { callRpc, unwrap } from "@/lib/rpc";
 import { demo, demoAuth, demoRespond, isDemo } from "@/lib/demo-data";
@@ -96,13 +97,27 @@ export async function enrollMfaTotp(): Promise<{
   totp: { qr_code: string; secret: string; uri: string };
 }> {
   if (isDemo()) {
+    const uri = "otpauth://totp/Dolancer:demo@dolancer.com?secret=DEMOAUTHENTICATORSECRET123&issuer=Dolancer";
+    let qr_code = "";
+    try {
+      qr_code = await QRCode.toDataURL(uri, {
+        margin: 1,
+        width: 256,
+        color: {
+          dark: "#0f172a",
+          light: "#ffffff",
+        },
+      });
+    } catch {
+      qr_code = "";
+    }
     return {
       id: "demo-mfa-factor",
       type: "totp",
       totp: {
-        qr_code: "data:image/svg+xml;base64,demo",
+        qr_code,
         secret: "DEMOAUTHENTICATORSECRET123",
-        uri: "otpauth://totp/Dolancer:demo@example.com?secret=DEMOAUTHENTICATORSECRET123&issuer=Dolancer",
+        uri,
       },
     };
   }
