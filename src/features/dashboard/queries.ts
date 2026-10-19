@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { qk } from "@/lib/query-keys";
 import { useAuth } from "@/providers/AuthProvider";
-import { MAX_ACTIVE_PROJECTS } from "@/lib/constants";
 import { useAvailabilityStore, isAtCap } from "@/stores/useAvailabilityStore";
 import { usePopupStore } from "@/stores/usePopupStore";
 import {
@@ -151,11 +150,11 @@ export function useAvailabilityAutopilot() {
       .then(() => {
         push(
           next
-            ? { kind: "availability", title: "You are available again", body: "A slot is free, so new offers can reach you.", href: "/pool" }
+            ? { kind: "availability", title: "You are available again", body: "New offers can now reach you.", href: "/pool" }
             : {
                 kind: "availability",
                 title: "Set to Not available",
-                body: `You have ${MAX_ACTIVE_PROJECTS} tasks. It turns back on when one is done.`,
+                body: "Availability is paused. New offers won't be sent until you resume.",
                 href: "/work",
               },
         );

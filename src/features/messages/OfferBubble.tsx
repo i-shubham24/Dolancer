@@ -6,7 +6,6 @@ import { taskTitle } from "@/lib/task-title";
 import { formatDayShort } from "@/features/calendar/dates";
 import { usePool } from "@/features/pool/queries";
 import { useActiveProjects } from "@/features/dashboard/queries";
-import { MAX_ACTIVE_PROJECTS } from "@/lib/constants";
 import { availabilityState, useAvailabilityStore } from "@/stores/useAvailabilityStore";
 
 /**
@@ -46,11 +45,9 @@ export function OfferBubble({ offerId }: { offerId: string }) {
   if (!offer) {
     return (
       <div className="w-[min(300px,85%)] rounded-2xl bg-white/70 px-3.5 py-3 text-[12.5px] font-bold text-ink-muted ring-1 ring-ink/[0.05]">
-        {state === "at-capacity"
-          ? `All ${MAX_ACTIVE_PROJECTS} slots are full. Finish a task to take this one.`
-          : state === "paused"
-            ? "Switch to Available to open this offer."
-            : "This offer is no longer open."}
+        {state === "paused"
+          ? "Switch to Available to open this offer."
+          : "This offer is no longer open."}
       </div>
     );
   }

@@ -20,7 +20,6 @@ import {
 import { MoreLink, Panel } from "@/components/app/ui";
 import { ReminderDialog } from "@/features/calendar/ReminderForm";
 import { useActiveProjects } from "./queries";
-import { MAX_ACTIVE_PROJECTS } from "@/lib/constants";
 
 const RANGE = new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "long" });
 
@@ -313,7 +312,7 @@ export function WeekCard({ events, loading }: { events: CalendarEvent[]; loading
                 {nextUpcoming ? `Next: ${formatDayRelative(nextUpcoming.at)}` : "All clear"}
               </p>
               <p className="truncate text-[11px] font-semibold text-ink-muted">
-                {activeProjects.length} of {MAX_ACTIVE_PROJECTS} active tasks in progress
+                {activeProjects.length === 1 ? "1 active task in progress" : `${activeProjects.length} active tasks in progress`}
               </p>
             </div>
           </div>

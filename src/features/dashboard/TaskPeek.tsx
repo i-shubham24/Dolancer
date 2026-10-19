@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { toast } from "sonner";
-import { ArrowRight, Play, X } from "lucide-react";
+import { ArrowRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/brutal/StatusBadge";
 import { formatPaise } from "@/lib/paise";
@@ -10,7 +9,6 @@ import { relativeDeadline, timeAgo } from "@/lib/datetime";
 import { statusDisplay } from "@/lib/status";
 import { taskTitle } from "@/lib/task-title";
 import { preloadWorkbench } from "@/lib/preload";
-import { useWorkTimer } from "@/stores/useTimerStore";
 import type { DoerProject } from "@/types/domain";
 import { formatDayShort, formatTime } from "@/features/calendar/dates";
 import { CategoryTile } from "@/components/app/ui";
@@ -37,7 +35,6 @@ export function TaskPeek({
   onOpenChange: (open: boolean) => void;
 }) {
   const reduceMotion = useReducedMotion();
-  const timer = useWorkTimer();
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -61,19 +58,7 @@ export function TaskPeek({
                 exit={reduceMotion ? { opacity: 0 } : { x: "105%" }}
                 transition={{ type: "spring", stiffness: 320, damping: 34 }}
               >
-                <PeekBody
-                  project={project}
-                  timerBusy={Boolean(timer.session) && timer.session?.projectId !== project.id}
-                  onTime={() => {
-                    const already = timer.session?.projectId === project.id && Boolean(timer.session.startedAt);
-                    if (!timer.session) timer.select(project.id);
-                    timer.play();
-                    onOpenChange(false);
-                    toast.success(already ? "Timer is already running" : "Timer started", {
-                      description: taskTitle(project),
-                    });
-                  }}
-                />
+                <PeekBody project={project} />
               </motion.aside>
             </Dialog.Content>
           </Dialog.Portal>
@@ -85,12 +70,8 @@ export function TaskPeek({
 
 function PeekBody({
   project,
-  timerBusy,
-  onTime,
 }: {
   project: DoerProject;
-  timerBusy: boolean;
-  onTime: () => void;
 }) {
   const status = statusDisplay(project.status, project.workingDocUrl);
   const review = project.status === "in_review" || project.status === "delivered";
@@ -161,21 +142,12 @@ function PeekBody({
       ) : null}
 
       <div className="min-h-6 flex-1" aria-hidden="true" />
-      <motion.div {...item(4)} className="grid gap-2.5">
+      <motion.div {...item(4)} className="pt-2">
         <Button asChild className="w-full">
           <Link to={`/work/${project.id}`} onMouseEnter={preloadWorkbench} onFocus={preloadWorkbench}>
             Open task
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
-        </Button>
-        <Button
-          variant="outline"
-          onClick={onTime}
-          disabled={timerBusy}
-          title={timerBusy ? "Stop the timer on your other task first" : undefined}
-        >
-          <Play className="h-4 w-4" aria-hidden="true" />
-          Time it
         </Button>
       </motion.div>
     </>

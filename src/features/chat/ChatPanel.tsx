@@ -8,14 +8,14 @@ import { qk } from "@/lib/query-keys";
 import { fetchThreadId } from "./api";
 import { Conversation } from "./Conversation";
 
-/** The supervisor's name plate at the top of a task's chat. */
+/** The project workspace chat header visible to supervisor and client. */
 export function SupervisorHeader({ category }: { category?: string } = {}) {
   return (
     <div className="flex items-center gap-3 border-b border-line-subtle px-4 py-3.5">
       <SupervisorAvatar category={category} size="sm" />
       <div className="min-w-0">
-        <h2 className="text-[15px] font-extrabold tracking-[-0.02em]">Your supervisor</h2>
-        <p className="text-[11.5px] font-semibold text-ink-muted">You never talk to the client</p>
+        <h2 className="text-[15px] font-extrabold tracking-[-0.02em]">Project Discussion</h2>
+        <p className="text-[11.5px] font-semibold text-ink-muted">Accessible by client & supervisor</p>
       </div>
     </div>
   );
@@ -75,10 +75,11 @@ export function ChatPanel({
       key={thread.data}
       threadId={thread.data}
       header={<SupervisorHeader category={category} />}
-      label="Chat with your supervisor"
+      label="Project discussion"
       fill={fill}
       className={className}
-      emptyText="No messages yet. Ask your supervisor anything about this task here."
+      placeholder="Message project workspace (supervisor & client)..."
+      emptyText="No messages yet. Send project updates here (accessible by supervisor & client)."
     />
   );
 }

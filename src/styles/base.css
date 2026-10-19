@@ -1611,14 +1611,13 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  /* Tasks: what is next, this week, the work itself, offers and the timer. */
+  /* Tasks: what is next, this week, the work itself, and offers. */
   .dash-grid {
     grid-template-areas:
       "k1 k2"
       "next next"
       "week week"
       "work work"
-      "timer timer"
       "offers offers";
   }
 
@@ -1642,7 +1641,7 @@
         "k1 k2"
         "next week"
         "work work"
-        "offers timer";
+        "offers offers";
     }
     .fin-grid {
       grid-template-areas:
@@ -1663,7 +1662,7 @@
         "k1 k2 week week"
         "next next week week"
         "work work work work"
-        "offers offers timer timer";
+        "offers offers offers offers";
     }
     .fin-grid {
       grid-template-areas:
@@ -1678,7 +1677,7 @@
       grid-template-areas:
         "k1 next next week"
         "k2 next next week"
-        "work work offers timer";
+        "work work offers offers";
     }
     .fin-grid {
       grid-template-areas:

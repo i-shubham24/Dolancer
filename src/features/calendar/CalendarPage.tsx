@@ -111,8 +111,7 @@ export function CalendarPage() {
 
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.08em] text-ink-muted">Calendar</p>
-          <h1 className="mt-1 text-[26px] font-extrabold tracking-[-0.04em] sm:text-[30px]">{formatMonthYear(cursor)}</h1>
+          <h1 className="text-[26px] font-extrabold tracking-[-0.04em] sm:text-[30px]">{formatMonthYear(cursor)}</h1>
           <p className="mt-1 text-sm font-medium text-ink-2 sm:text-md">
             Your deadlines, reminders and payouts in one place.
           </p>
@@ -181,7 +180,7 @@ export function CalendarPage() {
             />
           </div>
 
-          <div className="relative overflow-hidden">
+          <div className="relative overflow-hidden p-1 -m-1">
             <AnimatePresence mode="wait" initial={false} custom={direction}>
               <motion.div
                 key={`${view}-${periodKey}`}
@@ -190,6 +189,7 @@ export function CalendarPage() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={reduceMotion ? undefined : { opacity: 0, x: direction * -28 }}
                 transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                className="p-0.5"
               >
                 {view === "list" ? (
                   <ListView events={visible} loading={isLoading} />
@@ -329,7 +329,7 @@ function GridView({
   const reduceMotion = useReducedMotion();
   const limit = tall ? 6 : 2;
   return (
-    <div className="grid grid-cols-7 gap-1 sm:gap-1.5">
+    <div className="grid grid-cols-7 gap-1 sm:gap-1.5 p-0.5">
       {WEEKDAYS.map((day) => (
         <div key={day} className="pb-1 text-center text-[10.5px] font-bold uppercase text-ink-3 sm:text-[11px]">
           <span className="sm:hidden">{day[0]}</span>
@@ -354,9 +354,9 @@ function GridView({
               "flex min-w-0 flex-col gap-1 rounded-xl p-1.5 text-left transition-[background-color,box-shadow] sm:rounded-[14px] sm:p-2",
               "focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-primary",
               tall ? "min-h-[220px]" : "min-h-[58px] sm:min-h-[104px]",
-              outside ? "bg-transparent outline outline-1 -outline-offset-1 outline-dashed outline-line-subtle" : "bg-panel/55 hover:bg-panel",
-              isSelected && !isToday && "bg-white ring-2 ring-ink/70",
-              isToday && "bg-white ring-2 ring-primary",
+              outside ? "bg-transparent border border-dashed border-line-subtle" : "bg-panel/55 hover:bg-panel border border-transparent",
+              isSelected && !isToday && "bg-white ring-2 ring-inset ring-ink/70",
+              isToday && "bg-white ring-2 ring-inset ring-primary",
             )}
           >
             <span className="flex items-center justify-between gap-1">

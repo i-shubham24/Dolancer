@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink, Outlet, Link, useLocation } from "react-router-dom";
 import { ScrollToTop } from "@/routes/ScrollToTop";
 import {
@@ -15,15 +15,13 @@ import {
   Menu,
   X,
   LogOut,
-  Search,
-  PanelLeftClose,
-  PanelLeftOpen,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion, type Variants } from "framer-motion";
 import { cn } from "@/lib/cn";
 import { preloadRoute } from "@/lib/preload";
-import { CommandMenu, PALETTE_EVENT } from "@/components/CommandMenu";
-import { isDemo } from "@/lib/demo-data";
+import { CommandMenu } from "@/components/CommandMenu";
 import { useAuth } from "@/providers/AuthProvider";
 import { signOut } from "@/features/auth/api";
 import { useAvailabilityAutopilot, useProfile } from "@/features/dashboard/queries";
@@ -44,6 +42,7 @@ const NAV: NavEntry[] = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/work", label: "My work", icon: Briefcase },
   { to: "/messages", label: "Messages", icon: MessageCircle, isNew: true },
+  { to: "/notifications", label: "Alerts", icon: Bell },
   { to: "/calendar", label: "Calendar", icon: CalendarDays },
   { to: "/pool", label: "Assigned offers", icon: Layers },
 ];
@@ -123,7 +122,7 @@ function NavItem({
             </span>
           ) : null}
           {collapsed && badge ? (
-            <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
+            <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-danger-dot ring-2 ring-side" aria-hidden="true" />
           ) : null}
         </>
       )}
@@ -131,26 +130,15 @@ function NavItem({
   );
 }
 
-/** Marks the sample-data build, so nobody mistakes it for a live account. */
-function DemoBadge() {
-  return (
-    <span
-      title="Sample data. Changes last until you reload."
-      className="rounded-full border border-line-card bg-[var(--dl-card-yellow)] px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide"
-    >
-      Demo
-    </span>
-  );
-}
 
 function SidebarContent({
   onNavigate,
   collapsed,
-  setCollapsed,
+  onToggleCollapsed,
 }: {
   onNavigate?: () => void;
   collapsed?: boolean;
-  setCollapsed?: (v: boolean) => void;
+  onToggleCollapsed?: (collapsed: boolean) => void;
 }) {
   const { user } = useAuth();
   const profile = useProfile();
@@ -164,72 +152,110 @@ function SidebarContent({
   const initial = (profile.data?.full_name?.trim()?.[0] ?? user?.email?.[0] ?? "D").toUpperCase();
 
   return (
-    <div className="flex h-full flex-col overflow-x-hidden scrollbar-hide">
-      <div className={cn("mb-5 flex px-1", collapsed ? "mt-1 flex-col items-center gap-4" : "items-center justify-between")}>
-        <Link to="/dashboard" onClick={onNavigate} className="flex shrink-0 items-center gap-2.5 overflow-hidden">
-          <Logo size="md" className="rounded-[10px]" />
-          {!collapsed ? (
-            <span className="whitespace-nowrap text-xl font-extrabold tracking-[-0.04em]">Dolancer</span>
+    <div className="flex h-full min-h-0 flex-col overflow-hidden">
+      {/* Scrollable upper navigation section */}
+      <div className="flex-1 min-h-0 overflow-y-auto scrollbar-hide pr-0.5 space-y-3.5">
+        <div className={cn("flex items-center px-1", collapsed ? "justify-center" : "justify-between")}>
+          <Link to="/dashboard" onClick={onNavigate} className="flex shrink-0 items-center gap-2.5 overflow-hidden">
+            <Logo size="md" className="rounded-[10px]" />
+            {!collapsed ? (
+              <span className="whitespace-nowrap text-xl font-extrabold tracking-[-0.04em]">Dolancer</span>
+            ) : null}
+          </Link>
+          {!collapsed && onToggleCollapsed ? (
+            <div className="hidden lg:flex items-center gap-1">
+              <Link
+                to="/notifications"
+                onClick={onNavigate}
+                onMouseEnter={() => preloadRoute("/notifications")}
+                aria-label={unread > 0 ? `Alerts, ${unread} unread` : "Alerts"}
+                className="relative flex h-8 w-8 items-center justify-center rounded-xl text-ink-2 transition-colors hover:bg-white hover:text-ink focus-visible:outline-2 focus-visible:outline-primary"
+              >
+                <BellIcon />
+                {unread > 0 ? (
+                  <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-danger-dot ring-2 ring-side" aria-hidden="true" />
+                ) : null}
+              </Link>
+              <button
+                type="button"
+                onClick={() => onToggleCollapsed(true)}
+                aria-label="Collapse sidebar"
+                title="Collapse sidebar"
+                className="flex h-8 w-8 items-center justify-center rounded-xl text-ink-muted transition-colors hover:bg-white hover:text-ink focus-visible:outline-2 focus-visible:outline-primary"
+              >
+                <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+              </button>
+            </div>
           ) : null}
-          {!collapsed && isDemo() ? <DemoBadge /> : null}
-        </Link>
-        {setCollapsed ? (
-          <button
-            type="button"
-            onClick={() => setCollapsed(!collapsed)}
-            className="hidden h-8 w-8 shrink-0 items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-white hover:text-ink lg:flex"
-            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-            title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-          >
-            {collapsed ? <PanelLeftOpen className="h-4 w-4" /> : <PanelLeftClose className="h-4 w-4" />}
-          </button>
-        ) : null}
+        </div>
+
+        {/* In closed state, replace green dot with expand button. In open state, show Available toggle. */}
+        {collapsed ? (
+          onToggleCollapsed ? (
+            <div className="flex justify-center">
+              <button
+                type="button"
+                onClick={() => onToggleCollapsed(false)}
+                aria-label="Expand sidebar"
+                title="Expand sidebar"
+                className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-ink-2 shadow-[0_2px_8px_-2px_rgba(15,23,42,0.08)] ring-1 ring-ink/[0.05] transition-all hover:bg-white hover:text-primary hover:shadow-md focus-visible:outline-2 focus-visible:outline-primary"
+              >
+                <ChevronRight className="h-4 w-4" aria-hidden="true" />
+              </button>
+            </div>
+          ) : null
+        ) : (
+          <div>
+            <AvailabilityToggle />
+          </div>
+        )}
+
+        <motion.nav
+          className="space-y-0.5"
+          aria-label="Main"
+          variants={navList}
+          initial={reduceMotion ? false : "hidden"}
+          animate="show"
+        >
+          {nav.map((item) => (
+            <motion.div key={item.to} variants={navEntry}>
+              <NavItem
+                {...item}
+                badge={
+                  item.to === "/messages"
+                    ? unreadChats
+                    : item.to === "/notifications"
+                      ? (unread > 0 ? unread : undefined)
+                      : item.to === "/home" && !home.loading
+                        ? home.remaining
+                        : undefined
+                }
+                onNavigate={onNavigate}
+                collapsed={collapsed}
+              />
+            </motion.div>
+          ))}
+        </motion.nav>
+
+        <div className="mx-2 my-2.5 h-px bg-line-subtle/50" />
+
+        <motion.nav
+          className="space-y-0.5"
+          aria-label="Additional"
+          variants={navList}
+          initial={reduceMotion ? false : "hidden"}
+          animate="show"
+        >
+          {SECONDARY.map((item) => (
+            <motion.div key={item.to} variants={navEntry}>
+              <NavItem {...item} onNavigate={onNavigate} collapsed={collapsed} />
+            </motion.div>
+          ))}
+        </motion.nav>
       </div>
 
-      {!collapsed ? (
-        <p className="px-3 pb-1.5 text-[10.5px] font-bold uppercase tracking-[0.1em] text-ink-3">Work</p>
-      ) : null}
-      <motion.nav
-        className="space-y-0.5"
-        aria-label="Main"
-        variants={navList}
-        initial={reduceMotion ? false : "hidden"}
-        animate="show"
-      >
-        {nav.map((item) => (
-          <motion.div key={item.to} variants={navEntry}>
-            <NavItem
-              {...item}
-              badge={
-                item.to === "/messages" ? unreadChats : item.to === "/home" && !home.loading ? home.remaining : undefined
-              }
-              onNavigate={onNavigate}
-              collapsed={collapsed}
-            />
-          </motion.div>
-        ))}
-      </motion.nav>
-
-      {collapsed ? (
-        <div className="mx-2 my-4 h-px bg-line-subtle" />
-      ) : (
-        <p className="px-3 pb-1.5 pt-5 text-[10.5px] font-bold uppercase tracking-[0.1em] text-ink-3">Account</p>
-      )}
-      <motion.nav
-        className="space-y-0.5"
-        aria-label="Account"
-        variants={navList}
-        initial={reduceMotion ? false : "hidden"}
-        animate="show"
-      >
-        {SECONDARY.map((item) => (
-          <motion.div key={item.to} variants={navEntry}>
-            <NavItem {...item} onNavigate={onNavigate} collapsed={collapsed} />
-          </motion.div>
-        ))}
-      </motion.nav>
-
-      <div className="mt-auto pt-6">
+      {/* Fixed bottom profile box */}
+      <div className="shrink-0 pt-3 border-t border-line-subtle/60 mt-1">
         <ProfileMenu name={name} initial={initial} unread={unread} collapsed={collapsed} onNavigate={onNavigate} />
       </div>
     </div>
@@ -344,33 +370,6 @@ function BellIcon() {
   );
 }
 
-/** Search, availability and alerts, the same on every signed-in page. */
-function TopBar({ onAlerts }: { onAlerts: boolean }) {
-  const reduceMotion = useReducedMotion();
-  return (
-    <motion.div
-      className="mb-5 hidden items-center gap-3 lg:flex"
-      initial={reduceMotion ? false : { opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-    >
-      <button
-        type="button"
-        onClick={() => window.dispatchEvent(new Event(PALETTE_EVENT))}
-        className="flex h-11 w-full max-w-[400px] items-center gap-2.5 rounded-[14px] bg-white px-4 text-left text-sm font-medium text-ink-3 ring-1 ring-ink/[0.05] transition-colors hover:text-ink-2 focus-visible:outline-2 focus-visible:outline-primary"
-      >
-        <Search className="h-4 w-4" aria-hidden="true" />
-        Search pages
-        <kbd className="ml-auto rounded-md bg-panel px-1.5 py-0.5 font-sans text-[11px] font-bold text-ink-muted">Ctrl K</kbd>
-      </button>
-      <div className="flex-1" />
-      <AvailabilityToggle />
-      {/* No bell on the Alerts page itself: it would only link to where you are. */}
-      {onAlerts ? null : <BellLink />}
-    </motion.div>
-  );
-}
-
 export function AppShell() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
@@ -382,6 +381,16 @@ export function AppShell() {
       return false;
     }
   });
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const original = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = original;
+    };
+  }, [mobileOpen]);
+
   useReminderAlerts();
   useNotificationPopups();
   useAvailabilityAutopilot();
@@ -413,7 +422,6 @@ export function AppShell() {
         <Link to="/dashboard" className="flex min-w-0 items-center gap-2">
           <Logo size="sm" className="rounded-lg" />
           <span className="hidden truncate text-lg font-extrabold tracking-[-0.04em] sm:block">Dolancer</span>
-          {isDemo() ? <DemoBadge /> : null}
         </Link>
         <div className="flex shrink-0 items-center gap-2">
           {onAlerts ? null : <BellLink />}
@@ -441,7 +449,7 @@ export function AppShell() {
             <button
               type="button"
               aria-label="Close menu"
-              className="absolute inset-0 h-full w-full cursor-default bg-ink/30"
+              className="absolute inset-0 h-full w-full cursor-default bg-ink/30 touch-none"
               onClick={() => setMobileOpen(false)}
             />
             <motion.div
@@ -459,9 +467,6 @@ export function AppShell() {
               }}
               className="absolute inset-y-0 left-0 flex w-[85%] max-w-xs flex-col overflow-y-auto overscroll-contain bg-side px-4 py-5 shadow-soft-lg scrollbar-hide"
             >
-              <div className="mb-4 shrink-0">
-                <AvailabilityToggle />
-              </div>
               <div className="flex-1">
                 <SidebarContent onNavigate={() => setMobileOpen(false)} />
               </div>
@@ -471,17 +476,18 @@ export function AppShell() {
       </AnimatePresence>
 
       <div className="mx-auto flex w-full max-w-[1480px] gap-3.5 lg:p-3.5">
-        <aside
-          className={cn(
-            "sticky top-3.5 hidden h-[calc(100dvh-1.75rem)] shrink-0 overflow-y-auto rounded-3xl bg-side px-4 py-5 transition-[width] duration-300 ease-in-out scrollbar-hide lg:block",
-            collapsed ? "w-[84px]" : "w-60",
-          )}
-        >
-          <SidebarContent collapsed={collapsed} setCollapsed={toggleCollapsed} />
-        </aside>
+        <div className="sticky top-3.5 hidden h-[calc(100dvh-1.75rem)] shrink-0 lg:block">
+          <aside
+            className={cn(
+              "flex h-full flex-col overflow-hidden rounded-3xl bg-side p-4 transition-[width] duration-300 ease-in-out",
+              collapsed ? "w-[84px]" : "w-60",
+            )}
+          >
+            <SidebarContent collapsed={collapsed} onToggleCollapsed={toggleCollapsed} />
+          </aside>
+        </div>
 
         <main id="main" className="min-w-0 flex-1 px-4 py-5 lg:min-h-[calc(100dvh-1.75rem)] lg:rounded-3xl lg:bg-panel lg:px-6 lg:py-5">
-          <TopBar onAlerts={onAlerts} />
           {/* Each page eases in as you move between them, like the reel's screen changes. */}
           {/* Threads under /messages share the same key so switching chats does not remount the page. */}
           <motion.div
@@ -489,6 +495,7 @@ export function AppShell() {
             initial={reduceMotion ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className={location.pathname.startsWith("/messages") ? "h-full" : undefined}
           >
             <Outlet />
           </motion.div>

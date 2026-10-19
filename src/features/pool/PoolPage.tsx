@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { AlertTriangle, BellRing, Layers, Lock, PauseCircle, ShieldCheck } from "lucide-react";
+import { AlertTriangle, BellRing, Layers, PauseCircle, ShieldCheck } from "lucide-react";
 import { Skeleton, LoadingAnnounce } from "@/components/brutal/Skeleton";
 import { Button } from "@/components/ui/button";
 import { CardGrid, EmptyPanel, PageHeader } from "@/components/app/page";
 import { Segments } from "@/components/app/ui";
-import { cn } from "@/lib/cn";
-import { MAX_ACTIVE_PROJECTS } from "@/lib/constants";
 import { availabilityState } from "@/stores/useAvailabilityStore";
 import { useAvailability, useGateState } from "@/features/dashboard/queries";
 import { AvailabilityToggle } from "@/features/dashboard/AvailabilityToggle";
@@ -17,24 +15,17 @@ import { PoolCard } from "./PoolCard";
 import { ClaimDrawer } from "./ClaimDrawer";
 import { useBoardNotify } from "./useBoardNotify";
 
-/** Slots in use, as three small bars and a count. */
-function SlotsPill({ used }: { used: number }) {
-  const full = used >= MAX_ACTIVE_PROJECTS;
+/** Active tasks count indicator. */
+function ActiveWorkPill({ count }: { count: number }) {
+  if (count === 0) return null;
   return (
     <div
-      className={cn(
-        "flex h-11 items-center gap-2.5 rounded-full px-4 ring-1",
-        full ? "bg-warning-bg text-warning-ink ring-warning-dot/20" : "bg-white text-ink ring-ink/[0.05]",
-      )}
-      aria-label={`${used} of ${MAX_ACTIVE_PROJECTS} slots in use`}
+      className="flex h-11 items-center gap-2 rounded-full bg-white px-4 ring-1 ring-ink/[0.05]"
+      aria-label={`${count} active task${count === 1 ? "" : "s"}`}
     >
-      <span className="flex gap-1" aria-hidden="true">
-        {Array.from({ length: MAX_ACTIVE_PROJECTS }, (_, index) => (
-          <span key={index} className={cn("h-2 w-5 rounded-full", index < used ? (full ? "bg-warning-dot" : "bg-primary") : "bg-panel")} />
-        ))}
-      </span>
-      <span className="text-[13px] font-bold">
-        {used} of {MAX_ACTIVE_PROJECTS} slots
+      <span className="h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
+      <span className="text-[13px] font-bold text-ink">
+        {count} active {count === 1 ? "task" : "tasks"}
       </span>
     </div>
   );
@@ -49,7 +40,6 @@ export function PoolPage() {
   const { available, activeCount } = useAvailability();
 
   const state = availabilityState({ activeCount, available });
-  const atCap = state === "at-capacity";
   const paused = state === "paused";
   const unverified = gate.data ? !gate.data.unlocked : false;
   const offers = pool.data?.items ?? [];
@@ -68,11 +58,7 @@ export function PoolPage() {
     }, { replace: true });
   }, [wanted, pool.data, setParams]);
 
-  const blockedReason = atCap
-    ? "All your slots are full. Finish a task before taking another."
-    : unverified
-      ? "Finish your setup before accepting offers."
-      : null;
+  const blockedReason = unverified ? "Finish your setup before accepting offers." : null;
 
   return (
     <div>
@@ -86,7 +72,7 @@ export function PoolPage() {
               ? `${offers.length} offer${offers.length === 1 ? "" : "s"} for your skills. Pay is fixed before you say yes.`
               : "Offers for your skills land here."
         }
-        actions={<SlotsPill used={activeCount} />}
+        actions={<ActiveWorkPill count={activeCount} />}
       />
 
       {offers.length > 1 ? (
@@ -101,13 +87,6 @@ export function PoolPage() {
             { id: "deadline", label: "Due soonest" },
           ]}
         />
-      ) : null}
-
-      {atCap && offers.length > 0 ? (
-        <p className="mb-4 flex items-center gap-2.5 rounded-2xl bg-warning-bg px-4 py-3 text-[13px] font-bold text-warning-ink">
-          <Lock className="h-4 w-4 shrink-0" aria-hidden="true" />
-          All slots are full. You can look, and accept once a task is done.
-        </p>
       ) : null}
 
       {pool.isLoading ? (
@@ -129,19 +108,7 @@ export function PoolPage() {
           }
         />
       ) : offers.length === 0 ? (
-        atCap ? (
-          <EmptyPanel
-            tone="warning"
-            icon={<Lock />}
-            title="All slots are full"
-            body={`You are holding ${MAX_ACTIVE_PROJECTS} tasks. New offers show up after you finish one.`}
-            action={
-              <Button asChild>
-                <Link to="/work">Go to my work</Link>
-              </Button>
-            }
-          />
-        ) : paused ? (
+        paused ? (
           <EmptyPanel
             icon={<PauseCircle />}
             title="You are not available"

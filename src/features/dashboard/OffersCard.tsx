@@ -17,21 +17,18 @@ export function OffersCard({
   loading,
   error,
   unlocked,
-  atCap,
 }: {
   offers: PoolOffer[];
   loading: boolean;
   error: boolean;
   unlocked: boolean;
-  atCap: boolean;
+  atCap?: boolean;
 }) {
   const empty = !unlocked
     ? "Finish verification and offers that match your skills show here."
-    : atCap
-      ? "All your slots are full, so new offers are paused. Finish a task to see more."
-      : error
-        ? "Offers did not load. Open the offers page to try again."
-        : "No offers right now. Matching work shows here when a supervisor sends it.";
+    : error
+      ? "Offers did not load. Open the offers page to try again."
+      : "No offers right now. Matching work shows here when a supervisor sends it.";
 
   return (
     <Panel className="[grid-area:offers]" aria-labelledby="offers-for-you">

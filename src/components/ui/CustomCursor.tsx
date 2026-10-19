@@ -1,4 +1,20 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { router } from "@/routes";
+
+const isAppRoute = (p: string) =>
+  p.startsWith("/dashboard") ||
+  p.startsWith("/work") ||
+  p.startsWith("/messages") ||
+  p.startsWith("/calendar") ||
+  p.startsWith("/pool") ||
+  p.startsWith("/verification") ||
+  p.startsWith("/skills") ||
+  p.startsWith("/training") ||
+  p.startsWith("/notifications") ||
+  p.startsWith("/profile") ||
+  p.startsWith("/refer") ||
+  p.startsWith("/tickets") ||
+  p.startsWith("/admin");
 
 export function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
@@ -7,7 +23,24 @@ export function CustomCursor() {
   const ringRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);
 
+  const [isApp, setIsApp] = useState(() => isAppRoute(window.location.pathname));
+
   useEffect(() => {
+    return router.subscribe((state) => {
+      const active = isAppRoute(state.location.pathname);
+      setIsApp(active);
+      if (active) {
+        document.documentElement.classList.remove("custom-cursor-active");
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (isApp) {
+      document.documentElement.classList.remove("custom-cursor-active");
+      return;
+    }
+
     // Disable custom cursor on touch devices or small screens
     if (
       window.matchMedia("(hover: none)").matches ||
@@ -15,6 +48,7 @@ export function CustomCursor() {
       ("ontouchstart" in window) ||
       navigator.maxTouchPoints > 0
     ) {
+      document.documentElement.classList.remove("custom-cursor-active");
       return;
     }
 
@@ -132,7 +166,11 @@ export function CustomCursor() {
       document.removeEventListener("mouseleave", handleMouseLeave);
       document.removeEventListener("mouseenter", handleMouseEnter);
     };
-  }, []);
+  }, [isApp]);
+
+  if (isApp) {
+    return null;
+  }
 
   if (
     typeof window !== "undefined" &&

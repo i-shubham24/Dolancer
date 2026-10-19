@@ -8,7 +8,6 @@ import { CARD, cardMotion } from "@/components/app/card-styles";
 import { CardGrid, PageHeader } from "@/components/app/page";
 import { TickBox } from "@/components/app/TickBox";
 import { cn } from "@/lib/cn";
-import { MAX_ACTIVE_PROJECTS } from "@/lib/constants";
 import { formatDate } from "@/lib/datetime";
 import { useOnboardingStore } from "@/stores/useOnboardingStore";
 
@@ -24,7 +23,7 @@ const SECTIONS: { icon: LucideIcon; title: string; tone: string; points: string[
     points: [
       "Offers match the skills you pick, while you are set to Available.",
       "Your supervisor writes the brief and fixes the pay before you see it.",
-      `Accept only what you can finish on time. You can hold up to ${MAX_ACTIVE_PROJECTS} tasks.`,
+      "Accept only what you can finish on time to maintain high quality.",
     ],
   },
   {

@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { MAX_ACTIVE_PROJECTS } from "@/lib/constants";
 
 /**
  * Availability and the concurrency guardrail.
@@ -35,26 +34,16 @@ export const useAvailabilityStore = create<AvailabilityState>((set) => ({
   hydrate: ({ available, activeCount }) => set({ available, activeCount, hydrated: true }),
 }));
 
-export function isAtCap(activeCount: number): boolean {
-  return activeCount >= MAX_ACTIVE_PROJECTS;
+export function isAtCap(activeCount?: number): boolean {
+  return activeCount ? false : false;
 }
 
-/**
- * Three states, not two.
- *
- * "At capacity" is set by the system when all slots are full. "Paused" is a choice
- * the doer made while they still had room. Collapsing both into one "Busy" label
- * makes the automatic flip read as the platform overriding a personal decision,
- * which is exactly the wrong feeling for the one control that governs their income.
- * The distinction also tells them which one they can undo.
- */
-export type AvailabilityState_ = "available" | "paused" | "at-capacity";
+export type AvailabilityState_ = "available" | "paused";
 
 export function availabilityState(input: {
   activeCount: number;
   available: boolean;
 }): AvailabilityState_ {
-  if (isAtCap(input.activeCount)) return "at-capacity";
   return input.available ? "available" : "paused";
 }
 
@@ -71,13 +60,5 @@ export const AVAILABILITY_COPY: Record<
     label: "Not available",
     detail: "You turned new offers off. Work you already hold carries on as normal.",
     canToggle: true,
-  },
-  "at-capacity": {
-    label: "Not available",
-    detail:
-      // Borrowed from how Fiverr handles a full queue. Naming the consequence that
-      // does NOT happen is what stops the cap reading as a penalty.
-      `You have ${MAX_ACTIVE_PROJECTS} tasks, so new offers are off. It turns back on when one is done, and it does not affect your rating.`,
-    canToggle: false,
   },
 };

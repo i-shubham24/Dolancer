@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 import { ListChecks, Wallet } from "lucide-react";
 import { qk } from "@/lib/query-keys";
 import { isActiveStatus } from "@/lib/status";
-import { MAX_ACTIVE_PROJECTS } from "@/lib/constants";
 import { fyLabel, fyStartYear, inFinancialYear } from "@/lib/fy";
 import { taskTitle } from "@/lib/task-title";
 import { cn } from "@/lib/cn";
@@ -32,7 +31,6 @@ import { pickUpNext } from "./up-next";
 import { WeekCard } from "./WeekCard";
 import { WorkList } from "./WorkList";
 import { OffersCard } from "./OffersCard";
-import { WorkTimerCard } from "./WorkTimerCard";
 import { TaskPeek } from "./TaskPeek";
 import { gridMotion } from "@/components/app/card-styles";
 
@@ -243,9 +241,7 @@ export function DashboardPage() {
               loading={pool.isLoading}
               error={pool.isError}
               unlocked={unlocked}
-              atCap={active.length >= MAX_ACTIVE_PROJECTS}
             />
-            <WorkTimerCard projects={active} fallbackId={upNext?.id ?? null} />
           </motion.div>
         ) : (
           <motion.div

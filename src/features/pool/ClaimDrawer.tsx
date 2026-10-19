@@ -9,7 +9,6 @@ import { cn } from "@/lib/cn";
 import { formatPaise } from "@/lib/paise";
 import { relativeDeadline } from "@/lib/datetime";
 import { taskTitle } from "@/lib/task-title";
-import { MAX_ACTIVE_PROJECTS } from "@/lib/constants";
 import { formatDayShort, formatTime } from "@/features/calendar/dates";
 import type { PoolOffer } from "@/types/domain";
 import { useClaimProject } from "./queries";
@@ -111,7 +110,7 @@ export function ClaimDrawer({
                     <LineTexture className="pointer-events-none absolute inset-0 -z-10 h-full w-full text-white/[0.1]" />
                     <p className="text-xs font-bold text-white/80">You earn</p>
                     <p className="mt-1 text-[38px] font-extrabold leading-none tracking-[-0.04em] tabular-nums">{formatPaise(shown.payoutPaise)}</p>
-                    <p className="mt-1.5 text-xs font-semibold text-white/75">Fixed. Shown before tax.</p>
+                    <p className="mt-1.5 text-xs font-semibold text-white/85">Fixed payout • 1% TDS under Sec 194C credited to PAN</p>
                   </motion.div>
 
                   <motion.div
@@ -180,14 +179,14 @@ export function ClaimDrawer({
                     <>
                       <p className="flex items-start gap-2 rounded-xl bg-info-bg px-3 py-2.5 text-xs font-bold text-info-ink">
                         <Info className="mt-px h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-                        You agree to deliver by {due ? `${formatDayShort(due)}, ${formatTime(due)}` : "the agreed date"}. This uses 1 of your {MAX_ACTIVE_PROJECTS} slots.
+                        You agree to deliver by {due ? `${formatDayShort(due)}, ${formatTime(due)}` : "the agreed date"}. The task will be added directly to your work.
                       </p>
                       <div className="grid grid-cols-2 gap-2.5">
                         <Button variant="outline" onClick={() => setConfirming(false)} disabled={accept.isPending}>
                           Back
                         </Button>
                         <Button onClick={() => void handleAccept()} disabled={accept.isPending}>
-                          {accept.isPending ? "Accepting..." : "Accept"}
+                          {accept.isPending ? "Accepting..." : "Accept & start task"}
                         </Button>
                       </div>
                     </>

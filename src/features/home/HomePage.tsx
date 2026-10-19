@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { CARD, cardMotion, gridMotion } from "@/components/app/card-styles";
 import { Panel, PanelHeader } from "@/components/app/ui";
 import { cn } from "@/lib/cn";
-import { MAX_ACTIVE_PROJECTS } from "@/lib/constants";
 import { useAuth } from "@/providers/AuthProvider";
 import { useProfile } from "@/features/dashboard/queries";
 import { formatDayLong } from "@/features/calendar/dates";
@@ -17,7 +16,7 @@ const ABOUT = [
   { icon: BadgeIndianRupee, title: "Fixed pay", line: "You see the pay before you accept.", tone: "bg-success-bg text-success-ink" },
   { icon: ShieldUser, title: "A supervisor on every task", line: "One person to ask, start to finish.", tone: "bg-info-bg text-primary" },
   { icon: UserRoundX, title: "No client calls", line: "Your supervisor handles the client.", tone: "bg-violet-light text-violet" },
-  { icon: Layers, title: `Up to ${MAX_ACTIVE_PROJECTS} tasks at once`, line: "Take on only what you can finish.", tone: "bg-warning-bg text-warning-ink" },
+  { icon: Layers, title: "Flexible workload", line: "Take on work that fits your schedule.", tone: "bg-warning-bg text-warning-ink" },
   { icon: GraduationCap, title: "Free training", line: "Short courses for your skills.", tone: "bg-secondary-light text-secondary-hover" },
   { icon: Clock, title: "Paid on approval", line: "To your bank, with a receipt.", tone: "bg-danger-bg text-danger-ink" },
 ];

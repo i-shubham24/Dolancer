@@ -13,7 +13,6 @@ import { CARD, cardMotion, gridMotion } from "./card-styles";
 
 /** Eyebrow, title, one short line, and actions on the right. Nothing more. */
 export function PageHeader({
-  eyebrow,
   title,
   sub,
   actions,
@@ -46,10 +45,8 @@ export function PageHeader({
             <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-0.5" aria-hidden="true" />
             {back.label}
           </Link>
-        ) : eyebrow ? (
-          <p className="text-xs font-bold uppercase tracking-[0.08em] text-ink-muted">{eyebrow}</p>
         ) : null}
-        <h1 className="mt-1 break-words text-[26px] font-extrabold leading-tight tracking-[-0.04em] sm:text-[30px]">{title}</h1>
+        <h1 className="break-words text-[26px] font-extrabold leading-tight tracking-[-0.04em] sm:text-[30px]">{title}</h1>
         {sub ? <p className="mt-1 text-sm font-medium text-ink-2 sm:text-md">{sub}</p> : null}
       </div>
       {actions ? <div className="flex w-full flex-wrap gap-2.5 sm:w-auto">{actions}</div> : null}

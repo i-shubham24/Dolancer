@@ -4,7 +4,6 @@ import { CountUp } from "@/components/common/CountUp";
 import { cn } from "@/lib/cn";
 import { formatPaise } from "@/lib/paise";
 import { preloadRoute } from "@/lib/preload";
-import { MAX_ACTIVE_PROJECTS } from "@/lib/constants";
 import type { EarningsSummary } from "@/types/domain";
 import { formatDayShort } from "@/features/calendar/dates";
 import { CornerArrow } from "@/components/app/ui";
@@ -78,7 +77,7 @@ function ValueSkeleton({ inverse = false }: { inverse?: boolean }) {
   );
 }
 
-/** The two task figures: slots in use and what is due before Sunday. */
+/** The two task figures: active work and what is due before Sunday. */
 export function TaskStats({
   activeCount,
   activeLoading,
@@ -89,8 +88,6 @@ export function TaskStats({
   /** Deadlines from today to Sunday, soonest first. */
   dueThisWeek: Date[];
 }) {
-  const reduceMotion = useReducedMotion();
-  const free = Math.max(0, MAX_ACTIVE_PROJECTS - activeCount);
   const next = dueThisWeek[0];
   const soon = next ? next.getTime() - Date.now() < 48 * 3_600_000 : false;
 
@@ -102,25 +99,11 @@ export function TaskStats({
         area="[grid-area:k1]"
         hero
         foot={
-          <>
-            <span>
-              {activeCount >= MAX_ACTIVE_PROJECTS
-                ? "All slots full. Finish one to take more."
-                : `${free} slot${free === 1 ? "" : "s"} open for new work`}
-            </span>
-            <span className="mt-3 flex gap-1.5" aria-hidden="true">
-              {Array.from({ length: MAX_ACTIVE_PROJECTS }, (_, index) => (
-                <span key={index} className="h-[7px] flex-1 overflow-hidden rounded-full bg-white/25">
-                  <motion.span
-                    className="block h-full origin-left rounded-full bg-white"
-                    initial={reduceMotion ? false : { scaleX: 0 }}
-                    animate={{ scaleX: index < activeCount ? 1 : 0 }}
-                    transition={{ duration: 0.6, delay: 0.35 + index * 0.12, ease: [0.16, 1, 0.3, 1] }}
-                  />
-                </span>
-              ))}
-            </span>
-          </>
+          <span>
+            {activeCount === 0
+              ? "Ready for new work offers"
+              : `${activeCount} active task${activeCount === 1 ? "" : "s"} currently assigned`}
+          </span>
         }
       >
         {activeLoading ? (
@@ -128,7 +111,9 @@ export function TaskStats({
         ) : (
           <>
             <CountUp value={activeCount} format={whole} delay={0.3} />
-            <span className="ml-1 text-base font-bold tracking-normal text-white/85">of {MAX_ACTIVE_PROJECTS}</span>
+            <span className="ml-2 text-base font-bold tracking-normal text-white/85">
+              {activeCount === 1 ? "task in progress" : "tasks in progress"}
+            </span>
           </>
         )}
       </StatCard>
@@ -187,7 +172,7 @@ export function MoneyStats({
       <StatCard to={linkTo} label="Paid to you" area="[grid-area:f1]" hero foot={error ? "Could not load. Open Earnings to retry." : "After tax, since you joined"}>
         {loading ? <ValueSkeleton inverse /> : failed ?? <CountUp value={earnings?.netPaise ?? 0} format={rupees} delay={0.3} duration={1.3} />}
       </StatCard>
-      <StatCard to={linkTo} label="Tax withheld" area="[grid-area:f2]" foot="TDS and GST, all time">
+      <StatCard to={linkTo} label="Tax withheld" area="[grid-area:f2]" foot="TDS at 1% under Sec 194C credited to PAN">
         {loading ? <ValueSkeleton /> : failed ?? <CountUp value={earnings?.taxWithheldPaise ?? 0} format={rupees} delay={0.38} duration={1.3} />}
       </StatCard>
       <StatCard to={linkTo} label="Gross released" area="[grid-area:f3]" foot="Before tax, all time">

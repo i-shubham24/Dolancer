@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { AlertTriangle, CalendarClock, ChevronDown, Copy, FileSearch, IndianRupee, MessagesSquare, ListChecks, RotateCcw } from "lucide-react";
+import { AlertTriangle, CalendarDays, ChevronDown, Copy, FileSearch, MessagesSquare, ListChecks, RotateCcw } from "lucide-react";
 import { Skeleton, LoadingAnnounce } from "@/components/brutal/Skeleton";
 import { StatusBadge } from "@/components/brutal/StatusBadge";
 import { Button } from "@/components/ui/button";
@@ -13,7 +13,6 @@ import { CategoryTile, Segments } from "@/components/app/ui";
 import { Timeline } from "@/components/app/Timeline";
 import { cn } from "@/lib/cn";
 import { formatPaise } from "@/lib/paise";
-import { deadlineUrgency, relativeDeadline } from "@/lib/datetime";
 import { statusDisplay, timelineStep } from "@/lib/status";
 import { taskTitle } from "@/lib/task-title";
 import { qk } from "@/lib/query-keys";
@@ -23,14 +22,6 @@ import { ChatPanel } from "@/features/chat/ChatPanel";
 import { useProject } from "./queries";
 import { WorkingLinkCard } from "./WorkingLinkCard";
 import { ProgressCard, SubmitCard } from "./LifecycleActions";
-
-const URGENCY_TEXT = {
-  overdue: "text-danger-ink",
-  urgent: "text-danger-ink",
-  soon: "text-warning-ink",
-  comfortable: "text-ink-muted",
-  none: "text-ink-muted",
-} as const;
 
 /** The brief without its headline, which is already the page title. */
 function briefBody(brief: string | null): string {
@@ -111,8 +102,6 @@ export function WorkbenchPage() {
 
   const data = project.data;
   const status = statusDisplay(data.status, data.workingDocUrl);
-  const due = data.deliveryAt ? new Date(data.deliveryAt) : null;
-  const urgency = deadlineUrgency(data.deliveryAt);
   const body = briefBody(data.brief);
   const paragraphs = body.split(/\n{2,}/).filter((part) => part.trim());
   const changes = data.lastBounceReason || (data.revisionCount > 0 ? data.revisionReason : null);
@@ -138,6 +127,15 @@ export function WorkbenchPage() {
               {data.category}
             </span>
             <StatusBadge tone={status.tone} label={status.label} />
+            <span className="rounded-full bg-success-bg px-2.5 py-0.5 text-xs font-extrabold text-success-ink">
+              {formatPaise(data.payoutPaise)}
+            </span>
+            {data.deliveryAt ? (
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-panel px-2.5 py-0.5 text-xs font-bold text-ink-muted ring-1 ring-ink/[0.06]">
+                <CalendarDays className="h-3.5 w-3.5 text-ink-3" aria-hidden="true" />
+                <span>Due: {formatDayShort(new Date(data.deliveryAt))}, {formatTime(new Date(data.deliveryAt))}</span>
+              </span>
+            ) : null}
           </span>
         }
       />
@@ -171,47 +169,7 @@ export function WorkbenchPage() {
             </motion.section>
           ) : null}
 
-          {/* The three facts a doer checks first. */}
-          <motion.section variants={cardMotion} className={cn(CARD, "grid grid-cols-1 gap-3 min-[460px]:grid-cols-3")} aria-label="Key facts">
-            <div className="flex items-center gap-3 rounded-2xl bg-panel/60 p-3">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-success-bg text-success-ink" aria-hidden="true">
-                <IndianRupee className="h-[18px] w-[18px]" />
-              </span>
-              <div className="min-w-0">
-                <p className="text-[11px] font-bold text-ink-muted">You earn</p>
-                <p className="text-lg font-extrabold leading-tight tracking-[-0.02em] tabular-nums">{formatPaise(data.payoutPaise)}</p>
-                <p className="text-[10.5px] font-semibold text-ink-3">before tax</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 rounded-2xl bg-panel/60 p-3">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-info-bg text-primary" aria-hidden="true">
-                <CalendarClock className="h-[18px] w-[18px]" />
-              </span>
-              <div className="min-w-0">
-                <p className="text-[11px] font-bold text-ink-muted">Due</p>
-                <p className="truncate text-[15px] font-extrabold leading-tight">{due ? formatDayShort(due) : "Not set"}</p>
-                <p className={cn("text-[10.5px] font-bold", URGENCY_TEXT[urgency])}>
-                  {due ? `${formatTime(due)}, ${relativeDeadline(data.deliveryAt).toLowerCase()}` : "Ask your supervisor"}
-                </p>
-              </div>
-            </div>
-            <button
-              type="button"
-              onClick={() => void copyId()}
-              className="group flex items-center gap-3 rounded-2xl bg-panel/60 p-3 text-left transition-colors hover:bg-panel focus-visible:outline-2 focus-visible:outline-primary"
-              aria-label={`Copy task ID ${data.id.slice(0, 8)}`}
-            >
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-light text-violet" aria-hidden="true">
-                <Copy className="h-[18px] w-[18px]" />
-              </span>
-              <div className="min-w-0">
-                <p className="text-[11px] font-bold text-ink-muted">Task ID</p>
-                <p className="font-mono text-[15px] font-extrabold leading-tight">{data.id.slice(0, 8)}</p>
-                <p className="text-[10.5px] font-semibold text-ink-3 group-hover:text-primary">Tap to copy</p>
-              </div>
-            </button>
-          </motion.section>
-
+          {/* Main content of sections starts straight away */}
           <motion.section variants={cardMotion} className={cn(CARD, "gap-4")} aria-labelledby="timeline-title">
             <h2 id="timeline-title" className="text-[15px] font-extrabold tracking-[-0.02em]">
               Timeline
@@ -231,10 +189,22 @@ export function WorkbenchPage() {
           <SubmitCard project={data} />
 
           <motion.section variants={cardMotion} className={cn(CARD, "gap-3")} aria-labelledby="brief-title">
-            <h2 id="brief-title" className="flex items-center gap-2 text-[15px] font-extrabold tracking-[-0.02em]">
-              <ListChecks className="h-4 w-4 text-ink-muted" aria-hidden="true" />
-              The brief
-            </h2>
+            <div className="flex items-center justify-between gap-2">
+              <h2 id="brief-title" className="flex items-center gap-2 text-[15px] font-extrabold tracking-[-0.02em]">
+                <ListChecks className="h-4 w-4 text-ink-muted" aria-hidden="true" />
+                The brief
+              </h2>
+              {/* Minimal task ID inside brief header */}
+              <button
+                type="button"
+                onClick={() => void copyId()}
+                title="Click to copy full Task ID"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-line-subtle bg-panel/70 px-2 py-0.5 font-mono text-[11px] font-semibold text-ink-muted transition-colors hover:bg-panel hover:text-ink focus-visible:outline-2 focus-visible:outline-primary"
+              >
+                <span>ID: {data.id.slice(0, 8)}</span>
+                <Copy className="h-3 w-3" />
+              </button>
+            </div>
             {paragraphs.length === 0 ? (
               <p className="text-sm text-ink-2">Your supervisor will share the detail here.</p>
             ) : (
@@ -273,9 +243,9 @@ export function WorkbenchPage() {
           </motion.section>
         </CardGrid>
 
-        {/* Fixed on the right while the details scroll. */}
-        <div className={cn("lg:sticky lg:top-6 lg:h-[calc(100dvh-3rem)]", tab === "details" && "hidden lg:block")}>
-          <ChatPanel projectId={data.id} category={data.category} fill className="h-[72dvh] lg:h-full" />
+        {/* Fixed on the right without requiring scrolling */}
+        <div className={cn("lg:sticky lg:top-3.5 lg:h-[calc(100dvh-3.5rem)]", tab === "details" && "hidden lg:block")}>
+          <ChatPanel projectId={data.id} category={data.category} fill className="h-[75dvh] lg:h-full" />
         </div>
       </div>
 

@@ -177,7 +177,7 @@ export function MessagesPage() {
     <div
       className={cn(
         CARD,
-        "grid h-[calc(100dvh-6.5rem)] min-h-[480px] grid-cols-[minmax(0,1fr)] overflow-hidden p-0 md:grid-cols-[300px_minmax(0,1fr)] lg:h-[calc(100dvh-8.25rem)] xl:grid-cols-[360px_minmax(0,1fr)]",
+        "grid h-[calc(100dvh-4.75rem)] min-h-[520px] grid-cols-[minmax(0,1fr)] overflow-hidden p-0 md:grid-cols-[300px_minmax(0,1fr)] lg:h-[calc(100dvh-4.25rem)] xl:grid-cols-[360px_minmax(0,1fr)]",
       )}
     >
       <aside className={cn("min-h-0 min-w-0 flex-col border-line-subtle md:flex md:border-r", selected ? "hidden" : "flex")} aria-label="Conversations">

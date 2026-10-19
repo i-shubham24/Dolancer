@@ -7,7 +7,6 @@ import { relativeDeadline } from "@/lib/datetime";
 import { statusDisplay } from "@/lib/status";
 import { taskTitle } from "@/lib/task-title";
 import { preloadWorkbench } from "@/lib/preload";
-import { MAX_ACTIVE_PROJECTS } from "@/lib/constants";
 import { StatusBadge } from "@/components/brutal/StatusBadge";
 import { Button } from "@/components/ui/button";
 import type { DoerProject } from "@/types/domain";
@@ -47,14 +46,13 @@ export function WorkList({
   const [filter, setFilter] = useState<Filter>("all");
   const active = FILTERS.find((entry) => entry.id === filter) ?? FILTERS[0]!;
   const visible = useMemo(() => projects.filter(active.match), [projects, active]);
-  const free = Math.max(0, MAX_ACTIVE_PROJECTS - projects.length);
 
   return (
     <Panel className="[grid-area:work]" aria-labelledby="your-work">
       <PanelHeader
         id="your-work"
         title="Your work"
-        sub={`${projects.length} of ${MAX_ACTIVE_PROJECTS} slots in use`}
+        sub={projects.length === 1 ? "1 active task" : `${projects.length} active tasks`}
         className="flex-wrap"
         right={
           projects.length > 0 ? (
@@ -154,7 +152,7 @@ export function WorkList({
               </motion.li>
             ) : null}
 
-            {free > 0 ? (
+            {projects.length === 0 ? (
               <motion.li layout={!reduceMotion}>
                 <div className="grid grid-cols-[40px_minmax(0,1fr)_auto] items-center gap-3 rounded-2xl border border-dashed border-line-subtle p-3">
                   <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-panel text-ink-muted" aria-hidden="true">
@@ -162,11 +160,11 @@ export function WorkList({
                   </span>
                   <span className="min-w-0">
                     <span className="block text-[13.5px] font-bold text-ink-2">
-                      {free} slot{free === 1 ? "" : "s"} open
+                      No active tasks
                     </span>
                     <span className="block text-[11.5px] font-semibold text-ink-muted">
                       {unlocked
-                        ? "Pick an offer that fits around your deadlines."
+                        ? "Pick an offer from the pool to get started."
                         : "Finish verification to start getting offers."}
                     </span>
                   </span>
