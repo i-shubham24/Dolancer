@@ -469,7 +469,7 @@ export function AppShell() {
         ) : null}
       </AnimatePresence>
 
-      <div className="mx-auto flex w-full max-w-[1480px] gap-3.5 lg:p-3.5">
+      <div className="mx-auto flex w-full max-w-[1640px] 2xl:max-w-[1800px] gap-3.5 lg:p-3.5">
         <div className="sticky top-3.5 hidden h-[calc(100dvh-1.75rem)] shrink-0 lg:block">
           <aside
             className={cn(

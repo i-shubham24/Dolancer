@@ -1604,42 +1604,46 @@
     container-type: inline-size;
   }
 
+    /* Ultra-compact mobile (< 380px): stack all cards cleanly without cramping */
   .dash-grid,
   .fin-grid {
     display: grid;
     gap: 0.875rem;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
   }
 
-  /* Tasks: what is next, this week, the work itself, and offers. */
   .dash-grid {
     grid-template-areas:
-      "k1 k2"
-      "next next"
-      "week week"
-      "work work"
-      "offers offers";
+      "k1"
+      "k2"
+      "next"
+      "week"
+      "work"
+      "offers";
   }
 
-  /* Finances: four figures, the monthly chart, the split, and recent payouts. */
   .fin-grid {
     grid-template-areas:
-      "f1 f2"
-      "f3 f4"
-      "chart chart"
-      "split split"
-      "pays pays";
+      "f1"
+      "f2"
+      "f3"
+      "f4"
+      "chart"
+      "split"
+      "pays";
   }
 
-  @container (min-width: 600px) {
+  /* Standard mobile (>= 380px) */
+  @container (min-width: 380px) {
     .dash-grid,
     .fin-grid {
-      gap: 1rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     .dash-grid {
       grid-template-areas:
         "k1 k2"
-        "next week"
+        "next next"
+        "week week"
         "work work"
         "offers offers";
     }
@@ -1648,42 +1652,72 @@
         "f1 f2"
         "f3 f4"
         "chart chart"
-        "split pays";
+        "split split"
+        "pays pays";
     }
   }
 
-  @container (min-width: 780px) {
+  /* Tablet & When sidebar is open (>= 640px): keep Split & Payouts LEFT and RIGHT */
+  @container (min-width: 640px) {
     .dash-grid,
     .fin-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
     }
     .dash-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       grid-template-areas:
-        "k1 k2 week week"
-        "next next week week"
-        "work work work work"
-        "offers offers offers offers";
+        "k1 k2"
+        "next week"
+        "work work"
+        "offers offers";
     }
     .fin-grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
       grid-template-areas:
-        "f1 f2 f3 f4"
-        "chart chart chart chart"
-        "split split pays pays";
+        "f1 f1 f1 f1 f1 f1 f2 f2 f2 f2 f2 f2"
+        "f3 f3 f3 f3 f3 f3 f4 f4 f4 f4 f4 f4"
+        "chart chart chart chart chart chart chart chart chart chart chart chart"
+        "split split split split split pays pays pays pays pays pays pays";
     }
   }
 
-  @container (min-width: 1040px) {
+  /* Desktop (>= 860px): 4 stat cards in a single row, 3-column Tasks bento, and left-right Split & Payouts */
+  @container (min-width: 860px) {
     .dash-grid {
+      gap: 1.125rem;
+      grid-template-columns: minmax(210px, 1fr) minmax(350px, 1.55fr) minmax(320px, 1.35fr);
       grid-template-areas:
-        "k1 next next week"
-        "k2 next next week"
-        "work work offers offers";
+        "k1 next week"
+        "k2 next week"
+        "work work offers";
     }
     .fin-grid {
+      gap: 1.125rem;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
       grid-template-areas:
-        "f1 f2 f3 f4"
-        "chart chart chart split"
-        "pays pays pays split";
+        "f1 f1 f1 f2 f2 f2 f3 f3 f3 f4 f4 f4"
+        "chart chart chart chart chart chart chart chart chart chart chart chart"
+        "split split split split split pays pays pays pays pays pays pays";
+    }
+  }
+
+  /* Wide screens & Collapsed Sidebar (>= 1340px) */
+  @container (min-width: 1340px) {
+    .dash-grid {
+      gap: 1.25rem;
+      grid-template-columns: minmax(240px, 1fr) minmax(420px, 1.6fr) minmax(380px, 1.4fr);
+      grid-template-areas:
+        "k1 next week"
+        "k2 next week"
+        "work work offers";
+    }
+    .fin-grid {
+      gap: 1.25rem;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-template-areas:
+        "f1 f1 f1 f2 f2 f2 f3 f3 f3 f4 f4 f4"
+        "chart chart chart chart chart chart chart chart chart chart chart chart"
+        "split split split split split pays pays pays pays pays pays pays";
     }
   }
 

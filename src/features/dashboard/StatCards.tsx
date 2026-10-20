@@ -110,10 +110,12 @@ export function TaskStats({
           <ValueSkeleton inverse />
         ) : (
           <>
+            <div className="flex flex-wrap items-baseline gap-x-2">
             <CountUp value={activeCount} format={whole} delay={0.3} />
-            <span className="ml-2 text-base font-bold tracking-normal text-white/85">
+            <span className="text-sm min-[400px]:text-base font-bold tracking-normal text-white/85">
               {activeCount === 1 ? "task in progress" : "tasks in progress"}
             </span>
+          </div>
           </>
         )}
       </StatCard>

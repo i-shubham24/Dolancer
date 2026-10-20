@@ -34,8 +34,8 @@ export function MoneySplitCard({ earnings, loading }: { earnings: EarningsSummar
   return (
     <Panel className="[grid-area:split]" aria-labelledby="money-split">
       <PanelHeader id="money-split" title="How it adds up" sub="All payouts so far" />
-      <div className="flex flex-1 flex-col items-center justify-evenly gap-5">
-        <div className="relative aspect-square w-full max-w-[220px]" role="img" aria-label={`You kept ${Math.round(kept)}% after tax`}>
+      <div className="flex flex-1 flex-col items-center justify-center gap-3.5 py-1">
+        <div className="relative aspect-square w-full max-w-[170px]" role="img" aria-label={`You kept ${Math.round(kept)}% after tax`}>
           <svg viewBox="0 0 200 200" className="h-full w-full -rotate-90" aria-hidden="true">
             <circle cx="100" cy="100" r={radius} fill="none" stroke="var(--color-panel)" strokeWidth="14" />
             {gross > 0 ? (
@@ -75,13 +75,13 @@ export function MoneySplitCard({ earnings, loading }: { earnings: EarningsSummar
             {loading ? (
               <span className="skeleton h-8 w-16" />
             ) : (
-              <CountUp value={kept} format={pct} delay={0.4} duration={1.2} className="text-[34px] font-extrabold leading-none tracking-[-0.04em] tabular-nums" />
+              <CountUp value={kept} format={pct} delay={0.4} duration={1.2} className="text-[28px] sm:text-[30px] font-extrabold leading-none tracking-[-0.04em] tabular-nums" />
             )}
             <span className="mt-1.5 text-[11.5px] font-semibold text-ink-muted">kept after tax</span>
           </div>
         </div>
 
-        <dl className="w-full space-y-2.5 text-[13px]">
+        <dl className="w-full space-y-2 text-xs sm:text-[12.5px] rounded-xl bg-panel/40 p-2.5 border border-line-subtle/50">
           <div className="flex items-center justify-between gap-3">
             <dt className="flex items-center gap-2 font-semibold text-ink-2">
               <span className="h-2.5 w-2.5 rounded-full bg-ink/20" aria-hidden="true" />

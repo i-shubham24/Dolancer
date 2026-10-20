@@ -312,7 +312,7 @@ export function WeekCard({ events, loading }: { events: CalendarEvent[]; loading
                 {nextUpcoming ? `Next: ${formatDayRelative(nextUpcoming.at)}` : "All clear"}
               </p>
               <p className="truncate text-[11px] font-semibold text-ink-muted">
-                {activeProjects.length === 1 ? "1 active task in progress" : `${activeProjects.length} active tasks in progress`}
+                {activeProjects.length === 1 ? "1 active task in progress" : `${activeProjects.length} active tasks`}
               </p>
             </div>
           </div>
@@ -324,10 +324,10 @@ export function WeekCard({ events, loading }: { events: CalendarEvent[]; loading
               setReminderDay(undefined);
               setReminderOpen(true);
             }}
-            className="shrink-0 h-8 gap-1 text-xs font-bold bg-white hover:bg-panel shadow-2xs"
+            className="shrink-0 h-8 gap-1 text-xs font-bold bg-white hover:bg-panel shadow-2xs px-2.5"
           >
             <Plus className="h-3.5 w-3.5" />
-            <span>Reminder</span>
+            <span className="hidden min-[380px]:inline">Reminder</span>
           </Button>
         </div>
       </div>

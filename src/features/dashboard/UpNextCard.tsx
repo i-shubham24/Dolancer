@@ -94,14 +94,14 @@ export function UpNextCard({
             <DeadlineCounter deliveryAt={project.deliveryAt} />
           </div>
 
-          <dl className="mt-3.5 space-y-2 text-[12.5px] font-semibold">
+          <dl className="mt-3 space-y-2 rounded-xl bg-panel/50 p-2.5 text-[12.5px] font-semibold border border-line-subtle/60">
             <div className="flex items-center justify-between gap-3">
-              <dt className="text-ink-2">Deadline</dt>
+              <dt className="text-ink-2 font-medium">Deadline</dt>
               <dd className="text-right font-bold text-ink">{due ? `${formatDayShort(due)}, ${formatTime(due)}` : "Not set"}</dd>
             </div>
-            <div className="flex items-center justify-between gap-3">
-              <dt className="text-ink-2">Pay for this task</dt>
-              <dd className="font-bold text-ink tabular-nums">{formatPaise(project.payoutPaise)}</dd>
+            <div className="flex items-center justify-between gap-3 border-t border-line-subtle/50 pt-1.5">
+              <dt className="text-ink-2 font-medium">Pay for this task</dt>
+              <dd className="font-extrabold text-ink tabular-nums text-[13.5px] text-primary">{formatPaise(project.payoutPaise)}</dd>
             </div>
           </dl>
 
@@ -120,22 +120,28 @@ export function UpNextCard({
             Waiting for your supervisor to add the working link.
           </p>
         ) : (
-          <div className="flex flex-col justify-center rounded-2xl @md:bg-panel/60 @md:px-3 @md:py-5">
+          <div className="flex flex-col items-center justify-center rounded-2xl @md:bg-panel/60 @md:px-3 @md:py-4">
             <Gauge
               value={review ? 100 : progress}
               tone={review ? "var(--color-highlight)" : "var(--color-primary)"}
               label={review ? "Sent for review" : "Done so far"}
             />
-            <div className="mt-2.5 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[11px] font-semibold text-ink-muted">
-              <span className="inline-flex items-center gap-1.5">
+            <div className="mt-2 flex flex-wrap items-center justify-center gap-x-3.5 gap-y-1 text-[11px] font-semibold text-ink-muted">
+              <span className="inline-flex items-center gap-1.5 font-bold text-ink">
                 <span className="h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
-                Done
+                Done {Math.round(review ? 100 : progress)}%
               </span>
               <span className="inline-flex items-center gap-1.5">
                 <span className="chart-hatch h-2 w-2 rounded-full" aria-hidden="true" />
-                Left
+                Left {Math.round(100 - (review ? 100 : progress))}%
               </span>
               <span>Updated {timeAgo(project.updatedAt)}</span>
+            </div>
+            <div className="mt-2.5 flex w-full max-w-[210px] items-center justify-between rounded-xl bg-white/80 px-2.5 py-1.5 text-[11.5px] shadow-2xs">
+              <span className="font-medium text-ink-muted">Earned so far</span>
+              <span className="font-extrabold text-ink tabular-nums">
+                {formatPaise(Math.round((project.payoutPaise * (review ? 100 : progress)) / 100))}
+              </span>
             </div>
           </div>
         )}
