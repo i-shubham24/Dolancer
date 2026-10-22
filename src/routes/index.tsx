@@ -73,6 +73,9 @@ const TrainingPage = lazyWithRetry(() =>
 const LessonPage = lazyWithRetry(() =>
   import("@/features/training/LessonPage").then((m) => ({ default: m.LessonPage })),
 );
+const PayoutsPage = lazyWithRetry(() =>
+  import("@/features/payouts/PayoutsPage").then((m) => ({ default: m.PayoutsPage })),
+);
 const VerificationPage = lazyWithRetry(() =>
   import("@/features/verification/VerificationPage").then((m) => ({
     default: m.VerificationPage,
@@ -177,6 +180,8 @@ export const router = createBrowserRouter([
       { path: "/pool", element: page(<StageGate><PoolPage /></StageGate>) },
       // Earnings now lives in the dashboard's Earnings tab; old links still land there.
       { path: "/earnings", element: <Navigate to="/dashboard?view=earnings" replace /> },
+      // Reached from the Earnings tab, not the sidebar.
+      { path: "/payouts", element: page(<StageGate><PayoutsPage /></StageGate>) },
       // Setup pages open one at a time, each with its step.
       { path: "/verification", element: page(<StageGate><VerificationPage /></StageGate>) },
       { path: "/skills", element: page(<StageGate><SkillsPage /></StageGate>) },

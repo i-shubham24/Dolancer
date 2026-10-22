@@ -63,6 +63,7 @@ export function popupKindFor(templateType: string): PopupKind {
       return "approved";
     case "revision_requested":
     case "verification_rejected":
+    case "payout_failed":
       return "changes";
     case "payment_held":
     case "quote_ready":

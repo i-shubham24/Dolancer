@@ -178,6 +178,7 @@ const STEP_PAGES: { to: string; label: string; step: string }[] = [
 export const LOCKED_PAGES: { to: string; label: string; opensAt: DoerStage; when: string }[] = [
   { to: "/pool", label: "Assigned offers", opensAt: "approved", when: "Opens when every setup step is done" },
   { to: "/messages", label: "Messages", opensAt: "approved", when: "Opens when every setup step is done" },
+  { to: "/payouts", label: "Payouts", opensAt: "approved", when: "Opens when every setup step is done" },
   { to: "/work", label: "My work", opensAt: "working", when: "Opens when you take your first task" },
   { to: "/calendar", label: "Calendar", opensAt: "working", when: "Opens when you take your first task" },
 ];

@@ -81,6 +81,7 @@ export const PAGES: readonly PageSeo[] = [
   page("/guidelines", "Guidelines | Dolancer", ACCOUNT, false),
   page("/dashboard", "Dashboard | Dolancer", ACCOUNT, false),
   page("/pool", "Assigned offers | Dolancer", ACCOUNT, false),
+  page("/payouts", "Payouts | Dolancer", ACCOUNT, false),
   page("/work", "My work | Dolancer", ACCOUNT, false),
   page("/messages", "Messages | Dolancer", ACCOUNT, false),
   page("/calendar", "Calendar | Dolancer", ACCOUNT, false),

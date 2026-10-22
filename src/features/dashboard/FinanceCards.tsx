@@ -1,10 +1,11 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
-import { Wallet } from "lucide-react";
+import { ArrowRight, Wallet } from "lucide-react";
 import { CountUp } from "@/components/common/CountUp";
 import { Panel, PanelHeader } from "@/components/app/ui";
 import { Select } from "@/components/ui/Select";
+import { preloadRoute } from "@/lib/preload";
 import { formatPaise } from "@/lib/paise";
 import { fyLabel, fyOptions, inFinancialYear } from "@/lib/fy";
 import type { LedgerRow } from "@/features/earnings/api";
@@ -164,6 +165,18 @@ export function PayoutHistory({
           ) : null
         }
       />
+      <Link
+        to="/payouts"
+        onMouseEnter={() => preloadRoute("/payouts")}
+        className="group -mt-1 mb-1 flex items-center gap-3 rounded-2xl bg-info-bg px-3.5 py-3 transition-colors hover:bg-info-bg/70 focus-visible:outline-2 focus-visible:outline-primary"
+      >
+        <Wallet className="h-[18px] w-[18px] shrink-0 text-primary" aria-hidden="true" />
+        <span className="min-w-0 flex-1">
+          <span className="block text-[13.5px] font-extrabold text-ink">Payouts</span>
+          <span className="block truncate text-xs font-semibold text-ink-muted">Where your pay goes, payouts on their way and bank references</span>
+        </span>
+        <ArrowRight className="h-4 w-4 shrink-0 text-primary transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+      </Link>
       {loading ? (
         <div className="space-y-2">
           <div className="skeleton h-14 w-full rounded-2xl" />

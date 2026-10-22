@@ -128,6 +128,49 @@ that screens server-side and is the only granted write path, mirroring how
 
 ---
 
+## 6. Payouts page: what the SPA expects
+
+**Severity: high.** The `/payouts` page (reached from the Earnings tab) works in the demo
+only. Pay is sent as soon as the supervisor approves, to UPI or a bank account, India only.
+Live mode calls the pieces below, none of which exist yet. Shapes are in
+`src/features/payouts/api.ts`.
+
+**Reads (doer-scoped, `security_barrier = true`):**
+
+- `payout_methods_doer`: `id, method_type ('upi'|'bank'), vpa_masked, bank_name,
+  account_last4, holder_name, is_primary, active_from`. At most one of each type.
+- `payouts_doer`: `id, project_id, amount_paise, status, method_type, method_display,
+  utr, approved_at, status_event_at`. Status adds `rerouted` (UPI failed, paid to the bank)
+  to the existing `queued | processing | paid | failed`. This also closes section 2.
+
+**Writes:**
+
+- `check-payout-account` edge function: for UPI, a VPA lookup; for a bank account, a ₹1
+  fund-account validation. Returns `{ holderName }`. The SPA compares it with the profile
+  name; the server must compare it with the verified PAN name too.
+- `send-payout-code` edge function: a one-time code to the doer's phone.
+- `set-payout-method` (exists): now also takes `code` and `replaces`. Must check the code,
+  allow one method per type, and set `active_from = now() + 24 hours` unless it is the
+  doer's first method. Email the doer whenever details change.
+- `set_primary_payout_method(p_id)` RPC.
+
+**Sending:**
+
+- On approval (the `release_doer` ledger leg), create the RazorpayX payout right away:
+  UPI first if it is primary and active, else the bank. Idempotency key = ledger entry id,
+  so a task can never be paid twice.
+- Verify the webhook signature, then update status and `utr`. On a UPI failure, retry once
+  to the bank account and mark `rerouted`. Notify with `payout_released` or the new
+  `payout_failed` template.
+- Only methods past `active_from` may receive money. Hold payouts above an admin-set
+  amount for a second person to approve.
+
+**Not done yet, on purpose:** TDS stays as it is until the section and rate are confirmed.
+The PAN number must be stored server side (see the verification note: `submit_kyc` takes
+only the two file references today) before TDS can be filed.
+
+---
+
 ## Smaller notes
 
 - `projects_doer` lost `security_barrier = true` when `0166` recreated it; `0128` had it.

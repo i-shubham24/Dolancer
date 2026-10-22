@@ -40,6 +40,12 @@ export const qk = {
     ledger: (cursor?: string | null) => ["earnings", "ledger", cursor ?? null] as const,
   },
 
+  payouts: {
+    all: () => ["payouts"] as const,
+    list: () => ["payouts", "list"] as const,
+    methods: () => ["payouts", "methods"] as const,
+  },
+
   kyc: () => ["kyc"] as const,
 
   skills: {

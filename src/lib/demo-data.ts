@@ -1,5 +1,6 @@
 import type { ChatAttachment, ChatMessage } from "@/features/chat/api";
 import type { LedgerRow } from "@/features/earnings/api";
+import type { Payout, PayoutMethod } from "@/features/payouts/api";
 import type { SkillOption } from "@/features/skills/api";
 import type { Ticket, TicketMessage } from "@/features/tickets/api";
 import type { LessonDetail, LessonQuestion } from "@/features/training/api";
@@ -208,6 +209,47 @@ const ledger: LedgerRow[] = closedProjects.map((project) => ({
   createdAt: project.updatedAt,
 }));
 
+/**
+ * Where the demo doer's pay goes: UPI first, the bank account from verification as
+ * the backup.
+ */
+const payoutMethods: PayoutMethod[] = [
+  { id: "method-upi", kind: "upi", label: "shubham@okhdfcbank", last4: null, holderName: "SHUBHAM", primary: true, activeFrom: null },
+  { id: "method-bank", kind: "bank", label: "HDFC Bank", last4: "4521", holderName: "SHUBHAM", primary: false, activeFrom: null },
+];
+
+/**
+ * One payout per released ledger row. The newest was approved a few minutes ago and
+ * is still on its way, so the tracker has something to show; one older UPI payout
+ * failed and went to the bank instead.
+ */
+const payouts: Payout[] = [...ledger]
+  .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+  .map((row, index) => {
+    if (index === 0) {
+      const now = new Date(seededAt - 3 * 60_000).toISOString();
+      row.createdAt = now;
+      const project = closedProjects.find((item) => item.id === row.projectId);
+      if (project) project.updatedAt = now;
+    }
+    const upi = index % 2 === 0;
+    const status: Payout["status"] = index === 0 ? "sending" : index === 3 ? "rerouted" : "paid";
+    const toBank = status === "rerouted" || !upi;
+    // Spread across the day, so the rows do not all show the same time.
+    const settledAt = status === "sending" ? null : new Date(new Date(row.createdAt).getTime() + (4 + index * 137) * 60_000).toISOString();
+    return {
+      id: row.id,
+      projectId: row.projectId,
+      amountPaise: row.amountPaise,
+      status,
+      methodKind: toBank ? "bank" : "upi",
+      methodName: toBank ? "HDFC Bank ••4521" : "shubham@okhdfcbank",
+      utr: status === "sending" ? null : String(428715903362 - index * 1_904_431_117),
+      approvedAt: row.createdAt,
+      settledAt,
+    };
+  });
+
 const grossPaise = ledger.reduce((sum, row) => sum + row.amountPaise, 0);
 // A flat tenth stands in for TDS, which is really worked out across the financial
 // year. What matters on screen is that gross, withheld and net reconcile.
@@ -362,6 +404,8 @@ interface DemoState {
   pool: PoolOffer[];
   earnings: EarningsSummary;
   ledger: LedgerRow[];
+  payoutMethods: PayoutMethod[];
+  payouts: Payout[];
   skills: SkillOption[];
   lessons: DemoLesson[];
   kyc: KycStatus;
@@ -393,6 +437,8 @@ export const demo: DemoState = {
 
   earnings: { grossPaise, taxWithheldPaise, netPaise: grossPaise - taxWithheldPaise },
   ledger,
+  payoutMethods,
+  payouts,
 
   skills: seedSkills(),
 
