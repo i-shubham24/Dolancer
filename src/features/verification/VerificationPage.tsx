@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -32,7 +32,8 @@ import { qk } from "@/lib/query-keys";
 import { updateProfileBasics } from "@/features/auth/api";
 import { useProfile } from "@/features/dashboard/queries";
 import type { KycStatus } from "@/types/database";
-import { IFSC_PATTERN, PAN_PATTERN, fetchKycStatus, sameName, submitKyc, validateIdentityFile } from "./api";
+import { IFSC_PATTERN, PAN_PATTERN, fetchKycStatus, prepareIdentityFile, sameName, submitKyc } from "./api";
+import { NAME_PATTERN, cleanName } from "@/lib/input-safety";
 
 const STEPS: { id: string; label: string; icon: LucideIcon }[] = [
   { id: "profile", label: "Profile", icon: UserRound },
@@ -41,7 +42,8 @@ const STEPS: { id: string; label: string; icon: LucideIcon }[] = [
   { id: "review", label: "Review", icon: CheckCircle2 },
 ];
 
-const NAME_PATTERN = /^[\p{L}\s.'-]{3,100}$/u;
+/** A name as on the PAN card: the shared name rule, 3 to 100 characters. */
+const nameOk = (value: string) => value.length >= 3 && value.length <= 100 && NAME_PATTERN.test(value);
 
 /** Ten digits starting 6 to 9, from whatever the doer typed or had saved. */
 function tenDigits(raw: string | null | undefined): string {
@@ -235,7 +237,7 @@ function StatusCard({ status }: { status: KycStatus }) {
       </ol>
       {approved ? (
         <Button asChild>
-          <Link to="/home">
+          <Link to="/dashboard">
             Back to your steps
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
@@ -320,7 +322,7 @@ export function VerificationPage() {
   });
 
   const profileName = fullName.trim();
-  const nameError = profileName && !NAME_PATTERN.test(profileName) ? "Use letters and spaces only, as on your PAN card." : null;
+  const nameError = profileName && !nameOk(profileName) ? "Use letters and spaces only, as on your PAN card." : null;
   const mobileError = mobile && !/^[6-9]\d{9}$/.test(mobile) ? "Enter a 10 digit mobile number." : null;
   const profileReady = Boolean(photo && !photoError && profileName.length >= 3 && !nameError && /^[6-9]\d{9}$/.test(mobile));
 
@@ -343,10 +345,27 @@ export function VerificationPage() {
     window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
   }
 
-  function pickFile(file: File | null, set: (file: File | null) => void, setError: (error: string | null) => void) {
-    const problem = file ? validateIdentityFile(file) : null;
-    setError(problem);
-    set(problem ? null : file);
+  // The latest pick for each upload box. Checking a photo takes a moment, so a
+  // slower earlier pick must not land after a newer one.
+  const latestPick = useRef<Record<string, number>>({});
+
+  async function pickFile(box: string, file: File | null, set: (file: File | null) => void, setError: (error: string | null) => void) {
+    const ticket = (latestPick.current[box] ?? 0) + 1;
+    latestPick.current[box] = ticket;
+    if (!file) {
+      setError(null);
+      set(null);
+      return;
+    }
+    const prepared = await prepareIdentityFile(file);
+    if (latestPick.current[box] !== ticket) return;
+    if ("problem" in prepared) {
+      setError(prepared.problem);
+      set(null);
+    } else {
+      setError(null);
+      set(prepared.file);
+    }
   }
 
   async function continueFromProfile() {
@@ -417,11 +436,11 @@ export function VerificationPage() {
                     round
                     file={photo}
                     error={photoError}
-                    onPick={(file) => pickFile(file, setPhoto, setPhotoError)}
+                    onPick={(file) => void pickFile("photo", file, setPhoto, setPhotoError)}
                   />
                   <div className="grid gap-4 sm:grid-cols-2">
                     <Field id="full-name" label="Full name, as on PAN" error={nameError}>
-                      <Input id="full-name" value={fullName} onChange={(event) => setFullName(event.target.value)} autoComplete="name" placeholder="Shubham Kumar" />
+                      <Input id="full-name" value={fullName} maxLength={100} onChange={(event) => setFullName(cleanName(event.target.value))} autoComplete="name" placeholder="Shubham Kumar" />
                     </Field>
                     <Field id="mobile" label="Mobile number" error={mobileError}>
                       <div className="flex items-stretch gap-2">
@@ -479,7 +498,7 @@ export function VerificationPage() {
                     icon={IdCard}
                     file={panPhoto}
                     error={panPhotoError}
-                    onPick={(file) => pickFile(file, setPanPhoto, setPanPhotoError)}
+                    onPick={(file) => void pickFile("pan", file, setPanPhoto, setPanPhotoError)}
                   />
                   <TickBox checked={panNameOk} onChange={setPanNameOk}>
                     The name on my PAN card is <span className="text-ink">{profileName}</span>
@@ -506,7 +525,7 @@ export function VerificationPage() {
                     error={holderError}
                     ok={holder.trim() && holderMatches ? "Matches your profile name" : null}
                   >
-                    <Input id="holder" value={holder} onChange={(event) => setHolder(event.target.value)} autoComplete="off" />
+                    <Input id="holder" value={holder} maxLength={100} onChange={(event) => setHolder(cleanName(event.target.value))} autoComplete="off" />
                   </Field>
                   <div className="grid gap-4 sm:grid-cols-2">
                     <Field id="account" label="Account number" error={accountError}>

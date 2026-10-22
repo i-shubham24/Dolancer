@@ -5,7 +5,6 @@ import {
   LayoutDashboard,
   Layers,
   Briefcase,
-  House,
   MessageCircle,
   ScrollText,
   CalendarDays,
@@ -35,8 +34,7 @@ interface Action {
 }
 
 const ACTIONS: Action[] = [
-  { id: "home", label: "Home", hint: "Setup", to: "/home", icon: House, keywords: "home welcome setup steps start guidelines" },
-  { id: "dashboard", label: "Dashboard", hint: "Overview", to: "/dashboard", icon: LayoutDashboard, keywords: "overview tasks finances" },
+  { id: "dashboard", label: "Dashboard", hint: "Overview", to: "/dashboard", icon: LayoutDashboard, keywords: "overview tasks finances home welcome setup steps start" },
   { id: "guidelines", label: "Guidelines", hint: "Rules", to: "/guidelines", icon: ScrollText, keywords: "guidelines rules terms conduct" },
   { id: "pool", label: "View assigned offers", hint: "Accept work", to: "/pool", icon: Layers, keywords: "assigned offers accept tasks projects" },
   { id: "calendar", label: "Calendar", hint: "Dates", to: "/calendar", icon: CalendarDays, keywords: "calendar deadlines dates reminders schedule week month" },

@@ -33,6 +33,8 @@ import { WorkList } from "./WorkList";
 import { OffersCard } from "./OffersCard";
 import { TaskPeek } from "./TaskPeek";
 import { gridMotion } from "@/components/app/card-styles";
+import { useDoerStage } from "@/features/home/steps";
+import { SetupDashboard } from "@/features/home/SetupDashboard";
 
 function firstName(fullName: string | null | undefined): string {
   const name = fullName?.trim().split(/\s+/)[0];
@@ -50,7 +52,7 @@ function summary(active: DoerProject[], next: DoerProject | null, unlocked: bool
   if (active.length === 0) {
     return unlocked
       ? "No tasks right now. Offers that match your skills show up here."
-      : "Finish your setup on Home to start getting offers.";
+      : "Finish your setup to start getting offers.";
   }
   const review = active.filter((p) => p.status === "in_review" || p.status === "delivered").length;
   let text = `You have ${active.length} task${active.length === 1 ? "" : "s"}`;
@@ -115,6 +117,17 @@ function ViewSwitch({ value, onChange }: { value: DashView; onChange: (view: Das
 
 
 /**
+ * Before the first task the dashboard walks the doer through setup, one step at a
+ * time. From the first task on it is the working dashboard below.
+ */
+export function DashboardPage() {
+  const { stage, setup, loading } = useDoerStage();
+  if (loading) return <div className="skeleton h-[420px] w-full rounded-[20px]" aria-busy="true" />;
+  if (stage !== "working") return <SetupDashboard stage={stage} setup={setup} />;
+  return <WorkDashboard />;
+}
+
+/**
  * The doer's home.
  *
  * A bento of the things a doer checks every day, in the order they matter: what is
@@ -122,7 +135,7 @@ function ViewSwitch({ value, onChange }: { value: DashView; onChange: (view: Das
  * is one the database can prove. There is no pending balance, because the doer
  * cannot read payout status, and the client never appears in any form.
  */
-export function DashboardPage() {
+function WorkDashboard() {
   const reduceMotion = useReducedMotion();
   const profile = useProfile();
   const gate = useGateState();
@@ -155,6 +168,11 @@ export function DashboardPage() {
     [projects.data],
   );
   const upNext = useMemo(() => pickUpNext(active), [active]);
+  const inReview = useMemo(
+    () => active.filter((p) => p.status === "in_review" || p.status === "delivered").length,
+    [active],
+  );
+
   const dueThisWeek = useMemo(() => {
     const end = addDays(startOfWeek(new Date()), 7).getTime();
     return active
@@ -223,7 +241,7 @@ export function DashboardPage() {
             animate="show"
             exit={reduceMotion ? undefined : { opacity: 0, y: 8, transition: { duration: 0.15 } }}
           >
-            <TaskStats activeCount={active.length} activeLoading={projects.isLoading} dueThisWeek={dueThisWeek} />
+            <TaskStats activeCount={active.length} inReviewCount={inReview} activeLoading={projects.isLoading} dueThisWeek={dueThisWeek} />
             <UpNextCard project={upNext} loading={projects.isLoading} unlocked={unlocked} />
             <WeekCard events={calendar.events} loading={calendar.isLoading} />
             <WorkList

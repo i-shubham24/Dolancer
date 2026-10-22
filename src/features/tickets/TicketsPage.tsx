@@ -17,6 +17,7 @@ import { toUserError } from "@/lib/user-error";
 import { formatDate } from "@/lib/datetime";
 import { fetchTickets, openTicket, TICKET_CATEGORIES } from "./api";
 import { STATUS_TONE, topicOf } from "./topics";
+import { cleanText } from "@/lib/input-safety";
 
 export function TicketsPage() {
   const reduceMotion = useReducedMotion();
@@ -136,7 +137,7 @@ export function TicketsPage() {
 
               <div className="space-y-1.5">
                 <Label htmlFor="subject" className="text-xs text-ink-2">Subject</Label>
-                <Input id="subject" value={subject} maxLength={120} onChange={(event) => setSubject(event.target.value)} placeholder="A short summary" />
+                <Input id="subject" value={subject} maxLength={120} onChange={(event) => setSubject(cleanText(event.target.value, 120))} placeholder="A short summary" />
               </div>
               <div className="space-y-1.5">
                 <Label htmlFor="body" className="text-xs text-ink-2">Details</Label>
@@ -145,7 +146,7 @@ export function TicketsPage() {
                   rows={5}
                   value={body}
                   maxLength={4000}
-                  onChange={(event) => setBody(event.target.value)}
+                  onChange={(event) => setBody(cleanText(event.target.value, 4000))}
                   placeholder="What happened, and what you expected instead."
                 />
               </div>

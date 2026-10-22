@@ -3,6 +3,7 @@ import { callRpc, unwrap } from "@/lib/rpc";
 import { selectColumns } from "@/lib/select";
 import { BUCKETS } from "@/lib/constants";
 import { demo, demoApproveKycSoon, demoRespond, isDemo } from "@/lib/demo-data";
+import { checkFileContent, redrawImage } from "@/lib/input-safety";
 import type { KycRow, KycStatus } from "@/types/database";
 
 export const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
@@ -38,6 +39,25 @@ export function validateIdentityFile(file: File): string | null {
   return null;
 }
 
+/**
+ * Everything a picked file goes through before it is kept: the name and size
+ * check above, then its real content, then photos are redrawn as a fresh JPEG so
+ * only the picture itself is sent. Returns the file to keep, or a problem to show.
+ */
+export async function prepareIdentityFile(file: File): Promise<{ file: File } | { problem: string }> {
+  const quick = validateIdentityFile(file);
+  if (quick) return { problem: quick };
+  try {
+    const content = await checkFileContent(file, ["jpeg", "png", "webp", "pdf"]);
+    if (content) return { problem: content };
+    if (file.type === "application/pdf") return { file };
+    return { file: await redrawImage(file) };
+  } catch {
+    // The file could not be read at all, for example a cloud file that never downloaded.
+    return { problem: "Could not read that file. Save it to your phone and try again." };
+  }
+}
+
 export async function fetchKycStatus(): Promise<KycStatus> {
   if (isDemo()) return demoRespond(() => demo.kyc);
 
@@ -66,7 +86,8 @@ function extensionFor(file: File): string {
  * insert permission but no read policy, so they cannot fetch back what they sent.
  */
 async function uploadIdentityFile(file: File): Promise<string> {
-  const problem = validateIdentityFile(file);
+  // Checked again here, so nothing reaches storage without the content check.
+  const problem = validateIdentityFile(file) ?? (await checkFileContent(file, ["jpeg", "png", "webp", "pdf"]));
   if (problem) throw new Error(problem);
 
   const objectPath = `${crypto.randomUUID()}.${extensionFor(file)}`;

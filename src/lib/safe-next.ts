@@ -8,7 +8,7 @@
  * raw value through here first.
  */
 export function safeNext(raw: string | null | undefined): string {
-  // /start sends a doer to Home until setup is finished, then to the dashboard.
+  // /start lands on the dashboard, which shows setup until the first task.
   const fallback = "/start";
   if (!raw) return fallback;
   const value = raw.trim();

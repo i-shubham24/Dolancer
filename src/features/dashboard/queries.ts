@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { qk } from "@/lib/query-keys";
 import { useAuth } from "@/providers/AuthProvider";
 import { useAvailabilityStore, isAtCap } from "@/stores/useAvailabilityStore";
@@ -22,6 +22,9 @@ export function useGateState() {
   return useQuery({
     queryKey: [...qk.gate(), role],
     queryFn: () => fetchGateState(role),
+    // A token refresh can change the role in the key. Keeping the last answer meanwhile
+    // stops locked pages and the setup view from flashing back to loading.
+    placeholderData: keepPreviousData,
   });
 }
 

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { NAME_PATTERN } from "@/lib/input-safety";
 
 /**
  * Common schema validations for the frontend to prevent malformed submissions
@@ -22,7 +23,7 @@ export const profileBasicsSchema = z.object({
     .string()
     .min(2, "Name must be at least 2 characters.")
     .max(100, "Name is too long.")
-    .regex(/^[\p{L}\s'-]+$/u, "Name contains invalid characters."),
+    .regex(NAME_PATTERN, "Name contains invalid characters."),
   whatsapp: z
     .string()
     .max(20, "WhatsApp number is too long.")

@@ -11,6 +11,7 @@ import { supabase } from "@/lib/supabase";
 import { safeNext } from "@/lib/safe-next";
 import { toUserError } from "@/lib/user-error";
 import { isDemo } from "@/lib/demo-data";
+import { cleanName, cleanPhone } from "@/lib/input-safety";
 
 /**
  * The one true gate before the dashboard, and it exists because country is set once
@@ -115,7 +116,8 @@ export function CountryOnboardingPage() {
               required
               autoComplete="name"
               value={fullName}
-              onChange={(event) => setFullName(event.target.value)}
+              maxLength={100}
+              onChange={(event) => setFullName(cleanName(event.target.value))}
               placeholder="As it appears on your ID"
             />
           </div>
@@ -154,7 +156,8 @@ export function CountryOnboardingPage() {
               type="tel"
               autoComplete="tel"
               value={whatsapp}
-              onChange={(event) => setWhatsapp(event.target.value)}
+              maxLength={20}
+              onChange={(event) => setWhatsapp(cleanPhone(event.target.value))}
               placeholder="+91 00000 00000"
             />
             <p className="text-xs text-ink-muted">

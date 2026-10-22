@@ -14,6 +14,7 @@ import { toUserError } from "@/lib/user-error";
 import { useSkillExtrasStore, type CustomSkill } from "@/stores/useSkillExtrasStore";
 import { fetchSkills, addSkill, removeSkill, type SkillOption } from "./api";
 import { SKILL_AREAS, areaLook } from "./catalog";
+import { cleanText } from "@/lib/input-safety";
 
 /** One row in the search list: a listed skill, or a suggestion to add as the doer's own. */
 interface Match {
@@ -252,7 +253,7 @@ function AddOwnInline({ area, onAdd }: { area: string; onAdd: (name: string) => 
     >
       <input
         value={value}
-        onChange={(event) => setValue(event.target.value)}
+        onChange={(event) => setValue(cleanText(event.target.value, 60))}
         maxLength={60}
         placeholder="Not listed? Add your own"
         aria-label={`Add your own skill in ${area}`}

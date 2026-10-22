@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { NavLink, Outlet, Link, useLocation } from "react-router-dom";
 import { ScrollToTop } from "@/routes/ScrollToTop";
 import {
-  House,
   LayoutDashboard,
   Layers,
   Briefcase,
@@ -17,6 +16,8 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
+  Lock,
 } from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion, type Variants } from "framer-motion";
 import { cn } from "@/lib/cn";
@@ -32,13 +33,12 @@ import { useNotificationPopups } from "@/features/notifications/useNotificationP
 import { PopupStack } from "@/features/notifications/PopupStack";
 import { usePopupStore } from "@/stores/usePopupStore";
 import { useUnreadChats } from "@/features/messages/queries";
-import { useHomeVisible } from "@/features/home/steps";
+import { LOCKED_PAGES, useDoerStage } from "@/features/home/steps";
 import { Logo } from "@/components/ui/Logo";
 
 type NavEntry = { to: string; label: string; icon: typeof LayoutDashboard; isNew?: boolean };
 
 const NAV: NavEntry[] = [
-  { to: "/home", label: "Home", icon: House },
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/work", label: "My work", icon: Briefcase },
   { to: "/messages", label: "Messages", icon: MessageCircle, isNew: true },
@@ -111,7 +111,7 @@ function NavItem({
           {!collapsed && badge ? (
             <span className="ml-auto rounded-full bg-primary px-1.5 py-px text-[10.5px] font-extrabold text-white">
               {badge}
-              <span className="sr-only">{to === "/home" ? " steps left" : " unread"}</span>
+              <span className="sr-only"> unread</span>
             </span>
           ) : null}
           {!collapsed && !badge && isNew ? (
@@ -142,8 +142,19 @@ function SidebarContent({
   const profile = useProfile();
   const unread = useUnreadCount();
   const unreadChats = useUnreadChats();
-  const home = useHomeVisible();
-  const nav = home.visible ? NAV : NAV.filter((item) => item.to !== "/home");
+  const { isLocked, isLockable, lockFor, loading: stageLoading } = useDoerStage();
+  // Until the stage is known, pages that might be locked are left out, so the menu
+  // does not show them and then fold them away.
+  const shown = (item: NavEntry) => !isLocked(item.to) && !(stageLoading && isLockable(item.to));
+  const nav = NAV.filter(shown);
+  const secondary = SECONDARY.filter(shown);
+  // Listed in the order they open: the setup pages, then the rest.
+  const locked = [
+    ...SECONDARY.filter((item) => isLocked(item.to)),
+    ...LOCKED_PAGES.map((page) => NAV.find((item) => item.to === page.to && isLocked(item.to))).filter(
+      (item): item is NavEntry => Boolean(item),
+    ),
+  ];
 
   const reduceMotion = useReducedMotion();
   const name = profile.data?.full_name?.trim() || user?.email || "Your account";
@@ -224,9 +235,7 @@ function SidebarContent({
                     ? unreadChats
                     : item.to === "/notifications"
                       ? (unread > 0 ? unread : undefined)
-                      : item.to === "/home" && !home.loading
-                        ? home.remaining
-                        : undefined
+                      : undefined
                 }
                 onNavigate={onNavigate}
                 collapsed={collapsed}
@@ -234,6 +243,8 @@ function SidebarContent({
             </motion.div>
           ))}
         </motion.nav>
+
+        {locked.length > 0 ? <LockedPages pages={locked} whenFor={(to) => lockFor(to)?.when} collapsed={collapsed} /> : null}
 
         <div className="mx-2 my-2.5 h-px bg-line-subtle/50" />
 
@@ -244,7 +255,7 @@ function SidebarContent({
           initial={reduceMotion ? false : "hidden"}
           animate="show"
         >
-          {SECONDARY.map((item) => (
+          {secondary.map((item) => (
             <motion.div key={item.to} variants={navEntry}>
               <NavItem {...item} onNavigate={onNavigate} collapsed={collapsed} />
             </motion.div>
@@ -256,6 +267,77 @@ function SidebarContent({
       <div className="shrink-0 pt-3 border-t border-line-subtle/60 mt-1">
         <ProfileMenu name={name} initial={initial} unread={unread} collapsed={collapsed} onNavigate={onNavigate} />
       </div>
+    </div>
+  );
+}
+
+/**
+ * The pages that open later, folded into one row so a new doer is not faced with a
+ * menu of empty pages. Opening it lists each page and when it opens.
+ */
+function LockedPages({
+  pages,
+  whenFor,
+  collapsed,
+}: {
+  pages: NavEntry[];
+  whenFor: (to: string) => string | undefined;
+  collapsed?: boolean;
+}) {
+  const [open, setOpen] = useState(false);
+  const names = pages.map((page) => page.label.toLowerCase()).join(", ");
+
+  if (collapsed) {
+    return (
+      <div className="flex justify-center" title={`${pages.length} more pages open later: ${names}`}>
+        <span className="flex h-10 w-10 items-center justify-center rounded-[14px] border border-dashed border-line-card text-ink-3">
+          <Lock className="h-4 w-4" aria-hidden="true" />
+          <span className="sr-only">{`${pages.length} more pages open later: ${names}`}</span>
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-[14px] border border-dashed border-line-card">
+      <button
+        type="button"
+        onClick={() => setOpen((value) => !value)}
+        aria-expanded={open}
+        className="flex w-full items-center gap-3 rounded-[14px] px-3 py-2.5 text-left transition-colors hover:bg-white/70 focus-visible:outline-2 focus-visible:outline-primary"
+      >
+        <Lock className="h-[18px] w-[18px] shrink-0 text-ink-3" aria-hidden="true" />
+        <span className="min-w-0 flex-1">
+          <span className="block text-[13px] font-bold text-ink-2">
+            {pages.length} more {pages.length === 1 ? "page" : "pages"}
+          </span>
+          <span className="block truncate text-[11.5px] font-semibold text-ink-3">{names.charAt(0).toUpperCase() + names.slice(1)}</span>
+        </span>
+        <ChevronDown className={cn("h-4 w-4 shrink-0 text-ink-3 transition-transform", open && "rotate-180")} aria-hidden="true" />
+      </button>
+      <AnimatePresence initial={false}>
+        {open ? (
+          <motion.ul
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="overflow-hidden px-3"
+          >
+            {pages.map((page) => (
+              <li key={page.to} className="flex items-start gap-3 border-t border-line-subtle/70 py-2.5">
+                <page.icon className="mt-0.5 h-4 w-4 shrink-0 text-ink-3" aria-hidden="true" />
+                <span className="min-w-0">
+                  <span className="block text-[12.5px] font-bold text-ink-2">{page.label}</span>
+                  <span className="block text-[11.5px] font-semibold text-ink-3">
+                    {whenFor(page.to)}
+                  </span>
+                </span>
+              </li>
+            ))}
+          </motion.ul>
+        ) : null}
+      </AnimatePresence>
     </div>
   );
 }

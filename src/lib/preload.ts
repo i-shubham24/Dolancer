@@ -8,7 +8,6 @@
  * split points. Calls are safe to repeat; loaded chunks resolve from cache.
  */
 const LOADERS: Record<string, () => Promise<unknown>> = {
-  "/home": () => import("@/features/home/HomePage"),
   "/guidelines": () => import("@/features/home/GuidelinesPage"),
   "/work": () => import("@/features/work/WorkPage"),
   "/messages": () => import("@/features/messages/MessagesPage"),

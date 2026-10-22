@@ -39,6 +39,7 @@ import { toUserError } from "@/lib/user-error";
 import { enrollMfaTotp, verifyMfaChallenge, unenrollMfa, listMfaFactors, updateProfileBasics } from "@/features/auth/api";
 import { profileBasicsSchema, applicationBioSchema, validateOrThrow } from "@/lib/validations";
 import type { DoerApplicationRow, RatingSummaryRow } from "@/types/database";
+import { cleanName, cleanPhone, cleanText } from "@/lib/input-safety";
 
 /**
  * my_rating_summary returns the level the DATABASE computes, and we render exactly
@@ -234,7 +235,8 @@ export function ProfilePage() {
               id="bio"
               rows={4}
               value={bio}
-              onChange={(event) => setBio(event.target.value)}
+              maxLength={2000}
+              onChange={(event) => setBio(cleanText(event.target.value, 2000))}
               placeholder="I have written technical docs for six years, mostly for developer tools..."
             />
             <Button className="w-full sm:w-auto sm:self-end" disabled={bio.trim().length < 20 || apply.isPending} onClick={() => apply.mutate()}>
@@ -344,7 +346,7 @@ export function ProfilePage() {
           <div className="grid gap-4 md:grid-cols-3">
             <div className="space-y-1.5">
               <Label htmlFor="fullName" className="text-xs text-ink-2">Full name</Label>
-              <Input id="fullName" value={fullName} onChange={(event) => setFullName(event.target.value)} autoComplete="name" />
+              <Input id="fullName" value={fullName} maxLength={100} onChange={(event) => setFullName(cleanName(event.target.value))} autoComplete="name" />
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="whatsapp" className="text-xs text-ink-2">WhatsApp number</Label>
@@ -352,7 +354,8 @@ export function ProfilePage() {
                 id="whatsapp"
                 type="tel"
                 value={whatsapp}
-                onChange={(event) => setWhatsapp(event.target.value)}
+                maxLength={20}
+                onChange={(event) => setWhatsapp(cleanPhone(event.target.value))}
                 autoComplete="tel"
                 placeholder="+91 00000 00000"
               />

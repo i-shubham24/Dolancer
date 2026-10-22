@@ -10,6 +10,7 @@ import { useAuth } from "@/providers/AuthProvider";
 import { toUserError } from "@/lib/user-error";
 import { openTicket, TICKET_CATEGORIES } from "@/features/tickets/api";
 import { CONTACT } from "./content";
+import { cleanName, cleanText } from "@/lib/input-safety";
 
 /**
  * One form, two honest destinations.
@@ -94,7 +95,8 @@ export function ContactForm() {
               <Input
                 id="contact-name"
                 value={name}
-                onChange={(event) => setName(event.target.value)}
+                maxLength={100}
+                onChange={(event) => setName(cleanName(event.target.value))}
                 autoComplete="name"
                 required
               />
@@ -105,7 +107,8 @@ export function ContactForm() {
                 id="contact-email"
                 type="email"
                 value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                maxLength={254}
+                onChange={(event) => setEmail(cleanText(event.target.value, 254).trim())}
                 autoComplete="email"
                 required
               />
@@ -134,7 +137,7 @@ export function ContactForm() {
             id="contact-subject"
             value={subject}
             maxLength={120}
-            onChange={(event) => setSubject(event.target.value)}
+            onChange={(event) => setSubject(cleanText(event.target.value, 120))}
             placeholder="A short summary"
             required
           />
@@ -147,7 +150,7 @@ export function ContactForm() {
             rows={5}
             value={message}
             maxLength={4000}
-            onChange={(event) => setMessage(event.target.value)}
+            onChange={(event) => setMessage(cleanText(event.target.value, 4000))}
             placeholder="Tell us what is going on."
             required
           />

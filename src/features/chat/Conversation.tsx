@@ -13,6 +13,7 @@ import { useAuth } from "@/providers/AuthProvider";
 import { useThreadStream } from "@/lib/realtime";
 import { useChatReadStore } from "@/stores/useChatReadStore";
 import { fetchMessages, sendMessage, fetchAttachments, signedUrlFor } from "./api";
+import { cleanText } from "@/lib/input-safety";
 
 /**
  * One conversation: a header, the messages, and the composer. The task page and the
@@ -211,7 +212,7 @@ export function Conversation({
           <textarea
             rows={1}
             value={draft}
-            onChange={(event) => setDraft(event.target.value)}
+            onChange={(event) => setDraft(cleanText(event.target.value, MAX_MESSAGE_LENGTH + 100))}
             onKeyDown={(event) => {
               // Enter sends on a pointer device; Shift+Enter makes a newline. On touch
               // the on-screen keyboard's Enter should insert a newline, so this only

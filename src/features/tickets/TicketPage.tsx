@@ -17,6 +17,7 @@ import { formatDayRelative, formatTime } from "@/features/calendar/dates";
 import { useAuth } from "@/providers/AuthProvider";
 import { fetchTicket, fetchTicketMessages, replyToTicket } from "./api";
 import { STATUS_TONE, topicOf } from "./topics";
+import { cleanText } from "@/lib/input-safety";
 
 /** One support ticket, as a conversation with the support team. */
 export function TicketPage() {
@@ -180,7 +181,7 @@ export function TicketPage() {
               <textarea
                 rows={1}
                 value={draft}
-                onChange={(event) => setDraft(event.target.value)}
+                onChange={(event) => setDraft(cleanText(event.target.value, 4000))}
                 onKeyDown={(event) => {
                   if (event.key === "Enter" && !event.shiftKey && window.matchMedia("(pointer: fine)").matches) {
                     event.preventDefault();

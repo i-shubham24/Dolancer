@@ -23,14 +23,11 @@ const AuthLayout = lazyWithRetry(() =>
 const SignInPage = lazyWithRetry(() =>
   import("@/features/auth/SignInPage").then((m) => ({ default: m.SignInPage })),
 );
-const HomePage = lazyWithRetry(() =>
-  import("@/features/home/HomePage").then((m) => ({ default: m.HomePage })),
-);
 const GuidelinesPage = lazyWithRetry(() =>
   import("@/features/home/GuidelinesPage").then((m) => ({ default: m.GuidelinesPage })),
 );
-const StartRedirect = lazyWithRetry(() =>
-  import("@/features/home/StartRedirect").then((m) => ({ default: m.StartRedirect })),
+const StageGate = lazyWithRetry(() =>
+  import("@/features/home/StageGate").then((m) => ({ default: m.StageGate })),
 );
 const DashboardPage = lazyWithRetry(() =>
   import("@/features/dashboard/DashboardPage").then((m) => ({ default: m.DashboardPage })),
@@ -167,21 +164,24 @@ export const router = createBrowserRouter([
     ),
     errorElement: <RouteError />,
     children: [
-      { path: "/start", element: page(<StartRedirect />) },
-      { path: "/home", element: page(<HomePage />) },
+      // Setup now lives on the dashboard. Sign-in and old Home links land there.
+      { path: "/start", element: <Navigate to="/dashboard" replace /> },
+      { path: "/home", element: <Navigate to="/dashboard" replace /> },
       { path: "/guidelines", element: page(<GuidelinesPage />) },
       { path: "/dashboard", element: page(<DashboardPage />) },
-      { path: "/work", element: page(<WorkPage />) },
-      { path: "/work/:id", element: page(<WorkbenchPage />) },
-      { path: "/messages/:threadId?", element: page(<MessagesPage />) },
-      { path: "/calendar", element: page(<CalendarPage />) },
-      { path: "/pool", element: page(<PoolPage />) },
+      // Pages that stay empty until setup is done or the doer takes a first task.
+      { path: "/work", element: page(<StageGate><WorkPage /></StageGate>) },
+      { path: "/work/:id", element: page(<StageGate><WorkbenchPage /></StageGate>) },
+      { path: "/messages/:threadId?", element: page(<StageGate><MessagesPage /></StageGate>) },
+      { path: "/calendar", element: page(<StageGate><CalendarPage /></StageGate>) },
+      { path: "/pool", element: page(<StageGate><PoolPage /></StageGate>) },
       // Earnings now lives in the dashboard's Earnings tab; old links still land there.
       { path: "/earnings", element: <Navigate to="/dashboard?view=earnings" replace /> },
-      { path: "/verification", element: page(<VerificationPage />) },
-      { path: "/skills", element: page(<SkillsPage />) },
-      { path: "/training", element: page(<TrainingPage />) },
-      { path: "/training/:id", element: page(<LessonPage />) },
+      // Setup pages open one at a time, each with its step.
+      { path: "/verification", element: page(<StageGate><VerificationPage /></StageGate>) },
+      { path: "/skills", element: page(<StageGate><SkillsPage /></StageGate>) },
+      { path: "/training", element: page(<StageGate><TrainingPage /></StageGate>) },
+      { path: "/training/:id", element: page(<StageGate><LessonPage /></StageGate>) },
       { path: "/notifications", element: page(<NotificationsPage />) },
       { path: "/profile", element: page(<ProfilePage />) },
       { path: "/refer", element: page(<ReferPage />) },

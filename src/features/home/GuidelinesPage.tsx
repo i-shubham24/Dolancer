@@ -76,7 +76,7 @@ export function GuidelinesPage() {
 
   return (
     <div className="mx-auto max-w-3xl">
-      <PageHeader back={{ to: "/home", label: "Home" }} title="Platform guidelines" sub="The rules for working on Dolancer, in short." />
+      <PageHeader back={{ to: "/dashboard", label: "Dashboard" }} title="Platform guidelines" sub="The rules for working on Dolancer, in short." />
 
       <CardGrid>
         {SECTIONS.map((section, index) => (
@@ -120,7 +120,7 @@ export function GuidelinesPage() {
                 You agreed on {formatDate(guidelinesAt)}
               </span>
               <Button asChild size="sm" variant="outline">
-                <Link to="/home">Back to your steps</Link>
+                <Link to="/dashboard">Back to your steps</Link>
               </Button>
             </div>
           ) : (
@@ -135,7 +135,7 @@ export function GuidelinesPage() {
                 onClick={() => {
                   accept();
                   toast.success("Step done. On to the next one.");
-                  navigate("/home");
+                  navigate("/dashboard");
                 }}
               >
                 Agree and continue

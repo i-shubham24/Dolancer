@@ -6,6 +6,7 @@ import { formatPaise } from "@/lib/paise";
 import { preloadRoute } from "@/lib/preload";
 import type { EarningsSummary } from "@/types/domain";
 import { formatDayShort } from "@/features/calendar/dates";
+import { Clock } from "lucide-react";
 import { CornerArrow } from "@/components/app/ui";
 import { CARD, cardMotion } from "@/components/app/card-styles";
 import { LineTexture } from "@/components/app/LineTexture";
@@ -38,21 +39,25 @@ function StatCard({
         to={to}
         className={cn(
           CARD,
-          "group h-full transition-shadow duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+          "group h-full justify-between transition-shadow duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
           hero
             ? "isolate overflow-hidden bg-gradient-to-br from-primary to-primary-hover text-inverse ring-0 shadow-[0_14px_30px_-14px_rgba(10,101,192,0.75)]"
             : "hover:shadow-[0_14px_30px_-16px_rgba(15,23,42,0.22)]",
         )}
       >
         {hero ? <LineTexture className="pointer-events-none absolute inset-0 -z-10 h-full w-full text-white/[0.09]" /> : null}
-        <div className="flex items-start justify-between gap-3">
-          <span className={cn("text-[13px] font-bold", hero ? "text-white/85" : "text-ink-2")}>{label}</span>
-          {to ? <CornerArrow inverse={hero} /> : null}
+        <div>
+          <div className="flex items-start justify-between gap-3">
+            <span className={cn("text-[13px] font-bold tracking-tight", hero ? "text-white/85" : "text-ink-2")}>{label}</span>
+            {to ? <CornerArrow inverse={hero} /> : null}
+          </div>
+          <div className="mt-3 text-[26px] font-extrabold min-[420px]:text-[30px] sm:text-[34px] leading-none tracking-[-0.035em] tabular-nums">
+            {children}
+          </div>
         </div>
-        <div className="mb-1 mt-2.5 text-[26px] font-extrabold min-[420px]:text-[30px] sm:text-[34px] leading-none tracking-[-0.035em] tabular-nums">
-          {children}
+        <div className={cn("mt-auto pt-3 border-t text-xs font-semibold", hero ? "border-white/15 text-white/90" : "border-line-subtle/70 text-ink-muted")}>
+          {foot}
         </div>
-        <div className={cn("text-xs font-semibold", hero ? "text-white/85" : "text-ink-muted")}>{foot}</div>
       </Shell>
     </motion.div>
   );
@@ -82,11 +87,13 @@ export function TaskStats({
   activeCount,
   activeLoading,
   dueThisWeek,
+  inReviewCount = 0,
 }: {
   activeCount: number;
   activeLoading: boolean;
   /** Deadlines from today to Sunday, soonest first. */
   dueThisWeek: Date[];
+  inReviewCount?: number;
 }) {
   const next = dueThisWeek[0];
   const soon = next ? next.getTime() - Date.now() < 48 * 3_600_000 : false;
@@ -99,24 +106,32 @@ export function TaskStats({
         area="[grid-area:k1]"
         hero
         foot={
-          <span>
-            {activeCount === 0
-              ? "Ready for new work offers"
-              : `${activeCount} active task${activeCount === 1 ? "" : "s"} currently assigned`}
-          </span>
+          <div className="flex items-center justify-between gap-2 text-xs">
+            <span className="truncate">
+              {activeCount === 0
+                ? "Ready for new offers"
+                : inReviewCount > 0 && inReviewCount < activeCount
+                  ? `${activeCount - inReviewCount} drafting • ${inReviewCount} in review`
+                  : inReviewCount > 0
+                    ? `${inReviewCount} with supervisor`
+                    : "All actively on schedule"}
+            </span>
+            <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-white/15 px-2 py-0.5 text-[11px] font-bold text-white">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-300" aria-hidden="true" />
+              {activeCount === 0 ? "Available" : "On track"}
+            </span>
+          </div>
         }
       >
         {activeLoading ? (
           <ValueSkeleton inverse />
         ) : (
-          <>
-            <div className="flex flex-wrap items-baseline gap-x-2">
+          <div className="flex items-baseline gap-2">
             <CountUp value={activeCount} format={whole} delay={0.3} />
-            <span className="text-sm min-[400px]:text-base font-bold tracking-normal text-white/85">
-              {activeCount === 1 ? "task in progress" : "tasks in progress"}
+            <span className="text-sm min-[400px]:text-[15px] font-semibold text-white/80">
+              {activeCount === 1 ? "task ongoing" : "tasks ongoing"}
             </span>
           </div>
-          </>
         )}
       </StatCard>
 
@@ -125,21 +140,36 @@ export function TaskStats({
         label="Due this week"
         area="[grid-area:k2]"
         foot={
-          next ? (
-            <span
-              className={cn(
-                "inline-flex rounded-full px-2.5 py-1 text-[11.5px] font-bold",
-                soon ? "bg-danger-bg text-danger-ink" : "bg-info-bg text-info-ink",
-              )}
-            >
-              Next: {formatDayShort(next)}
-            </span>
-          ) : (
-            "Nothing due before Sunday"
-          )
+          <div className="flex items-center justify-between gap-2 text-xs">
+            <span className="font-semibold text-ink-2">Earliest due</span>
+            {next ? (
+              <span
+                className={cn(
+                  "inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11.5px] font-bold",
+                  soon ? "bg-danger-bg text-danger-ink" : "bg-panel text-ink",
+                )}
+              >
+                <Clock className="h-3 w-3 shrink-0" aria-hidden="true" />
+                {formatDayShort(next)}
+              </span>
+            ) : (
+              <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-success-bg px-2.5 py-0.5 text-[11.5px] font-bold text-success-ink">
+                All clear
+              </span>
+            )}
+          </div>
         }
       >
-        {activeLoading ? <ValueSkeleton /> : <CountUp value={dueThisWeek.length} format={whole} delay={0.38} />}
+        {activeLoading ? (
+          <ValueSkeleton />
+        ) : (
+          <div className="flex items-baseline gap-2">
+            <CountUp value={dueThisWeek.length} format={whole} delay={0.38} />
+            <span className="text-sm min-[400px]:text-[15px] font-semibold text-ink-muted">
+              {dueThisWeek.length === 1 ? "delivery scheduled" : "deliveries scheduled"}
+            </span>
+          </div>
+        )}
       </StatCard>
     </>
   );

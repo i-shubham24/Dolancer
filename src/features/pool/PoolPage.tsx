@@ -121,7 +121,7 @@ export function PoolPage() {
             body="Verification, skills and training help your supervisor send the right work."
             action={
               <Button asChild>
-                <Link to="/home">Continue setup</Link>
+                <Link to="/dashboard">Continue setup</Link>
               </Button>
             }
           />

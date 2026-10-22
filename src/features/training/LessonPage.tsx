@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
@@ -17,6 +17,7 @@ import { CourseCover } from "./CourseCard";
 export function LessonPage() {
   const { id = "" } = useParams();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [result, setResult] = useState<{ score: number; passed: boolean } | null>(null);
 
@@ -39,6 +40,7 @@ export function LessonPage() {
     onSuccess: () => {
       toast.success("Module complete.");
       invalidate();
+      navigate("/training");
     },
     onError: (error: Error) => toast.error(toUserError(error, "Could not mark complete. Try again.")),
   });
@@ -51,8 +53,10 @@ export function LessonPage() {
         // The database owns the answer key and the pass mark; completion is only
         // recorded once it says so.
         await markComplete(id);
-        toast.success(`Passed with ${outcome.score}%.`);
+        toast.success(`Passed with ${outcome.score}%. Module complete.`);
         invalidate();
+        // Back to the list of modules, where the next one is waiting.
+        navigate("/training");
       } else {
         toast.warning(`Scored ${outcome.score}%. Review and try again.`);
       }
