@@ -1612,10 +1612,14 @@
     grid-template-columns: 1fr;
   }
 
+  /* Tasks: four figures in a row like Earnings, then Up next beside the week, then
+     the work list beside offers. */
   .dash-grid {
     grid-template-areas:
       "k1"
       "k2"
+      "k3"
+      "k4"
       "next"
       "week"
       "work"
@@ -1642,6 +1646,7 @@
     .dash-grid {
       grid-template-areas:
         "k1 k2"
+        "k3 k4"
         "next next"
         "week week"
         "work work"
@@ -1667,7 +1672,9 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
       grid-template-areas:
         "k1 k2"
-        "next week"
+        "k3 k4"
+        "next next"
+        "week week"
         "work work"
         "offers offers";
     }
@@ -1681,15 +1688,15 @@
     }
   }
 
-  /* Desktop (>= 860px): 4 stat cards in a single row, 3-column Tasks bento, and left-right Split & Payouts */
+  /* Desktop (>= 860px): 4 stat cards in a single row on both tabs, Up next beside the week, and left-right Split & Payouts */
   @container (min-width: 860px) {
     .dash-grid {
       gap: 1.125rem;
-      grid-template-columns: minmax(210px, 1fr) minmax(350px, 1.55fr) minmax(320px, 1.35fr);
+      grid-template-columns: repeat(12, minmax(0, 1fr));
       grid-template-areas:
-        "k1 next week"
-        "k2 next week"
-        "work work offers";
+        "k1 k1 k1 k2 k2 k2 k3 k3 k3 k4 k4 k4"
+        "next next next next next next next week week week week week"
+        "work work work work work work work offers offers offers offers offers";
     }
     .fin-grid {
       gap: 1.125rem;
@@ -1705,11 +1712,6 @@
   @container (min-width: 1340px) {
     .dash-grid {
       gap: 1.25rem;
-      grid-template-columns: minmax(240px, 1fr) minmax(420px, 1.6fr) minmax(380px, 1.4fr);
-      grid-template-areas:
-        "k1 next week"
-        "k2 next week"
-        "work work offers";
     }
     .fin-grid {
       gap: 1.25rem;

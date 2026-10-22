@@ -231,18 +231,6 @@ export function WeekCard({ events, loading }: { events: CalendarEvent[]; loading
               <p className="mt-0.5 text-xs text-ink-muted max-w-[220px]">
                 A clear day for deep focus, research, and working ahead.
               </p>
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => {
-                  setReminderDay(parseDayKey(picked));
-                  setReminderOpen(true);
-                }}
-                className="mt-3 text-xs font-bold h-8"
-              >
-                <Plus className="mr-1 h-3.5 w-3.5" />
-                Add reminder
-              </Button>
             </div>
           )
         ) : inWeek.length === 0 && upcomingBeyondWeek.length === 0 ? (
@@ -321,7 +309,8 @@ export function WeekCard({ events, loading }: { events: CalendarEvent[]; loading
             size="sm"
             variant="outline"
             onClick={() => {
-              setReminderDay(undefined);
+              // With a day picked, the reminder starts on that day.
+              setReminderDay(picked ? parseDayKey(picked) : undefined);
               setReminderOpen(true);
             }}
             className="shrink-0 h-8 gap-1 text-xs font-bold bg-white hover:bg-panel shadow-2xs px-2.5"

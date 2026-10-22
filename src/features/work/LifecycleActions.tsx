@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Check, CheckCircle2, Hourglass, Info, Play, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -146,6 +146,15 @@ export function SubmitCard({ project }: { project: DoerProject }) {
   const [checked, setChecked] = useState(false);
   const submit = useSubmitForReview(project.id);
   const review = project.status === "in_review" || project.status === "delivered";
+  const formRef = useRef<HTMLElement>(null);
+
+  // "Submit work" on the dashboard links here with #submit; the page loads after the
+  // link is followed, so the scroll happens once this card is on screen.
+  useEffect(() => {
+    if (window.location.hash !== "#submit" || !formRef.current) return;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    formRef.current.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+  }, []);
 
   if (project.status === "approved") {
     return (
@@ -169,7 +178,7 @@ export function SubmitCard({ project }: { project: DoerProject }) {
   if (project.status !== "in_progress") return null;
 
   return (
-    <motion.section variants={cardMotion} className={cn(CARD, "gap-3")} aria-labelledby="submit-title">
+    <motion.section ref={formRef} id="submit" variants={cardMotion} className={cn(CARD, "gap-3")} aria-labelledby="submit-title">
       <h2 id="submit-title" className="text-[15px] font-extrabold tracking-[-0.02em]">
         Before you submit
       </h2>

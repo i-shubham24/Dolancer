@@ -36,8 +36,11 @@ export function useEarningsSummary() {
   return useQuery({ queryKey: qk.earnings.summary(), queryFn: fetchEarningsSummary });
 }
 
+export const POOL_PREVIEW_LIMIT = 20;
+
 export function usePoolPreview() {
-  return useQuery({ queryKey: qk.pool.list(), queryFn: () => fetchPoolPreview(3) });
+  // Enough to count them on the dashboard; the card itself lists the first two.
+  return useQuery({ queryKey: qk.pool.list(), queryFn: () => fetchPoolPreview(POOL_PREVIEW_LIMIT) });
 }
 
 /**

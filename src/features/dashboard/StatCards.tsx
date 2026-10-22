@@ -6,7 +6,7 @@ import { formatPaise } from "@/lib/paise";
 import { preloadRoute } from "@/lib/preload";
 import type { EarningsSummary } from "@/types/domain";
 import { formatDayShort } from "@/features/calendar/dates";
-import { Clock } from "lucide-react";
+import { Briefcase, CalendarClock, Layers, Wallet, type LucideIcon } from "lucide-react";
 import { CornerArrow } from "@/components/app/ui";
 import { CARD, cardMotion } from "@/components/app/card-styles";
 import { LineTexture } from "@/components/app/LineTexture";
@@ -18,6 +18,7 @@ const whole = (value: number) => String(Math.round(value));
 function StatCard({
   to,
   label,
+  icon: Icon,
   area,
   hero = false,
   children,
@@ -26,6 +27,7 @@ function StatCard({
   /** Where the card leads. Without it the card is a plain figure. */
   to?: string;
   label: string;
+  icon?: LucideIcon;
   /** A literal grid-area class, so the stylesheet build can see it. */
   area: string;
   hero?: boolean;
@@ -48,7 +50,17 @@ function StatCard({
         {hero ? <LineTexture className="pointer-events-none absolute inset-0 -z-10 h-full w-full text-white/[0.09]" /> : null}
         <div>
           <div className="flex items-start justify-between gap-3">
-            <span className={cn("text-[13px] font-bold tracking-tight", hero ? "text-white/85" : "text-ink-2")}>{label}</span>
+            <span className={cn("flex items-center gap-2 text-[13px] font-bold tracking-tight", hero ? "text-white/85" : "text-ink-2")}>
+              {Icon ? (
+                <span
+                  className={cn("flex h-8 w-8 shrink-0 items-center justify-center rounded-[10px]", hero ? "bg-white/15 text-white" : "bg-info-bg text-primary")}
+                  aria-hidden="true"
+                >
+                  <Icon className="h-4 w-4" />
+                </span>
+              ) : null}
+              {label}
+            </span>
             {to ? <CornerArrow inverse={hero} /> : null}
           </div>
           <div className="mt-3 text-[26px] font-extrabold min-[420px]:text-[30px] sm:text-[34px] leading-none tracking-[-0.035em] tabular-nums">
@@ -82,94 +94,97 @@ function ValueSkeleton({ inverse = false }: { inverse?: boolean }) {
   );
 }
 
-/** The two task figures: active work and what is due before Sunday. */
+/** A figure with its unit beside it, the unit small enough to read as a label. */
+function Figure({ value, unit, delay, inverse = false }: { value: number; unit: string; delay: number; inverse?: boolean }) {
+  return (
+    <div className="flex items-baseline gap-2">
+      <CountUp value={value} format={whole} delay={delay} />
+      <span className={cn("text-sm font-semibold tracking-normal min-[400px]:text-[15px]", inverse ? "text-white/80" : "text-ink-muted")}>{unit}</span>
+    </div>
+  );
+}
+
+/**
+ * The four task figures in one row, the same tiles as the Earnings tab: active
+ * work, what is due before Sunday, pay on the tasks in hand, and new offers.
+ */
 export function TaskStats({
   activeCount,
   activeLoading,
   dueThisWeek,
   inReviewCount = 0,
+  payInProgressPaise,
+  offersCount,
+  offersAtLimit = false,
+  offersLoading,
 }: {
   activeCount: number;
   activeLoading: boolean;
   /** Deadlines from today to Sunday, soonest first. */
   dueThisWeek: Date[];
   inReviewCount?: number;
+  /** Pay on every active task, before tax. */
+  payInProgressPaise: number;
+  offersCount: number;
+  /** The count hit the preview limit, so there may be more. */
+  offersAtLimit?: boolean;
+  offersLoading: boolean;
 }) {
   const next = dueThisWeek[0];
   const soon = next ? next.getTime() - Date.now() < 48 * 3_600_000 : false;
+  const drafting = activeCount - inReviewCount;
 
   return (
     <>
       <StatCard
         to="/work"
         label="Active work"
+        icon={Briefcase}
         area="[grid-area:k1]"
         hero
         foot={
-          <div className="flex items-center justify-between gap-2 text-xs">
-            <span className="truncate">
-              {activeCount === 0
-                ? "Ready for new offers"
-                : inReviewCount > 0 && inReviewCount < activeCount
-                  ? `${activeCount - inReviewCount} drafting • ${inReviewCount} in review`
-                  : inReviewCount > 0
-                    ? `${inReviewCount} with supervisor`
-                    : "All actively on schedule"}
-            </span>
-            <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-white/15 px-2 py-0.5 text-[11px] font-bold text-white">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-300" aria-hidden="true" />
-              {activeCount === 0 ? "Available" : "On track"}
-            </span>
-          </div>
+          activeCount === 0
+            ? "Ready for new offers"
+            : [drafting > 0 ? `${drafting} drafting` : null, inReviewCount > 0 ? `${inReviewCount} with your supervisor` : null].filter(Boolean).join(" · ")
         }
       >
-        {activeLoading ? (
-          <ValueSkeleton inverse />
-        ) : (
-          <div className="flex items-baseline gap-2">
-            <CountUp value={activeCount} format={whole} delay={0.3} />
-            <span className="text-sm min-[400px]:text-[15px] font-semibold text-white/80">
-              {activeCount === 1 ? "task ongoing" : "tasks ongoing"}
-            </span>
-          </div>
-        )}
+        {activeLoading ? <ValueSkeleton inverse /> : <Figure value={activeCount} unit={activeCount === 1 ? "task" : "tasks"} delay={0.3} inverse />}
       </StatCard>
 
       <StatCard
         to="/calendar"
         label="Due this week"
+        icon={CalendarClock}
         area="[grid-area:k2]"
         foot={
-          <div className="flex items-center justify-between gap-2 text-xs">
-            <span className="font-semibold text-ink-2">Earliest due</span>
-            {next ? (
-              <span
-                className={cn(
-                  "inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11.5px] font-bold",
-                  soon ? "bg-danger-bg text-danger-ink" : "bg-panel text-ink",
-                )}
-              >
-                <Clock className="h-3 w-3 shrink-0" aria-hidden="true" />
-                {formatDayShort(next)}
-              </span>
-            ) : (
-              <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-success-bg px-2.5 py-0.5 text-[11.5px] font-bold text-success-ink">
-                All clear
-              </span>
-            )}
-          </div>
+          next ? (
+            <>
+              Earliest: <span className={cn("font-bold", soon ? "text-danger-ink" : "text-ink")}>{formatDayShort(next)}</span>
+            </>
+          ) : (
+            <span className="font-bold text-success-ink">Nothing due before Sunday</span>
+          )
         }
       >
         {activeLoading ? (
           <ValueSkeleton />
         ) : (
-          <div className="flex items-baseline gap-2">
-            <CountUp value={dueThisWeek.length} format={whole} delay={0.38} />
-            <span className="text-sm min-[400px]:text-[15px] font-semibold text-ink-muted">
-              {dueThisWeek.length === 1 ? "delivery scheduled" : "deliveries scheduled"}
-            </span>
-          </div>
+          <Figure value={dueThisWeek.length} unit={dueThisWeek.length === 1 ? "delivery" : "deliveries"} delay={0.38} />
         )}
+      </StatCard>
+
+      <StatCard
+        to="/work"
+        label="Pay in progress"
+        icon={Wallet}
+        area="[grid-area:k3]"
+        foot={activeCount === 0 ? "Take an offer to start earning" : `On ${activeCount} task${activeCount === 1 ? "" : "s"}, before tax`}
+      >
+        {activeLoading ? <ValueSkeleton /> : <CountUp value={payInProgressPaise} format={rupees} delay={0.45} duration={1.3} />}
+      </StatCard>
+
+      <StatCard to="/pool" label="New offers" icon={Layers} area="[grid-area:k4]" foot="Matched to your skills">
+        {offersLoading ? <ValueSkeleton /> : <Figure value={offersCount} unit={offersAtLimit ? "or more for you" : "for you"} delay={0.52} />}
       </StatCard>
     </>
   );

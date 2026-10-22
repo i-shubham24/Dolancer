@@ -21,6 +21,7 @@ import {
   useActiveProjects,
   usePoolPreview,
   useEarningsSummary,
+  POOL_PREVIEW_LIMIT,
 } from "./queries";
 import { AttentionStrip } from "./AttentionStrip";
 import { MoneyStats, TaskStats } from "./StatCards";
@@ -241,8 +242,17 @@ function WorkDashboard() {
             animate="show"
             exit={reduceMotion ? undefined : { opacity: 0, y: 8, transition: { duration: 0.15 } }}
           >
-            <TaskStats activeCount={active.length} inReviewCount={inReview} activeLoading={projects.isLoading} dueThisWeek={dueThisWeek} />
-            <UpNextCard project={upNext} loading={projects.isLoading} unlocked={unlocked} />
+            <TaskStats
+              activeCount={active.length}
+              inReviewCount={inReview}
+              activeLoading={projects.isLoading}
+              dueThisWeek={dueThisWeek}
+              payInProgressPaise={active.reduce((sum, project) => sum + project.payoutPaise, 0)}
+              offersCount={pool.data?.length ?? 0}
+              offersAtLimit={(pool.data?.length ?? 0) >= POOL_PREVIEW_LIMIT}
+              offersLoading={pool.isLoading}
+            />
+            <UpNextCard project={upNext} loading={projects.isLoading} unlocked={unlocked} withSupervisor={inReview} />
             <WeekCard events={calendar.events} loading={calendar.isLoading} />
             <WorkList
               projects={active}
